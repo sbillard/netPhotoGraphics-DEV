@@ -102,9 +102,14 @@ class Zenphoto_Authority extends _Authority {
 		$adminObj->setUser($user);
 		$adminObj->setName($name);
 		$adminObj->setPass(ZP_PASS);
-		$adminObj->set('passupdate', 'n/a');
 
-		user_groups::merge_rights($adminObj, array(ZP_GROUP));
+		if (class_exists('user_groups')) {
+			user_groups::merge_rights($adminObj, array(ZP_GROUP));
+			$rights = $adminObj->getRights() ^ USER_RIGHTS;
+			$adminObj->setRights($rights);
+		} else {
+			$adminObj->setRights(DEFAULT_RIGHTS ^ USER_RIGHTS);
+		}
 		return $adminObj;
 	}
 
@@ -145,6 +150,12 @@ class Zenphoto_Administrator extends _Administrator {
 
 	function setID($id) {
 		$this->set('id', $id);
+	}
+
+	function setPass($pwd) {
+		$hash = parent::setPass($pwd);
+		$this->set('passupdate', 'n/a');
+		return $hash;
 	}
 
 }
