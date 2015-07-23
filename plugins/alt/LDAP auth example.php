@@ -154,7 +154,7 @@ class Zenphoto_Administrator extends _Administrator {
 
 	function setPass($pwd) {
 		$hash = parent::setPass($pwd);
-		$this->set('passupdate', 'n/a');
+		$this->set('passupdate', NULL);
 		return $hash;
 	}
 
