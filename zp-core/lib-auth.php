@@ -1243,7 +1243,7 @@ class _Authority {
 		<p>
 			<label for="disclose_password<?php echo $id; ?>"><?php echo gettext('Show password'); ?></label>
 			<input type="checkbox" name="disclose_password<?php echo $id; ?>" id="disclose_password<?php echo $id; ?>" onclick="passwordClear('<?php echo $id; ?>');
-					togglePassword('<?php echo $id; ?>');">
+							togglePassword('<?php echo $id; ?>');">
 		</p>
 		<p class="password_field_<?php echo $id; ?>">
 			<label for="pass_r<?php echo $id; ?>" id="match<?php echo $id; ?>"><?php echo gettext("Repeat password") . $flag; ?></label>
@@ -1390,7 +1390,7 @@ class _Administrator extends PersistentObject {
 		$this->set('pass', $pwd);
 		$this->set('passupdate', date('Y-m-d H:i:s'));
 		$this->set('passhash', $hash_type);
-		return $this->get('pass');
+		return $pwd;
 	}
 
 	/**

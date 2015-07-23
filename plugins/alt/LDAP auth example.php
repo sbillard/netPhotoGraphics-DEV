@@ -4,7 +4,7 @@
  * This is an example script to link ZenPhoto20 to an LDAP server for user verification
  * for posix-style users and groups.
  *
- * Note: Assumes user_groups plugin is enabled and a group named %ZP_USERS% is setup. LDAP users
+ * Note: Assumes user_groups plugin is enabled and a group named as defined in ZP_USERS is setup. LDAP users
  * will be defacto members of that group. Assumes that no standard ZenPhoto20 user has a database
  * record ID greater than the id number returned by the LDAP server.
  *
@@ -102,6 +102,7 @@ class Zenphoto_Authority extends _Authority {
 		$adminObj->setUser($user);
 		$adminObj->setName($name);
 		$adminObj->setPass(ZP_PASS);
+		$adminObj->set('passupdate', 'n/a');
 
 		user_groups::merge_rights($adminObj, array(ZP_GROUP));
 		return $adminObj;
