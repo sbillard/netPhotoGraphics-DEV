@@ -20,6 +20,9 @@ define('ZP_PASS', 'LDAP');
 
 
 require_once(SERVERPATH . '/' . ZENFOLDER . '/lib-auth.php');
+if (extensionEnabled('user_groups')) {
+	require_once(SERVERPATH . '/' . ZENFOLDER . '/' . PLUGIN_FOLDER . '/user_groups.php');
+}
 
 class Zenphoto_Authority extends _Authority {
 
@@ -87,28 +90,29 @@ class Zenphoto_Authority extends _Authority {
 	}
 
 	static function setupUser($userData) {
+		global $_zp_authority;
 		$user = $userData['uid'][0];
 		$id = $userData['uidnumber'][0];
 		$name = $userData['cn'][0];
-		if (isset($userData['email'][0])) {
-			$adminObj->setEmail($userData['email'][0]);
-		}
 
 		$adminObj = Zenphoto_Authority::newAdministrator('');
 		$adminObj->setID($id);
 		$adminObj->transient = true;
-		$this->addOtherUser($adminObj);
+		$_zp_authority->addOtherUser($adminObj);
 
+		if (isset($userData['email'][0])) {
+			$adminObj->setEmail($userData['email'][0]);
+		}
 		$adminObj->setUser($user);
 		$adminObj->setName($name);
 		$adminObj->setPass(ZP_PASS);
 
 		if (class_exists('user_groups')) {
 			user_groups::merge_rights($adminObj, array(ZP_GROUP));
-			$rights = $adminObj->getRights() ^ USER_RIGHTS;
-			$adminObj->setRights($rights);
+			$rights = $adminObj->getRights();
+			$adminObj->setRights($rights & ~ USER_RIGHTS);
 		} else {
-			$adminObj->setRights(DEFAULT_RIGHTS ^ USER_RIGHTS);
+			$adminObj->setRights(DEFAULT_RIGHTS & ~ USER_RIGHTS);
 		}
 		return $adminObj;
 	}
