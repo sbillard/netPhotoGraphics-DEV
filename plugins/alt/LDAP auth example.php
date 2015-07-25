@@ -15,7 +15,6 @@ define('LDAP_DOMAIN', 'localhost');
 define('LDAP_BASEDN', 'dc=rpi,dc=swinden,dc=local');
 define('LDAP_GROUP', 'users');
 
-define('ZP_GROUP', 'users');
 define('ZP_PASS', SERVERPATH);
 
 
@@ -39,31 +38,13 @@ class Zenphoto_Authority extends _Authority {
 		// in the case of authorisation failure.
 		$bindResult = @ldap_bind($ad, $userdn, $password);
 		if ($bindResult) { //	valid LDAP user
-			$group = self::ldapSingle($ad, '(cn=' . LDAP_GROUP . ')', 'ou=Groups,' . LDAP_BASEDN, array('memberUid'));
-			if ($group) {
-				$members = $group['memberuid'];
-				unset($members['count']);
-				$isMember = in_array($user, $members, true);
-				if ($isMember) {
-					if (DEBUG_LOGIN) {
-						debugLog("LDAPhandleLogon: authorized as " . $userdn);
-					}
-					$userData = self::ldapUser($ad, "(uid={$user})");
-					if ($userData) {
-						$_zp_current_admin_obj = self::setupUser($userData);
-						$loggedin = $_zp_current_admin_obj->getRights();
-						self::logUser($_zp_current_admin_obj);
-					}
-				} else {
-					if (DEBUG_LOGIN) {
-						debugLog("LDAPhandleLogon: User not member of " . LDAP_GROUP);
-					}
-				}
-				ldap_unbind($ad);
-			} else {
-				if (DEBUG_LOGIN) {
-					debugLog("LDAPhandleLogon: no LDAP entry");
-				}
+			$userData = self::ldapUser($ad, "(uid={$user})");
+			$_zp_current_admin_obj = self::setupUser($ad, $userData);
+			$loggedin = $_zp_current_admin_obj->getRights();
+			self::logUser($_zp_current_admin_obj);
+			$loggedin = $_zp_current_admin_obj->getRights();
+			if (DEBUG_LOGIN) {
+				debugLog("LDAPhandleLogon: authorized as " . $userdn);
 			}
 		} else {
 			if (DEBUG_LOGIN) {
@@ -90,7 +71,7 @@ class Zenphoto_Authority extends _Authority {
 			}
 			$goodAuth = Zenphoto_Authority::passwordHash($userData['uid'][0], ZP_PASS);
 			if ($authCode == $goodAuth) {
-				$_zp_current_admin_obj = self::setupUser($userData);
+				$_zp_current_admin_obj = self::setupUser($ad, $userData);
 				if (DEBUG_LOGIN) {
 					debugLog(sprintf('LDAPcheckAuthorization: from %1$s->%2$X', $authCode, $_zp_current_admin_obj->getRights()));
 				}
@@ -103,11 +84,12 @@ class Zenphoto_Authority extends _Authority {
 		return parent::checkAuthorization($authCode, $id);
 	}
 
-	static function setupUser($userData) {
+	static function setupUser($ad, $userData) {
 		global $_zp_authority;
 		$user = $userData['uid'][0];
 		$id = $userData['uidnumber'][0];
 		$name = $userData['cn'][0];
+		$groups = self::getLDAPGroups($ad, $user);
 
 		$adminObj = Zenphoto_Authority::newAdministrator('');
 		$adminObj->setID($id);
@@ -121,7 +103,10 @@ class Zenphoto_Authority extends _Authority {
 		$adminObj->setPass(ZP_PASS);
 
 		if (class_exists('user_groups')) {
-			user_groups::merge_rights($adminObj, array(ZP_GROUP));
+			user_groups::merge_rights($adminObj, $groups);
+			if (DEBUG_LOGIN) {
+				debugLogVar("LDAsetupUser: groups:", $adminObj->getGroup());
+			}
 			$rights = $adminObj->getRights();
 			$adminObj->setRights($rights & ~ USER_RIGHTS);
 		} else {
@@ -153,6 +138,25 @@ class Zenphoto_Authority extends _Authority {
 
 	static function ldapUser($ad, $filter) {
 		return self::ldapSingle($ad, $filter, 'ou=Users,' . LDAP_BASEDN, array('uid', 'uidnumber', 'cn', 'email'));
+	}
+
+	/**
+	 * returns an array the user's of LDAP groups
+	 * @param type $ad
+	 */
+	static function getLDAPGroups($ad, $user) {
+		$groups = array();
+		//	for now this is just the defined LDAP_GROUP!!!!!!!!!!!!!!!
+		$group = self::ldapSingle($ad, '(cn=' . LDAP_GROUP . ')', 'ou=Groups,' . LDAP_BASEDN, array('memberUid'));
+		if ($group) {
+			$members = $group['memberuid'];
+			unset($members['count']);
+			$isMember = in_array($user, $members, true);
+			if ($isMember) {
+				$groups[] = LDAP_GROUP;
+			}
+		}
+		return $groups;
 	}
 
 	static function ldapInit($domain) {
