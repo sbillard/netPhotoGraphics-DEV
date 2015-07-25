@@ -44,10 +44,10 @@ class Zenphoto_Authority extends _Authority {
 				$members = $group['memberuid'];
 				unset($members['count']);
 				$isMember = in_array($user, $members, true);
-
 				if ($isMember) {
-					echo "You're authorized as " . $userdn;
-
+					if (DEBUG_LOGIN) {
+						debugLog("LDAPhandleLogon: authorized as " . $userdn);
+					}
 					$userData = self::ldapUser($ad, "(uid={$user})");
 					if ($userData) {
 						$_zp_current_admin_obj = self::setupUser($userData);
@@ -55,14 +55,20 @@ class Zenphoto_Authority extends _Authority {
 						self::logUser($_zp_current_admin_obj);
 					}
 				} else {
-					echo 'Authorization failed';
+					if (DEBUG_LOGIN) {
+						debugLog("LDAPhandleLogon: Authorization failed");
+					}
 				}
 				ldap_unbind($ad);
 			} else {
-				echo 'no LDAP group';
+				if (DEBUG_LOGIN) {
+					debugLog("LDAPhandleLogon: no LDAP group");
+				}
 			}
 		} else {
-			echo 'Could not bind to LDAP.';
+			if (DEBUG_LOGIN) {
+				debugLog("LDAPhandleLogon: Could not bind to LDAP");
+			}
 		}
 
 		if ($loggedin) {
@@ -80,10 +86,19 @@ class Zenphoto_Authority extends _Authority {
 		$userData = self::ldapUser($ad, "(uidNumber={$id})");
 		ldap_unbind($ad);
 		if ($userData) {
+			if (DEBUG_LOGIN) {
+				debugLogBacktrace("LDAPcheckAuthorization($authCode, $id)");
+			}
 			$goodAuth = Zenphoto_Authority::passwordHash($userData['uid'][0], ZP_PASS);
 			if ($authCode == $goodAuth) {
 				$_zp_current_admin_obj = self::setupUser($userData);
+				if (DEBUG_LOGIN) {
+					debugLog(sprintf('LDAPcheckAuthorization: from %1$s->%2$X', $authCode, $_zp_current_admin_obj->getRights()));
+				}
 				return $_zp_current_admin_obj->getRights();
+			}
+			if (DEBUG_LOGIN) {
+				debugLog("LDAPcheckAuthorization: no match");
 			}
 		}
 		return parent::checkAuthorization($authCode, $id);
