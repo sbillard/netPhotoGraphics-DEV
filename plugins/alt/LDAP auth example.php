@@ -13,10 +13,9 @@
 
 define('LDAP_DOMAIN', 'localhost');
 define('LDAP_BASEDN', 'dc=rpi,dc=swinden,dc=local');
-define('LDAP_GROUP', 'users');
 
 define('ZP_PASS', SERVERPATH);
-
+$_LDAPGroupMap = array('users' => 'users', 'super_user' => 'administrators');
 
 require_once(SERVERPATH . '/' . ZENFOLDER . '/lib-auth.php');
 if (extensionEnabled('user_groups')) {
@@ -106,7 +105,7 @@ class Zenphoto_Authority extends _Authority {
 		$user = $userData['uid'][0];
 		$id = $userData['uidnumber'][0];
 		$name = $userData['cn'][0];
-		$groups = self::getLDAPGroups($ad, $user);
+		$groups = self::getZPGroups($ad, $user);
 
 		$adminObj = Zenphoto_Authority::newAdministrator('');
 		$adminObj->setID($id);
@@ -166,16 +165,19 @@ class Zenphoto_Authority extends _Authority {
 	 * returns an array the user's of LDAP groups
 	 * @param type $ad
 	 */
-	static function getLDAPGroups($ad, $user) {
+	static function getZPGroups($ad, $user) {
+		global $_LDAPGroupMap;
 		$groups = array();
-		//	for now this is just the defined LDAP_GROUP!!!!!!!!!!!!!!!
-		$group = self::ldapSingle($ad, '(cn=' . LDAP_GROUP . ')', 'ou=Groups,' . LDAP_BASEDN, array('memberUid'));
-		if ($group) {
-			$members = $group['memberuid'];
-			unset($members['count']);
-			$isMember = in_array($user, $members, true);
-			if ($isMember) {
-				$groups[] = LDAP_GROUP;
+
+		foreach ($_LDAPGroupMap as $LDAPgroup => $ZPgroup) {
+			$group = self::ldapSingle($ad, '(cn=' . $LDAPgroup . ')', 'ou=Groups,' . LDAP_BASEDN, array('memberUid'));
+			if ($group) {
+				$members = $group['memberuid'];
+				unset($members['count']);
+				$isMember = in_array($user, $members, true);
+				if ($isMember) {
+					$groups[] = $ZPgroup;
+				}
 			}
 		}
 		return $groups;
