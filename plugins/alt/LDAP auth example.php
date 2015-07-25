@@ -38,7 +38,7 @@ class Zenphoto_Authority extends _Authority {
 		// We suppress errors in the binding process, to prevent a warning
 		// in the case of authorisation failure.
 		$bindResult = @ldap_bind($ad, $userdn, $password);
-		if ($bindResult) {
+		if ($bindResult) { //	valid LDAP user
 			$group = self::ldapSingle($ad, '(cn=' . LDAP_GROUP . ')', 'ou=Groups,' . LDAP_BASEDN, array('memberUid'));
 			if ($group) {
 				$members = $group['memberuid'];
@@ -56,13 +56,13 @@ class Zenphoto_Authority extends _Authority {
 					}
 				} else {
 					if (DEBUG_LOGIN) {
-						debugLog("LDAPhandleLogon: Authorization failed");
+						debugLog("LDAPhandleLogon: User not member of " . LDAP_GROUP);
 					}
 				}
 				ldap_unbind($ad);
 			} else {
 				if (DEBUG_LOGIN) {
-					debugLog("LDAPhandleLogon: no LDAP group");
+					debugLog("LDAPhandleLogon: no LDAP entry");
 				}
 			}
 		} else {
@@ -74,8 +74,7 @@ class Zenphoto_Authority extends _Authority {
 		if ($loggedin) {
 			return $loggedin;
 		} else {
-			// If the LDAP authorisation failed we try the standard logon, e.g.
-			// for a master administrator.
+			// If the LDAP authorisation failed we try the standard logon, e.g. for a master administrator.
 			return parent::handleLogon();
 		}
 	}
