@@ -16,7 +16,7 @@ define('LDAP_BASEDN', 'dc=rpi,dc=swinden,dc=local');
 define('LDAP_GROUP', 'users');
 
 define('ZP_GROUP', 'users');
-define('ZP_PASS', 'LDAP');
+define('ZP_PASS', SERVERPATH);
 
 
 require_once(SERVERPATH . '/' . ZENFOLDER . '/lib-auth.php');
@@ -80,7 +80,7 @@ class Zenphoto_Authority extends _Authority {
 		$userData = self::ldapUser($ad, "(uidNumber={$id})");
 		ldap_unbind($ad);
 		if ($userData) {
-			$goodAuth = Zenphoto_Authority::passwordHash($userData['uid'][0], 'LDAP');
+			$goodAuth = Zenphoto_Authority::passwordHash($userData['uid'][0], ZP_PASS);
 			if ($authCode == $goodAuth) {
 				$_zp_current_admin_obj = self::setupUser($userData);
 				return $_zp_current_admin_obj->getRights();
@@ -98,7 +98,6 @@ class Zenphoto_Authority extends _Authority {
 		$adminObj = Zenphoto_Authority::newAdministrator('');
 		$adminObj->setID($id);
 		$adminObj->transient = true;
-		$_zp_authority->addOtherUser($adminObj);
 
 		if (isset($userData['email'][0])) {
 			$adminObj->setEmail($userData['email'][0]);
@@ -114,6 +113,7 @@ class Zenphoto_Authority extends _Authority {
 		} else {
 			$adminObj->setRights(DEFAULT_RIGHTS & ~ USER_RIGHTS);
 		}
+		$_zp_authority->addOtherUser($adminObj);
 		return $adminObj;
 	}
 
