@@ -44,7 +44,7 @@ class Zenphoto_Authority extends _Authority {
 			self::logUser($_zp_current_admin_obj);
 			$loggedin = $_zp_current_admin_obj->getRights();
 			if (DEBUG_LOGIN) {
-				debugLog("LDAPhandleLogon: authorized as " . $userdn);
+				debugLog(sprint('LDAPhandleLogon: authorized as %1$s->%2$X'), $userdn, $loggedin);
 			}
 		} else {
 			if (DEBUG_LOGIN) {
