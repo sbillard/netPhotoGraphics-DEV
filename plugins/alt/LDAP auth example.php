@@ -15,6 +15,7 @@ define('LDAP_DOMAIN', 'localhost');
 define('LDAP_BASEDN', 'dc=rpi,dc=swinden,dc=local');
 
 define('ZP_PASS', SERVERPATH);
+//array to map ldap users to ZenPhoto20 users. Key is LDAP user, value is equivalent ZenPhoto20 user
 $_LDAPGroupMap = array('users' => 'users', 'super_user' => 'administrators');
 
 require_once(SERVERPATH . '/' . ZENFOLDER . '/lib-auth.php');
