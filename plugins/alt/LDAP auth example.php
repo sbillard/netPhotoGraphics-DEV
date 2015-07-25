@@ -39,12 +39,18 @@ class Zenphoto_Authority extends _Authority {
 		$bindResult = @ldap_bind($ad, $userdn, $password);
 		if ($bindResult) { //	valid LDAP user
 			$userData = self::ldapUser($ad, "(uid={$user})");
-			$_zp_current_admin_obj = self::setupUser($ad, $userData);
-			$loggedin = $_zp_current_admin_obj->getRights();
-			self::logUser($_zp_current_admin_obj);
-			$loggedin = $_zp_current_admin_obj->getRights();
-			if (DEBUG_LOGIN) {
-				debugLog(sprint('LDAPhandleLogon: authorized as %1$s->%2$X'), $userdn, $loggedin);
+			$userobj = self::setupUser($ad, $userData);
+			if ($userobj) {
+				$_zp_current_admin_obj = $userobj;
+				$loggedin = $_zp_current_admin_obj->getRights();
+				self::logUser($_zp_current_admin_obj);
+				if (DEBUG_LOGIN) {
+					debugLog(sprintf('LDAPhandleLogon: authorized as %1$s->%2$X'), $userdn, $loggedin);
+				}
+			} else {
+				if (DEBUG_LOGIN) {
+					debugLog("LDAPhandleLogon: no rights");
+				}
 			}
 		} else {
 			if (DEBUG_LOGIN) {
@@ -64,24 +70,35 @@ class Zenphoto_Authority extends _Authority {
 		global $_zp_current_admin_obj;
 		$ad = self::ldapInit(LDAP_DOMAIN);
 		$userData = self::ldapUser($ad, "(uidNumber={$id})");
-		ldap_unbind($ad);
+
 		if ($userData) {
 			if (DEBUG_LOGIN) {
 				debugLogBacktrace("LDAPcheckAuthorization($authCode, $id)");
 			}
 			$goodAuth = Zenphoto_Authority::passwordHash($userData['uid'][0], ZP_PASS);
 			if ($authCode == $goodAuth) {
-				$_zp_current_admin_obj = self::setupUser($ad, $userData);
-				if (DEBUG_LOGIN) {
-					debugLog(sprintf('LDAPcheckAuthorization: from %1$s->%2$X', $authCode, $_zp_current_admin_obj->getRights()));
+				$userobj = self::setupUser($ad, $userData);
+				if ($userobj) {
+					$_zp_current_admin_obj = $userobj;
+					$rights = $_zp_current_admin_obj->getRights();
+				} else {
+					$rights = 0;
 				}
-				return $_zp_current_admin_obj->getRights();
-			}
-			if (DEBUG_LOGIN) {
-				debugLog("LDAPcheckAuthorization: no match");
+				if (DEBUG_LOGIN) {
+					debugLog(sprintf('LDAPcheckAuthorization: from %1$s->%2$X', $authCode, $rights));
+				}
+			} else {
+				if (DEBUG_LOGIN) {
+					debugLog(sprintf('LDAPcheckAuthorization: AuthCode %1$s <> %2$s', $goodAuth, $authCode));
+				}
 			}
 		}
-		return parent::checkAuthorization($authCode, $id);
+		ldap_unbind($ad);
+		if ($_zp_current_admin_obj) {
+			return $_zp_current_admin_obj->getRights();
+		} else {
+			return parent::checkAuthorization($authCode, $id);
+		}
 	}
 
 	static function setupUser($ad, $userData) {
@@ -107,13 +124,18 @@ class Zenphoto_Authority extends _Authority {
 			if (DEBUG_LOGIN) {
 				debugLogVar("LDAsetupUser: groups:", $adminObj->getGroup());
 			}
-			$rights = $adminObj->getRights();
-			$adminObj->setRights($rights & ~ USER_RIGHTS);
+			$rights = $adminObj->getRights() & ~ USER_RIGHTS;
+			$adminObj->setRights($rights);
 		} else {
+			$rights = DEFAULT_RIGHTS & ~ USER_RIGHTS;
 			$adminObj->setRights(DEFAULT_RIGHTS & ~ USER_RIGHTS);
 		}
-		$_zp_authority->addOtherUser($adminObj);
-		return $adminObj;
+
+		if ($rights) {
+			$_zp_authority->addOtherUser($adminObj);
+			return $adminObj;
+		}
+		return NULL;
 	}
 
 	/*
