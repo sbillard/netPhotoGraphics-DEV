@@ -4,7 +4,7 @@
  * This is an example script to link ZenPhoto20 to an LDAP server for user verification
  * for posix-style users and groups.
  *
- * To activate rename the script to "class-auth.php" and change the LDAP defines as appropriate
+ * To activate rename the script to "class-auth.php" and change the LDAP configuration items as appropriate
  *
  * @author Stephen Billard (sbillard), airep
  *
@@ -16,7 +16,7 @@ define('LDAP_DOMAIN', 'localhost');
 define('LDAP_BASEDN', 'dc=rpi,dc=swinden,dc=local');
 
 //array to map ldap users to ZenPhoto20 users.
-//Key is LDAP user, value is equivalent ZenPhoto20 user
+//Key is LDAP group, value is equivalent ZenPhoto20 group
 $_LDAPGroupMap = array('users' => 'users', 'super_user' => 'administrators');
 
 define('ZP_PASS', SERVERPATH); //	dummy password for auth cookie generation
