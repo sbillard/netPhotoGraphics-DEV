@@ -61,7 +61,6 @@ class Zenphoto_Authority extends _Authority {
 				debugLog("LDAPhandleLogon: Could not bind to LDAP");
 			}
 		}
-
 		ldap_unbind($ad);
 		if ($loggedin) {
 			return $loggedin;
@@ -99,7 +98,7 @@ class Zenphoto_Authority extends _Authority {
 					}
 				}
 			}
-		ldap_unbind($ad);
+			ldap_unbind($ad);
 		}
 		if ($_zp_current_admin_obj) {
 			return $_zp_current_admin_obj->getRights();
