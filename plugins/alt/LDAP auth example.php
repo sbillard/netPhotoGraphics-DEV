@@ -62,6 +62,7 @@ class Zenphoto_Authority extends _Authority {
 			}
 		}
 
+		ldap_unbind($ad);
 		if ($loggedin) {
 			return $loggedin;
 		} else {
@@ -98,7 +99,7 @@ class Zenphoto_Authority extends _Authority {
 					}
 				}
 			}
-//debug ldap_unbind($ad);
+		ldap_unbind($ad);
 		}
 		if ($_zp_current_admin_obj) {
 			return $_zp_current_admin_obj->getRights();
