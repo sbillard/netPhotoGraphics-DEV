@@ -158,15 +158,13 @@ class Zenphoto_Authority extends _Authority {
 
 	static function ldapSingle($ad, $filter, $basedn, $attributes) {
 		$result = ldap_search($ad, $basedn, $filter, $attributes);
-		if ($result === FALSE) {
-			return null;
+		if ($result) {
+			$entries = ldap_get_entries($ad, $result);
+			if ($entries['count'] != 0) {
+				return $entries[0];
+			}
 		}
-		$entries = ldap_get_entries($ad, $result);
-		if ($entries['count'] != 0) {
-			return $entries[0];
-		} else {
-			return null;
-		};
+		return null;
 	}
 
 	static function ldapUser($ad, $filter) {
