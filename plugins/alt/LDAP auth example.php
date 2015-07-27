@@ -17,7 +17,7 @@ define('LDAP_BASEDN', 'dc=rpi,dc=swinden,dc=local');
 
 //array to map ldap users to ZenPhoto20 users.
 //Key is LDAP group, value is equivalent ZenPhoto20 group
-$_LDAPGroupMap = array('users' => 'users', 'super_user' => 'administrators');
+$_LDAPGroupMap = array('users' => 'users', 'super_user' => 'administrators', 'manager' => 'album managers');
 
 define('ZP_PASS', SERVERPATH); //	dummy password for auth cookie generation
 define('LDAP_ID_OFFSET', 100000); //	number added to LDAP ID to insure it does not overlap any ZP admin ids
@@ -107,8 +107,8 @@ class Zenphoto_Authority extends _Authority {
 		}
 	}
 
-	function validUserID($id) {
-		return $id > LDAP_ID_OFFSET || parent::validUserID($id);
+	function validID($id) {
+		return $id > LDAP_ID_OFFSET || parent::validID($id);
 	}
 
 	static function setupUser($ad, $userData) {
@@ -177,7 +177,6 @@ class Zenphoto_Authority extends _Authority {
 	static function getZPGroups($ad, $user) {
 		global $_LDAPGroupMap;
 		$groups = array();
-
 		foreach ($_LDAPGroupMap as $LDAPgroup => $ZPgroup) {
 			$group = self::ldapSingle($ad, '(cn=' . $LDAPgroup . ')', 'ou=Groups,' . LDAP_BASEDN, array('memberUid'));
 			if ($group) {
