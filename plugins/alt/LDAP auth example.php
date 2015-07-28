@@ -6,7 +6,7 @@
  *
  * To activate rename the script to "class-auth.php" and change the LDAP configuration items as appropriate
  *
- * @author Stephen Billard (sbillard), airep
+ * @author Stephen Billard (sbillard), (airep)
  *
  * @package alt
  * @subpackage users
@@ -19,7 +19,6 @@ define('LDAP_BASEDN', 'dc=rpi,dc=swinden,dc=local');
 //Key is LDAP group, value is equivalent ZenPhoto20 group
 $_LDAPGroupMap = array('users' => 'users', 'super_user' => 'administrators', 'manager' => 'album managers');
 
-define('ZP_PASS', SERVERPATH); //	dummy password for auth cookie generation
 define('LDAP_ID_OFFSET', 100000); //	number added to LDAP ID to insure it does not overlap any ZP admin ids
 
 require_once(SERVERPATH . '/' . ZENFOLDER . '/lib-auth.php');
@@ -80,7 +79,7 @@ class Zenphoto_Authority extends _Authority {
 				if (DEBUG_LOGIN) {
 					debugLogBacktrace("LDAPcheckAuthorization($authCode, $ldid)");
 				}
-				$goodAuth = Zenphoto_Authority::passwordHash($userData['uid'][0], ZP_PASS);
+				$goodAuth = Zenphoto_Authority::passwordHash($userData['uid'][0], serialize($userData));
 				if ($authCode == $goodAuth) {
 					$userobj = self::setupUser($ad, $userData);
 					if ($userobj) {
@@ -127,8 +126,7 @@ class Zenphoto_Authority extends _Authority {
 		}
 		$adminObj->setUser($user);
 		$adminObj->setName($name);
-		$adminObj->setPass(ZP_PASS);
-
+		$adminObj->setPass(serialize($userData));
 		if (class_exists('user_groups')) {
 			user_groups::merge_rights($adminObj, $groups);
 			if (DEBUG_LOGIN) {
