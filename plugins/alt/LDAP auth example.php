@@ -156,14 +156,16 @@ class Zenphoto_Authority extends _Authority {
 	 */
 
 	static function ldapSingle($ad, $filter, $basedn, $attributes) {
-		$result = ldap_search($ad, $basedn, $filter, $attributes);
-		if ($result) {
-			$entries = ldap_get_entries($ad, $result);
+		$search = NULL;
+		$lfdp = ldap_search($ad, $basedn, $filter, $attributes);
+		if ($lfdp) {
+			$entries = ldap_get_entries($ad, $lfdp);
 			if ($entries['count'] != 0) {
-				return $entries[0];
+				$search = $entries[0];
 			}
 		}
-		return null;
+		ldap_free_result($lfdp);
+		return $search;
 	}
 
 	static function ldapUser($ad, $filter) {
@@ -192,10 +194,13 @@ class Zenphoto_Authority extends _Authority {
 	}
 
 	static function ldapInit($domain) {
-		$ad = ldap_connect("ldap://{$domain}") or die('Could not connect to LDAP server.');
-		ldap_set_option($ad, LDAP_OPT_PROTOCOL_VERSION, 3);
-		ldap_set_option($ad, LDAP_OPT_REFERRALS, 0);
-		return $ad;
+		if ($ad = ldap_connect("ldap://{$domain}")) {
+			ldap_set_option($ad, LDAP_OPT_PROTOCOL_VERSION, 3);
+			ldap_set_option($ad, LDAP_OPT_REFERRALS, 0);
+			return $ad;
+		} else {
+			zp_error(gettext('Could not connect to LDAP server.'));
+		}
 	}
 
 }
