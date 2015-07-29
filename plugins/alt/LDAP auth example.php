@@ -167,7 +167,7 @@ class Zenphoto_Authority extends _Authority {
 	}
 
 	static function ldapUser($ad, $filter) {
-		return self::ldapSingle($ad, $filter, 'ou=Users,' . LDAP_BASEDN, array('uid', 'uidnumber', 'cn', 'email'));
+		return self::ldapSingle($ad, $filter, 'ou=Users,' . LDAP_BASEDN, array('uid', 'uidnumber', 'cn', 'email', 'userPassword'));
 	}
 
 	/**
