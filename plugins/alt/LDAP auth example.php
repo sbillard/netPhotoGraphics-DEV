@@ -180,7 +180,7 @@ class Zenphoto_Authority extends _Authority {
 		foreach ($_LDAPGroupMap as $LDAPgroup => $ZPgroup) {
 			$group = self::ldapSingle($ad, '(cn=' . $LDAPgroup . ')', 'ou=Groups,' . LDAP_BASEDN, array('memberUid'));
 			if ($group) {
-				$members = $group['memberuid'];
+				$members = $group['memberUid'];
 				unset($members['count']);
 				$isMember = in_array($user, $members, true);
 				if ($isMember) {
