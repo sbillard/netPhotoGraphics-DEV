@@ -41,7 +41,7 @@ class Zenphoto_Authority extends _Authority {
 		// in the case of authorisation failure.
 		$bindResult = @ldap_bind($ad, $userdn, $password);
 		if ($bindResult) { //	valid LDAP user
-			$userData = self::ldapUser($ad, "(uid={$user})");
+			$userData = array_change_key_case(self::ldapUser($ad, "(uid={$user})"), CASE_LOWER);
 			$userobj = self::setupUser($ad, $userData);
 			if ($userobj) {
 				$_zp_current_admin_obj = $userobj;
@@ -74,7 +74,7 @@ class Zenphoto_Authority extends _Authority {
 		if ($id > LDAP_ID_OFFSET) { //	LDAP ID
 			$ldid = $id - LDAP_ID_OFFSET;
 			$ad = self::ldapInit(LDAP_DOMAIN);
-			$userData = self::ldapUser($ad, "(uidNumber={$ldid})");
+			$userData = array_change_key_case(self::ldapUser($ad, "(uidNumber={$ldid})"), CASE_LOWER);
 			if ($userData) {
 				if (DEBUG_LOGIN) {
 					debugLogBacktrace("LDAPcheckAuthorization($authCode, $ldid)");
@@ -167,7 +167,7 @@ class Zenphoto_Authority extends _Authority {
 	}
 
 	static function ldapUser($ad, $filter) {
-		return self::ldapSingle($ad, $filter, 'ou=Users,' . LDAP_BASEDN, array('uid', 'uidnumber', 'cn', 'email', 'userPassword'));
+		return self::ldapSingle($ad, $filter, 'ou=Users,' . LDAP_BASEDN, array('uid', 'uidNumber', 'cn', 'email', 'userPassword'));
 	}
 
 	/**
@@ -179,8 +179,9 @@ class Zenphoto_Authority extends _Authority {
 		$groups = array();
 		foreach ($_LDAPGroupMap as $LDAPgroup => $ZPgroup) {
 			$group = self::ldapSingle($ad, '(cn=' . $LDAPgroup . ')', 'ou=Groups,' . LDAP_BASEDN, array('memberUid'));
+			$group = array_change_key_case($group, CASE_LOWER);
 			if ($group) {
-				$members = $group['memberUid'];
+				$members = $group['memberuid'];
 				unset($members['count']);
 				$isMember = in_array($user, $members, true);
 				if ($isMember) {
