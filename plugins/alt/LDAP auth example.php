@@ -1,10 +1,9 @@
 <?php
-
 /*
  * This is an example script to link ZenPhoto20 to an LDAP server for user verification
  * for posix-style users and groups.
  *
- * To activate rename the script to "class-auth.php" and change the LDAP configuration items as appropriate
+ * To activate rename the script to "class-auth.php" and change set LDAP configuration options as appropriate
  *
  * @author Stephen Billard (sbillard), (airep)
  *
@@ -12,14 +11,10 @@
  * @subpackage users
  */
 
-define('LDAP_DOMAIN', 'localhost');
-define('LDAP_BASEDN', 'dc=rpi,dc=swinden,dc=local');
-
-//array to map ldap users to ZenPhoto20 users.
-//Key is LDAP group, value is equivalent ZenPhoto20 group
-$_LDAPGroupMap = array('users' => 'users', 'super_user' => 'administrators', 'manager' => 'album managers');
-
-define('LDAP_ID_OFFSET', 100000); //	number added to LDAP ID to insure it does not overlap any ZP admin ids
+define('LDAP_DOMAIN', getOption('ldap_domain'));
+define('LDAP_BASEDN', getOption('ldap_basedn'));
+define('LDAP_ID_OFFSET', getOption('ldap_id_offset')); //	number added to LDAP ID to insure it does not overlap any ZP admin ids
+$_LDAPGroupMap = getSerializedArray(getOption('ldap_group_map'));
 
 require_once(SERVERPATH . '/' . ZENFOLDER . '/lib-auth.php');
 if (extensionEnabled('user_groups')) {
@@ -27,6 +22,70 @@ if (extensionEnabled('user_groups')) {
 }
 
 class Zenphoto_Authority extends _Authority {
+
+	function getOptionsSupported() {
+		setOptionDefault('ldap_id_offset', 100000);
+		$options = parent::getOptionsSupported();
+		$ldapOptions = array(
+						gettext('LDAP domain')							 => array('key'		 => 'ldap_domain', 'type'	 => OPTION_TYPE_TEXTBOX,
+										'order'	 => 1,
+										'desc'	 => gettext('Domain name of the LDAP server')),
+						gettext('LDAP base dn')							 => array('key'		 => 'ldap_basedn', 'type'	 => OPTION_TYPE_TEXTBOX,
+										'order'	 => 1.1,
+										'desc'	 => gettext('Base DN strings for the LDAP searches.')),
+						gettext('ID offset for LDAP users')	 => array('key'		 => 'ldap_id_offset', 'type'	 => OPTION_TYPE_NUMBER,
+										'order'	 => 1.2,
+										'desc'	 => gettext('This number is added to the LDAP user id to insure that there is no overlap to ZenPhoto20 user ids.'))
+		);
+		if (extensionEnabled('user_groups')) {
+			$ldapOptions[gettext('LDAP Group map')] = array('key'		 => 'ldap_group_map_custom', 'type'	 => OPTION_TYPE_CUSTOM,
+							'order'	 => 1.3,
+							'desc'	 => gettext('Mapping of LDAP groups to ZenPhoto20 groups'));
+		}
+		return array_merge($ldapOptions, $options);
+	}
+
+	function handleOption($option, $currentValue) {
+		global $_zp_authority;
+		if ($option == 'ldap_group_map_custom') {
+			$groups = $_zp_authority->getAdministrators('groups');
+			$ldap = getSerializedArray(getOption('ldap_group_map'));
+			if (empty($groups)) {
+				echo gettext('No groups or templates are defined');
+			} else {
+				?>
+				<dl>
+					<?php
+					foreach ($groups as $group) {
+						if (array_key_exists($group['user'], $ldap)) {
+							$ldapgroup = $ldap[$group['user']];
+						} else {
+							$ldapgroup = $group['user'];
+						}
+						echo '<dh><input type="textbox" name="LDAP_group_for_' . $group['id'] . '" value="' . html_encode($ldapgroup) . '"></dh><dt>' . html_encode($group['user']) . '</dt>';
+					}
+					?>
+				</dl>
+				<?php
+			}
+		} else {
+			parent::handleOption($option, $currentValue);
+		}
+	}
+
+	function handleOptionSave($themename, $themealbum) {
+		global $_zp_authority;
+		$groups = $_zp_authority->getAdministrators('groups');
+		if (!empty($groups)) {
+			foreach ($_POST as $key => $v) {
+				if (strpos($key, 'LDAP_group_for_') !== false) {
+					$ldap[$groups[substr($key, 15)]['user']] = $v;
+				}
+			}
+			setOption('ldap_group_map', serialize($ldap));
+		}
+		parent::handleOptionSave($themename, $themealbum);
+	}
 
 	function handleLogon() {
 		global $_zp_current_admin_obj;
@@ -71,33 +130,36 @@ class Zenphoto_Authority extends _Authority {
 
 	function checkAuthorization($authCode, $id) {
 		global $_zp_current_admin_obj;
-		if ($id > LDAP_ID_OFFSET) { //	LDAP ID
+		if (LDAP_ID_OFFSET && $id > LDAP_ID_OFFSET) { //	LDAP ID
 			$ldid = $id - LDAP_ID_OFFSET;
 			$ad = self::ldapInit(LDAP_DOMAIN);
-			$userData = array_change_key_case(self::ldapUser($ad, "(uidNumber={$ldid})"), CASE_LOWER);
-			if ($userData) {
-				if (DEBUG_LOGIN) {
-					debugLogBacktrace("LDAPcheckAuthorization($authCode, $ldid)");
-				}
-				$goodAuth = Zenphoto_Authority::passwordHash($userData['uid'][0], serialize($userData));
-				if ($authCode == $goodAuth) {
-					$userobj = self::setupUser($ad, $userData);
-					if ($userobj) {
-						$_zp_current_admin_obj = $userobj;
-						$rights = $_zp_current_admin_obj->getRights();
+			if ($ad) {
+				$userData = self::ldapUser($ad, "(uidNumber={$ldid})");
+				if ($userData) {
+					$userData = array_change_key_case($userData, CASE_LOWER);
+					if (DEBUG_LOGIN) {
+						debugLogBacktrace("LDAPcheckAuthorization($authCode, $ldid)");
+					}
+					$goodAuth = Zenphoto_Authority::passwordHash($userData['uid'][0], serialize($userData));
+					if ($authCode == $goodAuth) {
+						$userobj = self::setupUser($ad, $userData);
+						if ($userobj) {
+							$_zp_current_admin_obj = $userobj;
+							$rights = $_zp_current_admin_obj->getRights();
+						} else {
+							$rights = 0;
+						}
+						if (DEBUG_LOGIN) {
+							debugLog(sprintf('LDAPcheckAuthorization: from %1$s->%2$X', $authCode, $rights));
+						}
 					} else {
-						$rights = 0;
-					}
-					if (DEBUG_LOGIN) {
-						debugLog(sprintf('LDAPcheckAuthorization: from %1$s->%2$X', $authCode, $rights));
-					}
-				} else {
-					if (DEBUG_LOGIN) {
-						debugLog(sprintf('LDAPcheckAuthorization: AuthCode %1$s <> %2$s', $goodAuth, $authCode));
+						if (DEBUG_LOGIN) {
+							debugLog(sprintf('LDAPcheckAuthorization: AuthCode %1$s <> %2$s', $goodAuth, $authCode));
+						}
 					}
 				}
+				ldap_unbind($ad);
 			}
-			ldap_unbind($ad);
 		}
 		if ($_zp_current_admin_obj) {
 			return $_zp_current_admin_obj->getRights();
@@ -128,7 +190,7 @@ class Zenphoto_Authority extends _Authority {
 		$adminObj->setName($name);
 		$adminObj->setPass(serialize($userData));
 		if (class_exists('user_groups')) {
-			user_groups::merge_rights($adminObj, $groups);
+			user_groups::merge_rights($adminObj, $groups, array());
 			if (DEBUG_LOGIN) {
 				debugLogVar("LDAsetupUser: groups:", $adminObj->getGroup());
 			}
@@ -177,15 +239,17 @@ class Zenphoto_Authority extends _Authority {
 	static function getZPGroups($ad, $user) {
 		global $_LDAPGroupMap;
 		$groups = array();
-		foreach ($_LDAPGroupMap as $LDAPgroup => $ZPgroup) {
-			$group = self::ldapSingle($ad, '(cn=' . $LDAPgroup . ')', 'ou=Groups,' . LDAP_BASEDN, array('memberUid'));
-			$group = array_change_key_case($group, CASE_LOWER);
-			if ($group) {
-				$members = $group['memberuid'];
-				unset($members['count']);
-				$isMember = in_array($user, $members, true);
-				if ($isMember) {
-					$groups[] = $ZPgroup;
+		foreach ($_LDAPGroupMap as $ZPgroup => $LDAPgroup) {
+			if (!empty($LDAPgroup)) {
+				$group = self::ldapSingle($ad, '(cn=' . $LDAPgroup . ')', 'ou=Groups,' . LDAP_BASEDN, array('memberUid'));
+				if ($group) {
+					$group = array_change_key_case($group, CASE_LOWER);
+					$members = $group['memberuid'];
+					unset($members['count']);
+					$isMember = in_array($user, $members, true);
+					if ($isMember) {
+						$groups[] = $ZPgroup;
+					}
 				}
 			}
 		}
@@ -193,13 +257,17 @@ class Zenphoto_Authority extends _Authority {
 	}
 
 	static function ldapInit($domain) {
-		if ($ad = ldap_connect("ldap://{$domain}")) {
-			ldap_set_option($ad, LDAP_OPT_PROTOCOL_VERSION, 3);
-			ldap_set_option($ad, LDAP_OPT_REFERRALS, 0);
-			return $ad;
-		} else {
-			zp_error(gettext('Could not connect to LDAP server.'));
+		if ($domain) {
+			if ($ad = ldap_connect("ldap://{$domain}")) {
+
+				ldap_set_option($ad, LDAP_OPT_PROTOCOL_VERSION, 3);
+				ldap_set_option($ad, LDAP_OPT_REFERRALS, 0);
+				return $ad;
+			} else {
+				zp_error(gettext('Could not connect to LDAP server.'));
+			}
 		}
+		return false;
 	}
 
 }
@@ -217,5 +285,4 @@ class Zenphoto_Administrator extends _Administrator {
 	}
 
 }
-
 ?>
