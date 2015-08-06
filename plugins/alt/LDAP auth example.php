@@ -233,7 +233,7 @@ class Zenphoto_Authority extends _Authority {
 	}
 
 	/**
-	 * returns an array the user's of LDAP groups
+	 * returns an array the user's of ZenPhoto20 groups
 	 * @param type $ad
 	 */
 	static function getZPGroups($ad, $user) {
