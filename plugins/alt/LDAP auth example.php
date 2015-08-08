@@ -128,7 +128,7 @@ class Zenphoto_Authority extends _Authority {
 				debugLog("LDAPhandleLogon: Could not bind to LDAP");
 			}
 		}
-		ldap_unbind($ad);
+		@ldap_unbind($ad);
 		if ($loggedin) {
 			return $loggedin;
 		} else {
