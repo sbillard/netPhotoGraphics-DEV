@@ -1,12 +1,12 @@
 <?php
 /*
- * This is an example script to link ZenPhoto20 to an LDAP server for user verification
- * for posix-style users and groups.
+ * This is an example script to link ZenPhoto20 to an LDAP server for user verification.
+ * It assumes that your LDAP server contains posix-style users and groups.
  *
  * To activate rename the script to "class-auth.php" and set LDAP configuration
  * options on the admin/security tab as appropriate.
  *
- * @author Stephen Billard (sbillard), (airep)
+ * @author Stephen Billard (sbillard), (ariep)
  *
  * @package alt
  * @subpackage users
@@ -128,7 +128,7 @@ class Zenphoto_Authority extends _Authority {
 				debugLog("LDAPhandleLogon: Could not bind to LDAP");
 			}
 		}
-		ldap_unbind($ad);
+		@ldap_unbind($ad);
 		if ($loggedin) {
 			return $loggedin;
 		} else {
@@ -239,7 +239,7 @@ class Zenphoto_Authority extends _Authority {
 	}
 
 	static function ldapUser($ad, $filter) {
-		return self::ldapSingle($ad, $filter, 'ou=Users,' . LDAP_BASEDN, array('uid', 'uidNumber', 'cn', 'email', 'userPassword'));
+		return self::ldapSingle($ad, $filter, 'ou=Users,' . LDAP_BASEDN, array('uid', 'uidNumber', 'cn', 'email'));
 	}
 
 	/**
