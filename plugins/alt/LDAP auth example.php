@@ -168,7 +168,7 @@ class Zenphoto_Authority extends _Authority {
 						}
 					}
 				}
-				ldap_unbind($ad);
+				@ldap_unbind($ad);
 			}
 		}
 		if ($_zp_current_admin_obj) {
