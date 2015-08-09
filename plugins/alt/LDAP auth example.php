@@ -103,32 +103,34 @@ class Zenphoto_Authority extends _Authority {
 		$loggedin = false;
 
 		$ad = self::ldapInit(LDAP_DOMAIN);
-		$userdn = "uid={$user},ou=Users," . LDAP_BASEDN;
+		if ($ad) {
+			$userdn = "uid={$user},ou=Users," . LDAP_BASEDN;
 
-		// We suppress errors in the binding process, to prevent a warning
-		// in the case of authorisation failure.
-		if (@ldap_bind($ad, $userdn, $password)) { //	valid LDAP user
-			self::ldapReader();
-			$userData = array_change_key_case(self::ldapUser($ad, "(uid={$user})"), CASE_LOWER);
-			$userobj = self::setupUser($ad, $userData);
-			if ($userobj) {
-				$_zp_current_admin_obj = $userobj;
-				$loggedin = $_zp_current_admin_obj->getRights();
-				self::logUser($_zp_current_admin_obj);
-				if (DEBUG_LOGIN) {
-					debugLog(sprintf('LDAPhandleLogon: authorized as %1$s->%2$X', $userdn, $loggedin));
+			// We suppress errors in the binding process, to prevent a warning
+			// in the case of authorisation failure.
+			if (@ldap_bind($ad, $userdn, $password)) { //	valid LDAP user
+				self::ldapReader();
+				$userData = array_change_key_case(self::ldapUser($ad, "(uid={$user})"), CASE_LOWER);
+				$userobj = self::setupUser($ad, $userData);
+				if ($userobj) {
+					$_zp_current_admin_obj = $userobj;
+					$loggedin = $_zp_current_admin_obj->getRights();
+					self::logUser($_zp_current_admin_obj);
+					if (DEBUG_LOGIN) {
+						debugLog(sprintf('LDAPhandleLogon: authorized as %1$s->%2$X', $userdn, $loggedin));
+					}
+				} else {
+					if (DEBUG_LOGIN) {
+						debugLog("LDAPhandleLogon: no rights");
+					}
 				}
 			} else {
 				if (DEBUG_LOGIN) {
-					debugLog("LDAPhandleLogon: no rights");
+					debugLog("LDAPhandleLogon: Could not bind to LDAP");
 				}
 			}
-		} else {
-			if (DEBUG_LOGIN) {
-				debugLog("LDAPhandleLogon: Could not bind to LDAP");
-			}
+			@ldap_unbind($ad);
 		}
-		@ldap_unbind($ad);
 		if ($loggedin) {
 			return $loggedin;
 		} else {
