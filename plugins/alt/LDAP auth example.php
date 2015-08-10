@@ -6,7 +6,7 @@
  * To activate rename the script to "class-auth.php" and set LDAP configuration
  * options on the admin/security tab as appropriate.
  *
- * @author Stephen Billard (sbillard), (ariep)
+ * @author Stephen Billard (sbillard), Arie (ariep)
  *
  * @package alt
  * @subpackage users
@@ -49,7 +49,7 @@ class Zenphoto_Authority extends _Authority {
 		if (extensionEnabled('user_groups')) {
 			$ldapOptions[gettext('LDAP Group map')] = array('key'		 => 'ldap_group_map_custom', 'type'	 => OPTION_TYPE_CUSTOM,
 							'order'	 => 1.5,
-							'desc'	 => gettext('Mapping of LDAP groups to ZenPhoto20 groups'));
+							'desc'	 => gettext('Mapping of LDAP groups to ZenPhoto20 groups') . '<p class="notebox">' . gettext('<strong>Note:</strong> if the LDAP group is empty no mapping will take place.') . '</p>');
 		}
 		return array_merge($ldapOptions, $options);
 	}
@@ -64,14 +64,25 @@ class Zenphoto_Authority extends _Authority {
 			} else {
 				?>
 				<dl>
+					<dt><em><?php echo gettext('ZenPhoto20 group'); ?></em></dt>
+					<dd><em><?php echo gettext('LDAP group'); ?></em></dd>
 					<?php
 					foreach ($groups as $group) {
-						if (array_key_exists($group['user'], $ldap)) {
-							$ldapgroup = $ldap[$group['user']];
-						} else {
-							$ldapgroup = $group['user'];
+						if ($group['name'] != 'template') {
+							if (array_key_exists($group['user'], $ldap)) {
+								$ldapgroup = $ldap[$group['user']];
+							} else {
+								$ldapgroup = $group['user'];
+							}
+							?>
+							<dt>
+							<?php echo html_encode($group['user']); ?>
+							</dt>
+							<dd>
+								<?php echo '<input type="textbox" name="LDAP_group_for_' . $group['id'] . '" value="' . html_encode($ldapgroup) . '">'; ?>
+							</dd>
+							<?php
 						}
-						echo '<dh><input type="textbox" name="LDAP_group_for_' . $group['id'] . '" value="' . html_encode($ldapgroup) . '"></dh><dt>' . html_encode($group['user']) . '</dt>';
 					}
 					?>
 				</dl>
@@ -85,7 +96,9 @@ class Zenphoto_Authority extends _Authority {
 	function handleOptionSave($themename, $themealbum) {
 		global $_zp_authority;
 		$groups = $_zp_authority->getAdministrators('groups');
-		if (!empty($groups)) {
+		if (empty($groups)) {
+			$ldap = NULL;
+		} else {
 			foreach ($_POST as $key => $v) {
 				if (strpos($key, 'LDAP_group_for_') !== false) {
 					$ldap[$groups[substr($key, 15)]['user']] = $v;
