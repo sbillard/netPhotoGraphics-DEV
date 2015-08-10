@@ -4141,7 +4141,6 @@ function printPasswordForm($_password_hint, $_password_showuser = NULL, $_passwo
 		$parts = parse_url(getRequestURI());
 		if (array_key_exists('query', $parts)) {
 			$query = parse_query($parts['query']);
-			unset($query['userLogin-out']);
 		} else {
 			$query = array();
 		}
