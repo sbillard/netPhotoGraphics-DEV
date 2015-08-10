@@ -1,6 +1,7 @@
 <?php
 /*
  * LDAP authorization plugin
+ *
  * This plugin will link ZenPhoto20 to an LDAP server for user verification.
  * It assumes that your LDAP server contains posix-style users and groups.
  *
@@ -45,6 +46,12 @@ class LDAP_auth_options {
 			$ldapOptions[gettext('LDAP Group map')] = array('key'		 => 'ldap_group_map_custom', 'type'	 => OPTION_TYPE_CUSTOM,
 							'order'	 => 1.5,
 							'desc'	 => gettext('Mapping of LDAP groups to ZenPhoto20 groups') . '<p class="notebox">' . gettext('<strong>Note:</strong> if the LDAP group is empty no mapping will take place.') . '</p>');
+			if (!extensionEnabled('LDAP_auth')) {
+				$ldapOptions['note'] = array(
+								'key'		 => 'LDAP_auth_note', 'type'	 => OPTION_TYPE_NOTE,
+								'order'	 => 0,
+								'desc'	 => '<p class="notebox">' . gettext('The LDAP Group map cannot be managed with the plugin disabled') . '</p>');
+			}
 		}
 		return $ldapOptions;
 	}
