@@ -1474,12 +1474,12 @@ function printAdminHeader($tab, $subtab = NULL) {
 									$x = $album->getPassword();
 									if (empty($x)) {
 										?>
-										<img src="images/lock_open.png" />
+										<img src="images/lock_open.png" /> No album password is currently set. Click left to set one.
 										<?php
 									} else {
 										$x = '          ';
 										?>
-										<a onclick="resetPass('<?php echo $suffix; ?>');" title="<?php echo addslashes(gettext('clear password')); ?>"><img src="images/lock.png" /></a>
+										<a onclick="resetPass('<?php echo $suffix; ?>');" title="<?php echo addslashes(gettext('clear password')); ?>"><img src="images/lock.png" /></a> An album password is currently set. Click left to clear or change the password.
 										<?php
 									}
 									?>
