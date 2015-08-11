@@ -1,12 +1,11 @@
 <?php
+
 /*
- * This is an example script to link ZenPhoto20 to an LDAP server for user verification.
+ * LDAP authorization module
+ * Use to link ZenPhoto20 to an LDAP server for user verification.
  * It assumes that your LDAP server contains posix-style users and groups.
  *
- * To activate rename the script to "class-auth.php" and set LDAP configuration
- * options on the admin/security tab as appropriate.
- *
- * @author Stephen Billard (sbillard), (ariep)
+ * @author Stephen Billard (sbillard), Arie (ariep)
  *
  * @package alt
  * @subpackage users
@@ -29,70 +28,17 @@ class Zenphoto_Authority extends _Authority {
 	function getOptionsSupported() {
 		setOptionDefault('ldap_id_offset', 100000);
 		$options = parent::getOptionsSupported();
-		$ldapOptions = array(
-						gettext('LDAP domain')								 => array('key'		 => 'ldap_domain', 'type'	 => OPTION_TYPE_TEXTBOX,
-										'order'	 => 1,
-										'desc'	 => gettext('Domain name of the LDAP server')),
-						gettext('LDAP base dn')								 => array('key'		 => 'ldap_basedn', 'type'	 => OPTION_TYPE_TEXTBOX,
-										'order'	 => 1.1,
-										'desc'	 => gettext('Base DN strings for the LDAP searches.')),
-						gettext('ID offset for LDAP usersids') => array('key'		 => 'ldap_id_offset', 'type'	 => OPTION_TYPE_NUMBER,
-										'order'	 => 1.4,
-										'desc'	 => gettext('This number is added to the LDAP <em>userid</em> to insure that there is no overlap to ZenPhoto20 <em>userids</em>.')),
-						gettext('LDAP reader user')						 => array('key'		 => 'ldap_reader_user', 'type'	 => OPTION_TYPE_TEXTBOX,
-										'order'	 => 1.2,
-										'desc'	 => gettext('User name for LDAP searches. If empty the searches will be anonymous.')),
-						gettext('LDAP reader password')				 => array('key'		 => 'ldap_reader_pass', 'type'	 => OPTION_TYPE_PASSWORD,
-										'order'	 => 1.3,
-										'desc'	 => gettext('User password for LDAP searches.'))
-		);
-		if (extensionEnabled('user_groups')) {
-			$ldapOptions[gettext('LDAP Group map')] = array('key'		 => 'ldap_group_map_custom', 'type'	 => OPTION_TYPE_CUSTOM,
-							'order'	 => 1.5,
-							'desc'	 => gettext('Mapping of LDAP groups to ZenPhoto20 groups'));
-		}
+		$ldapOptions = LDAP_auth_options::getOptionsSupported();
 		return array_merge($ldapOptions, $options);
 	}
 
 	function handleOption($option, $currentValue) {
-		global $_zp_authority;
-		if ($option == 'ldap_group_map_custom') {
-			$groups = $_zp_authority->getAdministrators('groups');
-			$ldap = getSerializedArray(getOption('ldap_group_map'));
-			if (empty($groups)) {
-				echo gettext('No groups or templates are defined');
-			} else {
-				?>
-				<dl>
-					<?php
-					foreach ($groups as $group) {
-						if (array_key_exists($group['user'], $ldap)) {
-							$ldapgroup = $ldap[$group['user']];
-						} else {
-							$ldapgroup = $group['user'];
-						}
-						echo '<dh><input type="textbox" name="LDAP_group_for_' . $group['id'] . '" value="' . html_encode($ldapgroup) . '"></dh><dt>' . html_encode($group['user']) . '</dt>';
-					}
-					?>
-				</dl>
-				<?php
-			}
-		} else {
-			parent::handleOption($option, $currentValue);
-		}
+		LDAP_auth_options::handleOption($option, $currentValue);
+		parent::handleOption($option, $currentValue);
 	}
 
 	function handleOptionSave($themename, $themealbum) {
-		global $_zp_authority;
-		$groups = $_zp_authority->getAdministrators('groups');
-		if (!empty($groups)) {
-			foreach ($_POST as $key => $v) {
-				if (strpos($key, 'LDAP_group_for_') !== false) {
-					$ldap[$groups[substr($key, 15)]['user']] = $v;
-				}
-			}
-			setOption('ldap_group_map', serialize($ldap));
-		}
+		LDAP_auth_options::handleOptionSave($themename, $themealbum);
 		parent::handleOptionSave($themename, $themealbum);
 	}
 
@@ -109,7 +55,7 @@ class Zenphoto_Authority extends _Authority {
 			// We suppress errors in the binding process, to prevent a warning
 			// in the case of authorisation failure.
 			if (@ldap_bind($ad, $userdn, $password)) { //	valid LDAP user
-				self::ldapReader();
+				self::ldapReader($ad);
 				$userData = array_change_key_case(self::ldapUser($ad, "(uid={$user})"), CASE_LOWER);
 				$userobj = self::setupUser($ad, $userData);
 				if ($userobj) {
@@ -145,7 +91,7 @@ class Zenphoto_Authority extends _Authority {
 			$ldid = $id - LDAP_ID_OFFSET;
 			$ad = self::ldapInit(LDAP_DOMAIN);
 			if ($ad) {
-				self::ldapReader();
+				self::ldapReader($ad);
 				$userData = self::ldapUser($ad, "(uidNumber={$ldid})");
 				if ($userData) {
 					$userData = array_change_key_case($userData, CASE_LOWER);
@@ -285,7 +231,7 @@ class Zenphoto_Authority extends _Authority {
 	/**
 	 * login the ldapReader user if defined
 	 */
-	static function ldapReader() {
+	static function ldapReader($ad) {
 		if (LDAP_READER_USER) {
 			if (!@ldap_bind($ad, "uid=" . LDAP_READER_USER . ",ou=Users," . LDAP_BASEDN, LDAP_REAER_PASS)) {
 				debugLog('LDAP reader authorization failed.');
