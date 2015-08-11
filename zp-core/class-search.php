@@ -1382,6 +1382,9 @@ class SearchEngine {
 					if (empty($sorttype)) {
 						$key = '`date` DESC';
 					} else {
+						if ($sortdirection == 1) {
+							$sortdirection = 'DESC';
+						}
 						$key = trim($sorttype . ' ' . $sortdirection);
 					}
 					if ($show) {
@@ -1423,6 +1426,9 @@ class SearchEngine {
 						}
 					} else {
 						list($key, $sortdirection) = $this->sortKey($sorttype, $sortdirection, 'title', 'albums');
+                                                if ($sortdirection == 1) {
+                                                        $sortdirection = 'DESC';
+                                                }
 						$key = trim($key . ' ' . $sortdirection);
 					}
 					break;
