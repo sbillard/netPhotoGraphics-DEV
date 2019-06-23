@@ -1,7 +1,8 @@
 <?php
 // force UTF-8 Ø
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 if (class_exists('favorites')) {
 	?>
 	<!DOCTYPE html>
@@ -31,7 +32,10 @@ if (class_exists('favorites')) {
 					<div class="content-primary">
 						<h2 class="breadcrumb"><a href="<?php echo getGalleryIndexURL(); ?>"><?php echo gettext('Gallery'); ?></a> <?php printParentBreadcrumb('', '', ''); ?> <?php printAlbumTitle(); ?></h2>
 						<?php printAlbumDesc(); ?>
-						<?php if (hasPrevPage() || hasNextPage()) printPageListWithNav(gettext("prev"), gettext("next"), false, true, 'pagelist', NULL, true, 7); ?>
+						<?php if (hasPrevPage() || hasNextPage()) {
+	printPageListWithNav(gettext("prev"), gettext("next"), false, true, 'pagelist', NULL, true, 7);
+}
+?>
 						<ul data-role="listview" data-inset="true" data-theme="a" class="ui-listview ui-group-theme-a">
 							<?php while (next_album()): ?>
 								<li>
@@ -61,7 +65,10 @@ if (class_exists('favorites')) {
 	<?php endwhile; ?>
 						</ul>
 						<br class="clearall">
-						<?php if (hasPrevPage() || hasNextPage()) printPageListWithNav(gettext("prev"), gettext("next"), false, true, 'pagelist', NULL, true, 7); ?>
+						<?php if (hasPrevPage() || hasNextPage()) {
+	printPageListWithNav(gettext("prev"), gettext("next"), false, true, 'pagelist', NULL, true, 7);
+}
+?>
 						<?php
 						if (function_exists('printCommentForm')) {
 							printCommentForm();

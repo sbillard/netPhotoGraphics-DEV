@@ -129,8 +129,9 @@ function printUserLogin_out($before = '', $after = '', $showLoginForm = NULL, $l
 	global $_gallery, $__redirect, $_current_admin_obj, $_login_error, $_gallery_page;
 	$excludedPages = array('password.php', 'register.php', 'favorites.php', '404.php');
 	$logintext = gettext('Login');
-	if (is_null($logouttext))
-		$logouttext = gettext("Logout");
+	if (is_null($logouttext)) {
+			$logouttext = gettext("Logout");
+	}
 	$params = array("userlog=0");
 	if (!empty($__redirect)) {
 		foreach ($__redirect as $param => $value) {

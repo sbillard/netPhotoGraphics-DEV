@@ -14,7 +14,7 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/admin-globals.php');
 admin_securityChecks(ADMIN_RIGHTS, currentRelativeURL());
 
 if (!npg_loggedin(OVERVIEW_RIGHTS)) { // prevent nefarious access to this page.
-	header('Location: ' . getAdminLink('admin.php').'?from=' . currentRelativeURL());
+	header('Location: ' . getAdminLink('admin.php') . '?from=' . currentRelativeURL());
 	exit();
 }
 

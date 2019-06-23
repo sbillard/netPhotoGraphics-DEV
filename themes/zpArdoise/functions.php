@@ -86,18 +86,21 @@ function zpArdoise_printRandomImages($number = 5, $class = NULL, $option = 'all'
 	if (is_null($crop) && is_null($width) && is_null($height)) {
 		$crop = 2;
 	} else {
-		if (is_null($width))
-			$width = 85;
-		if (is_null($height))
-			$height = 85;
+		if (is_null($width)) {
+					$width = 85;
+		}
+		if (is_null($height)) {
+					$height = 85;
+		}
 		if (is_null($crop)) {
 			$crop = 1;
 		} else {
 			$crop = (int) $crop && true;
 		}
 	}
-	if (!empty($class))
-		$class = ' class="' . $class . '"';
+	if (!empty($class)) {
+			$class = ' class="' . $class . '"';
+	}
 
 	echo "<ul" . $class . ">";
 	for ($i = 1; $i <= $number; $i++) {
@@ -152,10 +155,12 @@ function zpArdoise_printImageStatistic($number, $option, $albumfolder = '', $sho
 		if (is_null($crop) && is_null($width) && is_null($height)) {
 			$crop = 2;
 		} else {
-			if (is_null($width))
-				$width = 85;
-			if (is_null($height))
-				$height = 85;
+			if (is_null($width)) {
+							$width = 85;
+			}
+			if (is_null($height)) {
+							$height = 85;
+			}
 			if (is_null($crop)) {
 				$crop = 1;
 			} else {

@@ -138,8 +138,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'crop') {
 	$ch = $_REQUEST['h'];
 	$cx = $_REQUEST['x'];
 	$cy = $_REQUEST['y'];
-	if (DEBUG_IMAGE)
-		debugLog("Thumbcrop-in: \$width=$width \$height=$height \$cx=$cx \$cy=$cy \$cw=$cw \$ch=$ch");
+	if (DEBUG_IMAGE) {
+			debugLog("Thumbcrop-in: \$width=$width \$height=$height \$cx=$cx \$cy=$cy \$cw=$cw \$ch=$ch");
+	}
 	if (isset($_REQUEST['clear_crop']) || ($cw == 0 && $ch == 0)) {
 		$cx = $cy = $cw = $ch = NULL;
 	} else {
@@ -155,8 +156,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'crop') {
 		$cx = round($cx * $rw);
 		$cy = round($cy * $rh);
 	}
-	if (DEBUG_IMAGE)
-		debugLog("Thumbcrop-out: \$cx=$cx \$cy=$cy \$cw=$cw \$ch=$ch");
+	if (DEBUG_IMAGE) {
+			debugLog("Thumbcrop-out: \$cx=$cx \$cy=$cy \$cw=$cw \$ch=$ch");
+	}
 	$imageobj->set('thumbX', $cx);
 	$imageobj->set('thumbY', $cy);
 	$imageobj->set('thumbW', $cw);
@@ -302,7 +304,10 @@ scriptLoader(CORE_SERVERPATH . 'js/Jcrop/jquery.Jcrop.js');
 									<?php echo CROSS_MARK_RED; ?>
 									<strong><?php echo gettext("Reset"); ?></strong>
 								</button>
-								<button type="reset" value="<?php echo gettext('Back') ?>" onclick="window.location = '<?php echo getAdminLink('admin-tabs/edit.php') ?>?page=edit&album=<?php echo pathurlencode($albumname); ?>&subpage=<?php echo html_encode($subpage) ?><?php if ($singleimage) echo '&singleimage=' . html_encode($singleimage); ?>&tagsort=<?php echo html_encode($tagsort); ?>&tab=imageinfo'">
+								<button type="reset" value="<?php echo gettext('Back') ?>" onclick="window.location = '<?php echo getAdminLink('admin-tabs/edit.php') ?>?page=edit&album=<?php echo pathurlencode($albumname); ?>&subpage=<?php echo html_encode($subpage) ?><?php if ($singleimage) {
+	echo '&singleimage=' . html_encode($singleimage);
+}
+?>&tagsort=<?php echo html_encode($tagsort); ?>&tab=imageinfo'">
 									<span style="color:blue;font-size:large;line-height: 60%;">&lArr;</span>
 									<strong><?php echo gettext("Back"); ?></strong>
 								</button>

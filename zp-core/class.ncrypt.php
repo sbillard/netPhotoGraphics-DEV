@@ -32,7 +32,7 @@ class Ncrypt {
 	 *
 	 * @var string
 	 */
-	private $secret_iv	= '!@)*&%#(*^(-my-really-secret-iv';
+	private $secret_iv = '!@)*&%#(*^(-my-really-secret-iv';
 
 	/**
 	 * Encryption method
@@ -62,7 +62,7 @@ class Ncrypt {
 	 *
 	 * @param string $key
 	 */
-	public function set_secret_key( $key ) {
+	public function set_secret_key($key) {
 		$this->secret_key = $key;
 	}
 	
@@ -72,7 +72,7 @@ class Ncrypt {
 	 * @return string
 	 */
 	public function get_secret_key() {
-		return hash( 'sha256', $this->secret_key );
+		return hash('sha256', $this->secret_key);
 	}
 	
 	/**
@@ -80,7 +80,7 @@ class Ncrypt {
 	 *
 	 * @param string $iv
 	 */
-	public function set_secret_iv( $iv ) {
+	public function set_secret_iv($iv) {
 		$this->secret_iv = $iv;
 	}
 	
@@ -90,7 +90,7 @@ class Ncrypt {
 	 * @return string
 	 */
 	public function get_secret_iv() {
-		return substr( hash( 'sha256', $this->secret_iv ), 0, 16 );
+		return substr(hash('sha256', $this->secret_iv), 0, 16);
 	}
 	
 	/**
@@ -114,7 +114,7 @@ class Ncrypt {
 	 *
 	 * @param string $cipher
 	 */
-	public function set_cipher( $cipher ) {
+	public function set_cipher($cipher) {
 		$this->cipher = $cipher;
 	}
 	
@@ -134,12 +134,12 @@ class Ncrypt {
 	 *
 	 * @return string
 	 */
-	public function encrypt( $string ) {
-		$cipher 		= $this->get_cipher();
+	public function encrypt($string) {
+		$cipher = $this->get_cipher();
 		$secret_key 	= $this->get_secret_key();
 		$secret_iv 		= $this->get_secret_iv();
 
-		return base64_encode( openssl_encrypt( $string, $cipher, $secret_key, 0, $secret_iv ) );
+		return base64_encode(openssl_encrypt($string, $cipher, $secret_key, 0, $secret_iv));
 	}
 	
 	/**
@@ -149,11 +149,11 @@ class Ncrypt {
 	 *
 	 * @return string
 	 */
-	public function decrypt( $string ) {
-		$cipher 		= $this->get_cipher();
+	public function decrypt($string) {
+		$cipher = $this->get_cipher();
 		$secret_key 	= $this->get_secret_key();
 		$secret_iv 		= $this->get_secret_iv();
 
-		return openssl_decrypt( base64_decode( $string ), $cipher, $secret_key, 0, $secret_iv );
+		return openssl_decrypt(base64_decode($string), $cipher, $secret_key, 0, $secret_iv);
 	}
 }

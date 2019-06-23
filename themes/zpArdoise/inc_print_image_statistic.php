@@ -28,9 +28,9 @@
 	</h4>
 	<?php
 	if (getOption('use_galleriffic')) {
-		$number = 8;	// displays 8 thumbnails with default size (85*85) with galleriffic script
+		$number = 8; // displays 8 thumbnails with default size (85*85) with galleriffic script
 	} else {
-		$number = 5;	// displays 5 thumbnails with default size (150*150)
+		$number = 5; // displays 5 thumbnails with default size (150*150)
 	}
 
 	if (getOption('image_statistic') == 'random') {

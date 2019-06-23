@@ -66,7 +66,10 @@ npgFilters::apply('admin_note', 'albums', $subtab);
 				$album = newAlbum($folder);
 				echo "\n<!-- " . $album->name . " -->\n";
 				?>
-				<div class="innerbox<?php if (!($currentalbum % 2)) echo '_dark'; ?>" style="padding-left: 15px;padding-right: 15px;">
+				<div class="innerbox<?php if (!($currentalbum % 2)) {
+	echo '_dark';
+}
+?>" style="padding-left: 15px;padding-right: 15px;">
 
 					<a href="<?php echo getAdminLink('admin-tabs/edit.php'); ?>?page=edit&album=<?php echo urlencode($album->name); ?>&tab=albuminfo">
 						<em><strong><?php echo html_encode($album->name); ?></strong></em></a>

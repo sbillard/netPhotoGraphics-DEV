@@ -208,10 +208,12 @@ class utf8 {
 	 * Convert a foreign charset encoding from or to UTF-8
 	 */
 	function convert($string, $encoding = NULL, $destination = 'UTF-8') {
-		if (!$encoding)
-			$encoding = utf8::detect($string);
-		if ($encoding == $destination)
-			return $string;
+		if (!$encoding) {
+					$encoding = utf8::detect($string);
+		}
+		if ($encoding == $destination) {
+					return $string;
+		}
 
 		if (!empty($this->mb_sets)) {
 			$encode_mb = array_key_exists($encoding, $this->mb_sets);
@@ -256,20 +258,25 @@ class utf8 {
 				return $encoding;
 			}
 		}
-		if (!preg_match("/[\x80-\xFF]/", $string) && !preg_match("/\x1B/", $string))
-			return 'US-ASCII';
+		if (!preg_match("/[\x80-\xFF]/", $string) && !preg_match("/\x1B/", $string)) {
+					return 'US-ASCII';
+		}
 
-		if (!preg_match("/[\x80-\xFF]/", $string) && preg_match("/\x1B/", $string))
-			return 'ISO-2022-JP';
+		if (!preg_match("/[\x80-\xFF]/", $string) && preg_match("/\x1B/", $string)) {
+					return 'ISO-2022-JP';
+		}
 
-		if (preg_match("/^([\x01-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF][\x80-\xBF])+$/", $string) == 1)
-			return 'UTF-8';
+		if (preg_match("/^([\x01-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF][\x80-\xBF])+$/", $string) == 1) {
+					return 'UTF-8';
+		}
 
-		if (preg_match("/^([\x01-\x7F]|\x8E[\xA0-\xDF]|\x8F[xA1-\xFE][\xA1-\xFE]|[\xA1-\xFE][\xA1-\xFE])+$/", $string) == 1)
-			return 'EUC-JP';
+		if (preg_match("/^([\x01-\x7F]|\x8E[\xA0-\xDF]|\x8F[xA1-\xFE][\xA1-\xFE]|[\xA1-\xFE][\xA1-\xFE])+$/", $string) == 1) {
+					return 'EUC-JP';
+		}
 
-		if (preg_match("/^([\x01-\x7F]|[\xA0-\xDF]|[\x81-\xFC][\x40-\xFC])+$/", $string) == 1)
-			return 'Shift_JIS';
+		if (preg_match("/^([\x01-\x7F]|[\xA0-\xDF]|[\x81-\xFC][\x40-\xFC])+$/", $string) == 1) {
+					return 'Shift_JIS';
+		}
 
 		return 'ISO-8859-1';
 	}
@@ -310,11 +317,13 @@ class utf8 {
 	 * Compatible with mb_strcut()
 	 */
 	static function strcut($str, $start, $length = NULL) {
-		if ($start < 0)
-			$start += strlen($str);
+		if ($start < 0) {
+					$start += strlen($str);
+		}
 		$original = $start;
-		while ($start > 0 && intval(ord($str[$start]) & 0xC0) == 0x80)
-			$start--;
+		while ($start > 0 && intval(ord($str[$start]) & 0xC0) == 0x80) {
+					$start--;
+		}
 
 		$start = max($start, 0);
 		$original = max($original, 0);
@@ -325,18 +334,21 @@ class utf8 {
 			} elseif ($length > 0) {
 				$end = $start + $length;
 
-				while ($end > 0 && intval(ord($str[$end]) & 0xC0) == 0x80)
-					$end--;
+				while ($end > 0 && intval(ord($str[$end]) & 0xC0) == 0x80) {
+									$end--;
+				}
 
 				return substr($str, $start, $end - $start);
 			} elseif ($length < 0) {
 				$end = strlen($str) + $length - ($original - $start);
 
-				while ($end > 0 && intval(ord($str[$end]) & 0xC0) == 0x80)
-					$end--;
+				while ($end > 0 && intval(ord($str[$end]) & 0xC0) == 0x80) {
+									$end--;
+				}
 
-				if ($end > 0)
-					return substr($str, $start, $end - $start);
+				if ($end > 0) {
+									return substr($str, $start, $end - $start);
+				}
 			}
 		}
 
@@ -375,10 +387,11 @@ class utf8 {
 					$b2 = (int) ord($str[$i + 1]);
 					$b3 = (int) ord($str[$i + 2]);
 
-					if (($b2 == 0xBD && $b3 >= 0xA1) || ($b2 == 0xBE && $b3 <= 0x9F))
-						$count++;
-					else
-						$count = $count + 2;
+					if (($b2 == 0xBD && $b3 >= 0xA1) || ($b2 == 0xBE && $b3 <= 0x9F)) {
+											$count++;
+					} else {
+											$count = $count + 2;
+					}
 				} else {
 					$count++;
 				}
@@ -396,10 +409,11 @@ class utf8 {
 	 */
 	static function strrpos($haystack, $needle) {
 		$pos = strrpos($haystack, $needle);
-		if ($pos === false)
-			return false;
-		else
-			return UTF8::strlen(substr($haystack, 0, $pos));
+		if ($pos === false) {
+					return false;
+		} else {
+					return UTF8::strlen(substr($haystack, 0, $pos));
+		}
 	}
 
 	/**
@@ -411,11 +425,13 @@ class utf8 {
 
 		while (!isset($length) || $length < $offset) {
 			$pos = strpos($haystack, $needle, $offset + $comp);
-			if ($pos === false)
-				return false;
+			if ($pos === false) {
+							return false;
+			}
 			$length = UTF8::strlen(substr($haystack, 0, $pos));
-			if ($length < $offset)
-				$comp = $pos - $length;
+			if ($length < $offset) {
+							$comp = $pos - $length;
+			}
 		}
 
 		return $length;
@@ -452,8 +468,9 @@ class utf8 {
 			if ($pos + $length < $max) {
 				$adjust = 0;
 
-				while (intval(ord($str[$pos + $length + $adjust]) & 0xC0) == 0x80)
-					$adjust--;
+				while (intval(ord($str[$pos + $length + $adjust]) & 0xC0) == 0x80) {
+									$adjust--;
+				}
 
 				$buffer .= ($buffer == '' ? '' : "?=\n =?UTF-8?B?") . base64_encode(substr($str, $pos, $length + $adjust));
 				$pos = $pos + $length + $adjust;
@@ -475,8 +492,9 @@ class utf8 {
 		$message = chunk_split(base64_encode($message));
 
 		$additional_headers = trim($additional_headers);
-		if ($additional_headers != '')
-			$additional_headers .= "\n";
+		if ($additional_headers != '') {
+					$additional_headers .= "\n";
+		}
 		$additional_headers .=
 						"Mime-Version: 1.0\n" .
 						"Content-Transfer-Encoding: base64\n";
@@ -538,10 +556,11 @@ class utf8 {
 				$pos += 1;
 			}
 
-			if ($char_code < 0x80)
-				$out .= chr($char_code);
-			else
-				$out .= '\\u' . str_pad(dechex($char_code), 4, '0', STR_PAD_LEFT);
+			if ($char_code < 0x80) {
+							$out .= chr($char_code);
+			} else {
+							$out .= '\\u' . str_pad(dechex($char_code), 4, '0', STR_PAD_LEFT);
+			}
 		}
 
 		return $out;
@@ -585,10 +604,11 @@ class utf8 {
 				$pos += 1;
 			}
 
-			if ($char_code < 0x80)
-				$out .= chr($char_code);
-			else
-				$out .= '&#' . str_pad($char_code, 5, '0', STR_PAD_LEFT) . ';';
+			if ($char_code < 0x80) {
+							$out .= chr($char_code);
+			} else {
+							$out .= '&#' . str_pad($char_code, 5, '0', STR_PAD_LEFT) . ';';
+			}
 		}
 
 		return $out;

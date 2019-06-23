@@ -1,7 +1,8 @@
 <?php
 // force UTF-8 Ø
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 npgFilters::apply('theme_file_top');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -99,8 +100,9 @@ npgFilters::apply('theme_file_top');
 		<div class="clearing"></div>
 		<div class="stage" <?php echo $stageStyle; ?>>
 				<?php
-				if (getOption('zenfluid_buttontitle'))
-					printButtons();
+				if (getOption('zenfluid_buttontitle')) {
+									printButtons();
+				}
 				if (!getOption('zenfluid_titletop')) {
 					?>
 				<div class="title border colour" <?php echo $titleStyle; ?>>
@@ -124,8 +126,9 @@ if (getAlbumDesc()) {
 				</div>
 	<?php
 }
-if (!getOption('zenfluid_buttontitle'))
+if (!getOption('zenfluid_buttontitle')) {
 	printButtons();
+}
 if (getTags()) {
 	?>
 				<div class="albumbuttons" <?php echo $buttonStyle; ?>>

@@ -6,8 +6,9 @@
  * @Copyright 2014 by Stephen L Billard for use in {@link https://%GITHUB% netPhotoGraphics} and derivatives
  * @package plugins/user_mailing_list
  */
-if (!defined('OFFSET_PATH'))
+if (!defined('OFFSET_PATH')) {
 	define('OFFSET_PATH', 4);
+}
 require_once(dirname(dirname(dirname(__FILE__))) . '/admin-globals.php');
 
 admin_securityChecks(ADMIN_RIGHTS, currentRelativeURL());

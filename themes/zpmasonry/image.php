@@ -1,7 +1,10 @@
 <?php include ("inc-header.php"); ?>
 
 <div id="breadcrumbs">
-	<?php if (($zpmas_infscroll) && (in_context(SEARCH_LINKED))) $_current_search->page = '1'; ?>
+	<?php if (($zpmas_infscroll) && (in_context(SEARCH_LINKED))) {
+	$_current_search->page = '1';
+}
+?>
 	<a href="<?php echo $zpmas_homelink; ?>" title="<?php echo gettext("Gallery Index"); ?>"><?php echo gettext("Gallery Index"); ?></a> &raquo;
 	<?php printParentBreadcrumb('', ' » ', ' » '); ?>
 	<?php
@@ -75,8 +78,9 @@
 		<?php printCodeblock(); ?>
 		<?php if (simplemap::mapPlugin()) { ?><div class="post"><?php simpleMap::printMap(); ?></div><?php } ?>
 		<?php
-		if (function_exists('printAddToFavorites'))
-			printAddToFavorites($_current_image);
+		if (function_exists('printAddToFavorites')) {
+					printAddToFavorites($_current_image);
+		}
 		?>
 		<?php if (function_exists('printRating')) { ?><div class="post"><?php printRating(); ?></div><?php } ?>
 		<?php if (function_exists('printCommentForm')) { ?><div class="post"><?php printCommentForm(); ?></div><?php } ?>

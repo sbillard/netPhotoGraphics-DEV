@@ -130,9 +130,15 @@
 									$divider = '';
 								}
 								?>
-								<?php if (getNumAlbums() > 0) echo getNumAlbums() . ' ' . gettext("subalbums"); ?>
+								<?php if (getNumAlbums() > 0) {
+	echo getNumAlbums() . ' ' . gettext("subalbums");
+}
+?>
 								<?php echo $divider; ?>
-								<?php if (getNumImages() > 0) echo getNumImages() . ' ' . gettext("images"); ?>
+								<?php if (getNumImages() > 0) {
+	echo getNumImages() . ' ' . gettext("images");
+}
+?>
 							</li>
 						</ul>
 					</div>
@@ -187,8 +193,14 @@
 		<?php } ?>
 
 		<div class="sixteen columns">
-			<?php if ((hasNextPage()) || (hasPrevPage())) printPageListWithNav('«', '»', false, true, 'pagination', null, true, 5); ?>
-			<?php if ($numimages > 0) printPPSlideShowLink(gettext('Slideshow')); ?>
+			<?php if ((hasNextPage()) || (hasPrevPage())) {
+	printPageListWithNav('«', '»', false, true, 'pagination', null, true, 5);
+}
+?>
+			<?php if ($numimages > 0) {
+	printPPSlideShowLink(gettext('Slideshow'));
+}
+?>
 		</div>
 	</div>
 </div>

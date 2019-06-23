@@ -27,7 +27,7 @@ if ($plugin_disable) {
 }
 
 function jQueryUploadHandler($uploadHandlers) {
-	$uploadHandlers['jQuery'] = CORE_SERVERPATH .  PLUGIN_FOLDER . '/uploader_jQuery';
+	$uploadHandlers['jQuery'] = CORE_SERVERPATH . PLUGIN_FOLDER . '/uploader_jQuery';
 	return $uploadHandlers;
 }
 

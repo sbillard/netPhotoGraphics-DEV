@@ -51,14 +51,18 @@ GoogleMap::js();
 			$map_control_type = $mapControls;
 
 			$allowedMapTypes = array();
-			if (getOption('gmap_map_hybrid'))
-				$allowedMapTypes[] = 'HYBRID';
-			if (getOption('gmap_map_roadmap'))
-				$allowedMapTypes[] = 'ROADMAP';
-			if (getOption('gmap_map_satellite'))
-				$allowedMapTypes[] = 'SATELLITE';
-			if (getOption('gmap_map_terrain'))
-				$allowedMapTypes[] = 'TERRAIN';
+			if (getOption('gmap_map_hybrid')) {
+							$allowedMapTypes[] = 'HYBRID';
+			}
+			if (getOption('gmap_map_roadmap')) {
+							$allowedMapTypes[] = 'ROADMAP';
+			}
+			if (getOption('gmap_map_satellite')) {
+							$allowedMapTypes[] = 'SATELLITE';
+			}
+			if (getOption('gmap_map_terrain')) {
+							$allowedMapTypes[] = 'TERRAIN';
+			}
 		}
 
 		$config['center'] = '0, 0';

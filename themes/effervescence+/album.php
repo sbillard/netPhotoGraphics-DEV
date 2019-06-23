@@ -1,8 +1,9 @@
 <?php
 // force UTF-8 Ø
 
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 
 $map = simpleMap::mapPlugin();
 ?>
@@ -161,7 +162,10 @@ $map = simpleMap::mapPlugin();
 				} else {
 					?>
 					<div id="main">
-						<?php if (function_exists('printAddToFavorites')) printAddToFavorites($_current_album); ?>
+						<?php if (function_exists('printAddToFavorites')) {
+	printAddToFavorites($_current_album);
+}
+?>
 						<?php @call_user_func('printRating'); ?>
 					</div>
 					<?php

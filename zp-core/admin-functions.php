@@ -13,8 +13,9 @@ define('TEXTAREA_COLUMNS', 50);
 define('TEXT_INPUT_SIZE', 48);
 define('TEXTAREA_COLUMNS_SHORT', 32);
 define('TEXT_INPUT_SIZE_SHORT', 30);
-if (!defined('EDITOR_SANITIZE_LEVEL'))
+if (!defined('EDITOR_SANITIZE_LEVEL')) {
 	define('EDITOR_SANITIZE_LEVEL', 1);
+}
 
 define('ADMIN_THUMB_LARGE', 160);
 define('ADMIN_THUMB_MEDIUM', 80);
@@ -386,7 +387,10 @@ function printAdminHeader($tab, $subtab = NULL) {
 						$hasSubtabs = !empty($subtabs) && is_array($subtabs);
 						$loc++;
 						?>
-						<li<?php if ($hasSubtabs) echo ' class="has-sub"'; ?>>
+						<li<?php if ($hasSubtabs) {
+	echo ' class="has-sub"';
+}
+?>>
 							<a href="<?php echo html_encode($atab['link']); ?>" <?php echo $class; ?>><?php echo html_encodeTagged(ucfirst($atab['text'])); ?></a>
 							<?php
 							if ($hasSubtabs) { // don't print <ul> if there is nothing
@@ -414,11 +418,13 @@ function printAdminHeader($tab, $subtab = NULL) {
 									$position = 0; //	align to self
 								}
 								?>
-								<ul<?php if ($position) echo ' style="margin-top: -' . ($position * 32) . 'px;"' ?>>
+								<ul<?php if ($position) {
+	echo ' style="margin-top: -' . ($position * 32) . 'px;"' ?>>
 									<?php
 									if ($activeTab) {
 										if (isset($_GET['tab'])) {
 											$subtab = sanitize($_GET['tab']);
+}
 										} else {
 											if (isset($_admin_menu[$key]['default'])) {
 												$subtab = $_admin_menu[$key]['default'];
@@ -526,8 +532,9 @@ function printAdminHeader($tab, $subtab = NULL) {
 	function getCurrentTab() {
 		global $_admin_menu, $_admin_tab, $_admin_subtab;
 		$tabs = @$_admin_menu[$_admin_tab]['subtabs'];
-		if (!is_array($tabs))
-			return $_admin_subtab;
+		if (!is_array($tabs)) {
+					return $_admin_subtab;
+		}
 		$current = $_admin_subtab;
 		if (isset($_GET['tab'])) {
 			$test = sanitize($_GET['tab']);
@@ -623,8 +630,9 @@ function printAdminHeader($tab, $subtab = NULL) {
 	 * @param mixed $current
 	 */
 	function checked($checked, $current) {
-		if ($checked == $current)
-			echo ' checked="checked"';
+		if ($checked == $current) {
+					echo ' checked="checked"';
+		}
 	}
 
 	/**
@@ -864,7 +872,10 @@ function printAdminHeader($tab, $subtab = NULL) {
 					}
 					if ($type != OPTION_TYPE_NOTE) {
 						?>
-						<td class="option_name"><?php if ($option) echo $indent . $option; ?></td>
+						<td class="option_name"><?php if ($option) {
+	echo $indent . $option;
+}
+?></td>
 						<?php
 					}
 					switch ($type) {
@@ -895,15 +906,18 @@ function printAdminHeader($tab, $subtab = NULL) {
 								case OPTION_TYPE_NUMBER:
 									$multilingual = false;
 									$clear = 'numeric';
-									if (!is_numeric($v))
-										$v = 0;
+									if (!is_numeric($v)) {
+																			$v = 0;
+									}
 									$wide = 'width: 100px';
 									if (isset($row['limits'])) {
 										$inputtype = 'number';
-										if (isset($row['limits']['min']))
-											$inputtype .= '" min="' . $row['limits']['min'];
-										if (isset($row['limits']['max']))
-											$inputtype .= '" max="' . $row['limits']['max'];
+										if (isset($row['limits']['min'])) {
+																					$inputtype .= '" min="' . $row['limits']['min'];
+										}
+										if (isset($row['limits']['max'])) {
+																					$inputtype .= '" max="' . $row['limits']['max'];
+										}
 										if (isset($row['limits']['step'])) {
 											$inputtype .= '" step="' . $row['limits']['step'];
 										} else {
@@ -924,7 +938,10 @@ function printAdminHeader($tab, $subtab = NULL) {
 									if ($type == OPTION_TYPE_TEXTAREA || $type == OPTION_TYPE_RICHTEXT) {
 										$v = get_language_string($v); // just in case....
 										?>
-										<textarea id="__<?php echo $key; ?>"<?php if ($type == OPTION_TYPE_RICHTEXT) echo ' class="texteditor"'; ?> name="<?php echo $postkey; ?>" cols="<?php echo TEXTAREA_COLUMNS; ?>"	 rows="6"<?php echo $disabled; ?>><?php echo html_encode($v); ?></textarea>
+										<textarea id="__<?php echo $key; ?>"<?php if ($type == OPTION_TYPE_RICHTEXT) {
+	echo ' class="texteditor"';
+}
+?> name="<?php echo $postkey; ?>" cols="<?php echo TEXTAREA_COLUMNS; ?>"	 rows="6"<?php echo $disabled; ?>><?php echo html_encode($v); ?></textarea>
 										<?php
 									} else {
 										?>
@@ -971,7 +988,10 @@ function printAdminHeader($tab, $subtab = NULL) {
 									<?php
 									if (array_key_exists('null_selection', $row)) {
 										?>
-										<option value=""<?php if (empty($v)) echo ' selected="selected"'; ?> style="background-color:LightGray;"><?php echo $row['null_selection']; ?></option>
+										<option value=""<?php if (empty($v)) {
+	echo ' selected="selected"';
+}
+?> style="background-color:LightGray;"><?php echo $row['null_selection']; ?></option>
 										<?php
 									}
 									$list = array();
@@ -1011,12 +1031,18 @@ function printAdminHeader($tab, $subtab = NULL) {
 												?>
 												<input type="hidden" name="<?php echo CUSTOM_OPTION_PREFIX . 'chkbox-' . postIndexEncode($checkbox); ?>" value="1" />
 												<label class="checkboxlabel">
-													<?php if ($behind) echo($display); ?>
+													<?php if ($behind) {
+	echo($display);
+}
+?>
 													<input type="checkbox" id="__<?php echo $checkbox; ?>" name="<?php echo postIndexEncode($checkbox); ?>" value="1"<?php
 													checked('1', $v);
 													echo $disabled;
 													?> />
-																 <?php if (!$behind) echo($display); ?>
+																 <?php if (!$behind) {
+	echo($display);
+}
+?>
 												</label>
 												<?php
 											}
@@ -1043,9 +1069,18 @@ function printAdminHeader($tab, $subtab = NULL) {
 										$display = str_replace(' ', '&nbsp;', $display);
 										?>
 										<label class="checkboxlabel">
-											<?php if ($behind) echo($display); ?>
-											<input type="checkbox" id="__<?php echo $checkbox; ?>" name="<?php echo $postkey; ?>[]" value="<?php echo $checkbox; ?>"<?php if ($checked) echo ' checked="checked"' . $disabled; ?> />
-											<?php if (!$behind) echo($display); ?>
+											<?php if ($behind) {
+	echo($display);
+}
+?>
+											<input type="checkbox" id="__<?php echo $checkbox; ?>" name="<?php echo $postkey; ?>[]" value="<?php echo $checkbox; ?>"<?php if ($checked) {
+	echo ' checked="checked"' . $disabled;
+}
+?> />
+											<?php if (!$behind) {
+	echo($display);
+}
+?>
 										</label>
 										<?php
 									}
@@ -1101,7 +1136,10 @@ function printAdminHeader($tab, $subtab = NULL) {
 									// ]]> -->
 								</script>
 								<label>
-									<input type="checkbox" name="all_<?php echo $key; ?>" id="all_<?php echo $key; ?>" class="all_<?php echo $key; ?>" onclick="<?php echo $key; ?>_all();" <?php if ($all) echo ' checked="checked"'; ?>/>
+									<input type="checkbox" name="all_<?php echo $key; ?>" id="all_<?php echo $key; ?>" class="all_<?php echo $key; ?>" onclick="<?php echo $key; ?>_all();" <?php if ($all) {
+	echo ' checked="checked"';
+}
+?>/>
 									<?php echo gettext('all'); ?>
 								</label>
 							</td>
@@ -1126,7 +1164,10 @@ function printAdminHeader($tab, $subtab = NULL) {
 										?>
 										<li>
 											<label class="displayinline">
-												<input type="checkbox" id="__<?php echo $checkbox; ?>" class="all_<?php echo $key; ?>" name="<?php echo $postkey; ?>[]" value="<?php echo $checkbox; ?>"<?php if (in_array($checkbox, $setOptions)) echo ' checked="checked"'; ?><?php echo $disabled; ?> />
+												<input type="checkbox" id="__<?php echo $checkbox; ?>" class="all_<?php echo $key; ?>" name="<?php echo $postkey; ?>[]" value="<?php echo $checkbox; ?>"<?php if (in_array($checkbox, $setOptions)) {
+	echo ' checked="checked"';
+}
+?><?php echo $disabled; ?> />
 												<?php echo($display); ?>
 											</label>
 										</li>
@@ -1143,15 +1184,19 @@ function printAdminHeader($tab, $subtab = NULL) {
 									// ]]> -->
 								</script>
 								<label>
-									<input type="checkbox" name="all_<?php echo $key; ?>" id="all_<?php echo $key; ?>" class="all_<?php echo $key; ?>" onclick="<?php echo $key; ?>_all();" <?php if ($all) echo ' checked="checked"'; ?>/>
+									<input type="checkbox" name="all_<?php echo $key; ?>" id="all_<?php echo $key; ?>" class="all_<?php echo $key; ?>" onclick="<?php echo $key; ?>_all();" <?php if ($all) {
+	echo ' checked="checked"';
+}
+?>/>
 									<?php echo gettext('all'); ?>
 								</label>
 							</td>
 							<?php
 							break;
 						case OPTION_TYPE_COLOR_PICKER:
-							if (empty($v))
-								$v = '#000000';
+							if (empty($v)) {
+															$v = '#000000';
+							}
 							?>
 							<td class="option_value">
 								<input type="hidden" name="<?php echo CUSTOM_OPTION_PREFIX . 'text-' . $postkey; ?>" value="1" />
@@ -1274,8 +1319,9 @@ function printAdminHeader($tab, $subtab = NULL) {
 				}
 			} else {
 				if (strpos($posted, 'show-') === 0) {
-					if ($value)
-						$returntab .= '&' . $posted;
+					if ($value) {
+											$returntab .= '&' . $posted;
+					}
 				}
 			}
 		}
@@ -1359,10 +1405,19 @@ function printAdminHeader($tab, $subtab = NULL) {
 				$checked = ' checked="checked" '; //the checked() function uses quotes the other way round...
 			}
 			?>
-			<label<?php if ($class) echo ' class="' . $class . '"'; ?>>
-				<?php if ($behind) echo $text; ?>
+			<label<?php if ($class) {
+	echo ' class="' . $class . '"';
+}
+?>>
+				<?php if ($behind) {
+	echo $text;
+}
+?>
 				<input type="radio" name="<?php echo $option; ?>" id="__<?php echo $radioid . '-' . $value; ?>" value="<?php echo $value; ?>"<?php echo $checked . $disabled; ?> />
-				<?php if (!$behind) echo $text; ?>
+				<?php if (!$behind) {
+	echo $text;
+}
+?>
 			</label>
 			<?php
 		}
@@ -1380,10 +1435,12 @@ function printAdminHeader($tab, $subtab = NULL) {
 	 * @param bool $localize true if the list local key is text for the item
 	 */
 	function generateUnorderedListFromArray($currentValue, $list, $prefix, $alterrights, $sort, $localize, $class = NULL, $extra = NULL, $postArray = 0) {
-		if (is_null($extra))
-			$extra = array();
-		if (!empty($class))
-			$class = ' class="' . $class . '" ';
+		if (is_null($extra)) {
+					$extra = array();
+		}
+		if (!empty($class)) {
+					$class = ' class="' . $class . '" ';
+		}
 		if ($sort) {
 			if ($localize) {
 				$list = array_flip($list);
@@ -1436,8 +1493,9 @@ function printAdminHeader($tab, $subtab = NULL) {
 							}
 							if (isset($box['type'])) {
 								$type = $box['type'];
-								if ($type == 'radio')
-									$unique++;
+								if ($type == 'radio') {
+																	$unique++;
+								}
 							} else {
 								$type = 'checkbox';
 							}
@@ -2099,7 +2157,10 @@ function printAdminHeader($tab, $subtab = NULL) {
 							<tr>
 								<td class="leftcolumn"><?php echo gettext("Album theme"); ?> </td>
 								<td>
-									<select id="album_theme" class="album_theme" name="<?php echo $prefix; ?>album_theme"	<?php if (!npg_loggedin(THEMES_RIGHTS)) echo 'disabled="disabled" '; ?>	>
+									<select id="album_theme" class="album_theme" name="<?php echo $prefix; ?>album_theme"	<?php if (!npg_loggedin(THEMES_RIGHTS)) {
+	echo 'disabled="disabled" ';
+}
+?>	>
 										<?php
 										$themes = $_gallery->getThemes();
 										$oldtheme = $album->getAlbumTheme();
@@ -2134,8 +2195,14 @@ function printAdminHeader($tab, $subtab = NULL) {
 								<td>
 									<?php $current = $album->getWatermark(); ?>
 									<select id="album_watermark<?php echo $suffix; ?>" name="<?php echo $prefix; ?>album_watermark">
-										<option value="<?php echo NO_WATERMARK; ?>" <?php if ($current == NO_WATERMARK) echo ' selected="selected"' ?> style="background-color:LightGray"><?php echo gettext('*no watermark'); ?></option>
-										<option value="" <?php if (empty($current)) echo ' selected="selected"' ?> style="background-color:LightGray"><?php echo gettext('*default'); ?></option>
+										<option value="<?php echo NO_WATERMARK; ?>" <?php if ($current == NO_WATERMARK) {
+	echo ' selected="selected"' ?> style="background-color:LightGray"><?php echo gettext('*no watermark');
+}
+?></option>
+										<option value="" <?php if (empty($current)) {
+	echo ' selected="selected"' ?> style="background-color:LightGray"><?php echo gettext('*default');
+}
+?></option>
 										<?php
 										$watermarks = getWatermarks();
 										generateListFromArray(array($current), $watermarks, false, false);
@@ -2149,8 +2216,14 @@ function printAdminHeader($tab, $subtab = NULL) {
 								<td>
 									<?php $current = $album->getWatermarkThumb(); ?>
 									<select id="album_watermark_thumb<?php echo $suffix; ?>" name="<?php echo $prefix; ?>album_watermark_thumb">
-										<option value="<?php echo NO_WATERMARK; ?>" <?php if ($current == NO_WATERMARK) echo ' selected="selected"' ?> style="background-color:LightGray"><?php echo gettext('*no watermark'); ?></option>
-										<option value="" <?php if (empty($current)) echo ' selected="selected"' ?> style="background-color:LightGray"><?php echo gettext('*default'); ?></option>
+										<option value="<?php echo NO_WATERMARK; ?>" <?php if ($current == NO_WATERMARK) {
+	echo ' selected="selected"' ?> style="background-color:LightGray"><?php echo gettext('*no watermark');
+}
+?></option>
+										<option value="" <?php if (empty($current)) {
+	echo ' selected="selected"' ?> style="background-color:LightGray"><?php echo gettext('*default');
+}
+?></option>
 										<?php
 										$watermarks = getWatermarks();
 										generateListFromArray(array($current), $watermarks, false, false);
@@ -2275,7 +2348,10 @@ function printAdminHeader($tab, $subtab = NULL) {
 						<label class="checkboxlabel">
 							<input type="checkbox"
 										 name="<?php echo $prefix; ?>Published"
-										 value="1" <?php if ($album->getShow()) echo ' checked="checked"'; ?>
+										 value="1" <?php if ($album->getShow()) {
+	echo ' checked="checked"';
+}
+?>
 										 onclick="$('#<?php echo $prefix; ?>publishdate').val('');
 												 $('#<?php echo $prefix; ?>expirationdate').val('');
 												 $('#<?php echo $prefix; ?>publishdate').css('color', 'black');
@@ -2303,7 +2379,10 @@ function printAdminHeader($tab, $subtab = NULL) {
 							}
 							?>
 							<label class="checkboxlabel">
-								<input type="checkbox" name="reset_hitcounter<?php echo $prefix; ?>"<?php if (!$hc) echo ' disabled="disabled"'; ?> />
+								<input type="checkbox" name="reset_hitcounter<?php echo $prefix; ?>"<?php if (!$hc) {
+	echo ' disabled="disabled"';
+}
+?> />
 								<?php echo sprintf(ngettext("Reset hit counter (%u hit)", "Reset hit counter (%u hits)", $hc), $hc); ?>
 							</label>
 							<?php
@@ -2372,7 +2451,10 @@ function printAdminHeader($tab, $subtab = NULL) {
 
 						<p>
 							<label for="<?php echo $prefix; ?>publishdate"><?php echo gettext('Publish date'); ?> <small>(YYYY-MM-DD)</small></label>
-							<br /><input value="<?php echo $publishdate; ?>" type="text" size="20" maxlength="30" name="publishdate-<?php echo $prefix; ?>" id="<?php echo $prefix; ?>publishdate" <?php if ($publishdate > date('Y-m-d H:i:s')) echo 'style="color:blue"'; ?> />
+							<br /><input value="<?php echo $publishdate; ?>" type="text" size="20" maxlength="30" name="publishdate-<?php echo $prefix; ?>" id="<?php echo $prefix; ?>publishdate" <?php if ($publishdate > date('Y-m-d H:i:s')) {
+	echo 'style="color:blue"';
+}
+?> />
 							<br /><label for="<?php echo $prefix; ?>expirationdate"><?php echo gettext('Expiration date'); ?> <small>(YYYY-MM-DD)</small></label>
 							<br /><input value="<?php echo $expirationdate; ?>" type="text" size="20" maxlength="30" name="expirationdate-<?php echo $prefix; ?>" id="<?php echo $prefix; ?>expirationdate" />
 							<strong class="<?php echo $prefix; ?>expire" style="color:red">
@@ -2914,7 +2996,10 @@ function printAdminHeader($tab, $subtab = NULL) {
 				if ($enableEdit) {
 					?>
 					<div class="page-list_icon">
-						<input class="checkbox" type="checkbox" name="ids[]" value="<?php echo $album->getFileName(); ?>"<?php if ($supress) echo ' disabled="disabled"'; ?> />
+						<input class="checkbox" type="checkbox" name="ids[]" value="<?php echo $album->getFileName(); ?>"<?php if ($supress) {
+	echo ' disabled="disabled"';
+}
+?> />
 					</div>
 					<?php
 				}
@@ -3025,8 +3110,9 @@ function printAdminHeader($tab, $subtab = NULL) {
 		}
 		$tags = array_unique($tags);
 		$album->setTags($tags);
-		if (isset($_POST[$prefix . 'thumb']))
-			$album->setThumb(sanitize($_POST[$prefix . 'thumb']));
+		if (isset($_POST[$prefix . 'thumb'])) {
+					$album->setThumb(sanitize($_POST[$prefix . 'thumb']));
+		}
 		$album->setCommentsAllowed(isset($_POST[$prefix . 'allowcomments']));
 		$sorttype = strtolower(sanitize($_POST[$prefix . 'sortby'], 3));
 		if ($sorttype == 'custom') {
@@ -3044,8 +3130,9 @@ function printAdminHeader($tab, $subtab = NULL) {
 			$album->setSortDirection($direction, 'image');
 		}
 		$sorttype = strtolower(sanitize($_POST[$prefix . 'subalbumsortby'], 3));
-		if ($sorttype == 'custom')
-			$sorttype = strtolower(sanitize($_POST[$prefix . 'customalbumsort'], 3));
+		if ($sorttype == 'custom') {
+					$sorttype = strtolower(sanitize($_POST[$prefix . 'customalbumsort'], 3));
+		}
 		$album->setSortType($sorttype, 'album');
 		if (($sorttype == 'manual') || ($sorttype == 'random')) {
 			$album->setSortDirection(false, 'album');
@@ -3091,8 +3178,9 @@ function printAdminHeader($tab, $subtab = NULL) {
 		if ($movecopyrename_action == 'delete') {
 			$dest = dirname($album->name);
 			if ($album->remove()) {
-				if ($dest == '/' || $dest == '.')
-					$dest = '';
+				if ($dest == '/' || $dest == '.') {
+									$dest = '';
+				}
 				$redirectto = $dest;
 			} else {
 				$notify = "&mcrerr=7";
@@ -3166,8 +3254,9 @@ function printAdminHeader($tab, $subtab = NULL) {
 						<?php
 					}
 					if (array_key_exists($i + 1, $images)) {
-						if ($i > 0)
-							echo ' | ';
+						if ($i > 0) {
+													echo ' | ';
+						}
 						?>
 						<a href="?page=edit&tab=imageinfo&album=<?php echo pathurlencode($image->album->name); ?>&singleimage=<?php echo html_encode($images[$i + 1]); ?>"><?php echo gettext('next image'); ?></a>
 						<?php
@@ -3241,8 +3330,9 @@ function printAdminHeader($tab, $subtab = NULL) {
 			$rows = $xrows;
 		}
 		$dbstring = npgFunctions::unTagURLs($dbstring);
-		if (!empty($edit))
-			$edit = ' class="' . $edit . '"';
+		if (!empty($edit)) {
+					$edit = ' class="' . $edit . '"';
+		}
 		if (is_null($locale)) {
 			$locale = i18n::getUserLocale();
 		}
@@ -3322,8 +3412,11 @@ function printAdminHeader($tab, $subtab = NULL) {
 					foreach ($emptylang as $key => $lang) {
 						$flag = getLanguageFlag($key);
 						?>
-						<option value="<?php echo $key; ?>" data-image="<?php echo $flag; ?>" alt="<?php echo $key; ?>"<?php if ($key == $locale) echo ' selected="selected"' ?>>
-							<?php echo $lang; ?>
+						<option value="<?php echo $key; ?>" data-image="<?php echo $flag; ?>" alt="<?php echo $key; ?>"<?php if ($key == $locale) {
+	echo ' selected="selected"' ?>>
+							<?php echo $lang;
+}
+?>
 						</option>
 						<?php
 					}
@@ -3339,11 +3432,14 @@ function printAdminHeader($tab, $subtab = NULL) {
 					}
 					?>
 
-					<div id="lb<?php echo $key . '-' . $_lsInstance ?>" class="lbx-<?php echo $_lsInstance ?>"<?php if ($key != $locale) echo ' style="display:none;"' ?>>
+					<div id="lb<?php echo $key . '-' . $_lsInstance ?>" class="lbx-<?php echo $_lsInstance ?>"<?php if ($key != $locale) {
+	echo ' style="display:none;"' ?>>
 						<?php
 						if ($textbox) {
 							?>
-							<textarea name="<?php echo $name . '_' . $key ?>"<?php echo $edit . $width; ?>	rows="<?php echo $rows ?>"><?php echo html_encode($string); ?></textarea>
+							<textarea name="<?php echo $name . '_' . $key ?>"<?php echo $edit . $width;
+}
+?>	rows="<?php echo $rows ?>"><?php echo html_encode($string); ?></textarea>
 							<?php
 						} else {
 							?>
@@ -3358,8 +3454,9 @@ function printAdminHeader($tab, $subtab = NULL) {
 			</div>
 			<?php
 		} else {
-			if (empty($locale))
-				$locale = 'en_US';
+			if (empty($locale)) {
+							$locale = 'en_US';
+			}
 			if (isset($strings[$locale])) {
 				$dbstring = $strings[$locale];
 				unset($strings[$locale]);
@@ -3397,8 +3494,9 @@ function printAdminHeader($tab, $subtab = NULL) {
 				$key = substr($key, $l);
 				if (in_array($key, $languages)) {
 					$value = sanitize($value, $sanitize_level);
-					if (!empty($value))
-						$strings[$key] = $value;
+					if (!empty($value)) {
+											$strings[$key] = $value;
+					}
 				}
 			}
 		}
@@ -3666,8 +3764,9 @@ function printAdminHeader($tab, $subtab = NULL) {
 		// Now copy every file
 		foreach ($source_files as $file) {
 			$newfile = str_replace($source, $target, $file);
-			if (!copy("$file", "$newfile"))
-				return sprintf(gettext("An error occurred while copying files. Please delete manually the new theme directory “%s” and retry or copy files manually."), basename($target));
+			if (!copy("$file", "$newfile")) {
+							return sprintf(gettext("An error occurred while copying files. Please delete manually the new theme directory “%s” and retry or copy files manually."), basename($target));
+			}
 			@chmod("$newfile", FOLDER_MOD);
 		}
 
@@ -3703,14 +3802,15 @@ function printAdminHeader($tab, $subtab = NULL) {
 		}
 
 		// Make a slightly custom theme image
-		if (file_exists("$target/theme.png"))
-			$themeimage = "$target/theme.png";
-		else if (file_exists("$target/theme.gif"))
-			$themeimage = "$target/theme.gif";
-		else if (file_exists("$target/theme.jpg"))
-			$themeimage = "$target/theme.jpg";
-		else
-			$themeimage = false;
+		if (file_exists("$target/theme.png")) {
+					$themeimage = "$target/theme.png";
+		} else if (file_exists("$target/theme.gif")) {
+					$themeimage = "$target/theme.gif";
+		} else if (file_exists("$target/theme.jpg")) {
+					$themeimage = "$target/theme.jpg";
+		} else {
+					$themeimage = false;
+		}
 		if ($themeimage) {
 			if ($im = gl_imageGet($themeimage)) {
 				$x = gl_imageWidth($im) / 2 - 45;
@@ -3857,8 +3957,9 @@ function printAdminHeader($tab, $subtab = NULL) {
 
 						<label style="padding-right: 15px;" title="<?php echo html_encode(get_language_string($right['hint'])); ?>">
 							<input type="checkbox" name="<?php printf($format, $rightselement, $id); ?>" id="<?php echo $rightselement . '-' . $id; ?>" class="user-<?php echo $id; ?>" value="<?php echo $right['value']; ?>"<?php
-							if ($rights & $right['value'])
-								echo ' checked="checked"';
+							if ($rights & $right['value']) {
+															echo ' checked="checked"';
+							}
 							echo $alterrights;
 							?> />
 										 <?php echo $right['name']; ?>
@@ -3913,10 +4014,12 @@ function printManagedObjects($type, $objlist, $alterrights, $userobj, $prefix_id
 					$legend .= '* ' . gettext('Primary album') . ' ';
 				}
 				$legend .= $icon_edit . ' ' . gettext('edit') . ' ';
-				if ($rights & UPLOAD_RIGHTS)
-					$legend .= $icon_upload . ' ' . gettext('upload') . ' ';
-				if (!($rights & VIEW_UNPUBLISHED_RIGHTS))
-					$legend .= $icon_view . ' ' . gettext('view unpublished');
+				if ($rights & UPLOAD_RIGHTS) {
+									$legend .= $icon_upload . ' ' . gettext('upload') . ' ';
+				}
+				if (!($rights & VIEW_UNPUBLISHED_RIGHTS)) {
+									$legend .= $icon_view . ' ' . gettext('view unpublished');
+				}
 				foreach ($full as $item) {
 					if ($item['type'] == 'albums') {
 						if (in_array($item['data'], $flag)) {
@@ -4191,11 +4294,12 @@ function processManagedObjects($i, &$rights) {
  * @return int (0 or 1)
  */
 function getCheckboxState($id) {
-	if (isset($_REQUEST[$id]))
-		return 1;
-	else
-		return 0;
-}
+	if (isset($_REQUEST[$id])) {
+			return 1;
+	} else {
+			return 0;
+	}
+	}
 
 /**
  * Returns an array of "standard" theme scripts. This list is
@@ -4205,8 +4309,9 @@ function getCheckboxState($id) {
  */
 function standardScripts() {
 	$standardlist = array('themeoptions', 'theme_description', '404', 'slideshow', 'search', 'image', 'index', 'album', 'functions', 'password', 'archive', 'gallery', 'favorites', 'register', 'contact');
-	if (extensionEnabled('zenpage'))
-		$standardlist = array_merge($standardlist, array('news', 'pages'));
+	if (extensionEnabled('zenpage')) {
+			$standardlist = array_merge($standardlist, array('news', 'pages'));
+	}
 	return $standardlist;
 }
 
@@ -4348,21 +4453,21 @@ function printNestedAlbumsList($albums, $show_thumb, $owner) {
 			$open[$indent] = 0;
 		} else if ($level < $indent) {
 			while ($indent > $level) {
-				$open[$indent] --;
+				$open[$indent]--;
 				$indent--;
 				echo "</li>\n" . str_pad("\t", $indent, "\t") . "</ul>\n";
 			}
 		} else { // indent == level
 			if ($open[$indent]) {
 				echo str_pad("\t", $indent, "\t") . "</li>\n";
-				$open[$indent] --;
+				$open[$indent]--;
 			} else {
 				echo "\n";
 			}
 		}
 		if ($open[$indent]) {
 			echo str_pad("\t", $indent, "\t") . "</li>\n";
-			$open[$indent] --;
+			$open[$indent]--;
 		}
 		$albumobj = newAlbum($album['name']);
 		if ($albumobj->isDynamic()) {
@@ -4372,11 +4477,11 @@ function printNestedAlbumsList($albums, $show_thumb, $owner) {
 		}
 		echo str_pad("\t", $indent - 1, "\t") . "<li id=\"id_" . $albumobj->getID() . "\"$nonest >";
 		printAlbumEditRow($albumobj, $show_thumb, $owner, $rslt);
-		$open[$indent] ++;
+		$open[$indent]++;
 	}
 	while ($indent > 1) {
 		echo "</li>\n";
-		$open[$indent] --;
+		$open[$indent]--;
 		$indent--;
 		echo str_pad("\t", $indent, "\t") . "</ul>";
 	}
@@ -4403,21 +4508,21 @@ function printNestedImageList($albums, $show_thumb, $owner) {
 			$open[$indent] = 0;
 		} else if ($level < $indent) {
 			while ($indent > $level) {
-				$open[$indent] --;
+				$open[$indent]--;
 				$indent--;
 				echo "</li>\n" . str_pad("\t", $indent, "\t") . "</ul>\n";
 			}
 		} else { // indent == level
 			if ($open[$indent]) {
 				echo str_pad("\t", $indent, "\t") . "</li>\n";
-				$open[$indent] --;
+				$open[$indent]--;
 			} else {
 				echo "\n";
 			}
 		}
 		if ($open[$indent]) {
 			echo str_pad("\t", $indent, "\t") . "</li>\n";
-			$open[$indent] --;
+			$open[$indent]--;
 		}
 		$albumobj = newAlbum($album['name']);
 		if ($albumobj->isDynamic()) {
@@ -4427,11 +4532,11 @@ function printNestedImageList($albums, $show_thumb, $owner) {
 		}
 		echo str_pad("\t", $indent - 1, "\t") . "<li id=\"id_" . $albumobj->getID() . "\"$nonest >";
 		printImageEditRow($albumobj, $show_thumb, $owner, $album['image_count']);
-		$open[$indent] ++;
+		$open[$indent]++;
 	}
 	while ($indent > 1) {
 		echo "</li>\n";
-		$open[$indent] --;
+		$open[$indent]--;
 		$indent--;
 		echo str_pad("\t", $indent, "\t") . "</ul>";
 	}
@@ -4518,8 +4623,9 @@ function processEditSelection($subtab) {
 				break;
 			case 'imageinfo':
 				$count = getNPGCookie('imagesTab_imageCount');
-				if ($count)
-					$imagesTab_imageCount = $count;
+				if ($count) {
+									$imagesTab_imageCount = $count;
+				}
 				break;
 		}
 	}
@@ -5009,7 +5115,10 @@ function printCodeblockEdit($obj, $id) {
 			<?php
 			for ($i = $start; $i < $codeblockCount; $i++) {
 				?>
-				<li><a class="<?php if ($i == 1) echo 'first '; ?>cbt-<?php echo $id; ?>" id="<?php echo 'cbt' . $i . '-' . $id; ?>" onclick="cbclick(<?php echo $i . ',' . $id; ?>);" title="<?php printf(gettext('codeblock %u'), $i); ?>">&nbsp;&nbsp;<?php echo $i; ?>&nbsp;&nbsp;</a></li>
+				<li><a class="<?php if ($i == 1) {
+	echo 'first ';
+}
+?>cbt-<?php echo $id; ?>" id="<?php echo 'cbt' . $i . '-' . $id; ?>" onclick="cbclick(<?php echo $i . ',' . $id; ?>);" title="<?php printf(gettext('codeblock %u'), $i); ?>">&nbsp;&nbsp;<?php echo $i; ?>&nbsp;&nbsp;</a></li>
 				<?php
 			}
 			if (npg_loggedin(CODEBLOCK_RIGHTS)) {
@@ -5026,7 +5135,10 @@ function printCodeblockEdit($obj, $id) {
 		<?php
 		for ($i = $start; $i < $codeblockCount; $i++) {
 			?>
-			<div class="cbx-<?php echo $id; ?>" id="cb<?php echo $i . '-' . $id; ?>"<?php if ($i != 1) echo ' style="display:none"'; ?>>
+			<div class="cbx-<?php echo $id; ?>" id="cb<?php echo $i . '-' . $id; ?>"<?php if ($i != 1) {
+	echo ' style="display:none"';
+}
+?>>
 				<?php
 				if (!$i) {
 					?>
@@ -5320,7 +5432,10 @@ function printPageSelector($subpage, $rangeset, $script, $queryParams) {
 			<?php
 			foreach ($rangeset as $page => $range) {
 				?>
-				<option value="<?php echo $page; ?>" <?php if ($page == $subpage) echo ' selected="selected"'; ?>><?php echo $range; ?></option>
+				<option value="<?php echo $page; ?>" <?php if ($page == $subpage) {
+	echo ' selected="selected"';
+}
+?>><?php echo $range; ?></option>
 				<?php
 			}
 			?>
@@ -5851,10 +5966,12 @@ function checkAlbumParentid($albumname, $id, $recorder) {
 	if ($oldid != $id) {
 		$album->set('parentid', $id);
 		$album->save();
-		if (is_null($oldid))
-			$oldid = '<em>NULL</em>';
-		if (is_null($id))
-			$id = '<em>NULL</em>';
+		if (is_null($oldid)) {
+					$oldid = '<em>NULL</em>';
+		}
+		if (is_null($id)) {
+					$id = '<em>NULL</em>';
+		}
 		$msg = sprintf('Fixed album <strong>%1$s</strong>: parentid was %2$s should have been %3$s<br />', $albumname, $oldid, $id);
 		$recorder($msg, true);
 	}

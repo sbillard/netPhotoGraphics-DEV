@@ -39,7 +39,7 @@ class GraphLocation extends GraphObject
    */
   public function getStreet()
   {
-    return $this->getProperty('street');
+	return $this->getProperty('street');
   }
 
   /**
@@ -49,7 +49,7 @@ class GraphLocation extends GraphObject
    */
   public function getCity()
   {
-    return $this->getProperty('city');
+	return $this->getProperty('city');
   }
 
   /**
@@ -59,7 +59,7 @@ class GraphLocation extends GraphObject
    */
   public function getState()
   {
-    return $this->getProperty('state');
+	return $this->getProperty('state');
   }
 
   /**
@@ -69,7 +69,7 @@ class GraphLocation extends GraphObject
    */
   public function getCountry()
   {
-    return $this->getProperty('country');
+	return $this->getProperty('country');
   }
 
   /**
@@ -79,7 +79,7 @@ class GraphLocation extends GraphObject
    */
   public function getZip()
   {
-    return $this->getProperty('zip');
+	return $this->getProperty('zip');
   }
 
   /**
@@ -89,7 +89,7 @@ class GraphLocation extends GraphObject
    */
   public function getLatitude()
   {
-    return $this->getProperty('latitude');
+	return $this->getProperty('latitude');
   }
 
   /**
@@ -99,7 +99,7 @@ class GraphLocation extends GraphObject
    */
   public function getLongitude()
   {
-    return $this->getProperty('longitude');
+	return $this->getProperty('longitude');
   }
 
 }

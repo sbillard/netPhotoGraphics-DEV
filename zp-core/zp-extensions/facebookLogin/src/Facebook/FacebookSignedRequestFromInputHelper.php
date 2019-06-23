@@ -60,10 +60,10 @@ abstract class FacebookSignedRequestFromInputHelper
    */
   public function __construct($appId = null, $appSecret = null)
   {
-    $this->appId = FacebookSession::_getTargetAppId($appId);
-    $this->appSecret = FacebookSession::_getTargetAppSecret($appSecret);
+	$this->appId = FacebookSession::_getTargetAppId($appId);
+	$this->appSecret = FacebookSession::_getTargetAppSecret($appSecret);
 
-    $this->instantiateSignedRequest();
+	$this->instantiateSignedRequest();
   }
 
   /**
@@ -73,13 +73,13 @@ abstract class FacebookSignedRequestFromInputHelper
    */
   public function instantiateSignedRequest($rawSignedRequest = null)
   {
-    $rawSignedRequest = $rawSignedRequest ?: $this->getRawSignedRequest();
+	$rawSignedRequest = $rawSignedRequest ?: $this->getRawSignedRequest();
 
-    if (!$rawSignedRequest) {
-      return;
-    }
+	if (!$rawSignedRequest) {
+	  return;
+	}
 
-    $this->signedRequest = new SignedRequest($rawSignedRequest, $this->state, $this->appSecret);
+	$this->signedRequest = new SignedRequest($rawSignedRequest, $this->state, $this->appSecret);
   }
 
   /**
@@ -89,10 +89,10 @@ abstract class FacebookSignedRequestFromInputHelper
    */
   public function getSession()
   {
-    if ($this->signedRequest && $this->signedRequest->hasOAuthData()) {
-      return FacebookSession::newSessionFromSignedRequest($this->signedRequest);
-    }
-    return null;
+	if ($this->signedRequest && $this->signedRequest->hasOAuthData()) {
+	  return FacebookSession::newSessionFromSignedRequest($this->signedRequest);
+	}
+	return null;
   }
 
   /**
@@ -102,7 +102,7 @@ abstract class FacebookSignedRequestFromInputHelper
    */
   public function getSignedRequest()
   {
-    return $this->signedRequest;
+	return $this->signedRequest;
   }
 
   /**
@@ -112,7 +112,7 @@ abstract class FacebookSignedRequestFromInputHelper
    */
   public function getUserId()
   {
-    return $this->signedRequest ? $this->signedRequest->getUserId() : null;
+	return $this->signedRequest ? $this->signedRequest->getUserId() : null;
   }
 
   /**
@@ -129,11 +129,11 @@ abstract class FacebookSignedRequestFromInputHelper
    */
   public function getRawSignedRequestFromGet()
   {
-    if (isset($_GET['signed_request'])) {
-      return $_GET['signed_request'];
-    }
+	if (isset($_GET['signed_request'])) {
+	  return $_GET['signed_request'];
+	}
 
-    return null;
+	return null;
   }
 
   /**
@@ -143,11 +143,11 @@ abstract class FacebookSignedRequestFromInputHelper
    */
   public function getRawSignedRequestFromPost()
   {
-    if (isset($_POST['signed_request'])) {
-      return $_POST['signed_request'];
-    }
+	if (isset($_POST['signed_request'])) {
+	  return $_POST['signed_request'];
+	}
 
-    return null;
+	return null;
   }
 
   /**
@@ -157,10 +157,10 @@ abstract class FacebookSignedRequestFromInputHelper
    */
   public function getRawSignedRequestFromCookie()
   {
-    if (isset($_COOKIE['fbsr_' . $this->appId])) {
-      return $_COOKIE['fbsr_' . $this->appId];
-    }
-    return null;
+	if (isset($_COOKIE['fbsr_' . $this->appId])) {
+	  return $_COOKIE['fbsr_' . $this->appId];
+	}
+	return null;
   }
 
 }

@@ -34,9 +34,15 @@
 								$divider = '';
 							}
 							?>
-							<?php if (getNumAlbums() > 0) echo getNumAlbums() . ' ' . gettext("subalbums"); ?>
+							<?php if (getNumAlbums() > 0) {
+	echo getNumAlbums() . ' ' . gettext("subalbums");
+}
+?>
 							<?php echo $divider; ?>
-							<?php if (getNumImages() > 0) echo getNumImages() . ' ' . gettext("images"); ?>
+							<?php if (getNumImages() > 0) {
+	echo getNumImages() . ' ' . gettext("images");
+}
+?>
 						</li>
 					</ul>
 				</div>
@@ -53,7 +59,10 @@
 		?>
 		<div class="sixteen columns">
 			<?php printPageListWithNav('« ' . gettext('prev'), gettext('next') . ' »', false, true, 'pagination'); ?>
-			<?php if (!empty($zpskel_social)) include ("inc-social.php"); ?>
+			<?php if (!empty($zpskel_social)) {
+	include ("inc-social.php");
+}
+?>
 		</div>
 	</div>
 </div>

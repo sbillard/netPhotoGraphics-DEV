@@ -4,7 +4,7 @@
     </h3>
     <h3 style="float:right; padding-top: 22px;">
         <?php if (getOption('Allow_search')) {  
-        	printSearchForm(NULL, 'search', NULL, gettext('Search'), $_themeroot . '/images/filter.png'); 
-        } ?>
+			printSearchForm(NULL, 'search', NULL, gettext('Search'), $_themeroot . '/images/filter.png'); 
+		} ?>
     </h2>
 </div>

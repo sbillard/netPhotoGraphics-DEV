@@ -44,8 +44,9 @@ function saveOptions() {
 	}
 
 	$sorttype = strtolower(sanitize($_POST['subalbumsortby'], 3));
-	if ($sorttype == 'custom')
-		$sorttype = strtolower(sanitize($_POST['customalbumsort'], 3));
+	if ($sorttype == 'custom') {
+			$sorttype = strtolower(sanitize($_POST['customalbumsort'], 3));
+	}
 	setOption('search_album_sort_type', $sorttype);
 	if ($sorttype == 'random') {
 		setOption('search_album_sort_direction', 0);
@@ -287,13 +288,22 @@ function getOptionContent() {
 					<p>
 						<?php echo gettext('language specific tags'); ?>
 						<label>
-							<input type="radio" name="languageTagSearch"  value="" <?php if (getOption('languageTagSearch') == 0) echo ' checked="checked"'; ?> /><?php echo gettext('off'); ?>
+							<input type="radio" name="languageTagSearch"  value="" <?php if (getOption('languageTagSearch') == 0) {
+	echo ' checked="checked"';
+}
+?> /><?php echo gettext('off'); ?>
 						</label>
 						<label>
-							<input type="radio" name="languageTagSearch"  value="1" <?php if (getOption('languageTagSearch') == 1) echo ' checked="checked"'; ?> /><?php echo gettext('generic'); ?>
+							<input type="radio" name="languageTagSearch"  value="1" <?php if (getOption('languageTagSearch') == 1) {
+	echo ' checked="checked"';
+}
+?> /><?php echo gettext('generic'); ?>
 						</label>
 						<label>
-							<input type="radio" name="languageTagSearch"  value="2" <?php if (getOption('languageTagSearch') == 2) echo ' checked="checked"'; ?> /><?php echo gettext('specific'); ?>
+							<input type="radio" name="languageTagSearch"  value="2" <?php if (getOption('languageTagSearch') == 2) {
+	echo ' checked="checked"';
+}
+?> /><?php echo gettext('specific'); ?>
 						</label>
 					</p>
 					<p>
@@ -370,7 +380,10 @@ function getOptionContent() {
 						<?php printf(gettext('redo search after %s minutes.'), '<input type="textbox" size="4" name="search_cache_duration" value="' . getOption('search_cache_duration') . '" />'); ?>
 						<br />
 						<label>
-							<input type="checkbox" name="cache_random_search" value="1" <?php if (getoption('cache_random_search')) echo ' checked="checked"'; ?>>
+							<input type="checkbox" name="cache_random_search" value="1" <?php if (getoption('cache_random_search')) {
+	echo ' checked="checked"';
+}
+?>>
 							<?php echo gettext('cache searches which return randomly sorted items'); ?>
 						</label>
 					</td>

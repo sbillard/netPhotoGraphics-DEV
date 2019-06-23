@@ -1,8 +1,8 @@
 	<?php
 	switch ($_gallery_page) {
 		case 'album.php':
-			$comments_open = getOption('comment_form_albums');					// option of comment_form plugin for albums
-			$comments_allowed = $_current_album->getCommentsAllowed();		// value for current album
+			$comments_open = getOption('comment_form_albums'); // option of comment_form plugin for albums
+			$comments_allowed = $_current_album->getCommentsAllowed(); // value for current album
 			break;
 		case 'image.php':
 			$comments_open = getOption('comment_form_images');
@@ -22,14 +22,14 @@
 	}
 	?>
 
-	<?php if (($comments_open) && ($comments_allowed || (getCommentCount() > 0 ))){ ?>
+	<?php if (($comments_open) && ($comments_allowed || (getCommentCount() > 0))) { ?>
 		<a class="fadetoggler"><img src="<?php echo $_themeroot; ?>/images/icon-comment.png" alt="icon-comment" id="icon-comment" />
 		<?php
 		$num = getCommentCount();
 		if ($num == 0) {
 			echo gettext('No Comments');
 		} else {
-			echo sprintf(ngettext('%u Comment','%u Comments',$num), $num);
+			echo sprintf(ngettext('%u Comment', '%u Comments', $num), $num);
 		}
 		?>
 		</a>

@@ -315,8 +315,9 @@ function printContactForm($subject_override = '') {
 
 			if (getOption('contactform_confirm')) {
 				echo get_language_string(getOption("contactform_confirmtext"));
-				if (getOption('contactform_sendcopy'))
-					echo get_language_string(getOption("contactform_sendcopy_text"));
+				if (getOption('contactform_sendcopy')) {
+									echo get_language_string(getOption("contactform_sendcopy_text"));
+				}
 				?>
 				<div>
 					<?PHP
@@ -408,15 +409,15 @@ function printContactForm($subject_override = '') {
 			}
 		}
 		echo get_language_string(getOption("contactform_introtext"));
-		if (getOption('contactform_sendcopy'))
-			echo get_language_string(getOption("contactform_sendcopy_text"));
+		if (getOption('contactform_sendcopy')) {
+					echo get_language_string(getOption("contactform_sendcopy_text"));
+		}
 		$_processing_post = false;
 		include(getPlugin('contact_form/form.php', true));
 	}
 }
 
 /**
-
  * Helper function that checks if a field should be shown ("required" or "show") or omitted ("ommitt").
  * Only for the fields set by radioboxes.
  *

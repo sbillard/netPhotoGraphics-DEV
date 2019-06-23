@@ -348,9 +348,10 @@ function getNewsURL($titlelink = NULL) {
 	} else {
 		$obj = newArticle($titlelink);
 	}
-	if (!is_null($obj))
-		return $obj->getLink(true);
-}
+	if (!is_null($obj)) {
+			return $obj->getLink(true);
+	}
+	}
 
 /**
  * Prints the title of a news article as a full html link
@@ -917,11 +918,13 @@ function printNewsPageListWithNav($next, $prev, $nextprev = true, $class = 'page
 	global $_CMS, $_current_page;
 	$total = ceil($_CMS->getTotalArticles() / ARTICLES_PER_PAGE);
 	if ($total > 1) {
-		if ($navlen == 0)
-			$navlen = $total;
+		if ($navlen == 0) {
+					$navlen = $total;
+		}
 		$extralinks = 2;
-		if ($firstlast)
-			$extralinks = $extralinks + 2;
+		if ($firstlast) {
+					$extralinks = $extralinks + 2;
+		}
 		$len = floor(($navlen - $extralinks) / 2);
 		$j = max(round($extralinks / 2), min($_current_page - $len - (2 - round($extralinks / 2)), $total - $navlen + $extralinks - 1));
 		$ilim = min($total, max($navlen - round($extralinks / 2), $_current_page + floor($len)));
@@ -1000,8 +1003,9 @@ function getNextNewsURL() {
 	global $_CMS_current_article;
 	if (is_object($_CMS_current_article)) {
 		$article = $_CMS_current_article->getNextArticle();
-		if ($article)
-			return array("link" => $article->getLink(true), "title" => $article->getTitle());
+		if ($article) {
+					return array("link" => $article->getLink(true), "title" => $article->getTitle());
+		}
 	}
 	return false;
 }
@@ -1018,8 +1022,9 @@ function getPrevNewsURL() {
 	global $_CMS_current_article;
 	if (is_object($_CMS_current_article)) {
 		$article = $_CMS_current_article->getPrevArticle();
-		if ($article)
-			return array("link" => $article->getLink(true), "title" => $article->getTitle());
+		if ($article) {
+					return array("link" => $article->getLink(true), "title" => $article->getTitle());
+		}
 	}
 	return false;
 }
@@ -1337,8 +1342,9 @@ function printNestedMenu($option = 'list', $mode = NULL, $counter = TRUE, $css_i
 	if (is_null($css_class_active)) {
 		$css_class_active = 'menu-active';
 	}
-	if ($showsubs === true)
-		$showsubs = 9999999999;
+	if ($showsubs === true) {
+			$showsubs = 9999999999;
+	}
 	switch ($mode) {
 		case 'pages':
 			$items = $_CMS->getPages();
@@ -1383,11 +1389,14 @@ function printNestedMenu($option = 'list', $mode = NULL, $counter = TRUE, $css_i
 		rem_context(ZENPAGE_PAGE);
 	}
 
-	if (0 == count($items) + (int) ($mode == 'allcategories'))
-		return; // nothing to do
+	if (0 == count($items) + (int) ($mode == 'allcategories')) {
+			return;
+	}
+	// nothing to do
 	$startlist = $startlist && !($option == 'omit-top' || $option == 'list-sub');
-	if ($startlist)
-		echo '<ul id="' . $css_id . '">';
+	if ($startlist) {
+			echo '<ul id="' . $css_id . '">';
+	}
 	// if index link and if if with count
 	if (!empty($indexname)) {
 		if ($limit) {
@@ -1481,7 +1490,7 @@ function printNestedMenu($option = 'list', $mode = NULL, $counter = TRUE, $css_i
 							|| ($option == 'list' || $option == 'list-top') && $level == 1 // show the top level
 							|| (($option == 'list' || ($option == 'omit-top' && $level > 1)) && (($itemid == $currentitem_id) // current page
 							|| ($itemparentid == $currentitem_id) // offspring of current page
-							|| ($level < $mylevel && $level > 1 && (strpos($itemsortorder, $myparentsort) === 0) || $override )// direct ancestor
+							|| ($level < $mylevel && $level > 1 && (strpos($itemsortorder, $myparentsort) === 0) || $override)// direct ancestor
 							|| (($level == $mylevel) && ($currentitem_parentid == $itemparentid)) // sibling
 							)
 							) || ($option == 'list-sub' && ($itemparentid == $currentitem_id) // offspring of the current page
@@ -1498,7 +1507,7 @@ function printNestedMenu($option = 'list', $mode = NULL, $counter = TRUE, $css_i
 					$parents[$indent] = NULL;
 					while ($indent > $level) {
 						if ($open[$indent]) {
-							$open[$indent] --;
+							$open[$indent]--;
 							echo "</li>\n";
 						}
 						$indent--;
@@ -1507,17 +1516,17 @@ function printNestedMenu($option = 'list', $mode = NULL, $counter = TRUE, $css_i
 				} else { // level == indent, have not changed
 					if ($open[$indent]) { // level = indent
 						echo str_pad("\t", $indent, "\t") . "</li>\n";
-						$open[$indent] --;
+						$open[$indent]--;
 					} else {
 						echo "\n";
 					}
 				}
 				if ($open[$indent]) { // close an open LI if it exists
 					echo "</li>\n";
-					$open[$indent] --;
+					$open[$indent]--;
 				}
 				echo str_pad("\t", $indent - 1, "\t");
-				$open[$indent] ++;
+				$open[$indent]++;
 				$parents[$indent] = $itemid;
 				if ($level == 1) { // top level
 					$class = $css_class_topactive . $password_class;
@@ -1567,20 +1576,21 @@ function printNestedMenu($option = 'list', $mode = NULL, $counter = TRUE, $css_i
 	while ($indent > 1) {
 		if ($open[$indent]) {
 			echo "</li>\n";
-			$open[$indent] --;
+			$open[$indent]--;
 		}
 		$indent--;
 		echo str_pad("\t", $indent, "\t") . "</ul>";
 	}
 	if ($open[$indent]) {
 		echo "</li>\n";
-		$open[$indent] --;
+		$open[$indent]--;
 	} else {
 		echo "\n";
 	}
-	if ($startlist)
-		echo "</ul>\n";
-}
+	if ($startlist) {
+			echo "</ul>\n";
+	}
+	}
 
 /**
  * Prints the parent items breadcrumb navigation for pages or categories

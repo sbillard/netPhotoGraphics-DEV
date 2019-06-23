@@ -127,12 +127,14 @@ function kses_split2($matches) {
 	$elem = $matches[2];
 	$attrlist = $matches[3];
 
-	if (!@isset($allowed_html[strtolower($elem)]))
-		return '';
+	if (!@isset($allowed_html[strtolower($elem)])) {
+			return '';
+	}
 	//They are using a not allowed HTML element
 
-	if ($slash != '')
-		return "<$slash$elem>";
+	if ($slash != '') {
+			return "<$slash$elem>";
+	}
 	//No attributes are allowed for closing elements
 
 	return kses_attr("$slash$elem", $attrlist, $allowed_html, $allowed_protocols);
@@ -156,13 +158,15 @@ function kses_attr($element, $attr, $allowed_html, $allowed_protocols) {
 	//Is there a closing XHTML slash at the end of the attributes?
 
 	$xhtml_slash = '';
-	if (preg_match('%\s/\s*$%', $attr))
-		$xhtml_slash = ' /';
+	if (preg_match('%\s/\s*$%', $attr)) {
+			$xhtml_slash = ' /';
+	}
 
 	//Are any attributes allowed at all for this element?
 
-	if (@count($allowed_html[strtolower($element)]) == 0)
-		return "<$element$xhtml_slash>";
+	if (@count($allowed_html[strtolower($element)]) == 0) {
+			return "<$element$xhtml_slash>";
+	}
 
 	//Split it
 
@@ -175,26 +179,32 @@ function kses_attr($element, $attr, $allowed_html, $allowed_protocols) {
 
 	foreach ($attrarr as $arreach) {
 		if (!@isset($allowed_html[strtolower($element)]
-										[strtolower($arreach['name'])]))
-			continue; //the attribute is not allowed
+										[strtolower($arreach['name'])])) {
+					continue;
+		}
+		//the attribute is not allowed
 
 		$current = $allowed_html[strtolower($element)]
 						[strtolower($arreach['name'])];
 
-		if (!is_array($current))
-			$attr2 .= ' ' . $arreach['whole'];
+		if (!is_array($current)) {
+					$attr2 .= ' ' . $arreach['whole'];
+		}
 		//there are no checks
 		else {
 			//there are some checks
 			$ok = true;
-			foreach ($current as $currkey => $currval)
-				if (!kses_check_attr_val($arreach['value'], $arreach['vless'], $currkey, $currval)) {
+			foreach ($current as $currkey => $currval) {
+							if (!kses_check_attr_val($arreach['value'], $arreach['vless'], $currkey, $currval)) {
 					$ok = false;
+			}
 					break;
 				}
 
-			if ($ok)
-				$attr2 .= ' ' . $arreach['whole']; //it passed them
+			if ($ok) {
+							$attr2 .= ' ' . $arreach['whole'];
+			}
+			//it passed them
 		}
 	}
 	//Remove any "<" or ">" characters
@@ -249,8 +259,7 @@ function kses_hair($attr, $allowed_protocols) {
 				if (preg_match('/^\s+/', $attr)) { //valueless
 					$working = 1;
 					$mode = 0;
-					$attrarr[] = array
-							('name' => $attrname,
+					$attrarr[] = array('name' => $attrname,
 							'value' => '',
 							'whole' => $attrname,
 							'vless' => 'y');
@@ -269,8 +278,7 @@ function kses_hair($attr, $allowed_protocols) {
 						$thisval = kses_bad_protocol($match[1], $allowed_protocols);
 					}
 
-					$attrarr[] = array
-							('name' => $attrname,
+					$attrarr[] = array('name' => $attrname,
 							'value' => $thisval,
 							'whole' => "$attrname=\"$thisval\"",
 							'vless' => 'n');
@@ -288,8 +296,7 @@ function kses_hair($attr, $allowed_protocols) {
 						$thisval = kses_bad_protocol($match[1], $allowed_protocols);
 					}
 
-					$attrarr[] = array
-							('name' => $attrname,
+					$attrarr[] = array('name' => $attrname,
 							'value' => $thisval,
 							'whole' => "$attrname='$thisval'",
 							'vless' => 'n');
@@ -307,8 +314,7 @@ function kses_hair($attr, $allowed_protocols) {
 						$thisval = kses_bad_protocol($match[1], $allowed_protocols);
 					}
 
-					$attrarr[] = array
-							('name' => $attrname,
+					$attrarr[] = array('name' => $attrname,
 							'value' => $thisval,
 							'whole' => "$attrname=\"$thisval\"",
 							'vless' => 'n');
@@ -324,16 +330,16 @@ function kses_hair($attr, $allowed_protocols) {
 			$mode = 0;
 		}
 	}
-	if ($mode == 1)
-	/*
+	if ($mode == 1) {
+		/*
 	 * special case, for when the attribute list ends with a valueless
 	 * attribute like "selected"
 	 */
-		$attrarr[] = array
-				('name' => $attrname,
+		$attrarr[] = array('name' => $attrname,
 				'value' => '',
 				'whole' => $attrname,
 				'vless' => 'y');
+	}
 	return $attrarr;
 }
 
@@ -358,8 +364,9 @@ function kses_check_attr_val($value, $vless, $checkname, $checkvalue) {
 			 * greater than the given value. This can be used to avoid Buffer Overflows
 			 * in WWW clients and various Internet servers.
 			 */
-			if (strlen($value) > $checkvalue)
-				$ok = false;
+			if (strlen($value) > $checkvalue) {
+							$ok = false;
+			}
 			break;
 
 		case 'minlen':
@@ -367,8 +374,9 @@ function kses_check_attr_val($value, $vless, $checkname, $checkvalue) {
 			 * The minlen check makes sure that the attribute value has a length not
 			 * smaller than the given value.
 			 */
-			if (strlen($value) < $checkvalue)
-				$ok = false;
+			if (strlen($value) < $checkvalue) {
+							$ok = false;
+			}
 			break;
 
 		case 'maxval':
@@ -379,10 +387,12 @@ function kses_check_attr_val($value, $vless, $checkname, $checkvalue) {
 			 * value is not greater than the given value.
 			 * This check can be used to avoid Denial of Service attacks.
 			 */
-			if (!preg_match('/^\s{0,6}[0-9]{1,6}\s{0,6}$/', $value))
-				$ok = false;
-			if ($value > $checkvalue)
-				$ok = false;
+			if (!preg_match('/^\s{0,6}[0-9]{1,6}\s{0,6}$/', $value)) {
+							$ok = false;
+			}
+			if ($value > $checkvalue) {
+							$ok = false;
+			}
 			break;
 
 		case 'minval':
@@ -390,10 +400,12 @@ function kses_check_attr_val($value, $vless, $checkname, $checkvalue) {
 			 * The minval check checks that the attribute value is a positive integer,
 			 * and that it is not smaller than the given value.
 			 */
-			if (!preg_match('/^\s{0,6}[0-9]{1,6}\s{0,6}$/', $value))
-				$ok = false;
-			if ($value < $checkvalue)
-				$ok = false;
+			if (!preg_match('/^\s{0,6}[0-9]{1,6}\s{0,6}$/', $value)) {
+							$ok = false;
+			}
+			if ($value < $checkvalue) {
+							$ok = false;
+			}
 			break;
 
 		case 'valueless':
@@ -403,8 +415,9 @@ function kses_check_attr_val($value, $vless, $checkname, $checkvalue) {
 			 * is a "y" or a "Y", the attribute must not have a value.
 			 * If the given value is an "n" or an "N", the attribute must have one.
 			 */
-			if (strtolower($checkvalue) != $vless)
-				$ok = false;
+			if (strtolower($checkvalue) != $vless) {
+							$ok = false;
+			}
 			break;
 	}
 	return $ok;
@@ -532,16 +545,18 @@ function kses_bad_protocol_once2($matches) {
 	//deals with Opera "feature"
 	$string2 = strtolower($string2);
 	$allowed = false;
-	foreach ($allowed_protocols as $one_protocol)
-		if (strtolower($one_protocol) == $string2) {
+	foreach ($allowed_protocols as $one_protocol) {
+			if (strtolower($one_protocol) == $string2) {
 			$allowed = true;
+	}
 			break;
 		}
-	if ($allowed)
-		return "$string2:";
-	else
-		return '';
-}
+	if ($allowed) {
+			return "$string2:";
+	} else {
+			return '';
+	}
+	}
 
 /**
  * This function normalizes HTML entities. It will convert "AT&T" to the correct

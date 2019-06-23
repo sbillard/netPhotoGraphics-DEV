@@ -1,6 +1,6 @@
 <?php
 // force UTF-8 Ø
-require_once (CORE_SERVERPATH .  PLUGIN_FOLDER . '/image_album_statistics.php');
+require_once (CORE_SERVERPATH . PLUGIN_FOLDER . '/image_album_statistics.php');
 npgFilters::register('themeSwitcher_head', 'switcher_head');
 npgFilters::register('themeSwitcher_Controllink', 'switcher_controllink');
 
@@ -10,9 +10,10 @@ $persona = safe_glob('*', GLOB_ONLYDIR);
 chdir($cwd);
 $personalities = array();
 foreach ($persona as $personality) {
-	if (file_exists(SERVERPATH . '/' . THEMEFOLDER . '/garland/' . $personality . '/functions.php'))
-		$personalities[ucfirst(str_replace('_', ' ', $personality))] = $personality;
-}
+	if (file_exists(SERVERPATH . '/' . THEMEFOLDER . '/garland/' . $personality . '/functions.php')) {
+			$personalities[ucfirst(str_replace('_', ' ', $personality))] = $personality;
+	}
+	}
 
 if (!OFFSET_PATH) {
 	if (class_exists('themeSwitcher')) {
@@ -136,7 +137,10 @@ function commonNewsLoop($paged) {
 			$newstypedisplay .= ' <small><em>' . gettext('sticky') . '</em></small>';
 		}
 		?>
-		<div class="newsarticle<?php if (stickyNews()) echo ' sticky'; ?>">
+		<div class="newsarticle<?php if (stickyNews()) {
+	echo ' sticky';
+}
+?>">
 			<h3><?php printNewsURL(); ?><?php echo " <span class='newstype'>[" . $newstypedisplay . "]</span>"; ?></h3>
 			<div class="newsarticlecredit">
 				<span class="newsarticlecredit-left">

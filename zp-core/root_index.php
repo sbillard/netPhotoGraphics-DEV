@@ -38,8 +38,9 @@ if (!$_themeScript = @$_SERVER['SCRIPT_FILENAME']) {
 $_contents = @file_get_contents(dirname($_themeScript) . '/DATA_FOLDER/CONFIGFILE');
 
 if ($_contents) {
-	if (strpos($_contents, '<?php') !== false)
-		$_contents = '?>' . $_contents;
+	if (strpos($_contents, '<?php') !== false) {
+			$_contents = '?>' . $_contents;
+	}
 	@eval($_contents);
 	if (isset($conf)) {
 		$_conf_vars = $conf;

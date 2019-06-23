@@ -35,10 +35,12 @@ scriptLoader(CORE_SERVERPATH . 'admin-statistics.css');
  */
 
 function gallerystats_filesize_r($path) {
-	if (!file_exists($path))
-		return 0;
-	if (is_file($path))
-		return filesize($path);
+	if (!file_exists($path)) {
+			return 0;
+	}
+	if (is_file($path)) {
+			return filesize($path);
+	}
 	$ret = 0;
 	foreach (safe_glob($path . "/*") as $fn) {
 		$ret += gallerystats_filesize_r($fn);
@@ -238,8 +240,9 @@ function printBarGraph($sortorder = "mostimages", $type = "albums", $from_number
 			if (!empty($albumObjects)) {
 				foreach ($albumObjects as $key => $albumobj) {
 					$itemssorted[$key] = $albumobj->getData();
-					if ($albumobj->loaded)
-						$itemssorted[$key]['imagenumber'] = $albumobj->getNumImages();
+					if ($albumobj->loaded) {
+											$itemssorted[$key]['imagenumber'] = $albumobj->getNumImages();
+					}
 				}
 			}
 
@@ -564,7 +567,7 @@ echo '</head>';
 				</ul>
 
 				<?php
-				if (!isset($_GET['stats']) AND ! isset($_GET['fulllist'])) {
+				if (!isset($_GET['stats']) AND !isset($_GET['fulllist'])) {
 					?>
 					<ul class="statistic_navlist">
 						<li><strong><?php echo gettext("Images"); ?></strong>

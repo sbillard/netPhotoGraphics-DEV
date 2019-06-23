@@ -581,8 +581,9 @@ class xmpMetadata {
 		global $_supported_images, $_images_classes;
 		$list = array_diff($_supported_images, array('gif', 'wbmp', 'wbm', 'bmp'));
 		foreach ($_images_classes as $suffix => $type) {
-			if ($type == 'Video')
-				$list[] = $suffix;
+			if ($type == 'Video') {
+							$list[] = $suffix;
+			}
 		}
 		$listi = array();
 		natcasesort($list);
@@ -850,11 +851,13 @@ class xmpMetadata {
 		$n = explode('/', $element);
 		$v = sprintf('%f', $n[0] / $n[1]);
 		for ($i = strlen($v) - 1; $i > 1; $i--) {
-			if ($v{$i} != '0')
-				break;
+			if ($v{$i} != '0') {
+							break;
+			}
 		}
-		if ($v{$i} == '.')
-			$i--;
+		if ($v{$i} == '.') {
+					$i--;
+		}
 		return substr($v, 0, $i + 1);
 	}
 

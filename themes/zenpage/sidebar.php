@@ -113,7 +113,7 @@ if (getOption("zenpage_contactpage") && extensionEnabled('contact_form')) {
 	</div>
 	<?php
 }
-if ((function_exists("printUserLogin_out") ) || !npg_loggedin() && function_exists('printRegistrationForm') || class_exists('mobileTheme')) {
+if ((function_exists("printUserLogin_out")) || !npg_loggedin() && function_exists('printRegistrationForm') || class_exists('mobileTheme')) {
 	?>
 	<div class="menu">
 		<ul>

@@ -13,10 +13,12 @@ class ThemeOptions {
 
 	function __construct() {
 
-		if (!extensionEnabled('zenpage'))
-			enableExtension('zenpage', 8291, true);
-		if (!extensionEnabled('print_album_menu'))
-			enableExtension('print_album_menu', 1025, true);
+		if (!extensionEnabled('zenpage')) {
+					enableExtension('zenpage', 8291, true);
+		}
+		if (!extensionEnabled('print_album_menu')) {
+					enableExtension('print_album_menu', 1025, true);
+		}
 
 		setThemeOptionDefault('Use_thickbox', 1);
 		setThemeOptionDefault('Allow_search', 1);

@@ -56,8 +56,9 @@ if (isset($_POST['processed'])) {
 			}
 		} else {
 			// upload to the root
-			if (!npg_loggedin(MANAGE_ALL_ALBUM_RIGHTS))
-				$error = UPLOAD_ERR_BLOCKED;
+			if (!npg_loggedin(MANAGE_ALL_ALBUM_RIGHTS)) {
+							$error = UPLOAD_ERR_BLOCKED;
+			}
 		}
 
 		if (!$error) {
@@ -91,8 +92,10 @@ if (isset($_POST['processed'])) {
 					$error = npgFilters::apply('check_upload_quota', UPLOAD_ERR_OK, $tmp_name);
 					if (!$error) {
 						if (Gallery::imageObjectClass($name)) {
-							if (strrpos($soename, '.') === 0)
-								$soename = md5($name) . $soename; // soe stripped out all the name.
+							if (strrpos($soename, '.') === 0) {
+															$soename = md5($name) . $soename;
+							}
+							// soe stripped out all the name.
 							if (!$error) {
 								$uploadfile = $targetPath . '/' . internalToFilesystem($soename);
 								if (file_exists($uploadfile)) {

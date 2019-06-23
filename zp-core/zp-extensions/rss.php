@@ -284,9 +284,7 @@ function getRSSLink($option, $lang = NULL, $addl = NULL) {
 	}
 	if (is_array($link)) {
 		switch (defined('LOCALE_TYPE') ? LOCALE_TYPE : 0) {
-			case 2:
-			case 1:
-				break;
+			case 2 : case 1 : break;
 			default:
 				$link['lang'] = $lang;
 				break;
@@ -364,8 +362,9 @@ class RSS extends feed {
 	function __construct($options = NULL) {
 		global $_gallery, $_authority, $_current_admin_obj, $_loggedin, $_gallery_page;
 		$_gallery_page = 'RSS.php';
-		if (empty($options))
-			self::feed404();
+		if (empty($options)) {
+					self::feed404();
+		}
 
 		$this->feedtype = $options['rss'];
 		parent::__construct($options);

@@ -725,10 +725,12 @@ class sitemap {
 				foreach ($pages as $page) {
 					$pageobj = newPage($page['titlelink']);
 					$lastchange = $date = substr($pageobj->getPublishDate(), 0, 10);
-					if (!is_null($pageobj->getLastchange()))
-						$lastchange = substr($pageobj->getLastchange(), 0, 10);
-					if ($date > $lastchange)
-						$date = $lastchange;
+					if (!is_null($pageobj->getLastchange())) {
+											$lastchange = substr($pageobj->getLastchange(), 0, 10);
+					}
+					if ($date > $lastchange) {
+											$date = $lastchange;
+					}
 					if (!$pageobj->isProtected()) {
 						$base = $pageobj->getLink();
 						switch (SITEMAP_LOCALE_TYPE) {
@@ -840,10 +842,12 @@ class sitemap {
 				foreach ($articles as $article) {
 					$articleobj = newArticle($article['titlelink']);
 					$lastchange = $date = substr($articleobj->getPublishDate(), 0, 10);
-					if (!is_null($articleobj->getLastchange()))
-						$lastchange = substr($articleobj->getLastchange(), 0, 10);
-					if ($date > $lastchange)
-						$date = $lastchange;
+					if (!is_null($articleobj->getLastchange())) {
+											$lastchange = substr($articleobj->getLastchange(), 0, 10);
+					}
+					if ($date > $lastchange) {
+											$date = $lastchange;
+					}
 					if (!$articleobj->inProtectedCategory()) {
 						$base = $articleobj->getLink();
 						switch (SITEMAP_LOCALE_TYPE) {

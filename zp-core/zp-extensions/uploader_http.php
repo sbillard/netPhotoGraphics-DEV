@@ -19,7 +19,7 @@ if (npg_loggedin(UPLOAD_RIGHTS)) {
 }
 
 function httpUploadHandler($uploadHandlers) {
-	$uploadHandlers['http'] = CORE_SERVERPATH .  PLUGIN_FOLDER . '/uploader_http';
+	$uploadHandlers['http'] = CORE_SERVERPATH . PLUGIN_FOLDER . '/uploader_http';
 	return $uploadHandlers;
 }
 

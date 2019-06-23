@@ -1,4 +1,7 @@
-<?php if (!defined('WEBPATH')) die(); ?>
+<?php if (!defined('WEBPATH')) {
+	die();
+}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
@@ -17,8 +20,9 @@
 				$zpmas_metatitle = $metatitle;
 				$zpmas_metadesc = truncate_string(getBareGalleryDesc(), 150, '...');
 				$galleryactive = true;
-				if ($zpmas_ss)
-					require_once (CORE_SERVERPATH . PLUGIN_FOLDER . '/image_album_statistics.php');
+				if ($zpmas_ss) {
+									require_once (CORE_SERVERPATH . PLUGIN_FOLDER . '/image_album_statistics.php');
+				}
 				break;
 			case 'album.php':
 			case 'favorites.php':
@@ -264,6 +268,9 @@
 					printSearchForm('', 'searchform', '', gettext('Search'), "$_themeroot/images/media-eject.png", null, null, null);
 				}
 				?>
-				<h1 id="logo"<?php if (strlen($zpmas_logo) > 0) echo ' class="image-logo"'; ?>><a href="<?php echo $zpmas_homelink; ?>" title="<?php echo gettext("Gallery Index"); ?>"><?php echo getGalleryTitle(); ?></a></h1>
+				<h1 id="logo"<?php if (strlen($zpmas_logo) > 0) {
+	echo ' class="image-logo"';
+}
+?>><a href="<?php echo $zpmas_homelink; ?>" title="<?php echo gettext("Gallery Index"); ?>"><?php echo getGalleryTitle(); ?></a></h1>
 			</div>
 		</div>

@@ -172,7 +172,10 @@ class cmsFilters {
 			<span id="themeSwitcher_zenpage" title="<?php echo gettext("Enable Zenpage CMS plugin"); ?>">
 				<label>
 					Zenpage
-					<input type="checkbox" name="cmsSwitch" id="cmsSwitch" value="1"<?php if (extensionEnabled('zenpage')) echo $disabled . ' checked="checked"'; ?> onclick="switchCMS(this.checked);" />
+					<input type="checkbox" name="cmsSwitch" id="cmsSwitch" value="1"<?php if (extensionEnabled('zenpage')) {
+	echo $disabled . ' checked="checked"';
+}
+?> onclick="switchCMS(this.checked);" />
 				</label>
 			</span>
 			<?php

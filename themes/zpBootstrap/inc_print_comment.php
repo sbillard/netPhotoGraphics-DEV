@@ -1,8 +1,8 @@
 <?php
 switch ($_gallery_page) {
 	case 'album.php':
-		$comments_open = getOption('comment_form_albums');		 // option of comment_form plugin for albums
-		$comments_allowed = $_current_album->getCommentsAllowed();	// value for current album
+		$comments_open = getOption('comment_form_albums'); // option of comment_form plugin for albums
+		$comments_allowed = $_current_album->getCommentsAllowed(); // value for current album
 		break;
 	case 'image.php':
 		$comments_open = getOption('comment_form_images');
@@ -22,7 +22,7 @@ switch ($_gallery_page) {
 }
 ?>
 
-<?php if (($comments_open) && (($comments_allowed) || (getCommentCount() > 0 ))) { ?>
+<?php if (($comments_open) && (($comments_allowed) || (getCommentCount() > 0))) { ?>
 	<div id="comment_accordion" class="panel-group" role="tablist">
 		<div class="panel panel-default">
 			<div id="heading" class="panel-heading" role="tab">

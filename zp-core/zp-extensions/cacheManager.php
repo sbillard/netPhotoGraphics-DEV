@@ -309,9 +309,18 @@ class cacheManager {
 							?>
 							<span class="nowrap"><?php echo gettext('Watermark'); ?> <input type="textbox" size="20" name="cacheManager[<?php echo $key; ?>][wmk]" value="<?php echo $wmk; ?>" /></span>
 							<br />
-							<span class="nowrap"><?php echo gettext('MaxSpace'); ?> <input type="checkbox"  name="cacheManager[<?php echo $key; ?>][maxspace]" value="1"<?php if (isset($cache['maxspace']) && $cache['maxspace']) echo ' checked="checked"'; ?> /></span>
-							<span class="nowrap"><?php echo gettext('Thumbnail'); ?> <input type="checkbox"  name="cacheManager[<?php echo $key; ?>][thumb]" value="1"<?php if (isset($cache['thumb']) && $cache['thumb']) echo ' checked="checked"'; ?> /></span>
-							<span class="nowrap"><?php echo gettext('Grayscale'); ?> <input type="checkbox"  name="cacheManager[<?php echo $key; ?>][gray]" value="gray"<?php if (isset($cache['gray']) && $cache['gray']) echo ' checked="checked"'; ?> /></span>
+							<span class="nowrap"><?php echo gettext('MaxSpace'); ?> <input type="checkbox"  name="cacheManager[<?php echo $key; ?>][maxspace]" value="1"<?php if (isset($cache['maxspace']) && $cache['maxspace']) {
+	echo ' checked="checked"';
+}
+?> /></span>
+							<span class="nowrap"><?php echo gettext('Thumbnail'); ?> <input type="checkbox"  name="cacheManager[<?php echo $key; ?>][thumb]" value="1"<?php if (isset($cache['thumb']) && $cache['thumb']) {
+	echo ' checked="checked"';
+}
+?> /></span>
+							<span class="nowrap"><?php echo gettext('Grayscale'); ?> <input type="checkbox"  name="cacheManager[<?php echo $key; ?>][gray]" value="gray"<?php if (isset($cache['gray']) && $cache['gray']) {
+	echo ' checked="checked"';
+}
+?> /></span>
 						</div>
 						<br />
 					</div>

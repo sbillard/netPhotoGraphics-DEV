@@ -1,6 +1,7 @@
 <?php
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 // force UTF-8 Ø
 ?>
 <!DOCTYPE html>

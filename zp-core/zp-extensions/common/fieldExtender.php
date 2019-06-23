@@ -131,10 +131,12 @@ class fieldExtender {
 						if ($utf8mb4 && ($dbType == 'TEXT' || $dbType == 'LONGTEXT')) {
 							$sql .= ' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci';
 						}
-						if (isset($newfield['attribute']))
-							$sql .= ' ' . $newfield['attribute'];
-						if (isset($newfield['default']))
-							$sql .= ' DEFAULT ' . $newfield['default'];
+						if (isset($newfield['attribute'])) {
+													$sql .= ' ' . $newfield['attribute'];
+						}
+						if (isset($newfield['default'])) {
+													$sql .= ' DEFAULT ' . $newfield['default'];
+						}
 						$sql .= " COMMENT 'optional_$me'";
 						if ((!$cmd || setupQuery($sql)) && in_array($newfield['table'], array('albums', 'images', 'news', 'news_categories', 'pages'))) {
 							$fields[] = strtolower($newfield['name']);
@@ -401,8 +403,9 @@ class fieldExtender {
 		foreach ($fields as $field) {
 			if ($field['table'] == $object->table) {
 				$newdata = fieldExtender::_saveHandler($object, NULL, $field);
-				if (!is_null($newdata))
-					$object->set($field['name'], $newdata);
+				if (!is_null($newdata)) {
+									$object->set($field['name'], $newdata);
+				}
 			}
 		}
 		return $object;
@@ -536,8 +539,9 @@ value="' . $item . '" />';
 				$object = $_current_album;
 			} else if (in_context(ZENPAGE_NEWS_ARTICLE)) {
 				$object = $_CMS_current_article;
-				if ($_CMS_current_category)
-					$objects[$tables[] = 'news_categories'] = $_CMS_current_category;
+				if ($_CMS_current_category) {
+									$objects[$tables[] = 'news_categories'] = $_CMS_current_category;
+				}
 			} else if (in_context(ZENPAGE_PAGE)) {
 				$object = $_CMS_current_page;
 			} else if (in_context(ZENPAGE_NEWS_CATEGORY)) {

@@ -213,8 +213,9 @@ class create_album {
 	 */
 	static function edit($html, $userobj, $id, $background, $current) {
 		global $_current_admin_obj, $_gallery, $__creatAlbumList, $_create_album_html;
-		if (!$userobj->getValid())
-			return $html;
+		if (!$userobj->getValid()) {
+					return $html;
+		}
 		$rights = $userobj->getRights();
 		$user = $userobj->getUser();
 		$enabled = in_array($user, $__creatAlbumList);

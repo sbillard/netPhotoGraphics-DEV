@@ -1,8 +1,9 @@
 <?php
 // force UTF-8 Ø
 
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,7 +32,10 @@ if (!defined('WEBPATH'))
 				<div class="content-primary">
 					<h2 class="breadcrumb"><a href="<?php echo getGalleryIndexURL(); ?>"><?php echo gettext('Gallery'); ?></a> <?php printParentBreadcrumb('', '', ''); ?> <?php printAlbumTitle(); ?></h2>
 					<?php printAlbumDesc(); ?>
-					<?php if (hasPrevPage() || hasNextPage()) printPageListWithNav(gettext("prev"), gettext("next"), false, true, 'pagelist', NULL, true, 7); ?>
+					<?php if (hasPrevPage() || hasNextPage()) {
+	printPageListWithNav(gettext("prev"), gettext("next"), false, true, 'pagelist', NULL, true, 7);
+}
+?>
 					<ul data-role="listview" data-inset="true">
 						<?php while (next_album()): ?>
 							<li>
@@ -75,8 +79,9 @@ if (!defined('WEBPATH'))
 					</div>
 					<br class="clearall">
 					<?php
-					if (hasPrevPage() || hasNextPage())
-						printPageListWithNav(gettext("prev"), gettext("next"), false, true, 'pagelist', NULL, true, 7);
+					if (hasPrevPage() || hasNextPage()) {
+											printPageListWithNav(gettext("prev"), gettext("next"), false, true, 'pagelist', NULL, true, 7);
+					}
 					if (function_exists('printSlideShowLink')) {
 						echo '<span id="slideshowlink">';
 						printSlideShowLink();

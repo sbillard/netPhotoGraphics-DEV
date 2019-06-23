@@ -730,8 +730,9 @@ class AlbumBase extends MediaObject {
 	 */
 	function copy($newfolder) {
 		// album name to destination folder
-		if (substr($newfolder, -1, 1) != '/')
-			$newfolder .= '/';
+		if (substr($newfolder, -1, 1) != '/') {
+					$newfolder .= '/';
+		}
 		$newfolder .= basename($this->localpath);
 		// First, ensure the new base directory exists.
 		$oldfolder = $this->name;
@@ -1005,8 +1006,9 @@ class AlbumBase extends MediaObject {
 				if ($uralbum->name == $this->name) {
 					if (isset($_admin_owner_list[$uralbum->name])) {
 						$this->subrights = $_admin_owner_list[$uralbum->name] | MANAGED_OBJECT_MEMBER;
-						if (npg_loggedin(VIEW_UNPUBLISHED_RIGHTS))
-							$this->subrights = $this->subrights | MANAGED_OBJECT_RIGHTS_VIEW;
+						if (npg_loggedin(VIEW_UNPUBLISHED_RIGHTS)) {
+													$this->subrights = $this->subrights | MANAGED_OBJECT_RIGHTS_VIEW;
+						}
 					}
 				} else {
 					$this->subrights = $uralbum->subRights();
@@ -1050,8 +1052,9 @@ class AlbumBase extends MediaObject {
 			}
 		}
 		$sql = "SELECT * FROM " . prefix("images") . " WHERE `albumid`= " . $this->getID() . ' ORDER BY ' . $sortkey;
-		if ($order)
-			$sql .= ' DESC';
+		if ($order) {
+					$sql .= ' DESC';
+		}
 		$result = query($sql);
 		$results = array();
 		while ($row = db_fetch_assoc($result)) {
@@ -1094,8 +1097,9 @@ class AlbumBase extends MediaObject {
 	protected function updateParent($newfolder) {
 		$this->name = $newfolder;
 		$parentname = dirname($newfolder);
-		if ($parentname == '/' || $parentname == '.')
-			$parentname = '';
+		if ($parentname == '/' || $parentname == '.') {
+					$parentname = '';
+		}
 		if (empty($parentname)) {
 			$this->set('parentid', NULL);
 		} else {
@@ -1110,8 +1114,9 @@ class AlbumBase extends MediaObject {
 	 * load accurate values into the database.
 	 */
 	function preLoad() {
-		if ($this->isDynamic())
-			return;
+		if ($this->isDynamic()) {
+					return;
+		}
 		$images = $this->getImages(0);
 		$subalbums = $this->getAlbums(0);
 		foreach ($subalbums as $dir) {
@@ -1260,8 +1265,9 @@ class Album extends AlbumBase {
 	 */
 	function getAlbums($page = 0, $sorttype = null, $sortdirection = null, $care = true, $mine = NULL) {
 		global $_gallery;
-		if (!$this->exists)
-			return array();
+		if (!$this->exists) {
+					return array();
+		}
 		if ($mine || is_null($this->subalbums) || $care && $sorttype . $sortdirection !== $this->lastsubalbumsort) {
 			if (is_null($sorttype)) {
 				$sorttype = $this->getSortType('album');
@@ -1455,8 +1461,9 @@ class Album extends AlbumBase {
 	 * @param bool $deep set to true for a thorough cleansing
 	 */
 	function garbageCollect($deep = false) {
-		if (is_null($this->images))
-			$this->getImages();
+		if (is_null($this->images)) {
+					$this->getImages();
+		}
 		$result = query("SELECT * FROM " . prefix('images') . " WHERE `albumid` = '" . $this->id . "'");
 		$dead = array();
 		$live = array();
@@ -1517,8 +1524,9 @@ class Album extends AlbumBase {
 			foreach ($this->getAlbums(0) as $dir) {
 				$subalbum = newAlbum($dir);
 				// Could have been deleted if it didn't exist above...
-				if ($subalbum->exists)
-					$subalbum->garbageCollect($deep);
+				if ($subalbum->exists) {
+									$subalbum->garbageCollect($deep);
+				}
 			}
 		}
 	}
@@ -1663,8 +1671,9 @@ class dynamicAlbum extends AlbumBase {
 	 */
 	function getAlbums($page = 0, $sorttype = null, $sortdirection = null, $care = true, $mine = NULL) {
 		global $_gallery;
-		if (!$this->exists)
-			return array();
+		if (!$this->exists) {
+					return array();
+		}
 		if (is_null($sorttype)) {
 			$sorttype = $this->getSortType('album');
 		}
@@ -1730,8 +1739,9 @@ class dynamicAlbum extends AlbumBase {
 	 * @return array
 	 */
 	function getImages($page = 0, $firstPageCount = 0, $sorttype = null, $sortdirection = null, $care = true, $mine = NULL) {
-		if (!$this->exists)
-			return array();
+		if (!$this->exists) {
+					return array();
+		}
 		if (is_null($sorttype)) {
 			$sorttype = $this->getSortType();
 		}

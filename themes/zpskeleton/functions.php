@@ -48,8 +48,9 @@ if (!$zpskel_disablewarning) {
 // warning about saving theme options
 if ($optionsnotsaved) {
 	$options_message = '<div><h4>Please note:</h4><p>You must set zpSkeleton theme options at least once to create the theme variables.  This is just a warning and can be switched off in the theme options</p></div>';
-} else
+} else {
 	$options_message = '';
+}
 
 setOption('comment_form_rss', false, false); // displayed elsewhere.
 setOption('albums_per_row', 3, false);
@@ -57,29 +58,37 @@ setOption('images_per_row', 8, false);
 
 // Pull theme option variables | set if null
 $zpskel_debuguser = getOption('zpskel_debuguser');
-if (is_null($zpskel_debuguser))
+if (is_null($zpskel_debuguser)) {
 	$zpskel_debuguser = false;
+}
 $zpskel_usenews = getOption('zpskel_usenews');
-if (is_null($zpskel_usenews))
+if (is_null($zpskel_usenews)) {
 	$zpskel_usenews = true;
+}
 $zpskel_pptarget = getOption('zpskel_pptarget');
-if (is_null($zpskel_pptarget))
+if (is_null($zpskel_pptarget)) {
 	$zpskel_pptarget = 'sized';
+}
 $zpskel_strip = getOption('zpskel_strip');
-if (is_null($zpskel_strip))
+if (is_null($zpskel_strip)) {
 	$zpskel_strip = 'latest';
+}
 $zpskel_download = getOption('zpskel_download');
-if (is_null($zpskel_download))
+if (is_null($zpskel_download)) {
 	$zpskel_download = true;
+}
 $zpskel_thumbsize = getOption('zpskel_thumbsize');
-if (is_null($zpskel_thumbsize))
+if (is_null($zpskel_thumbsize)) {
 	$zpskel_thumbsize = 'large';
+}
 $zpskel_archive = getOption('zpskel_archive');
-if (is_null($zpskel_archive))
+if (is_null($zpskel_archive)) {
 	$zpskel_archive = true;
+}
 $zenpage_homepage = getOption('zenpage_homepage');
-if (is_null($zenpage_homepage))
+if (is_null($zenpage_homepage)) {
 	$zenpage_homepage = 'none';
+}
 
 // include useragent detector, set variable for mobile users...
 require_once('inc-browser.php');
@@ -91,8 +100,9 @@ if ($browser->isMobile()) {
 }
 
 // include image statistics plugin if image strip set to latest images
-if ($zpskel_strip == 'latest')
+if ($zpskel_strip == 'latest') {
 	require_once (CORE_SERVERPATH . PLUGIN_FOLDER . '/image_album_statistics.php');
+}
 
 // Sets expanded titles (breadcrumbs) for Title meta
 function getTitleBreadcrumb($before = ' ( ', $between = ' / ', $after = ' ) ') {
@@ -121,8 +131,9 @@ function getTitleBreadcrumb($before = ' ( ', $between = ' / ', $after = ' ) ') {
 		$titlebreadcrumb .= $before;
 		$i = 0;
 		foreach ($parents as $parent) {
-			if ($i > 0)
-				$titlebreadcrumb .= $between;
+			if ($i > 0) {
+							$titlebreadcrumb .= $between;
+			}
 			$titlebreadcrumb .= $parent->getTitle();
 			$i++;
 		}

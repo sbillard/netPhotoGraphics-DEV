@@ -32,8 +32,10 @@ class Gallery {
 		}
 		if (isset($this->data['unprotected_pages'])) {
 			$pages = getSerializedArray($this->data['unprotected_pages']);
-			if (is_array($pages))
-				$this->unprotected_pages = $pages; //	protect against a failure
+			if (is_array($pages)) {
+							$this->unprotected_pages = $pages;
+			}
+			//	protect against a failure
 		}
 	}
 
@@ -862,8 +864,9 @@ class Gallery {
 			$order = $sortdirection && strtolower($sortdirection) != 'asc';
 		}
 		$sql = 'SELECT * FROM ' . prefix("albums") . ' WHERE `parentid`' . $albumid . ' ORDER BY ' . db_escape($sortkey);
-		if ($order)
-			$sql .= ' DESC';
+		if ($order) {
+					$sql .= ' DESC';
+		}
 		$result = query($sql);
 		$results = array();
 		//	check database aganist file system
@@ -898,7 +901,7 @@ class Gallery {
 			if ($mine ||
 							($album->getShow() || $viewUnpublished) // published or overridden by parameter
 							|| $subrights && is_null($album->getParent()) // is the user's managed album
-							|| $subrights && ($subrights & MANAGED_OBJECT_RIGHTS_VIEW ) //	managed subalbum and  user has unpublished rights
+							|| $subrights && ($subrights & MANAGED_OBJECT_RIGHTS_VIEW) //	managed subalbum and  user has unpublished rights
 			) {
 				$albums_ordered[] = $folder;
 			}

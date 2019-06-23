@@ -159,8 +159,10 @@ function printAlbumMenuList($option, $showcount = NULL, $css_id = '', $css_class
 	}
 
 	$startlist = $startlist && !($option == 'omit-top' || $option == 'list-sub');
-	if ($startlist)
-		echo '<ul id="' . $css_id . '">' . "\n"; // top level list
+	if ($startlist) {
+			echo '<ul id="' . $css_id . '">' . "\n";
+	}
+	// top level list
 		/*		 * ** Top level start with Index link  *** */
 	if ($option === "list" OR $option === "list-top") {
 		if (!empty($indexname)) {
@@ -176,9 +178,10 @@ function printAlbumMenuList($option, $showcount = NULL, $css_id = '', $css_class
 
 	printAlbumMenuListAlbum($albums, $currentfolder, $option, $showcount, $showsubs, $css_class, $css_class_topactive, $css_class_active, $firstimagelink, $keeptopactive, $limit);
 
-	if ($startlist)
-		echo "</ul>\n";
-}
+	if ($startlist) {
+			echo "</ul>\n";
+	}
+	}
 
 /**
  * Handles an album for printAlbumMenuList
@@ -222,8 +225,10 @@ function printAlbumMenuListAlbum($albums, $folder, $option, $showcount, $showsub
 						);
 
 		if ($process && hasDynamicAlbumSuffix($album) && !is_dir(ALBUM_FOLDER_SERVERPATH . $album)) {
-			if (in_array($album, $_albums_visited_albumMenu))
-				$process = false; // skip already seen dynamic albums
+			if (in_array($album, $_albums_visited_albumMenu)) {
+							$process = false;
+			}
+			// skip already seen dynamic albums
 		}
 		$albumobj = newAlbum($album, true);
 		$has_password = '';

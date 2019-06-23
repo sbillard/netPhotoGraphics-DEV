@@ -278,8 +278,9 @@ class favorites extends AlbumBase {
 		global $_current_admin_obj, $_gallery_page, $_current_album, $_conf_vars, $_myFavorites;
 		if ($_myFavorites && isset($_REQUEST['instance'])) {
 			$_myFavorites->instance = sanitize(rtrim($_REQUEST['instance'], '/'));
-			if ($_myFavorites->instance)
-				$_myFavorites->setTitle($_myFavorites->getTitle() . '[' . $_myFavorites->instance . ']');
+			if ($_myFavorites->instance) {
+							$_myFavorites->setTitle($_myFavorites->getTitle() . '[' . $_myFavorites->instance . ']');
+			}
 		}
 		if ($_gallery_page == "favorites.php") {
 			if (npg_loggedin()) {
@@ -322,8 +323,9 @@ class favorites extends AlbumBase {
 	function getLink($page = NULL, $instance = NULL) {
 		$link = _FAVORITES_ . '/';
 		$link_no = 'index.php?p=favorites';
-		if (is_null($instance))
-			$instance = $this->instance;
+		if (is_null($instance)) {
+					$instance = $this->instance;
+		}
 		if ($instance) {
 			$instance = rtrim($instance, '/');
 			$link .= $instance . '/';

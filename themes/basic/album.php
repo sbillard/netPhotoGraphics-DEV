@@ -1,7 +1,8 @@
 <?php
 // force UTF-8 Ø
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,8 +14,9 @@ if (!defined('WEBPATH'))
 		scriptLoader($zenCSS);
 		scriptLoader(dirname(dirname($zenCSS)) . '/common.css');
 
-		if (class_exists('RSS'))
-			printRSSHeaderLink('Album', getAlbumTitle());
+		if (class_exists('RSS')) {
+					printRSSHeaderLink('Album', getAlbumTitle());
+		}
 		?>
 	</head>
 	<body>
@@ -72,8 +74,9 @@ if (!defined('WEBPATH'))
 				<?php
 				printCodeblock(2);
 				printPageListWithNav("« " . gettext("prev"), gettext("next") . " »");
-				if (function_exists('printAddToFavorites'))
-					printAddToFavorites($_current_album);
+				if (function_exists('printAddToFavorites')) {
+									printAddToFavorites($_current_album);
+				}
 				printTags('links', gettext('<strong>Tags:</strong>') . ' ', 'taglist', '');
 				simpleMap::printMap();
 				@call_user_func('printSlideShowLink');
@@ -87,8 +90,9 @@ if (!defined('WEBPATH'))
 			if (function_exists('printFavoritesURL')) {
 				printFavoritesURL(NULL, '', ' | ', '<br />');
 			}
-			if (class_exists('RSS'))
-				printRSSLink('Album', '', gettext('Album'), ' | ');
+			if (class_exists('RSS')) {
+							printRSSLink('Album', '', gettext('Album'), ' | ');
+			}
 			printCustomPageURL(gettext("Archive View"), "archive", '', '', ' | ');
 			printSoftwareLink();
 			@call_user_func('printUserLogin_out', " | ");

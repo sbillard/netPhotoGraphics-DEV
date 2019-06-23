@@ -1,6 +1,7 @@
 <?php
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 ?>
 <!DOCTYPE html>
 <head>
@@ -12,8 +13,9 @@ if (!defined('WEBPATH'))
 
 	scriptLoader($_themeroot . '/style.css');
 
-	if (extensionEnabled('rss'))
-		printRSSHeaderLink('Album', getAlbumTitle());
+	if (extensionEnabled('rss')) {
+			printRSSHeaderLink('Album', getAlbumTitle());
+	}
 	?>
 </head>
 <body>

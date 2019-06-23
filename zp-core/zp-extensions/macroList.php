@@ -108,8 +108,9 @@ function macroList_show($macro, $detail) {
 	if ($detail['class'] == 'expression') {
 		preg_match_all('/\$\d+/', $detail['value'], $replacements);
 		foreach ($replacements as $rkey => $v) {
-			if (empty($v))
-				unset($replacements[$rkey]);
+			if (empty($v)) {
+							unset($replacements[$rkey]);
+			}
 		}
 		if (count($detail['params']) != count($replacements)) {
 			$warn['paremeters'] = gettext('The number of macro parameters must match the number of replacement tokens in the expression.');
@@ -146,8 +147,9 @@ function macroList_show($macro, $detail) {
 			}
 			$array = $array || $type == 'array';
 		}
-		if ($required)
-			$params .= "<em>}</em>";
+		if ($required) {
+					$params .= "<em>}</em>";
+		}
 		echo $params;
 	}
 	echo ']</code> <em>' . @$detail['owner'] . '</em></dt><dd class="top">' . $detail['desc'] . '</dd>';

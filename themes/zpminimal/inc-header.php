@@ -1,6 +1,7 @@
 <?php
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 if (function_exists('printAddThis')) {
 	$zpmin_social = true;
 } else {
@@ -14,8 +15,9 @@ if (function_exists('printAddThis')) {
 		npgFilters::apply('theme_head');
 
 		scriptLoader($_themeroot . '/css/main.css');
-		if (function_exists('printGslideshow'))
-			setOption('gslideshow_style', 'light', false);
+		if (function_exists('printGslideshow')) {
+					setOption('gslideshow_style', 'light', false);
+		}
 
 		$showsearch = true;
 		$galleryactive = false;
@@ -36,8 +38,9 @@ if (function_exists('printAddThis')) {
 			case 'favorites.php';
 				$zpmin_metatitle = getBareAlbumTitle() . ' | ';
 				$zpmin_metadesc = truncate_string(getBareAlbumDesc(), 150, '...');
-				if (extensionEnabled('rss'))
-					printRSSHeaderLink('Album', getAlbumTitle());
+				if (extensionEnabled('rss')) {
+									printRSSHeaderLink('Album', getAlbumTitle());
+				}
 				$galleryactive = true;
 				$cbscript = true;
 				break;

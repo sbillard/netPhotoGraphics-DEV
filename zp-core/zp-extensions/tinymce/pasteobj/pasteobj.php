@@ -269,7 +269,10 @@ function getIPSizedImage($size, $image) {
 							<?php echo gettext('image only'); ?>
 						</label>
 						<label class="nowrap">
-							<input type="radio" name="link" value="imagelink" id="link_image_image"<?php if ($picture) echo 'checked="checked"'; ?> onchange="zenchange();" />
+							<input type="radio" name="link" value="imagelink" id="link_image_image"<?php if ($picture) {
+	echo 'checked="checked"';
+}
+?> onchange="zenchange();" />
 							<?php printf($token, 'image'); ?>
 						</label>
 						<?php

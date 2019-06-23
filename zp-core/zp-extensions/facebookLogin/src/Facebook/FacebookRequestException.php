@@ -56,12 +56,12 @@ class FacebookRequestException extends FacebookSDKException
    */
   public function __construct($rawResponse, $responseData, $statusCode)
   {
-    $this->rawResponse = $rawResponse;
-    $this->statusCode = $statusCode;
-    $this->responseData = self::convertToArray($responseData);
-    parent::__construct(
-      $this->get('message', 'Unknown Exception'), $this->get('code', -1), null
-    );
+	$this->rawResponse = $rawResponse;
+	$this->statusCode = $statusCode;
+	$this->responseData = self::convertToArray($responseData);
+	parent::__construct(
+	  $this->get('message', 'Unknown Exception'), $this->get('code', -1), null
+	);
   }
 
   /**
@@ -76,66 +76,66 @@ class FacebookRequestException extends FacebookSDKException
    */
   public static function create($raw, $data, $statusCode)
   {
-    $data = self::convertToArray($data);
-    if (!isset($data['error']['code']) && isset($data['code'])) {
-      $data = array('error' => $data);
-    }
-    $code = (isset($data['error']['code']) ? $data['error']['code'] : null);
+	$data = self::convertToArray($data);
+	if (!isset($data['error']['code']) && isset($data['code'])) {
+	  $data = array('error' => $data);
+	}
+	$code = (isset($data['error']['code']) ? $data['error']['code'] : null);
 
-    if (isset($data['error']['error_subcode'])) {
-      switch ($data['error']['error_subcode']) {
-        // Other authentication issues
-        case 458:
-        case 459:
-        case 460:
-        case 463:
-        case 464:
-        case 467:
-          return new FacebookAuthorizationException($raw, $data, $statusCode);
-          break;
-      }
-    }
+	if (isset($data['error']['error_subcode'])) {
+	  switch ($data['error']['error_subcode']) {
+		// Other authentication issues
+		case 458:
+		case 459:
+		case 460:
+		case 463:
+		case 464:
+		case 467:
+		  return new FacebookAuthorizationException($raw, $data, $statusCode);
+		  break;
+	  }
+	}
 
-    switch ($code) {
-      // Login status or token expired, revoked, or invalid
-      case 100:
-      case 102:
-      case 190:
-        return new FacebookAuthorizationException($raw, $data, $statusCode);
-        break;
+	switch ($code) {
+	  // Login status or token expired, revoked, or invalid
+	  case 100:
+	  case 102:
+	  case 190:
+		return new FacebookAuthorizationException($raw, $data, $statusCode);
+		break;
 
-      // Server issue, possible downtime
-      case 1:
-      case 2:
-        return new FacebookServerException($raw, $data, $statusCode);
-        break;
+	  // Server issue, possible downtime
+	  case 1:
+	  case 2:
+		return new FacebookServerException($raw, $data, $statusCode);
+		break;
 
-      // API Throttling
-      case 4:
-      case 17:
-      case 341:
-        return new FacebookThrottleException($raw, $data, $statusCode);
-        break;
+	  // API Throttling
+	  case 4:
+	  case 17:
+	  case 341:
+		return new FacebookThrottleException($raw, $data, $statusCode);
+		break;
 
-      // Duplicate Post
-      case 506:
-        return new FacebookClientException($raw, $data, $statusCode);
-        break;
-    }
+	  // Duplicate Post
+	  case 506:
+		return new FacebookClientException($raw, $data, $statusCode);
+		break;
+	}
 
-    // Missing Permissions
-    if ($code == 10 || ($code >= 200 && $code <= 299)) {
-      return new FacebookPermissionException($raw, $data, $statusCode);
-    }
+	// Missing Permissions
+	if ($code == 10 || ($code >= 200 && $code <= 299)) {
+	  return new FacebookPermissionException($raw, $data, $statusCode);
+	}
 
-    // OAuth authentication error
-    if (isset($data['error']['type'])
-      and $data['error']['type'] === 'OAuthException') {
-      return new FacebookAuthorizationException($raw, $data, $statusCode);
-    }
+	// OAuth authentication error
+	if (isset($data['error']['type'])
+	  and $data['error']['type'] === 'OAuthException') {
+	  return new FacebookAuthorizationException($raw, $data, $statusCode);
+	}
 
-    // All others
-    return new FacebookOtherException($raw, $data, $statusCode);
+	// All others
+	return new FacebookOtherException($raw, $data, $statusCode);
   }
 
   /**
@@ -148,10 +148,10 @@ class FacebookRequestException extends FacebookSDKException
    */
   private function get($key, $default = null)
   {
-    if (isset($this->responseData['error'][$key])) {
-      return $this->responseData['error'][$key];
-    }
-    return $default;
+	if (isset($this->responseData['error'][$key])) {
+	  return $this->responseData['error'][$key];
+	}
+	return $default;
   }
 
   /**
@@ -161,7 +161,7 @@ class FacebookRequestException extends FacebookSDKException
    */
   public function getHttpStatusCode()
   {
-    return $this->statusCode;
+	return $this->statusCode;
   }
 
   /**
@@ -171,7 +171,7 @@ class FacebookRequestException extends FacebookSDKException
    */
   public function getSubErrorCode()
   {
-    return $this->get('error_subcode', -1);
+	return $this->get('error_subcode', -1);
   }
 
   /**
@@ -181,7 +181,7 @@ class FacebookRequestException extends FacebookSDKException
    */
   public function getErrorType()
   {
-    return $this->get('type', '');
+	return $this->get('type', '');
   }
 
   /**
@@ -191,7 +191,7 @@ class FacebookRequestException extends FacebookSDKException
    */
   public function getRawResponse()
   {
-    return $this->rawResponse;
+	return $this->rawResponse;
   }
 
   /**
@@ -201,7 +201,7 @@ class FacebookRequestException extends FacebookSDKException
    */
   public function getResponse()
   {
-    return $this->responseData;
+	return $this->responseData;
   }
 
   /**
@@ -213,10 +213,10 @@ class FacebookRequestException extends FacebookSDKException
    */
   private static function convertToArray($object)
   {
-    if ($object instanceof \stdClass) {
-      return get_object_vars($object);
-    }
-    return $object;
+	if ($object instanceof \stdClass) {
+	  return get_object_vars($object);
+	}
+	return $object;
   }
 
 }

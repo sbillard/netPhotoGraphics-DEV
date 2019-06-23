@@ -310,8 +310,9 @@ class htmlmetatags {
 		}
 		if (getOption('htmlmeta_name-expires')) {
 			$expires = getOption("htmlmeta_expires");
-			if ($expires == (int) $expires)
-				$expires = preg_replace('|\s\-\d+|', '', date('r', time() + $expires)) . ' GMT';
+			if ($expires == (int) $expires) {
+							$expires = preg_replace('|\s\-\d+|', '', date('r', time() + $expires)) . ' GMT';
+			}
 			$meta .= '<meta name="expires" content="' . $expires . '">' . "\n";
 		}
 		if (getOption('htmlmeta_google-site-verification')) {
@@ -477,8 +478,9 @@ class htmlmetatags {
 			$separator = ", ";
 			foreach ($tags as $keyword) {
 				$count++;
-				if ($count >= count($tags))
-					$separator = "";
+				if ($count >= count($tags)) {
+									$separator = "";
+				}
 				switch ($mode) {
 					case "gallery":
 						$alltags .= html_encode($keyword) . $separator;

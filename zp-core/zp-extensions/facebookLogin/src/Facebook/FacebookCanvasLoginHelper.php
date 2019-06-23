@@ -39,7 +39,7 @@ class FacebookCanvasLoginHelper extends FacebookSignedRequestFromInputHelper
    */
   public function getAppData()
   {
-    return $this->signedRequest ? $this->signedRequest->get('app_data') : null;
+	return $this->signedRequest ? $this->signedRequest->get('app_data') : null;
   }
 
   /**
@@ -49,12 +49,12 @@ class FacebookCanvasLoginHelper extends FacebookSignedRequestFromInputHelper
    */
   public function getRawSignedRequest()
   {
-    $rawSignedRequest = $this->getRawSignedRequestFromPost();
-    if ($rawSignedRequest) {
-      return $rawSignedRequest;
-    }
+	$rawSignedRequest = $this->getRawSignedRequestFromPost();
+	if ($rawSignedRequest) {
+	  return $rawSignedRequest;
+	}
 
-    return null;
+	return null;
   }
 
 }

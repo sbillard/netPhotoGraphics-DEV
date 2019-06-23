@@ -24,9 +24,15 @@
 							$divider = '';
 						}
 						?>
-						<?php if (getNumAlbums() > 0) echo getNumAlbums() . ' ' . gettext("subalbums"); ?>
+						<?php if (getNumAlbums() > 0) {
+	echo getNumAlbums() . ' ' . gettext("subalbums");
+}
+?>
 						<?php echo $divider; ?>
-						<?php if (getNumImages() > 0) echo getNumImages() . ' ' . gettext("images"); ?>
+						<?php if (getNumImages() > 0) {
+	echo getNumImages() . ' ' . gettext("images");
+}
+?>
 					</li>
 					<?php if (strlen($tagstring) > 0) { ?><li class="meta-tags"><?php printTags('links', '', 'taglist', ', '); ?></li><?php } ?>
 				</ul>
@@ -56,9 +62,15 @@
 								$divider = '';
 							}
 							?>
-							<?php if (getNumAlbums() > 0) echo getNumAlbums() . ' ' . gettext("subalbums"); ?>
+							<?php if (getNumAlbums() > 0) {
+	echo getNumAlbums() . ' ' . gettext("subalbums");
+}
+?>
 							<?php echo $divider; ?>
-							<?php if (getNumImages() > 0) echo getNumImages() . ' ' . gettext("images"); ?>
+							<?php if (getNumImages() > 0) {
+	echo getNumImages() . ' ' . gettext("images");
+}
+?>
 						</li>
 					</ul>
 				</div>
@@ -109,14 +121,20 @@
 			} endwhile;
 		?>
 		<div class="sixteen columns">
-			<?php if ((hasNextPage()) || (hasPrevPage())) printPageListWithNav("«", "»", false, true, 'pagination', null, true, 5); ?>
+			<?php if ((hasNextPage()) || (hasPrevPage())) {
+	printPageListWithNav("«", "»", false, true, 'pagination', null, true, 5);
+}
+?>
 			<?php
 			if (function_exists('printAddToFavorites')) {
 				printAddToFavorites($_current_album);
 			}
 			?>
 			<?php printPPSlideShowLink(gettext('Slideshow')); ?>
-			<?php if ($zpskel_social) include ('inc-social.php'); ?>
+			<?php if ($zpskel_social) {
+	include ('inc-social.php');
+}
+?>
 			<?php if (simpleMap::mapPlugin()) { ?>
 				<div id="map">
 					<?php simplemap::printMap(); ?>

@@ -27,7 +27,7 @@ class Api extends Sanity {
 	private $token;
 
 	public function __construct(Http\IClient $client = NULL) {
-		$this->client = $client ? : Helpers::createDefaultClient();
+		$this->client = $client ?: Helpers::createDefaultClient();
 	}
 
 	/**
@@ -50,7 +50,7 @@ class Api extends Sanity {
 	 * @return self
 	 */
 	public function setDefaultParameters(array $defaults = NULL) {
-		$this->defaultParameters = $defaults ? : [];
+		$this->defaultParameters = $defaults ?: [];
 		return $this;
 	}
 
@@ -396,15 +396,15 @@ class Api extends Sanity {
 					if ($explode) {
 						$parts = [];
 						if ($isAssoc) {
-							$this->walk($value, function ($v, $k) use (& $parts, $flags, $maxLength) {
+							$this->walk($value, function($v, $k) use (& $parts, $flags, $maxLength) {
 								$parts[] = $this->prefix(['named' => TRUE] + $flags, $k, $this->escape($flags, $v, $maxLength));
 							});
 						} elseif ($flags['named']) {
-							$this->walk($value, function ($v) use (& $parts, $flags, $name, $maxLength) {
+							$this->walk($value, function($v) use (& $parts, $flags, $name, $maxLength) {
 								$parts[] = $this->prefix($flags, $name, $this->escape($flags, $v, $maxLength));
 							});
 						} else {
-							$this->walk($value, function ($v) use (& $parts, $flags, $maxLength) {
+							$this->walk($value, function($v) use (& $parts, $flags, $maxLength) {
 								$parts[] = $this->escape($flags, $v, $maxLength);
 							});
 						}

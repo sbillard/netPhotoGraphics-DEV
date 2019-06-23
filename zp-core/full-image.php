@@ -8,8 +8,9 @@
  * @package core
  */
 // force UTF-8 Ø
-if (!defined('OFFSET_PATH'))
+if (!defined('OFFSET_PATH')) {
 	define('OFFSET_PATH', 1);
+}
 require_once(dirname(__FILE__) . "/functions.php");
 require_once(dirname(__FILE__) . "/lib-image.php");
 
@@ -227,12 +228,14 @@ if (is_null($cache_path) || !file_exists($cache_path)) { //process the image
 	if ($force_cache && !$process) {
 		// we can just use the original!
 		if (SYMLINK && @symlink($image_path, $cache_path)) {
-			if (DEBUG_IMAGE)
-				debugLog("full-image:symlink original " . basename($image));
+			if (DEBUG_IMAGE) {
+							debugLog("full-image:symlink original " . basename($image));
+			}
 			clearstatcache();
 		} else if (@copy($image_path, $cache_path)) {
-			if (DEBUG_IMAGE)
-				debugLog("full-image:copy original " . basename($image));
+			if (DEBUG_IMAGE) {
+							debugLog("full-image:copy original " . basename($image));
+			}
 			clearstatcache();
 		}
 	} else {

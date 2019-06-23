@@ -43,8 +43,9 @@ class _Authority {
 				switch ($user['valid']) {
 					case 1:
 						$this->admin_users[$user['id']] = $user;
-						if (empty($this->master_user))
-							$this->master_user = $user['user'];
+						if (empty($this->master_user)) {
+													$this->master_user = $user['user'];
+						}
 						break;
 					case 0:
 						$this->admin_groups[$user['id']] = $user;
@@ -408,8 +409,10 @@ class _Authority {
 		}
 
 		$_current_admin_obj = NULL;
-		if (empty($authCode) || empty($id))
-			return 0; //  so we don't "match" with an empty password
+		if (empty($authCode) || empty($id)) {
+					return 0;
+		}
+		//  so we don't "match" with an empty password
 		if (DEBUG_LOGIN) {
 			debugLogVar(["checkAuthorization: admins" => $admins]);
 		}
@@ -600,8 +603,9 @@ class _Authority {
 	static function updateAdminField($update, $value, $constraints) {
 		$where = '';
 		foreach ($constraints as $field => $clause) {
-			if (!empty($where))
-				$where .= ' AND ';
+			if (!empty($where)) {
+							$where .= ' AND ';
+			}
 			if (is_numeric($clause)) {
 				$where .= $field . $clause;
 			} else {
@@ -1133,7 +1137,10 @@ class _Authority {
 							}
 							?>
 							<div class="buttons">
-								<button type="submit" value="<?php echo gettext("Submit"); ?>"<?php if (!$info['challenge']) echo ' disabled="disabled"'; ?> >
+								<button type="submit" value="<?php echo gettext("Submit"); ?>"<?php if (!$info['challenge']) {
+	echo ' disabled="disabled"';
+}
+?> >
 									<?php echo CHECKMARK_GREEN; ?>
 									<?php echo gettext("Submit"); ?>
 								</button>
@@ -1280,8 +1287,9 @@ class _Authority {
 					</script>
 					<form name="login" id="login" action="<?php echo getAdminLink('admin.php'); ?>" method="post">
 						<?php
-						if (isset($captcha['hidden']))
-							echo $captcha['hidden'];
+						if (isset($captcha['hidden'])) {
+													echo $captcha['hidden'];
+						}
 						?>
 						<input type="hidden" name="login" value="1" />
 						<input type="hidden" name="password" value="captcha" />
@@ -1291,8 +1299,9 @@ class _Authority {
 								<input class="textfield" name="user" id="user" type="text" value="<?php echo html_encode($requestor); ?>" onkeyup="toggleSubmit();"/>
 							</fieldset>
 							<?php
-							if (isset($captcha['html']))
-								echo $captcha['html'];
+							if (isset($captcha['html'])) {
+															echo $captcha['html'];
+							}
 							?>
 							<?php
 							if (isset($captcha['input'])) {
@@ -1307,8 +1316,9 @@ class _Authority {
 							<div class="buttons">
 								<button type="submit"  id="submitButton"<?php
 								echo $extra;
-								if (empty($requestor))
-									echo ' disabled="disabled"';
+								if (empty($requestor)) {
+																	echo ' disabled="disabled"';
+								}
 								?>>
 													<?php echo CHECKMARK_GREEN; ?>
 													<?php echo gettext("Request password reset"); ?>
@@ -1554,9 +1564,10 @@ class _Authority {
 			# Initial hash for this block
 			$ib = $b = hash_hmac($a, $s . pack('N', $block), $p, true);
 			# Perform block iterations
-			for ($i = 1; $i < $c; $i++)
-			# XOR each iterate
+			for ($i = 1; $i < $c; $i++) {
+						# XOR each iterate
 				$ib ^= ($b = hash_hmac($a, $b, $p, true));
+			}
 			$dk .= $ib; # Append iterated block
 		}
 # Return derived key of correct length

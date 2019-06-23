@@ -1,8 +1,9 @@
 <?php
 
 // force UTF-8 ø
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 
 if ($_zenpage_enabled) { // check if Zenpage is enabled or not
 	if (checkForPage(getOption('zenpage_homepage'))) { // switch to a home page

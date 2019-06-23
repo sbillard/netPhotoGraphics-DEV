@@ -531,22 +531,34 @@ echo $refresh;
 										echo gettext('show');
 										?>
 										<select name="showgroup" id="showgroup" class="ignoredirty" onchange="launchScript('<?php echo getAdminLink('admin-tabs/users.php'); ?>', ['showgroup=' + $('#showgroup').val()]);" >
-											<option value=""<?php if (!$showgroup) echo ' selected="selected"'; ?>><?php echo gettext('all'); ?></option>
+											<option value=""<?php if (!$showgroup) {
+	echo ' selected="selected"';
+}
+?>><?php echo gettext('all'); ?></option>
 											<?php
 											if ($pending) {
 												?>
-												<option value = "*"<?php if ($showgroup == '*') echo ' selected="selected"'; ?>><?php echo gettext('pending verification'); ?></option>
+												<option value = "*"<?php if ($showgroup == '*') {
+	echo ' selected="selected"';
+}
+?>><?php echo gettext('pending verification'); ?></option>
 												<?php
 											}
 											if (!empty($seenGroups)) {
 												if ($nogroup) {
 													?>
-													<option value="$"<?php if ($showgroup == '$') echo ' selected="selected"'; ?>><?php echo gettext('no group'); ?></option>
+													<option value="$"<?php if ($showgroup == '$') {
+	echo ' selected="selected"';
+}
+?>><?php echo gettext('no group'); ?></option>
 													<?php
 												}
 												foreach ($seenGroups as $group) {
 													?>
-													<option value="<?php echo $group; ?>"<?php if ($showgroup == $group) echo ' selected="selected"'; ?>><?php printf('%s group', $group); ?></option>
+													<option value="<?php echo $group; ?>"<?php if ($showgroup == $group) {
+	echo ' selected="selected"';
+}
+?>><?php printf('%s group', $group); ?></option>
 													<?php
 												}
 											}
@@ -746,8 +758,14 @@ echo $refresh;
 											$no_change = array();
 											if (!npg_loggedin(ADMIN_RIGHTS) && !$_current_admin_obj->reset) {
 												?>
-												<tr <?php if (!$current) echo 'style="display:none;"'; ?> class="userextrainfo">
-													<td <?php if (!empty($background)) echo " style=\"$background\""; ?> colspan="100%">
+												<tr <?php if (!$current) {
+	echo 'style="display:none;"';
+}
+?> class="userextrainfo">
+													<td <?php if (!empty($background)) {
+	echo " style=\"$background\"";
+}
+?> colspan="100%">
 														<p class="notebox">
 															<?php echo gettext('<strong>Note:</strong> You must have ADMIN rights to alter anything but your personal information.'); ?>
 														</p>
@@ -756,8 +774,14 @@ echo $refresh;
 												<?php
 											}
 											?>
-											<tr <?php if (!$current) echo 'style="display:none;"'; ?> class="userextrainfo">
-												<td <?php if (!empty($background)) echo " style=\"$background\""; ?> valign="top" colspan="100%">
+											<tr <?php if (!$current) {
+	echo 'style="display:none;"';
+}
+?> class="userextrainfo">
+												<td <?php if (!empty($background)) {
+	echo " style=\"$background\"";
+}
+?> valign="top" colspan="100%">
 													<div class="user_left">
 														<p>
 															<?php
@@ -803,12 +827,18 @@ echo $refresh;
 														?>
 														<?php echo gettext("Full name"); ?><br />
 														<input type="text" size="<?php echo TEXT_INPUT_SIZE; ?>" id="admin_name-<?php echo $id ?>" name="user[<?php echo $id ?>][admin_name]"
-																	 value="<?php echo html_encode($userobj->getName()); ?>"<?php if (in_array('name', $no_change)) echo ' disabled="disabled"'; ?> />
+																	 value="<?php echo html_encode($userobj->getName()); ?>"<?php if (in_array('name', $no_change)) {
+	echo ' disabled="disabled"';
+}
+?> />
 
 														<p>
 															<?php echo gettext("Email"); ?><br />
 															<input type="text" size="<?php echo TEXT_INPUT_SIZE; ?>" id="admin_email-<?php echo $id ?>" name="user[<?php echo $id ?>][admin_email]"
-																		 value="<?php echo html_encode($userobj->getEmail()); ?>"<?php if (in_array('email', $no_change)) echo ' disabled="disabled"'; ?> />
+																		 value="<?php echo html_encode($userobj->getEmail()); ?>"<?php if (in_array('email', $no_change)) {
+	echo ' disabled="disabled"';
+}
+?> />
 														</p>
 														<?php
 														$primeAlbum = $userobj->getAlbum();
@@ -866,15 +896,19 @@ echo $refresh;
 															foreach ($languages as $text => $lang) {
 																$current = $lang == $currentValue;
 																?>
-																<li id="<?php echo $lang . '_' . $id; ?>"<?php if ($current) echo ' class="currentLanguage"'; ?>>
+																<li id="<?php echo $lang . '_' . $id; ?>"<?php if ($current) {
+	echo ' class="currentLanguage"';
+}
+?>>
 																	<a onclick="languageChange('<?php echo $id; ?>', '<?php echo $lang; ?>');" >
 																		<img src="<?php echo $flags[$lang]; ?>" alt="<?php echo $text; ?>" title="<?php echo $text; ?>" />
 																	</a>
 																</li>
 																<?php
 																$c++;
-																if (($c % 7) == 0)
-																	echo '<br class="clearall">';
+																if (($c % 7) == 0) {
+																																	echo '<br class="clearall">';
+																}
 															}
 															?>
 														</ul>

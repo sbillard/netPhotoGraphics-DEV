@@ -110,14 +110,16 @@ class TextObject extends Image {
 		$this->updateDimensions();
 		$new = $this->instantiate('images', array('filename' => $filename, 'albumid' => $this->album->getID()), 'filename');
 		if ($new || $this->filemtime != $this->get('mtime')) {
-			if ($new)
-				$this->setTitle($this->displayname);
+			if ($new) {
+							$this->setTitle($this->displayname);
+			}
 			$title = $this->displayname;
 			$this->updateMetaData();
 			$this->set('mtime', $this->filemtime);
 			$this->save();
-			if ($new)
-				npgFilters::apply('new_image', $this);
+			if ($new) {
+							npgFilters::apply('new_image', $this);
+			}
 		}
 	}
 
@@ -160,10 +162,12 @@ class TextObject extends Image {
 		$sw = getOption('thumb_crop_width');
 		$sh = getOption('thumb_crop_height');
 		list($custom, $cw, $ch, $cx, $cy) = $this->getThumbCropping($ts, $sw, $sh);
-		if (empty($wmt))
-			$wmt = $this->watermark;
-		if (empty($wmt))
-			$wmt = getWatermarkParam($this, WATERMARK_THUMB);
+		if (empty($wmt)) {
+					$wmt = $this->watermark;
+		}
+		if (empty($wmt)) {
+					$wmt = getWatermarkParam($this, WATERMARK_THUMB);
+		}
 
 		if (is_null($this->objectsThumb)) {
 			$mtime = $cx = $cy = NULL;
@@ -189,10 +193,12 @@ class TextObject extends Image {
 	 */
 	function getContent($w = NULL, $h = NULL) {
 		$this->updateDimensions();
-		if (is_null($w))
-			$w = $this->getWidth();
-		if (is_null($h))
-			$h = $this->getHeight();
+		if (is_null($w)) {
+					$w = $this->getWidth();
+		}
+		if (is_null($h)) {
+					$h = $this->getHeight();
+		}
 		switch (getSuffix($this->filename)) {
 			case 'txt':
 			case 'htm':

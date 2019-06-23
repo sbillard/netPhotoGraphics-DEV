@@ -121,8 +121,9 @@ class imageProcessing {
 				$neww = $wprop; // width is not supplied, use the proportional
 			}
 		}
-		if (DEBUG_IMAGE)
-			debugLog("imageProcessing::propSizes(\$size=$size, \$width=$width, \$height=$height, \$w=$w, \$h=$h, \$thumb=$thumb, \$image_use_side=$image_use_side, \$dim=$dim):: \$wprop=$wprop; \$hprop=$hprop; \$neww=$neww; \$newh=$newh");
+		if (DEBUG_IMAGE) {
+					debugLog("imageProcessing::propSizes(\$size=$size, \$width=$width, \$height=$height, \$w=$w, \$h=$h, \$thumb=$thumb, \$image_use_side=$image_use_side, \$dim=$dim):: \$wprop=$wprop; \$hprop=$hprop; \$neww=$neww; \$newh=$newh");
+		}
 		return array((int) $neww, (int) $newh);
 	}
 
@@ -205,8 +206,9 @@ class imageProcessing {
 			}
 			$newfile = SERVERCACHE . $newfilename;
 			mkdir_recursive(dirname($newfile), FOLDER_MOD);
-			if (DEBUG_IMAGE)
-				debugLog("imageProcessing::cache(\$imgfile=" . basename($imgfile) . ", \$newfilename=$newfilename, \$allow_watermark=$allow_watermark, \$theme=$theme) \$size=$size, \$width=$width, \$height=$height, \$cw=$cw, \$ch=$ch, \$cx=" . (is_null($cx) ? 'NULL' : $cx) . ", \$cy=" . (is_null($cy) ? 'NULL' : $cy) . ", \$quality=$quality, \$thumb=$thumb, \$crop=$crop \$image_use_side=$image_use_side; \$upscale=$upscale);");
+			if (DEBUG_IMAGE) {
+							debugLog("imageProcessing::cache(\$imgfile=" . basename($imgfile) . ", \$newfilename=$newfilename, \$allow_watermark=$allow_watermark, \$theme=$theme) \$size=$size, \$width=$width, \$height=$height, \$cw=$cw, \$ch=$ch, \$cx=" . (is_null($cx) ? 'NULL' : $cx) . ", \$cy=" . (is_null($cy) ? 'NULL' : $cy) . ", \$quality=$quality, \$thumb=$thumb, \$crop=$crop \$image_use_side=$image_use_side; \$upscale=$upscale);");
+			}
 			// Check for the source image.
 			if (!file_exists($imgfile) || !is_readable($imgfile)) {
 				self::error('404 Not Found', sprintf(gettext('Image %s not found or is unreadable.'), filesystemToInternal($imgfile)), 'err-imagenotfound.png');
@@ -226,8 +228,9 @@ class imageProcessing {
 					}
 					if ($big_enough) {
 						$im = gl_imageFromString($im);
-						if (DEBUG_IMAGE && $im)
-							debugLog(sprintf(gettext('Using %1$ux%2$u %3$s thumbnail image.'), $tw, $th, image_type_to_mime_type($tt)));
+						if (DEBUG_IMAGE && $im) {
+													debugLog(sprintf(gettext('Using %1$ux%2$u %3$s thumbnail image.'), $tw, $th, image_type_to_mime_type($tt)));
+						}
 					} else {
 						$im = false;
 					}
@@ -242,8 +245,9 @@ class imageProcessing {
 				self::error('404 Not Found', sprintf(gettext('Image %s not renderable (imageGet).'), filesystemToInternal($imgfile)), 'err-failimage.png');
 			}
 			if ($rotate) {
-				if (DEBUG_IMAGE)
-					debugLog("self::cache:rotate->$rotate");
+				if (DEBUG_IMAGE) {
+									debugLog("self::cache:rotate->$rotate");
+				}
 				$im = gl_rotateImage($im, $rotate);
 				if (!$im) {
 					self::error('404 Not Found', sprintf(gettext('Image %s not rotatable.'), filesystemToInternal($imgfile)), 'err-failimage.png');
@@ -258,10 +262,12 @@ class imageProcessing {
 			if (!empty($size)) {
 				$dim = $size;
 				if ($crop) {
-					if (!$ch)
-						$ch = $size;
-					if (!$cw)
-						$cw = $size;
+					if (!$ch) {
+											$ch = $size;
+					}
+					if (!$cw) {
+											$cw = $size;
+					}
 					$width = $cw;
 					$height = $ch;
 					$size = false;
@@ -274,12 +280,14 @@ class imageProcessing {
 				if ($ratio_in > $ratio_out) { // image is taller than desired, $height is the determining factor
 					$thumb = true;
 					$dim = $width;
-					if (!$ch)
-						$ch = $height;
+					if (!$ch) {
+											$ch = $height;
+					}
 				} else { // image is wider than desired, $width is the determining factor
 					$dim = $height;
-					if (!$cw)
-						$cw = $width;
+					if (!$cw) {
+											$cw = $width;
+					}
 				}
 			} else if (!empty($width)) {
 				$dim = $width;
@@ -295,10 +303,11 @@ class imageProcessing {
 			$sizes = self::propSizes($size, $width, $height, $w, $h, $thumb, $image_use_side, $dim);
 			list($neww, $newh) = $sizes;
 
-			if (DEBUG_IMAGE)
-				debugLog("self::cache:" . basename($imgfile) . ": \$size=$size, \$width=$width, \$height=$height, \$w=$w; \$h=$h; \$cw=$cw, " .
+			if (DEBUG_IMAGE) {
+							debugLog("self::cache:" . basename($imgfile) . ": \$size=$size, \$width=$width, \$height=$height, \$w=$w; \$h=$h; \$cw=$cw, " .
 								"\$ch=$ch, \$cx=$cx, \$cy=$cy, \$quality=$quality, \$thumb=$thumb, \$crop=$crop, \$newh=$newh, \$neww=$neww, \$dim=$dim, " .
 								"\$ratio_in=$ratio_in, \$ratio_out=$ratio_out \$upscale=$upscale \$rotate=$rotate \$effects=$effects");
+			}
 
 			if (!$upscale && $newh >= $h && $neww >= $w) { // image is the same size or smaller than the request
 				$neww = $w;
@@ -312,8 +321,9 @@ class imageProcessing {
 						$height = $newh;
 					}
 				}
-				if (DEBUG_IMAGE)
-					debugLog("imageProcessing::cache:no upscale " . basename($imgfile) . ":  \$newh=$newh, \$neww=$neww, \$crop=$crop, \$thumb=$thumb, \$rotate=$rotate, watermark=" . $watermark_image);
+				if (DEBUG_IMAGE) {
+									debugLog("imageProcessing::cache:no upscale " . basename($imgfile) . ":  \$newh=$newh, \$neww=$neww, \$crop=$crop, \$thumb=$thumb, \$rotate=$rotate, watermark=" . $watermark_image);
+				}
 			}
 
 			// Crop the image if requested.
@@ -345,10 +355,12 @@ class imageProcessing {
 				if (is_null($cx) && is_null($cy)) { // scale crop to max of image
 					// set crop scale factor
 					$cf = 1;
-					if ($cw)
-						$cf = min($cf, $cw / $neww);
-					if ($ch)
-						$cf = min($cf, $ch / $newh);
+					if ($cw) {
+											$cf = min($cf, $cw / $neww);
+					}
+					if ($ch) {
+											$cf = min($cf, $ch / $newh);
+					}
 					//	set the image area of the crop (use the most image possible)
 					if (!$cw || $w / $cw * $ch > $h) {
 						$cw = round($h / $ch * $cw * $cf);
@@ -360,20 +372,24 @@ class imageProcessing {
 						$cy = round(($h - $ch) / 2);
 					}
 				} else { // custom crop
-					if (!$cw || $cw > $w)
-						$cw = $w;
-					if (!$ch || $ch > $h)
-						$ch = $h;
+					if (!$cw || $cw > $w) {
+											$cw = $w;
+					}
+					if (!$ch || $ch > $h) {
+											$ch = $h;
+					}
 				}
 				// force the crop to be within the image
-				if ($cw + $cx > $w)
-					$cx = $w - $cw;
+				if ($cw + $cx > $w) {
+									$cx = $w - $cw;
+				}
 				if ($cx < 0) {
 					$cw = $cw + $cx;
 					$cx = 0;
 				}
-				if ($ch + $cy > $h)
-					$cy = $h - $ch;
+				if ($ch + $cy > $h) {
+									$cy = $h - $ch;
+				}
 				if ($cy < 0) {
 					$ch = $ch + $cy;
 					$cy = 0;
@@ -398,13 +414,15 @@ class imageProcessing {
 				if ($newh >= $h && $neww >= $w && !$rotate && !$effects && !$watermark_image && (!$upscale || $newh == $h && $neww == $w)) {
 					// we can just use the original!
 					if (SYMLINK && @symlink($imgfile, $newfile)) {
-						if (DEBUG_IMAGE)
-							debugLog("imageProcessing::cache:symlink original " . basename($imgfile) . ":\$size=$size, \$width=$width, \$height=$height, \$dim=$dim, \$neww=$neww; \$newh=$newh; \$quality=$quality, \$thumb=$thumb, \$crop=$crop, \$rotate=$rotate; \$allowscale=$allowscale;");
+						if (DEBUG_IMAGE) {
+													debugLog("imageProcessing::cache:symlink original " . basename($imgfile) . ":\$size=$size, \$width=$width, \$height=$height, \$dim=$dim, \$neww=$neww; \$newh=$newh; \$quality=$quality, \$thumb=$thumb, \$crop=$crop, \$rotate=$rotate; \$allowscale=$allowscale;");
+						}
 						clearstatcache();
 						return true;
 					} else if (@copy($imgfile, $newfile)) {
-						if (DEBUG_IMAGE)
-							debugLog("imageProcessing::cache:copy original " . basename($imgfile) . ":\$size=$size, \$width=$width, \$height=$height, \$dim=$dim, \$neww=$neww; \$newh=$newh; \$quality=$quality, \$thumb=$thumb, \$crop=$crop, \$rotate=$rotate; \$allowscale=$allowscale;");
+						if (DEBUG_IMAGE) {
+													debugLog("imageProcessing::cache:copy original " . basename($imgfile) . ":\$size=$size, \$width=$width, \$height=$height, \$dim=$dim, \$neww=$neww; \$newh=$newh; \$quality=$quality, \$thumb=$thumb, \$crop=$crop, \$rotate=$rotate; \$allowscale=$allowscale;");
+						}
 						clearstatcache();
 						return true;
 					}
@@ -458,8 +476,9 @@ class imageProcessing {
 					$iptc_data = gl_imageIPTC($imgfile);
 					if ($iptc_data) {
 						$iptc_data = iptcparse($iptc_data);
-						if ($iptc_data)
-							$iptc = array_merge($iptc_data, $iptc);
+						if ($iptc_data) {
+													$iptc = array_merge($iptc_data, $iptc);
+						}
 					}
 					$imgfile = str_replace(ALBUM_FOLDER_SERVERPATH, '', $imgfile);
 					$imagename = basename($imgfile);
@@ -494,11 +513,13 @@ class imageProcessing {
 					clearstatcache();
 				}
 				@chmod($newfile, FILE_MOD);
-				if (DEBUG_IMAGE)
-					debugLog('Finished:' . basename($imgfile));
+				if (DEBUG_IMAGE) {
+									debugLog('Finished:' . basename($imgfile));
+				}
 			} else {
-				if (DEBUG_IMAGE)
-					debugLog('imageProcessing::cache: failed to create ' . $newfile);
+				if (DEBUG_IMAGE) {
+									debugLog('imageProcessing::cache: failed to create ' . $newfile);
+				}
 				self::error('404 Not Found', sprintf(gettext('imageProcessing::cache: failed to create %s'), $newfile), 'err-failimage.png');
 			}
 			@chmod($newfile, FILE_MOD);
@@ -541,8 +562,9 @@ class imageProcessing {
 		// Position Overlay in Bottom Right
 		$dest_x = max(0, floor(($imw - $nw) * $offset_w));
 		$dest_y = max(0, floor(($imh - $nh) * $offset_h));
-		if (DEBUG_IMAGE)
-			debugLog("Watermark:" . basename($imgfile) . ": \$offset_h=$offset_h, \$offset_w=$offset_w, \$watermark_height=$watermark_height, \$watermark_width=$watermark_width, \$imw=$imw, \$imh=$imh, \$percent=$percent, \$r=$r, \$nw=$nw, \$nh=$nh, \$dest_x=$dest_x, \$dest_y=$dest_y");
+		if (DEBUG_IMAGE) {
+					debugLog("Watermark:" . basename($imgfile) . ": \$offset_h=$offset_h, \$offset_w=$offset_w, \$watermark_height=$watermark_height, \$watermark_width=$watermark_width, \$imw=$imw, \$imh=$imh, \$percent=$percent, \$r=$r, \$nw=$nw, \$nh=$nh, \$dest_x=$dest_x, \$dest_y=$dest_y");
+		}
 		if (!gl_copyCanvas($newim, $watermark_new, $dest_x, $dest_y, 0, 0, $nw, $nh)) {
 			self::error('404 Not Found', sprintf(gettext('Image %s not renderable (copycanvas).'), filesystemToInternal($imgfile)), 'err-failimage.png', $imgfile, $album, $newfilename);
 		}

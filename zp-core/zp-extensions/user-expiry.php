@@ -273,8 +273,9 @@ class user_expiry {
 
 	static function edit_admin($html, $userobj, $i, $background, $current, $local_alterrights) {
 		global $_current_admin_obj;
-		if (!$userobj->getValid())
-			return $html;
+		if (!$userobj->getValid()) {
+					return $html;
+		}
 		$subscription = 86400 * getOption('user_expiry_interval');
 		if ($subscription && !npg_loggedin(ADMIN_RIGHTS) && $userobj->getID() == $_current_admin_obj->getID()) {
 			$now = time();

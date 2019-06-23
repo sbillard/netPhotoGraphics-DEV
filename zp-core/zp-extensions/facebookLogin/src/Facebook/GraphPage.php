@@ -38,7 +38,7 @@ class GraphPage extends GraphObject
    */
   public function getId()
   {
-    return $this->getProperty('id');
+	return $this->getProperty('id');
   }
 
   /**
@@ -48,7 +48,7 @@ class GraphPage extends GraphObject
    */
   public function getCategory()
   {
-    return $this->getProperty('category');
+	return $this->getProperty('category');
   }
 
   /**
@@ -58,7 +58,7 @@ class GraphPage extends GraphObject
    */
   public function getName()
   {
-    return $this->getProperty('name');
+	return $this->getProperty('name');
   }
 
 }

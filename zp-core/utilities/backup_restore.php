@@ -9,8 +9,9 @@
  *
  * @package admin
  */
-if (!defined('OFFSET_PATH'))
+if (!defined('OFFSET_PATH')) {
 	define('OFFSET_PATH', 3);
+}
 define('HEADER', '__HEADER__');
 define('RECORD_SEPARATOR', ':****:');
 define('TABLE_SEPARATOR', '::');
@@ -71,8 +72,9 @@ function getrow($handle) {
 		}
 		$end = substr($buffer, 0, $i) + $i + 1;
 		while ($end >= strlen($buffer)) {
-			if (!fillbuffer($handle))
-				return false;
+			if (!fillbuffer($handle)) {
+							return false;
+			}
 		}
 		$result = substr($buffer, $i + 1, $end - $i - 1);
 		$buffer = substr($buffer, $end);
@@ -202,8 +204,9 @@ if ($action == 'backup') {
 					}
 					db_free_result($result);
 				}
-				if ($writeresult === false)
-					break;
+				if ($writeresult === false) {
+									break;
+				}
 			}
 			fclose($handle);
 			@chmod($filename, 0660 & CHMOD_VALUE);
@@ -529,7 +532,10 @@ if (isset($_GET['compression'])) {
 								<?php
 								for ($v = 0; $v <= 9; $v++) {
 									?>
-									<option value="<?php echo $v; ?>"<?php if ($compression_level == $v) echo ' selected="selected"'; ?>><?php echo $v; ?></option>
+									<option value="<?php echo $v; ?>"<?php if ($compression_level == $v) {
+	echo ' selected="selected"';
+}
+?>><?php echo $v; ?></option>
 									<?php
 								}
 								?>

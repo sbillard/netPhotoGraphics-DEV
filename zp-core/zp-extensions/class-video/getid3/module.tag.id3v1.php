@@ -22,7 +22,7 @@ class getid3_id3v1 extends getid3_handler
 		$info = &$this->getid3->info;
 
 		if (!getid3_lib::intValueSupported($info['filesize'])) {
-			$info['warning'][] = 'Unable to check for ID3v1 because file is larger than '.round(PHP_INT_MAX / 1073741824).'GB';
+			$info['warning'][] = 'Unable to check for ID3v1 because file is larger than ' . round(PHP_INT_MAX / 1073741824) . 'GB';
 			return false;
 		}
 
@@ -34,18 +34,18 @@ class getid3_id3v1 extends getid3_handler
 
 			$info['avdataend'] = $info['filesize'] - 128;
 
-			$ParsedID3v1['title']   = $this->cutfield(substr($id3v1tag,   3, 30));
-			$ParsedID3v1['artist']  = $this->cutfield(substr($id3v1tag,  33, 30));
-			$ParsedID3v1['album']   = $this->cutfield(substr($id3v1tag,  63, 30));
-			$ParsedID3v1['year']    = $this->cutfield(substr($id3v1tag,  93,  4));
-			$ParsedID3v1['comment'] =                 substr($id3v1tag,  97, 30);  // can't remove nulls yet, track detection depends on them
-			$ParsedID3v1['genreid'] =             ord(substr($id3v1tag, 127,  1));
+			$ParsedID3v1['title']   = $this->cutfield(substr($id3v1tag, 3, 30));
+			$ParsedID3v1['artist']  = $this->cutfield(substr($id3v1tag, 33, 30));
+			$ParsedID3v1['album']   = $this->cutfield(substr($id3v1tag, 63, 30));
+			$ParsedID3v1['year']    = $this->cutfield(substr($id3v1tag, 93, 4));
+			$ParsedID3v1['comment'] = substr($id3v1tag, 97, 30); // can't remove nulls yet, track detection depends on them
+			$ParsedID3v1['genreid'] = ord(substr($id3v1tag, 127, 1));
 
 			// If second-last byte of comment field is null and last byte of comment field is non-null
 			// then this is ID3v1.1 and the comment field is 28 bytes long and the 30th byte is the track number
 			if (($id3v1tag{125} === "\x00") && ($id3v1tag{126} !== "\x00")) {
-				$ParsedID3v1['track']   = ord(substr($ParsedID3v1['comment'], 29,  1));
-				$ParsedID3v1['comment'] =     substr($ParsedID3v1['comment'],  0, 28);
+				$ParsedID3v1['track']   = ord(substr($ParsedID3v1['comment'], 29, 1));
+				$ParsedID3v1['comment'] = substr($ParsedID3v1['comment'], 0, 28);
 			}
 			$ParsedID3v1['comment'] = $this->cutfield($ParsedID3v1['comment']);
 
@@ -107,7 +107,7 @@ class getid3_id3v1 extends getid3_handler
 		return trim(substr($str, 0, strcspn($str, "\x00")));
 	}
 
-	public static function ArrayOfGenres($allowSCMPXextended=false) {
+	public static function ArrayOfGenres($allowSCMPXextended = false) {
 		static $GenreLookup = array(
 			0    => 'Blues',
 			1    => 'Classic Rock',
@@ -291,7 +291,7 @@ class getid3_id3v1 extends getid3_handler
 		return ($allowSCMPXextended ? $GenreLookupSCMPX : $GenreLookup);
 	}
 
-	public static function LookupGenreName($genreid, $allowSCMPXextended=true) {
+	public static function LookupGenreName($genreid, $allowSCMPXextended = true) {
 		switch ($genreid) {
 			case 'RX':
 			case 'CR':
@@ -307,7 +307,7 @@ class getid3_id3v1 extends getid3_handler
 		return (isset($GenreLookup[$genreid]) ? $GenreLookup[$genreid] : false);
 	}
 
-	public static function LookupGenreID($genre, $allowSCMPXextended=false) {
+	public static function LookupGenreID($genre, $allowSCMPXextended = false) {
 		$GenreLookup = self::ArrayOfGenres($allowSCMPXextended);
 		$LowerCaseNoSpaceSearchTerm = strtolower(str_replace(' ', '', $genre));
 		foreach ($GenreLookup as $key => $value) {
@@ -325,12 +325,12 @@ class getid3_id3v1 extends getid3_handler
 		return $OriginalGenre;
 	}
 
-	public static function GenerateID3v1Tag($title, $artist, $album, $year, $genreid, $comment, $track='') {
+	public static function GenerateID3v1Tag($title, $artist, $album, $year, $genreid, $comment, $track = '') {
 		$ID3v1Tag  = 'TAG';
-		$ID3v1Tag .= str_pad(trim(substr($title,  0, 30)), 30, "\x00", STR_PAD_RIGHT);
+		$ID3v1Tag .= str_pad(trim(substr($title, 0, 30)), 30, "\x00", STR_PAD_RIGHT);
 		$ID3v1Tag .= str_pad(trim(substr($artist, 0, 30)), 30, "\x00", STR_PAD_RIGHT);
-		$ID3v1Tag .= str_pad(trim(substr($album,  0, 30)), 30, "\x00", STR_PAD_RIGHT);
-		$ID3v1Tag .= str_pad(trim(substr($year,   0,  4)),  4, "\x00", STR_PAD_LEFT);
+		$ID3v1Tag .= str_pad(trim(substr($album, 0, 30)), 30, "\x00", STR_PAD_RIGHT);
+		$ID3v1Tag .= str_pad(trim(substr($year, 0, 4)), 4, "\x00", STR_PAD_LEFT);
 		if (!empty($track) && ($track > 0) && ($track <= 255)) {
 			$ID3v1Tag .= str_pad(trim(substr($comment, 0, 28)), 28, "\x00", STR_PAD_RIGHT);
 			$ID3v1Tag .= "\x00";

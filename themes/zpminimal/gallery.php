@@ -2,7 +2,10 @@
 
 </div> <!-- close #header -->
 <div id="content">
-	<div id="main"<?php if ($zpmin_switch) echo ' class="switch"'; ?>>
+	<div id="main"<?php if ($zpmin_switch) {
+	echo ' class="switch"';
+}
+?>>
 		<div id="albums-wrap">
 			<?php while (next_album()): ?>
 				<div class="album-maxspace">
@@ -25,7 +28,10 @@
 			</div>
 		<?php } ?>
 	</div>
-	<div id="sidebar"<?php if ($zpmin_switch) echo ' class="switch"'; ?>>
+	<div id="sidebar"<?php if ($zpmin_switch) {
+	echo ' class="switch"';
+}
+?>>
 		<div class="sidebar-divide">
 			<?php printGalleryDesc(true); ?>
 		</div>

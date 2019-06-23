@@ -70,7 +70,7 @@ class zoomImage {
 	static function body_close() {
 		global $_zoomImage_id_list;
 		scriptLoader(getPlugin('zoomImage/zoom.css', true));
-		scriptLoader(CORE_SERVERPATH .  PLUGIN_FOLDER . '/zoomImage/jquery.zoom.min.js');
+		scriptLoader(CORE_SERVERPATH . PLUGIN_FOLDER . '/zoomImage/jquery.zoom.min.js');
 		?>
 		<script type="text/javascript">
 		<?php

@@ -137,8 +137,9 @@ class Image extends MediaObject {
 			$this->updateDimensions(); // deal with rotation issues
 			$this->set('mtime', $this->filemtime);
 			$this->save();
-			if ($new)
-				npgFilters::apply('new_image', $this);
+			if ($new) {
+							npgFilters::apply('new_image', $this);
+			}
 		}
 	}
 
@@ -293,8 +294,9 @@ class Image extends MediaObject {
 		$this->imagefolder = $this->albumlink = $this->albumname = $album->name;
 		$this->filename = $filename;
 		$this->displayname = substr($this->filename, 0, strrpos($this->filename, '.'));
-		if (empty($this->displayname))
-			$this->displayname = $this->filename;
+		if (empty($this->displayname)) {
+					$this->displayname = $this->filename;
+		}
 		$this->comments = null;
 		$this->filemtime = @filemtime($this->localpath);
 		$this->imagetype = strtolower(get_class($this)) . 's';
@@ -947,8 +949,9 @@ class Image extends MediaObject {
 	 * @return int
 	 */
 	function move($newalbum, $newfilename = null) {
-		if (is_string($newalbum))
-			$newalbum = newAlbum($newalbum, false);
+		if (is_string($newalbum)) {
+					$newalbum = newAlbum($newalbum, false);
+		}
 		if ($newfilename == null) {
 			$newfilename = $this->filename;
 		} else {

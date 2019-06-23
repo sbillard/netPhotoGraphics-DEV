@@ -26,7 +26,7 @@
 			<div class="flexslider">
 			<?php if (!empty($slides)) { ?>
 			<ul class="slides">
-				<?php foreach($slides as $slide) {
+				<?php foreach ($slides as $slide) {
 					makeImageCurrent($slide);
 					?>
 					<li>
@@ -58,7 +58,7 @@
 			<?php if ($_latest_news_homepage) { ?>
 			<div class="col-sm-5">
 			<h3><?php echo NEWS_LABEL; ?></h3>
-				<?php printLatestNews( 1, '', true, true, 200, false); ?>
+				<?php printLatestNews(1, '', true, true, 200, false); ?>
 			</div>
 			<?php } ?>
 		</div>

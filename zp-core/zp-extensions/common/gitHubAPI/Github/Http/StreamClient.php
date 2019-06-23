@@ -48,14 +48,14 @@ class StreamClient extends AbstractClient
 			'http' => [
 				'method' => $request->getMethod(),
 				'header' => implode("\r\n", $headerStr) . "\r\n",
-				'follow_location' => 0,  # Github sets the Location header for 201 code too and redirection is not required for us
+				'follow_location' => 0, # Github sets the Location header for 201 code too and redirection is not required for us
 				'protocol_version' => 1.1,
 				'ignore_errors' => TRUE,
 			],
 			'ssl' => [
 				'verify_peer' => TRUE,
 				'cafile' => realpath(__DIR__ . '/../../ca-chain.crt'),
-				'disable_compression' => TRUE,  # Effective since PHP 5.4.13
+				'disable_compression' => TRUE, # Effective since PHP 5.4.13
 			],
 		];
 
@@ -104,7 +104,7 @@ class StreamClient extends AbstractClient
 		$headers = [];
 		foreach ($http_response_header as $header) {
 			if (in_array(substr($header, 0, 1), [' ', "\t"], TRUE)) {
-				$headers[$last] .= ' ' . trim($header);  # RFC2616, 2.2
+				$headers[$last] .= ' ' . trim($header); # RFC2616, 2.2
 			} else {
 				list($name, $value) = explode(':', $header, 2) + [NULL, NULL];
 				$headers[$last = trim($name)] = trim($value);

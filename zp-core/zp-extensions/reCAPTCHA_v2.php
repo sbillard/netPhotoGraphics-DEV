@@ -16,7 +16,6 @@
  *
  *
  * @author Stephen Billard (sbillard)
-
  * @package plugins/reCAPTCHA_v2
  * @pluginCategory admin
  */

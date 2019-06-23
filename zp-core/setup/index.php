@@ -470,12 +470,14 @@ if ($setup_checked) {
 }
 
 if (!isset($_setupCurrentLocale_result) || empty($_setupCurrentLocale_result)) {
-	if (DEBUG_LOCALE)
-		debugLog('Setup checking locale');
+	if (DEBUG_LOCALE) {
+			debugLog('Setup checking locale');
+	}
 	$_setupCurrentLocale_result = i18n::setMainDomain();
-	if (DEBUG_LOCALE)
-		debugLog('$_setupCurrentLocale_result = ' . $_setupCurrentLocale_result);
-}
+	if (DEBUG_LOCALE) {
+			debugLog('$_setupCurrentLocale_result = ' . $_setupCurrentLocale_result);
+	}
+	}
 $testRelease = defined('TEST_RELEASE') && TEST_RELEASE || strpos(getOption('markRelease_state'), '-DEBUG') !== false;
 
 $taskDisplay = array('create' => gettext("create"), 'update' => gettext("update"));
@@ -776,7 +778,7 @@ $taskDisplay = array('create' => gettext("create"), 'update' => gettext("update"
 							}
 						}
 						if (file_exists(SERVERPATH . '/' . DATA_FOLDER . '/' . CONFIGFILE)) {
-							require( SERVERPATH . '/' . DATA_FOLDER . '/' . CONFIGFILE);
+							require(SERVERPATH . '/' . DATA_FOLDER . '/' . CONFIGFILE);
 							$cfg = true;
 						} else {
 							$cfg = false;

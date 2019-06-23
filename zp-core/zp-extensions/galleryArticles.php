@@ -4,7 +4,6 @@
  * Create news articles when a gallery item is published.
  *
  * @author Stephen Billard (sbillard)
-
  * @package plugins/galleryArticles
  * @pluginCategory theme
  */
@@ -15,10 +14,12 @@ $plugin_disable = extensionEnabled('zenpage') ? '' : gettext('Gallery Articles r
 $option_interface = 'galleryArticles';
 
 npgFilters::register('show_change', 'galleryArticles::published');
-if (getOption('galleryArticles_albums'))
+if (getOption('galleryArticles_albums')) {
 	npgFilters::register('new_album', 'galleryArticles::published');
-if (getOption('galleryArticles_images'))
+}
+if (getOption('galleryArticles_images')) {
 	npgFilters::register('new_image', 'galleryArticles::published');
+}
 npgFilters::register('content_macro', 'galleryArticles::macro');
 
 class galleryArticles {
@@ -116,7 +117,7 @@ class galleryArticles {
 
 	function handleOptionSave($themename, $themealbum) {
 		if (getOption('galleryArticles_import')) {
-			require_once(CORE_SERVERPATH .  PLUGIN_FOLDER . '/galleryArticles/combiNews.php');
+			require_once(CORE_SERVERPATH . PLUGIN_FOLDER . '/galleryArticles/combiNews.php');
 			purgeOption('galleryArticles_import');
 		}
 		return false;
@@ -208,8 +209,9 @@ class galleryArticles {
 
 		$article->setContent($desc);
 		$date = $obj->getPublishDate();
-		if (!$date)
-			$date = date('Y-m-d H:i:s');
+		if (!$date) {
+					$date = date('Y-m-d H:i:s');
+		}
 		$article->setDateTime($date);
 		$article->setOwner('galleryArticles');
 		$article->setShow(true);

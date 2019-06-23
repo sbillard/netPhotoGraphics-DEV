@@ -79,7 +79,7 @@ class ThemeOptions {
 
 	function getOptionsSupported() {
 		global $personalities;
-		require_once(CORE_SERVERPATH .  PLUGIN_FOLDER . '/image_effects.php');
+		require_once(CORE_SERVERPATH . PLUGIN_FOLDER . '/image_effects.php');
 
 		$note = '<p class="notebox">' . gettext('<strong>Note:</strong> This option is valid only if the Zenpage plugin is enabled or the Separate gallery index option is checked. Of course the <em>menu_manager</em> plugin must also be enabled.') . '</p>';
 
@@ -165,7 +165,10 @@ class ThemeOptions {
 				?>
 				<select id="EF_themeselect_logo" name="Graphic_logo">
 					<option value="" style="background-color:LightGray"><?php echo gettext('*no logo selected'); ?></option>';
-					<option value="*"<?php if ($currentValue == '*') echo ' selected="selected"'; ?>><?php echo gettext('Effervescence'); ?></option>';
+					<option value="*"<?php if ($currentValue == '*') {
+	echo ' selected="selected"';
+}
+?>><?php echo gettext('Effervescence'); ?></option>';
 					<?php generateListFromFiles($currentValue, SERVERPATH . '/' . UPLOAD_FOLDER . '/images', '.png'); ?>
 				</select>
 				<?php

@@ -9,8 +9,9 @@
  *
  * @package plugins/linkedinLogin
  */
-if (!defined('OFFSET_PATH'))
+if (!defined('OFFSET_PATH')) {
 	define('OFFSET_PATH', 4);
+}
 require_once(dirname(dirname(dirname(__FILE__))) . '/admin-functions.php');
 
 npg_session_start();
@@ -28,8 +29,8 @@ if (isset($_REQUEST['redirect'])) {
 	}
 }
 
-include_once(CORE_SERVERPATH .  PLUGIN_FOLDER . "/common/oAuth/http.php");
-include_once(CORE_SERVERPATH .  PLUGIN_FOLDER . "/common/oAuth/oauth_client.php");
+include_once(CORE_SERVERPATH . PLUGIN_FOLDER . "/common/oAuth/http.php");
+include_once(CORE_SERVERPATH . PLUGIN_FOLDER . "/common/oAuth/oauth_client.php");
 
 $client = new oauth_client_class;
 

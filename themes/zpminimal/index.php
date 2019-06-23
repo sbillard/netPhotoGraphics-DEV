@@ -40,19 +40,19 @@
 					break;
 					} ?>
 					<?php if ($zpmin_albumorimage == 'image') {
-					printImageStatistic(1,$zpmin_functionoption,'',true,true,false,40,'',535,535,false);
+					printImageStatistic(1, $zpmin_functionoption, '', true, true, false, 40, '', 535, 535, false);
 					} else if ($zpmin_albumorimage == 'album') {
-					printAlbumStatistic(1,$zpmin_functionoption,true,true,false,40,'',535,535,false);
+					printAlbumStatistic(1, $zpmin_functionoption, true, true, false, 40, '', 535, 535, false);
 					} else {
 					$randomImage = getRandomImages($zpmin_functionoption);
 					if (is_object($randomImage) && $randomImage->exists) {
 						$randomImageURL = html_encode($randomImage->getLink());
-						echo '<a href="' . $randomImageURL . '" title="'.sprintf(gettext('View image: %s'), html_encode($randomImage->getTitle())) . '">';
-						$html =  "<img src=\"".html_encode($randomImage->getCustomImage(535, NULL, NULL, NULL, NULL, NULL, NULL, TRUE))."\" alt=\"" . html_encode($randomImage->getTitle()) . "\" />\n";
+						echo '<a href="' . $randomImageURL . '" title="' . sprintf(gettext('View image: %s'), html_encode($randomImage->getTitle())) . '">';
+						$html = "<img src=\"" . html_encode($randomImage->getCustomImage(535, NULL, NULL, NULL, NULL, NULL, NULL, TRUE)) . "\" alt=\"" . html_encode($randomImage->getTitle()) . "\" />\n";
 						echo npgFilters::apply('custom_image_html', $html, false);
 						echo "</a>";
-						echo '<h3><a href="' . $randomImageURL . '" title="'.sprintf(gettext('View image: %s'), html_encode($randomImage->getTitle())) . '">'.html_encode($randomImage->getTitle()).'</a></h3>';
-						echo "<p>". formattedDate(getOption('date_format'),strtotime($randomImage->getDateTime()))."</p>";
+						echo '<h3><a href="' . $randomImageURL . '" title="' . sprintf(gettext('View image: %s'), html_encode($randomImage->getTitle())) . '">' . html_encode($randomImage->getTitle()) . '</a></h3>';
+						echo "<p>" . formattedDate(getOption('date_format'), strtotime($randomImage->getDateTime())) . "</p>";
 					} else { echo gettext('No Images Exist...'); }
 					} ?>
 					<div id="enter">

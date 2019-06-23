@@ -29,8 +29,9 @@ if (isset($_GET['album'])) {
 		XSRFdefender('save_sort');
 		if (isset($_POST['ids'])) { //	process bulk actions, not individual image actions.
 			$action = processImageBulkActions($album);
-			if (!empty($action))
-				$_GET['bulkmessage'] = $action;
+			if (!empty($action)) {
+							$_GET['bulkmessage'] = $action;
+			}
 		}
 		parse_str($_POST['sortableList'], $inputArray);
 		if (isset($inputArray['id'])) {

@@ -1,7 +1,8 @@
 <?php
 // force UTF-8 Ø
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 if (class_exists('CMS')) {
 	?>
 	<!DOCTYPE html>
@@ -14,8 +15,9 @@ if (class_exists('CMS')) {
 			scriptLoader($zenCSS);
 			scriptLoader(dirname(dirname($zenCSS)) . '/common.css');
 
-			if (class_exists('RSS'))
-				printRSSHeaderLink("Pages", "Zenpage pages", "");
+			if (class_exists('RSS')) {
+							printRSSHeaderLink("Pages", "Zenpage pages", "");
+			}
 			?>
 		</head>
 
@@ -73,7 +75,10 @@ if (class_exists('CMS')) {
 					printFavoritesURL(NULL, '', ' | ', '<br />');
 				}
 				?>
-				<?php if (class_exists('RSS')) printRSSLink('Gallery', '', 'RSS', ' | '); ?>
+				<?php if (class_exists('RSS')) {
+	printRSSLink('Gallery', '', 'RSS', ' | ');
+}
+?>
 				<?php printCustomPageURL(gettext("Archive View"), "archive"); ?> | <?php printSoftwareLink(); ?>
 				<?php
 				if (extensionEnabled('daily-summary')) {

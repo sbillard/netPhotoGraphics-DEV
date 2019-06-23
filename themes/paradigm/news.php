@@ -1,14 +1,18 @@
 <?php
 // force UTF-8 Ø
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 if (class_exists("CMS")) {
 	?>
 
 	<?php include(SERVERPATH . '/' . THEMEFOLDER . '/paradigm/includes/_head.php'); ?>
 	<?php include(SERVERPATH . '/' . THEMEFOLDER . '/paradigm/includes/_header.php'); ?>
 
-	<?php if (class_exists('RSS')) printRSSHeaderLink("News", "Zenpage news", ""); ?>
+	<?php if (class_exists('RSS')) {
+	printRSSHeaderLink("News", "Zenpage news", "");
+}
+?>
 
 
 	<div id="background-main" class="background">

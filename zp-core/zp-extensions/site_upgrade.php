@@ -234,7 +234,7 @@ class site_upgrade {
 				default:
 					// Feed plugin
 					$plugin = getPlugin(substr($name, 0, strpos($name, '-')) . '.php');
-					require_once( $plugin);
+					require_once($plugin);
 					$items = array(
 							array(
 									'title' => sprintf(gettext('%s suspended'), $source),
@@ -263,37 +263,37 @@ class site_upgrade {
 }
 
 switch (OFFSET_PATH) {
-	case 0:
-		$state = @$_conf_vars['site_upgrade::state'];
-		if ((!npg_loggedin(ADMIN_RIGHTS | DEBUG_RIGHTS) && $state == 'closed_for_test') || $state == 'closed') {
-			if (isset($_conf_vars['special_pages']['page']['rewrite'])) {
-				$page = $_conf_vars['special_pages']['page']['rewrite'];
-			} else {
-				$page = 'page';
+		case 0:
+			$state = @$_conf_vars['site_upgrade::state'];
+			if ((!npg_loggedin(ADMIN_RIGHTS | DEBUG_RIGHTS) && $state == 'closed_for_test') || $state == 'closed') {
+				if (isset($_conf_vars['special_pages']['page']['rewrite'])) {
+					$page = $_conf_vars['special_pages']['page']['rewrite'];
+				} else {
+					$page = 'page';
+				}
+				if (!preg_match('~' . preg_quote($page) . '/setup_set-mod_rewrite\?z=setup$~', $_SERVER['REQUEST_URI'])) {
+					header('location: ' . WEBPATH . '/' . USER_PLUGIN_FOLDER . '/site_upgrade/closed.php');
+					exit();
+				}
+			} else if ($state == 'closed_for_test') {
+				npgFilters::register('theme_body_open', 'site_upgrade::notice');
 			}
-			if (!preg_match('~' . preg_quote($page) . '/setup_set-mod_rewrite\?z=setup$~', $_SERVER['REQUEST_URI'])) {
-				header('location: ' . WEBPATH . '/' . USER_PLUGIN_FOLDER . '/site_upgrade/closed.php');
-				exit();
+			break;
+		default:
+			npgFilters::register('admin_utilities_buttons', 'site_upgrade::button');
+			npgFilters::register('installation_information', 'site_upgrade::status');
+			npgFilters::register('admin_note', 'site_upgrade::note');
+			if (isset($_REQUEST['refreshHTML'])) {
+				XSRFdefender('site_upgrade_refresh');
+				site_upgrade::updateXML();
+				$_GET['report'] = gettext('site_upgrade files Restored to original.');
 			}
-		} else if ($state == 'closed_for_test') {
-			npgFilters::register('theme_body_open', 'site_upgrade::notice');
-		}
-		break;
-	default:
-		npgFilters::register('admin_utilities_buttons', 'site_upgrade::button');
-		npgFilters::register('installation_information', 'site_upgrade::status');
-		npgFilters::register('admin_note', 'site_upgrade::note');
-		if (isset($_REQUEST['refreshHTML'])) {
-			XSRFdefender('site_upgrade_refresh');
+			break;
+		case 2:
+			$_site_filelist = array(
+					'closed.php' => '*' // copy and update just this file
+			);
 			site_upgrade::updateXML();
-			$_GET['report'] = gettext('site_upgrade files Restored to original.');
-		}
-		break;
-	case 2:
-		$_site_filelist = array(
-				'closed.php' => '*' // copy and update just this file
-		);
-		site_upgrade::updateXML();
-		break;
+			break;
 }
 ?>

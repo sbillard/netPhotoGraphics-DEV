@@ -206,63 +206,63 @@ class zenPhotoCompatibilityPack {
 }
 
 switch (OFFSET_PATH) {
-	case 2:
-		break;
+		case 2:
+			break;
 
-	default:
-		if (class_exists('CMS')) {
+		default:
+			if (class_exists('CMS')) {
 
-			class Zenpage extends CMS {
+				class Zenpage extends CMS {
+
+				}
+
+				class ZenpagePage extends Page {
+
+				}
+
+				class ZenpageNews extends Article {
+
+				}
+
+				class ZenpageCategory extends Category {
+
+				}
+
+				$_zp_zenpage = clone $_CMS;
+				$_zp_CMS = clone $_CMS;
+
+				//define the useless legacy definitions
+				define('ZP_NEWS_ENABLED', $_CMS->news_enabled);
+				define('ZP_PAGES_ENABLED', $_CMS->pages_enabled);
+			}
+
+			class zpFunctions extends npgFunctions {
 
 			}
 
-			class ZenpagePage extends Page {
+			$_zp_captcha = clone $_captcha;
+			$_zp_gallery = clone $_gallery;
 
-			}
+			define('ZENFOLDER', CORE_FOLDER);
+			define('SERVER_HTTP_HOST', FULLHOSTPATH);
 
-			class ZenpageNews extends Article {
+			define("ZP_INDEX", NPG_INDEX);
+			define("ZP_ALBUM", NPG_ALBUM);
+			define("ZP_IMAGE", NPG_IMAGE);
+			define("ZP_COMMENT", NPG_COMMENT);
+			define("ZP_SEARCH", NPG_COMMENT);
+			define('ZP_SEARCH_LINKED', SEARCH_LINKED);
+			define('ZP_ALBUM_LINKED', ALBUM_LINKED);
+			define('ZP_IMAGE_LINKED', IMAGE_LINKED);
+			define('ZP_ZENPAGE_NEWS_PAGE', ZENPAGE_NEWS_PAGE);
+			define('ZP_ZENPAGE_NEWS_ARTICLE', ZENPAGE_NEWS_ARTICLE);
+			define('ZP_ZENPAGE_NEWS_CATEGORY', ZENPAGE_NEWS_CATEGORY);
+			define('ZP_ZENPAGE_NEWS_DATE', ZENPAGE_NEWS_DATE);
+			define('ZP_ZENPAGE_PAGE', ZENPAGE_PAGE);
+			define('ZP_ZENPAGE_SINGLE', ZENPAGE_SINGLE);
 
-			}
-
-			class ZenpageCategory extends Category {
-
-			}
-
-			$_zp_zenpage = clone $_CMS;
-			$_zp_CMS = clone $_CMS;
-
-			//define the useless legacy definitions
-			define('ZP_NEWS_ENABLED', $_CMS->news_enabled);
-			define('ZP_PAGES_ENABLED', $_CMS->pages_enabled);
-		}
-
-		class zpFunctions extends npgFunctions {
-
-		}
-
-		$_zp_captcha = clone $_captcha;
-		$_zp_gallery = clone $_gallery;
-
-		define('ZENFOLDER', CORE_FOLDER);
-		define('SERVER_HTTP_HOST', FULLHOSTPATH);
-
-		define("ZP_INDEX", NPG_INDEX);
-		define("ZP_ALBUM", NPG_ALBUM);
-		define("ZP_IMAGE", NPG_IMAGE);
-		define("ZP_COMMENT", NPG_COMMENT);
-		define("ZP_SEARCH", NPG_COMMENT);
-		define('ZP_SEARCH_LINKED', SEARCH_LINKED);
-		define('ZP_ALBUM_LINKED', ALBUM_LINKED);
-		define('ZP_IMAGE_LINKED', IMAGE_LINKED);
-		define('ZP_ZENPAGE_NEWS_PAGE', ZENPAGE_NEWS_PAGE);
-		define('ZP_ZENPAGE_NEWS_ARTICLE', ZENPAGE_NEWS_ARTICLE);
-		define('ZP_ZENPAGE_NEWS_CATEGORY', ZENPAGE_NEWS_CATEGORY);
-		define('ZP_ZENPAGE_NEWS_DATE', ZENPAGE_NEWS_DATE);
-		define('ZP_ZENPAGE_PAGE', ZENPAGE_PAGE);
-		define('ZP_ZENPAGE_SINGLE', ZENPAGE_SINGLE);
-
-		npgFilters::register('load_theme_script', 'zenphotoCompatibilityPack::scriptFilter');
-		npgFilters::register('next_object_loop', 'zenphotoCompatibilityPack::nextObjFilter');
-		npgFilters::register('admin_tabs', 'zenphotoCompatibilityPack::admin_tabs');
+			npgFilters::register('load_theme_script', 'zenphotoCompatibilityPack::scriptFilter');
+			npgFilters::register('next_object_loop', 'zenphotoCompatibilityPack::nextObjFilter');
+			npgFilters::register('admin_tabs', 'zenphotoCompatibilityPack::admin_tabs');
 }
 

@@ -1,6 +1,7 @@
 <?php
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 $zpskel_social = function_exists('printAddThis');
 ?>
 <!DOCTYPE html>
@@ -20,8 +21,9 @@ $zpskel_social = function_exists('printAddThis');
 				}
 				$zpskel_metatitle = $metatitle;
 				$zpskel_metadesc = truncate_string(getBareGalleryDesc(), 150, '...');
-				if ((!$zenpage) || ($zenpage_homepage == 'none'))
-					$galleryactive = true;
+				if ((!$zenpage) || ($zenpage_homepage == 'none')) {
+									$galleryactive = true;
+				}
 				break;
 			case 'gallery.php':
 				$zpskel_metatitle = getBareGalleryTitle();
@@ -155,7 +157,10 @@ $zpskel_social = function_exists('printAddThis');
 				});
 			</script>
 		<?php } ?>
-		<?php if ($_gallery_page == "search.php") printZDSearchToggleJS(); ?>
+		<?php if ($_gallery_page == "search.php") {
+	printZDSearchToggleJS();
+}
+?>
 		<link rel="shortcut icon" href="<?php echo $_themeroot; ?>/images/favicon.ico">
 		<link rel="apple-touch-icon" href="<?php echo $_themeroot; ?>/images/apple-touch-icon.png">
 		<link rel="apple-touch-icon" sizes="72x72" href="<?php echo $_themeroot; ?>/images/apple-touch-icon-72x72.png">

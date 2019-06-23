@@ -51,8 +51,9 @@ foreach ($tables as $table) {
 		$dbType = strtoupper($datum['Type']);
 		if ($dbType == 'TEXT' || $dbType == 'LONGTEXT') {
 			$sql = "ALTER TABLE " . prefix($table) . " CHANGE `" . $datum['Field'] . "` `" . $datum['Field'] . "` " . $dbType . ' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci';
-			if ($datum['Null'] === 'NO')
-				$sql .= " NOT NULL";
+			if ($datum['Null'] === 'NO') {
+							$sql .= " NOT NULL";
+			}
 			if (!empty($datum['Default']) || $datum['Default'] === '0' || $datum['Null'] !== 'NO') {
 				if (is_null($datum['Default'])) {
 					if ($datum['Null'] !== 'NO') {
@@ -76,5 +77,5 @@ configFile::store($_config_contents);
 $_configMutex->unlock();
 
 
-header('Location: ' . getAdminLink('admin.php').'?action=external&msg=' . gettext('utf8mb4 migration completed.'));
+header('Location: ' . getAdminLink('admin.php') . '?action=external&msg=' . gettext('utf8mb4 migration completed.'));
 exit();

@@ -238,8 +238,9 @@ scriptLoader(CORE_SERVERPATH . PLUGIN_FOLDER . '/purgeOptions/purgeOptions.css')
 									?>
 									<br />
 									<ul class = "purgeOptionsBlock"<?php
-									if ($size > 1)
-										echo ' style="' . "column-count:$size;	-moz-column-count: $size;	-webkit-column-count: $size;" . '"';
+									if ($size > 1) {
+																			echo ' style="' . "column-count:$size;	-moz-column-count: $size;	-webkit-column-count: $size;" . '"';
+									}
 									?>>
 												<?php
 												foreach ($orpahaned as $key => $option) {
@@ -247,18 +248,30 @@ scriptLoader(CORE_SERVERPATH . PLUGIN_FOLDER . '/purgeOptions/purgeOptions.css')
 													$classes = $option['class'];
 													$hidden = in_array('hiddenOrphanHighlight', $classes);
 													?>
-											<li<?php if ($hidden) echo ' class="hiddenOrphan"'; ?>>
+											<li<?php if ($hidden) {
+	echo ' class="hiddenOrphan"';
+}
+?>>
 												<label class="none">
 													<?php echo BULLSEYE_BLUE; ?>
-													<input type="radio" name="missingcreator[<?php echo $key; ?>]" class="orphanedIgnore" value="1" <?php if (!$hidden) echo ' checked="checked"'; ?>/>
+													<input type="radio" name="missingcreator[<?php echo $key; ?>]" class="orphanedIgnore" value="1" <?php if (!$hidden) {
+	echo ' checked="checked"';
+}
+?>/>
 												</label>
 												<label class="none">
 													<?php echo WASTEBASKET; ?>
-													<input type="radio" name="missingcreator[<?php echo $key; ?>]" class="orphanedDelete<?php if (in_array('emptyOption', $classes)) echo ' deleteEmpty'; ?>" value="2" />
+													<input type="radio" name="missingcreator[<?php echo $key; ?>]" class="orphanedDelete<?php if (in_array('emptyOption', $classes)) {
+	echo ' deleteEmpty';
+}
+?>" value="2" />
 												</label>
 												<label class="none">
 													<?php echo HIDE_ICON; ?>
-													<input type="radio" name="missingcreator[<?php echo $key; ?>]" class="orphaned" value="3" <?php if ($hidden) echo ' checked="checked"'; ?>/>
+													<input type="radio" name="missingcreator[<?php echo $key; ?>]" class="orphaned" value="3" <?php if ($hidden) {
+	echo ' checked="checked"';
+}
+?>/>
 												</label>
 
 												<?php

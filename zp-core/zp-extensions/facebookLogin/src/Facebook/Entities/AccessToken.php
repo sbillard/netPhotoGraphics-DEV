@@ -65,11 +65,11 @@ class AccessToken
    */
   public function __construct($accessToken, $expiresAt = 0, $machineId = null)
   {
-    $this->accessToken = $accessToken;
-    if ($expiresAt) {
-      $this->setExpiresAtFromTimeStamp($expiresAt);
-    }
-    $this->machineId = $machineId;
+	$this->accessToken = $accessToken;
+	if ($expiresAt) {
+	  $this->setExpiresAtFromTimeStamp($expiresAt);
+	}
+	$this->machineId = $machineId;
   }
 
   /**
@@ -79,9 +79,9 @@ class AccessToken
    */
   protected function setExpiresAtFromTimeStamp($timeStamp)
   {
-    $dt = new \DateTime();
-    $dt->setTimestamp($timeStamp);
-    $this->expiresAt = $dt;
+	$dt = new \DateTime();
+	$dt->setTimestamp($timeStamp);
+	$this->expiresAt = $dt;
   }
 
   /**
@@ -91,7 +91,7 @@ class AccessToken
    */
   public function getExpiresAt()
   {
-    return $this->expiresAt;
+	return $this->expiresAt;
   }
 
   /**
@@ -101,7 +101,7 @@ class AccessToken
    */
   public function getMachineId()
   {
-    return $this->machineId;
+	return $this->machineId;
   }
 
   /**
@@ -111,10 +111,10 @@ class AccessToken
    */
   public function isLongLived()
   {
-    if ($this->expiresAt) {
-      return $this->expiresAt->getTimestamp() > time() + (60 * 60 * 2);
-    }
-    return false;
+	if ($this->expiresAt) {
+	  return $this->expiresAt->getTimestamp() > time() + (60 * 60 * 2);
+	}
+	return false;
   }
 
   /**
@@ -128,9 +128,9 @@ class AccessToken
    */
   public function isValid($appId = null, $appSecret = null, $machineId = null)
   {
-    $accessTokenInfo = $this->getInfo($appId, $appSecret);
-    $machineId = $machineId ?: $this->machineId;
-    return static::validateAccessToken($accessTokenInfo, $appId, $machineId);
+	$accessTokenInfo = $this->getInfo($appId, $appSecret);
+	$machineId = $machineId ?: $this->machineId;
+	return static::validateAccessToken($accessTokenInfo, $appId, $machineId);
   }
 
   /**
@@ -146,22 +146,22 @@ class AccessToken
    * @return boolean
    */
   public static function validateAccessToken(GraphSessionInfo $tokenInfo,
-                                             $appId = null, $machineId = null)
+											 $appId = null, $machineId = null)
   {
-    $targetAppId = FacebookSession::_getTargetAppId($appId);
+	$targetAppId = FacebookSession::_getTargetAppId($appId);
 
-    $appIdIsValid = $tokenInfo->getAppId() == $targetAppId;
-    $machineIdIsValid = $tokenInfo->getProperty('machine_id') == $machineId;
-    $accessTokenIsValid = $tokenInfo->isValid();
+	$appIdIsValid = $tokenInfo->getAppId() == $targetAppId;
+	$machineIdIsValid = $tokenInfo->getProperty('machine_id') == $machineId;
+	$accessTokenIsValid = $tokenInfo->isValid();
 
-    // Not all access tokens return an expiration. E.g. an app access token.
-    if ($tokenInfo->getExpiresAt() instanceof \DateTime) {
-      $accessTokenIsStillAlive = $tokenInfo->getExpiresAt()->getTimestamp() >= time();
-    } else {
-      $accessTokenIsStillAlive = true;
-    }
+	// Not all access tokens return an expiration. E.g. an app access token.
+	if ($tokenInfo->getExpiresAt() instanceof \DateTime) {
+	  $accessTokenIsStillAlive = $tokenInfo->getExpiresAt()->getTimestamp() >= time();
+	} else {
+	  $accessTokenIsStillAlive = true;
+	}
 
-    return $appIdIsValid && $machineIdIsValid && $accessTokenIsValid && $accessTokenIsStillAlive;
+	return $appIdIsValid && $machineIdIsValid && $accessTokenIsValid && $accessTokenIsStillAlive;
   }
 
   /**
@@ -176,16 +176,16 @@ class AccessToken
    */
   public static function getAccessTokenFromCode($code, $appId = null, $appSecret = null, $machineId = null)
   {
-    $params = array(
-      'code' => $code,
-      'redirect_uri' => '',
-    );
+	$params = array(
+	  'code' => $code,
+	  'redirect_uri' => '',
+	);
 
-    if ($machineId) {
-      $params['machine_id'] = $machineId;
-    }
+	if ($machineId) {
+	  $params['machine_id'] = $machineId;
+	}
 
-    return static::requestAccessToken($params, $appId, $appSecret);
+	return static::requestAccessToken($params, $appId, $appSecret);
   }
 
   /**
@@ -199,14 +199,14 @@ class AccessToken
    */
   public static function getCodeFromAccessToken($accessToken, $appId = null, $appSecret = null)
   {
-    $accessToken = (string) $accessToken;
+	$accessToken = (string) $accessToken;
 
-    $params = array(
-      'access_token' => $accessToken,
-      'redirect_uri' => '',
-    );
+	$params = array(
+	  'access_token' => $accessToken,
+	  'redirect_uri' => '',
+	);
 
-    return static::requestCode($params, $appId, $appSecret);
+	return static::requestCode($params, $appId, $appSecret);
   }
 
   /**
@@ -219,12 +219,12 @@ class AccessToken
    */
   public function extend($appId = null, $appSecret = null)
   {
-    $params = array(
-      'grant_type' => 'fb_exchange_token',
-      'fb_exchange_token' => $this->accessToken,
-    );
+	$params = array(
+	  'grant_type' => 'fb_exchange_token',
+	  'fb_exchange_token' => $this->accessToken,
+	);
 
-    return static::requestAccessToken($params, $appId, $appSecret);
+	return static::requestAccessToken($params, $appId, $appSecret);
   }
 
   /**
@@ -240,31 +240,31 @@ class AccessToken
    */
   public static function requestAccessToken(array $params, $appId = null, $appSecret = null)
   {
-    $response = static::request('/oauth/access_token', $params, $appId, $appSecret);
-    $data = $response->getResponse();
+	$response = static::request('/oauth/access_token', $params, $appId, $appSecret);
+	$data = $response->getResponse();
 
-    /**
-     * @TODO fix this malarkey - getResponse() should always return an object
-     * @see https://github.com/facebook/facebook-php-sdk-v4/issues/36
-     */
-    if (is_array($data)) {
-      if (isset($data['access_token'])) {
-        $expiresAt = isset($data['expires']) ? time() + $data['expires'] : 0;
-        return new static($data['access_token'], $expiresAt);
-      }
-    } elseif($data instanceof \stdClass) {
-      if (isset($data->access_token)) {
-        $expiresAt = isset($data->expires_in) ? time() + $data->expires_in : 0;
-        $machineId = isset($data->machine_id) ? (string) $data->machine_id : null;
-        return new static((string) $data->access_token, $expiresAt, $machineId);
-      }
-    }
+	/**
+	 * @TODO fix this malarkey - getResponse() should always return an object
+	 * @see https://github.com/facebook/facebook-php-sdk-v4/issues/36
+	 */
+	if (is_array($data)) {
+	  if (isset($data['access_token'])) {
+		$expiresAt = isset($data['expires']) ? time() + $data['expires'] : 0;
+		return new static($data['access_token'], $expiresAt);
+	  }
+	} elseif($data instanceof \stdClass) {
+	  if (isset($data->access_token)) {
+		$expiresAt = isset($data->expires_in) ? time() + $data->expires_in : 0;
+		$machineId = isset($data->machine_id) ? (string) $data->machine_id : null;
+		return new static((string) $data->access_token, $expiresAt, $machineId);
+	  }
+	}
 
-    throw FacebookRequestException::create(
-      $response->getRawResponse(),
-      $data,
-      401
-    );
+	throw FacebookRequestException::create(
+	  $response->getRawResponse(),
+	  $data,
+	  401
+	);
   }
 
   /**
@@ -280,18 +280,18 @@ class AccessToken
    */
   public static function requestCode(array $params, $appId = null, $appSecret = null)
   {
-    $response = static::request('/oauth/client_code', $params, $appId, $appSecret);
-    $data = $response->getResponse();
+	$response = static::request('/oauth/client_code', $params, $appId, $appSecret);
+	$data = $response->getResponse();
 
-    if (isset($data->code)) {
-      return (string) $data->code;
-    }
+	if (isset($data->code)) {
+	  return (string) $data->code;
+	}
 
-    throw FacebookRequestException::create(
-      $response->getRawResponse(),
-      $data,
-      401
-    );
+	throw FacebookRequestException::create(
+	  $response->getRawResponse(),
+	  $data,
+	  401
+	);
   }
 
   /**
@@ -308,25 +308,25 @@ class AccessToken
    */
   protected static function request($endpoint, array $params, $appId = null, $appSecret = null)
   {
-    $targetAppId = FacebookSession::_getTargetAppId($appId);
-    $targetAppSecret = FacebookSession::_getTargetAppSecret($appSecret);
+	$targetAppId = FacebookSession::_getTargetAppId($appId);
+	$targetAppSecret = FacebookSession::_getTargetAppSecret($appSecret);
 
-    if (!isset($params['client_id'])) {
-      $params['client_id'] = $targetAppId;
-    }
-    if (!isset($params['client_secret'])) {
-      $params['client_secret'] = $targetAppSecret;
-    }
+	if (!isset($params['client_id'])) {
+	  $params['client_id'] = $targetAppId;
+	}
+	if (!isset($params['client_secret'])) {
+	  $params['client_secret'] = $targetAppSecret;
+	}
 
-    // The response for this endpoint is not JSON, so it must be handled
-    //   differently, not as a GraphObject.
-    $request = new FacebookRequest(
-      FacebookSession::newAppSession($targetAppId, $targetAppSecret),
-      'GET',
-      $endpoint,
-      $params
-    );
-    return $request->execute();
+	// The response for this endpoint is not JSON, so it must be handled
+	//   differently, not as a GraphObject.
+	$request = new FacebookRequest(
+	  FacebookSession::newAppSession($targetAppId, $targetAppSecret),
+	  'GET',
+	  $endpoint,
+	  $params
+	);
+	return $request->execute();
   }
 
   /**
@@ -339,22 +339,22 @@ class AccessToken
    */
   public function getInfo($appId = null, $appSecret = null)
   {
-    $params = array('input_token' => $this->accessToken);
+	$params = array('input_token' => $this->accessToken);
 
-    $request = new FacebookRequest(
-      FacebookSession::newAppSession($appId, $appSecret),
-      'GET',
-      '/debug_token',
-      $params
-    );
-    $response = $request->execute()->getGraphObject(GraphSessionInfo::className());
+	$request = new FacebookRequest(
+	  FacebookSession::newAppSession($appId, $appSecret),
+	  'GET',
+	  '/debug_token',
+	  $params
+	);
+	$response = $request->execute()->getGraphObject(GraphSessionInfo::className());
 
-    // Update the data on this token
-    if ($response->getExpiresAt()) {
-      $this->expiresAt = $response->getExpiresAt();
-    }
+	// Update the data on this token
+	if ($response->getExpiresAt()) {
+	  $this->expiresAt = $response->getExpiresAt();
+	}
 
-    return $response;
+	return $response;
   }
 
   /**
@@ -364,7 +364,7 @@ class AccessToken
    */
   public function __toString()
   {
-    return $this->accessToken;
+	return $this->accessToken;
   }
 
   /**
@@ -374,7 +374,7 @@ class AccessToken
    */
   public function isAppSession()
   {
-    return strpos($this->accessToken, "|") !== false;
+	return strpos($this->accessToken, "|") !== false;
   }
 
 }

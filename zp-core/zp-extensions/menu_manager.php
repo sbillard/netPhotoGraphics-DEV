@@ -151,8 +151,9 @@ function getMenuItems($menuset, $visible) {
 	if ($result) {
 		while ($row = db_fetch_assoc($result)) {
 			$row['type'] = strtolower($row['type']);
-			if (strpos($row['type'], 'zenpage') !== false)
-				$row['type'] = str_replace('zenpage', '', $row['type']);
+			if (strpos($row['type'], 'zenpage') !== false) {
+							$row['type'] = str_replace('zenpage', '', $row['type']);
+			}
 			$_menu_manager_items[$menuset][$visible][] = $row;
 		}
 		db_free_result($result);
@@ -567,10 +568,12 @@ function getCurrentMenuItem($menuset) {
 function getMenumanagerPredicessor($menuset = 'default') {
 	$sortorder = getCurrentMenuItem($menuset);
 	$items = getMenuItems($menuset, getMenuVisibility());
-	if (count($items) == 0)
-		return NULL;
-	if (empty($sortorder))
-		return NULL;
+	if (count($items) == 0) {
+			return NULL;
+	}
+	if (empty($sortorder)) {
+			return NULL;
+	}
 	$order = explode('-', $sortorder);
 	$next = array_pop($order) - 1;
 	$saveorder = $order;
@@ -597,8 +600,9 @@ function getMenumanagerPredicessor($menuset = 'default') {
 function printMenumanagerPrevLink($text, $menuset = 'default', $title = NULL, $class = NULL, $id = NULL) {
 	$itemarray = getMenumanagerPredicessor($menuset);
 	if (is_array($itemarray)) {
-		if (is_null($title))
-			$title = $itemarray['title'];
+		if (is_null($title)) {
+					$title = $itemarray['title'];
+		}
 		printLinkHTML($itemarray['url'], $text, $title, $class, $id);
 	} else {
 		echo '<span class="disabledlink">' . html_encode($text) . '</span>';
@@ -613,10 +617,12 @@ function printMenumanagerPrevLink($text, $menuset = 'default', $title = NULL, $c
 function getMenumanagerSuccessor($menuset = 'default') {
 	$sortorder = getCurrentMenuItem($menuset);
 	$items = getMenuItems($menuset, getMenuVisibility());
-	if (count($items) == 0)
-		return NULL;
-	if (empty($sortorder))
-		return NULL;
+	if (count($items) == 0) {
+			return NULL;
+	}
+	if (empty($sortorder)) {
+			return NULL;
+	}
 	$order = explode('-', $sortorder);
 	$next = array_pop($order) + 1;
 	$short_order = $order;
@@ -647,8 +653,9 @@ function getMenumanagerSuccessor($menuset = 'default') {
 function printMenumanagerNextLink($text, $menuset = 'default', $title = NULL, $class = NULL, $id = NULL) {
 	$itemarray = getMenumanagerSuccessor($menuset);
 	if (is_array($itemarray)) {
-		if (is_null($title))
-			$title = $itemarray['title'];
+		if (is_null($title)) {
+					$title = $itemarray['title'];
+		}
 		printLinkHTML($itemarray['url'], $text, $title, $class, $id);
 	} else {
 		echo '<span class="disabledlink">' . html_encode($text) . '</span>';
@@ -669,8 +676,10 @@ function printMenumanagerNextLink($text, $menuset = 'default', $title = NULL, $c
  */
 function printMenuemanagerPageListWithNav($prevtext, $nexttext, $menuset = 'default', $class = 'pagelist', $nextprev = true, $id = NULL, $firstlast = true, $navlen = 9) {
 	$currentitem = getMenuFromLink(html_encode(urldecode(getRequestURI())), $menuset);
-	if (is_null($currentitem))
-		return; // we are not in menuset
+	if (is_null($currentitem)) {
+			return;
+	}
+	// we are not in menuset
 	$orders = explode('-', $currentitem['sort_order']);
 	array_pop($orders);
 	$lookfor = implode('-', $orders) . '-';
@@ -679,8 +688,9 @@ function printMenuemanagerPageListWithNav($prevtext, $nexttext, $menuset = 'defa
 	if (is_array($result)) {
 		$l = strlen($lookfor) + 3;
 		foreach ($result as $key => $item) { // discard next level items
-			if (strlen($key) > $l)
-				unset($result[$key]);
+			if (strlen($key) > $l) {
+							unset($result[$key]);
+			}
 		}
 		$itemlist = array_keys($result);
 		$total = count($itemlist);
@@ -688,11 +698,13 @@ function printMenuemanagerPageListWithNav($prevtext, $nexttext, $menuset = 'defa
 		if ($total < 2) {
 			$class .= ' disabled_nav';
 		}
-		if ($navlen == 0)
-			$navlen = $total;
+		if ($navlen == 0) {
+					$navlen = $total;
+		}
 		$extralinks = 2;
-		if ($firstlast)
-			$extralinks = $extralinks + 2;
+		if ($firstlast) {
+					$extralinks = $extralinks + 2;
+		}
 		$len = floor(($navlen - $extralinks) / 2);
 		$j = max(round($extralinks / 2), min($current - $len - (2 - round($extralinks / 2)), $total - $navlen + $extralinks - 1));
 		$ilim = min($total, max($navlen - round($extralinks / 2), $current + floor($len)));
@@ -850,8 +862,9 @@ function getMenuFromLink($link, $menuset = 'default') {
 	$items = getMenuItems($menuset, getMenuVisibility());
 	foreach ($items as $item) {
 		$itemarray = getItemTitleAndURL($item);
-		if ($itemarray['url'] == $link)
-			return $item;
+		if ($itemarray['url'] == $link) {
+					return $item;
+		}
 	}
 	return NULL;
 }
@@ -929,10 +942,12 @@ function createMenu($menuitems, $menuset = 'default') {
 		} else {
 			$nesting = 0;
 		}
-		while ($nesting + 1 < count($orders))
-			array_pop($orders);
-		while ($nesting + 1 > count($orders))
-			array_push($orders, -1);
+		while ($nesting + 1 < count($orders)) {
+					array_pop($orders);
+		}
+		while ($nesting + 1 > count($orders)) {
+					array_push($orders, -1);
+		}
 		$result['id'] = 0;
 		if (isset($result['include_li'])) {
 			$includeli = $result['include_li'];
@@ -942,12 +957,12 @@ function createMenu($menuitems, $menuset = 'default') {
 		$type = $result['type'];
 		switch ($type) {
 			case 'all_items':
-				$orders[$nesting] ++;
+				$orders[$nesting]++;
 				query("INSERT INTO " . prefix('menu') . " (`title`,`link`,`type`,`show`,`menuset`,`sort_order`) " .
 								"VALUES ('" . gettext('Home') . "', '" . WEBPATH . '/' . "','siteindex','1'," . db_quote($menuset) . ',' . db_quote($orders), true);
 				$orders[$nesting] = addAlbumsToDatabase($menuset, $orders);
 				if (extensionEnabled('zenpage')) {
-					$orders[$nesting] ++;
+					$orders[$nesting]++;
 					query("INSERT INTO " . prefix('menu') . " (title`,`link`,`type`,`show`,`menuset`,`sort_order`) " .
 									"VALUES ('" . gettext('News index') . "', '" . getNewsIndexURL() . "','newsindex','1'," . db_quote($menuset) . ',' . db_quote(sprintf('%03u', $base + 1)), true);
 					$orders[$nesting] = addPagesToDatabase($menuset, $orders) + 1;
@@ -956,7 +971,7 @@ function createMenu($menuitems, $menuset = 'default') {
 				$type = false;
 				break;
 			case 'all_albums':
-				$orders[$nesting] ++;
+				$orders[$nesting]++;
 				$orders[$nesting] = addAlbumsToDatabase($menuset, $orders);
 				$type = false;
 				break;
@@ -964,7 +979,7 @@ function createMenu($menuitems, $menuset = 'default') {
 				$type = 'all_pages';
 				$success = -5;
 			case 'all_Pages':
-				$orders[$nesting] ++;
+				$orders[$nesting]++;
 				$orders[$nesting] = addPagesToDatabase($menuset, $orders);
 				$type = false;
 				break;
@@ -972,7 +987,7 @@ function createMenu($menuitems, $menuset = 'default') {
 				$type = 'all_categorys';
 				$success = -5;
 			case 'all_categories':
-				$orders[$nesting] ++;
+				$orders[$nesting]++;
 				$orders[$nesting] = addCategoriesToDatabase($menuset, $orders);
 				$type = false;
 				break;
@@ -1071,7 +1086,7 @@ function createMenu($menuitems, $menuset = 'default') {
 			$errors = true;
 		}
 		if ($success > 0 && $type) {
-			$orders[$nesting] ++;
+			$orders[$nesting]++;
 			$sort_order = '';
 			for ($i = 0; $i < count($orders); $i++) {
 				$sort_order .= sprintf('%03u', $orders[$i]) . '-';
@@ -1158,14 +1173,17 @@ function printCustomMenu($menuset = 'default', $option = 'list', $css_id = '', $
 	if ($css_id != "") {
 		$css_id = " id='" . $css_id . "'";
 	}
-	if ($showsubs === true)
-		$showsubs = 9999999999;
+	if ($showsubs === true) {
+			$showsubs = 9999999999;
+	}
 
 	$sortorder = getCurrentMenuItem($menuset);
 	$items = getMenuItems($menuset, getMenuVisibility());
 
-	if (count($items) == 0)
-		return; // nothing to do
+	if (count($items) == 0) {
+			return;
+	}
+	// nothing to do
 	$currentitem_parentid = @$items[$sortorder]['parentid'];
 	if ($startlist = !($option == 'omit-top' || $option == 'list-sub')) {
 		echo "<ul$css_id>";
@@ -1206,7 +1224,7 @@ function printCustomMenu($menuset = 'default', $option = 'list', $css_id = '', $
 				$parents[$indent] = NULL;
 				while ($indent > $level) {
 					if ($open[$indent]) {
-						$open[$indent] --;
+						$open[$indent]--;
 						echo "</li>\n";
 					}
 					$indent--;
@@ -1215,7 +1233,7 @@ function printCustomMenu($menuset = 'default', $option = 'list', $css_id = '', $
 			} else { // level == indent, have not changed
 				if ($open[$indent]) { // level = indent
 					echo str_pad("\t", $indent, "\t") . "</li>\n";
-					$open[$indent] --;
+					$open[$indent]--;
 				} else {
 					echo "\n";
 				}
@@ -1223,7 +1241,7 @@ function printCustomMenu($menuset = 'default', $option = 'list', $css_id = '', $
 
 			if ($open[$indent]) { // close an open LI if it exists
 				echo "</li>\n";
-				$open[$indent] --;
+				$open[$indent]--;
 			}
 
 			echo str_pad("\t", $indent - 1, "\t");
@@ -1279,10 +1297,12 @@ function printCustomMenu($menuset = 'default', $option = 'list', $css_id = '', $
 				}
 				if ($item['span_id'] || $item['span_class']) {
 					echo '<span';
-					if ($item['span_id'])
-						echo ' id="' . $item['span_id'] . '"';
-					if ($item['span_class'])
-						echo ' class="' . $item['span_class'] . '"';
+					if ($item['span_id']) {
+											echo ' id="' . $item['span_id'] . '"';
+					}
+					if ($item['span_class']) {
+											echo ' class="' . $item['span_class'] . '"';
+					}
 					echo '>';
 				}
 				switch ($item['type']) {
@@ -1319,14 +1339,14 @@ function printCustomMenu($menuset = 'default', $option = 'list', $css_id = '', $
 	while ($indent > 1) {
 		if ($open[$indent]) {
 			echo "</li>\n";
-			$open[$indent] --;
+			$open[$indent]--;
 		}
 		$indent--;
 		echo str_pad("\t", $indent, "\t") . "</ul>";
 	}
 	if ($open[$indent]) {
 		echo "</li>\n";
-		$open[$indent] --;
+		$open[$indent]--;
 	} else {
 		echo "\n";
 	}

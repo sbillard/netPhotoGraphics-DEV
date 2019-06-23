@@ -49,7 +49,7 @@ class FacebookStream
    */
   public function streamContextCreate(array $options)
   {
-    $this->stream = stream_context_create($options);
+	$this->stream = stream_context_create($options);
   }
 
   /**
@@ -59,7 +59,7 @@ class FacebookStream
    */
   public function getResponseHeaders()
   {
-    return $this->responseHeaders;
+	return $this->responseHeaders;
   }
 
   /**
@@ -71,9 +71,9 @@ class FacebookStream
    */
   public function fileGetContents($url)
   {
-    $rawResponse = file_get_contents($url, false, $this->stream);
-    $this->responseHeaders = $http_response_header;
-    return $rawResponse;
+	$rawResponse = file_get_contents($url, false, $this->stream);
+	$this->responseHeaders = $http_response_header;
+	return $rawResponse;
   }
 
 }

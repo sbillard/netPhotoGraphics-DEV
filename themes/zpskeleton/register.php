@@ -10,7 +10,7 @@
 	<div class="wrapper">
 		<div class="container">
 			<div class="sixteen columns">
-				<?php printRegistrationForm();  ?>
+				<?php printRegistrationForm(); ?>
 			</div>
 		</div>
 	</div>

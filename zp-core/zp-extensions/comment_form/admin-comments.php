@@ -16,14 +16,16 @@ if (isset($_GET['page'])) {
 	$page = '';
 }
 
-if (isset($_GET['fulltext']) && $_GET['fulltext'])
+if (isset($_GET['fulltext']) && $_GET['fulltext']) {
 	$fulltext = true;
-else
+} else {
 	$fulltext = false;
-if (isset($_GET['viewall']))
+}
+if (isset($_GET['viewall'])) {
 	$viewall = true;
-else
+} else {
 	$viewall = false;
+}
 
 /* handle posts */
 if (isset($_GET['action'])) {
@@ -72,12 +74,15 @@ if (isset($_GET['action'])) {
 			XSRFdefender('savecomment');
 			$id = sanitize_numeric($_POST['id']);
 			$comment = new Comment($id);
-			if (isset($_POST['name']))
-				$comment->setName(sanitize($_POST['name'], 3));
-			if (isset($_POST['email']))
-				$comment->setEmail(sanitize($_POST['email'], 3));
-			if (isset($_POST['website']))
-				$comment->setWebsite(sanitize($_POST['website'], 3));
+			if (isset($_POST['name'])) {
+							$comment->setName(sanitize($_POST['name'], 3));
+			}
+			if (isset($_POST['email'])) {
+							$comment->setEmail(sanitize($_POST['email'], 3));
+			}
+			if (isset($_POST['website'])) {
+							$comment->setWebsite(sanitize($_POST['website'], 3));
+			}
 			$comment->setDateTime(sanitize($_POST['date'], 3));
 			$comment->setComment(sanitize($_POST['comment'], 1));
 			$comment->setAddressData($_comment_form_save_post = serialize(getCommentAddress(0)));
@@ -351,10 +356,12 @@ printLogoAndLinks();
 							?>
 							<a href="<?php echo getAdminLink(PLUGIN_FOLDER . '/comment_form/admin-comments.php'); ?>?fulltext=<?php
 							echo (int) ($fulltext + 1) & 1;
-							if ($viewall)
-								echo '&amp;viewall';
-							if ($pagenum > 1)
-								echo "&amp;subpage=$pagenum";
+							if ($viewall) {
+															echo '&amp;viewall';
+							}
+							if ($pagenum > 1) {
+															echo "&amp;subpage=$pagenum";
+							}
 							?>">
 									 <?php echo $arrow; ?>
 									 <?php echo $msg; ?>

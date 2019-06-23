@@ -239,18 +239,21 @@ function printRandomImages_zb($number = 12, $class = null, $option = 'all', $roo
 	if (is_null($crop) && is_null($width) && is_null($height)) {
 		$crop = 2;
 	} else {
-		if (is_null($width))
-			$width = 200;
-		if (is_null($height))
-			$height = 200;
+		if (is_null($width)) {
+					$width = 200;
+		}
+		if (is_null($height)) {
+					$height = 200;
+		}
 		if (is_null($crop)) {
 			$crop = 1;
 		} else {
 			$crop = (int) $crop && true;
 		}
 	}
-	if (!empty($class))
-		$class = ' class="' . $class . '"';
+	if (!empty($class)) {
+			$class = ' class="' . $class . '"';
+	}
 	echo '<div id="images" class="row $class">';
 	for ($i = 1; $i <= $number; $i++) {
 		switch ($option) {
@@ -440,8 +443,9 @@ function newsOnIndex($link, $obj, $page) {
 		if (MOD_REWRITE) {
 			if (preg_match('~' . _NEWS_ . '[/\d/]*$~', $link)) {
 				$link = WEBPATH;
-				if ($page > 1)
-					$link .= '/' . _PAGE_ . '/' . $page;
+				if ($page > 1) {
+									$link .= '/' . _PAGE_ . '/' . $page;
+				}
 			}
 		} else {
 			if (strpos($link, 'category=') === false && strpos($link, 'title=') === false) {
@@ -498,10 +502,12 @@ function printImageStatistic_zb($number, $option, $albumfolder = '', $showtitle 
 		if (is_null($crop) && is_null($width) && is_null($height)) {
 			$crop = 2;
 		} else {
-			if (is_null($width))
-				$width = 85;
-			if (is_null($height))
-				$height = 85;
+			if (is_null($width)) {
+							$width = 85;
+			}
+			if (is_null($height)) {
+							$height = 85;
+			}
 			if (is_null($crop)) {
 				$crop = 1;
 			} else {

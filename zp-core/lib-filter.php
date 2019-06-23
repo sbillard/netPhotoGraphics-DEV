@@ -67,8 +67,9 @@ class npgFilters {
 				'function' => $function_name,
 				'script' => $base
 		);
-		if (DEBUG_FILTERS)
-			debugLog($base . '=>' . $function_name . ' registered to ' . $hook . ' at priority ' . $priority);
+		if (DEBUG_FILTERS) {
+					debugLog($base . '=>' . $function_name . ' registered to ' . $hook . ' at priority ' . $priority);
+		}
 	}
 
 	/**
@@ -87,14 +88,16 @@ class npgFilters {
 		global $_filters;
 
 		// If function then just skip all of the tests and not overwrite the following.
-		if (is_string($function))
-			return $function;
+		if (is_string($function)) {
+					return $function;
+		}
 		// Object Class Calling
 		else if (is_object($function[0])) {
 			$obj_idx = get_class($function[0]) . $function[1];
 			if (!isset($function[0]->_npg_filters_id)) {
-				if (false === $priority)
-					return false;
+				if (false === $priority) {
+									return false;
+				}
 				$count = isset($_filters[$hook][$priority]) ? count((array) $_filters[$hook][$priority]) : 0;
 				$function[0]->_npg_filters_id = $count;
 				$obj_idx .= $count;
@@ -105,8 +108,9 @@ class npgFilters {
 			return $obj_idx;
 		}
 		// Static Calling
-		else if (is_string($function[0]))
-			return $function[0] . $function[1];
+		else if (is_string($function[0])) {
+					return $function[0] . $function[1];
+		}
 	}
 
 	/**
@@ -193,12 +197,15 @@ class npgFilters {
 		$remove = isset($_filters[$hook][$priority][$function_to_remove]);
 		if ($remove) {
 			unset($_filters[$hook][$priority][$function_to_remove]);
-			if (empty($_filters[$hook][$priority]))
-				unset($_filters[$hook][$priority]);
-			if (empty($_filters[$hook]))
-				unset($_filters[$hook]);
-			if (DEBUG_FILTERS)
-				debugLog($function_to_remove . ' removed from ' . $hook);
+			if (empty($_filters[$hook][$priority])) {
+							unset($_filters[$hook][$priority]);
+			}
+			if (empty($_filters[$hook])) {
+							unset($_filters[$hook]);
+			}
+			if (DEBUG_FILTERS) {
+							debugLog($function_to_remove . ' removed from ' . $hook);
+			}
 		}
 		return $remove;
 	}
@@ -221,8 +228,9 @@ class npgFilters {
 			return false;
 		}
 		foreach ((array) array_keys($_filters[$hook]) as $key => $priority) {
-			if (isset($_filters[$hook][$priority][$idx]))
-				return $priority;
+			if (isset($_filters[$hook][$priority][$idx])) {
+							return $priority;
+			}
 		}
 		return false;
 	}

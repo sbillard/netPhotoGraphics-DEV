@@ -26,7 +26,6 @@
  * <b>IP list importing</b>
  *
  * IP addresses may be supplied in a text file, one IP per line. Upload the text file to the <i>%UPLOAD_FOLDER%</i> folder.
-
  * @author Stephen Billard (sbillard)
  * @Copyright 2015 by Stephen L Billard for use in {@link https://%GITHUB% netPhotoGraphics} and derivatives
  *
@@ -206,16 +205,16 @@ class ipBlocker {
 					$ipa = explode('.', $range['start']);
 					do {
 						$current = sprintf('%03u.%03u.%03u.%03u', @$ipa[0], @$ipa[1], @$ipa[2], @$ipa[3]);
-						$ipa[3] ++;
+						$ipa[3]++;
 						if ($ipa[3] > 255) {
 							$ipa[3] = 0;
-							$ipa[2] ++;
+							$ipa[2]++;
 							if ($ipa[2] > 255) {
 								$ipa[2] = 0;
-								$ipa[2] ++;
+								$ipa[2]++;
 								if ($ipa[1] > 255) {
 									$ipa[1] = 0;
-									$ipa[0] ++;
+									$ipa[0]++;
 									if ($ipa[0] > 255) {
 										break;
 									}
@@ -249,16 +248,16 @@ class ipBlocker {
 						$try = trim(array_shift($import_list));
 						if ($try) { //	ignore empty lines
 							$ipa = explode('.', $current);
-							$ipa[3] ++;
+							$ipa[3]++;
 							if ($ipa[3] > 255) {
 								$ipa[3] = 0;
-								$ipa[2] ++;
+								$ipa[2]++;
 								if ($ipa[2] > 255) {
 									$ipa[2] = 0;
-									$ipa[2] ++;
+									$ipa[2]++;
 									if ($ipa[1] > 255) {
 										$ipa[1] = 0;
-										$ipa[0] ++;
+										$ipa[0]++;
 										if ($ipa[0] > 255) {
 											break;
 										}
@@ -282,10 +281,11 @@ class ipBlocker {
 				}
 			}
 		}
-		if ($notify)
-			return '&custom=' . $notify;
-		else
-			return false;
+		if ($notify) {
+					return '&custom=' . $notify;
+		} else {
+					return false;
+		}
 	}
 
 	/**
@@ -295,8 +295,9 @@ class ipBlocker {
 	 * @param string $pass ignored
 	 */
 	static function login($loggedin, $user, $pass = NULL, $auth = NULL) {
-		if (!$loggedin)
-			self::ipGate('logon');
+		if (!$loggedin) {
+					self::ipGate('logon');
+		}
 		return $loggedin;
 	}
 

@@ -22,8 +22,9 @@ $imagelist = array();
 function getSubalbumImages($folder) {
 	global $imagelist, $_gallery;
 	$album = newAlbum($folder);
-	if ($album->isDynamic())
-		return;
+	if ($album->isDynamic()) {
+			return;
+	}
 	$images = $album->getImages();
 	foreach ($images as $image) {
 		$imagelist[] = '/' . $folder . '/' . $image;

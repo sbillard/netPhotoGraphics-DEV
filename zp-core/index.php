@@ -6,8 +6,10 @@
  *
  */
 // force UTF-8 Ø
-if (!defined('OFFSET_PATH'))
-	die(); //	no direct linking
+if (!defined('OFFSET_PATH')) {
+	die();
+}
+//	no direct linking
 
 $_themeScript_timer['start'] = microtime();
 require_once(dirname(__FILE__) . '/functions.php');
@@ -183,8 +185,9 @@ if (TEST_RELEASE) {
 		printf("<!-- " . gettext('Script processing %1$s:%2$.4f seconds') . " -->\n", $step, $cur - $last);
 		$last = $cur;
 	}
-	if (count($_themeScript_timer) > 1)
-		printf("<!-- " . gettext('Script processing total:%.4f seconds') . " -->\n", $last - $first);
-}
+	if (count($_themeScript_timer) > 1) {
+			printf("<!-- " . gettext('Script processing total:%.4f seconds') . " -->\n", $last - $first);
+	}
+	}
 $_HTML_cache->endHTMLCache();
 ?>

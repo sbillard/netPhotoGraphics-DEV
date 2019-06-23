@@ -14,8 +14,9 @@
  * @pluginCategory media
  */
 if (isset($_REQUEST['performcrop'])) {
-	if (!defined('OFFSET_PATH'))
-		define('OFFSET_PATH', 3);
+	if (!defined('OFFSET_PATH')) {
+			define('OFFSET_PATH', 3);
+	}
 	require_once(dirname(dirname(__FILE__)) . '/admin-globals.php');
 	require_once(dirname(dirname(__FILE__)) . '/lib-image.php');
 	admin_securityChecks(ALBUM_RIGHTS, $return = currentRelativeURL());
@@ -53,8 +54,9 @@ class crop_image {
 				$albumname = $image->albumlink;
 				$imagename = $image->filename;
 			}
-			if ($singleimage)
-				$singleimage = '&amp;singleimage=' . $singleimage;
+			if ($singleimage) {
+							$singleimage = '&amp;singleimage=' . $singleimage;
+			}
 			$output .= '<div class="button buttons tooltip" title="' . gettext('Permanently crop the actual image.') . '">' . "\n" .
 							'<a href="' . getAdminLink(PLUGIN_FOLDER . '/crop_image.php') . '?a=' . pathurlencode($albumname) . "\n" .
 							'&amp;i=' . urlencode($imagename) . '&amp;performcrop=backend&amp;subpage=' . $subpage . $singleimage . '&amp;tagsort=' . html_encode($tagsort) . '">' . "\n" .
@@ -167,8 +169,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'crop') {
 	if (gl_imageCanRotate()) {
 		$rotate = imageProcessing::getRotation($imageobj);
 	}
-	if (DEBUG_IMAGE)
-		debugLog("image_crop: crop " . basename($imgpath) . ":\$cw=$cw, \$ch=$ch, \$cx=$cx, \$cy=$cy \$rotate=$rotate");
+	if (DEBUG_IMAGE) {
+			debugLog("image_crop: crop " . basename($imgpath) . ":\$cw=$cw, \$ch=$ch, \$cx=$cx, \$cy=$cy \$rotate=$rotate");
+	}
 
 	if ($rotate) {
 		$timg = gl_rotateImage($timg, $rotate);
@@ -179,11 +182,13 @@ if (isset($_GET['action']) && $_GET['action'] == 'crop') {
 	@chmod($imgpath, 0777);
 	@unlink($imgpath);
 	if (gl_imageOutputt($newim, getSuffix($imgpath), $imgpath, $quality)) {
-		if (DEBUG_IMAGE)
-			debugLog('image_crop Finished:' . basename($imgpath));
+		if (DEBUG_IMAGE) {
+					debugLog('image_crop Finished:' . basename($imgpath));
+		}
 	} else {
-		if (DEBUG_IMAGE)
-			debugLog('image_crop: failed to create ' . $imgpath);
+		if (DEBUG_IMAGE) {
+					debugLog('image_crop: failed to create ' . $imgpath);
+		}
 	}
 	@chmod($imgpath, FILE_MOD);
 	gl_imageKill($newim);
@@ -200,8 +205,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'crop') {
 
 	if ($_REQUEST['performcrop'] == 'backend') {
 		$return = getAdminLink('admin-tabs/edit.php') . '?page=edit&album=' . pathurlencode($albumname) . '&saved&subpage=' . sanitize($_REQUEST['subpage']) . '&tagsort=' . sanitize($_REQUEST['tagsort']) . '&tab=imageinfo';
-		if ($singleimage)
-			$return .= '&singleimage=' . html_encode($singleimage);
+		if ($singleimage) {
+					$return .= '&singleimage=' . html_encode($singleimage);
+		}
 	} else {
 		$return = FULLWEBPATH . $imageobj->getLink();
 	}
@@ -437,7 +443,10 @@ if ($pasteobj && isset($_REQUEST['size'])) {
 								$current = IMAGE_WATERMARK;
 								?>
 								<select id="watermark" name="watermark" onchange="watermarkChange();">
-									<option value="" <?php if (empty($current)) echo ' selected="selected"' ?> style="background-color:LightGray"><?php echo gettext('none'); ?></option>
+									<option value="" <?php if (empty($current)) {
+	echo ' selected="selected"' ?> style="background-color:LightGray"><?php echo gettext('none');
+}
+?></option>
 									<?php
 									generateListFromArray(array($current), $watermarks, false, false);
 									?>

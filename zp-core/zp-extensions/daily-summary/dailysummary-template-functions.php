@@ -168,11 +168,13 @@ function printDailySummaryPageListWithNav($next, $prev, $nextprev = true, $class
 	$script = stripSuffix(getOption('DailySummaryScript'));
 	$total = ceil($_current_DailySummary->getTotalItems() / getOption('DailySummaryItemsPage'));
 	if ($total > 1) {
-		if ($navlen == 0)
-			$navlen = $total;
+		if ($navlen == 0) {
+					$navlen = $total;
+		}
 		$extralinks = 2;
-		if ($firstlast)
-			$extralinks = $extralinks + 2;
+		if ($firstlast) {
+					$extralinks = $extralinks + 2;
+		}
 		$len = floor(($navlen - $extralinks) / 2);
 		$j = max(round($extralinks / 2), min($_current_page - $len - (2 - round($extralinks / 2)), $total - $navlen + $extralinks - 1));
 		$ilim = min($total, max($navlen - round($extralinks / 2), $_current_page + floor($len)));

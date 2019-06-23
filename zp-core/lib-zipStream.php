@@ -162,14 +162,17 @@ class ZipStream {
 		$this->opt = $opt;
 
 	# set large file defaults: size = 20 megabytes, method = store
-	if (!isset($this->opt['large_file_size']))
-		$this->opt['large_file_size'] = 20 * 1024 * 1024;
-	if (!isset($this->opt['large_file_method']))
-		$this->opt['large_file_method'] = 'store';
+	if (!isset($this->opt['large_file_size'])) {
+			$this->opt['large_file_size'] = 20 * 1024 * 1024;
+	}
+	if (!isset($this->opt['large_file_method'])) {
+			$this->opt['large_file_method'] = 'store';
+	}
 
 	$this->output_name = $name;
-	if ($name || (isset($opt['send_http_headers']) && !empty($opt['send_http_headers'])))
-		$this->need_headers = true;
+	if ($name || (isset($opt['send_http_headers']) && !empty($opt['send_http_headers']))) {
+			$this->need_headers = true;
+	}
 	}
 
 	#
@@ -306,16 +309,16 @@ class ZipStream {
 
 	# build file header
 	$fields = array(            # (from V.A of APPNOTE.TXT)
-			array('V', 0x04034b50),     # local file header signature
-			array('v', 0x0014),         # version needed to extract
-			array('v', 0x00),           # general purpose bit flag
-			array('v', $meth),          # compresion method (deflate or store)
-			array('V', $dts),           # dos timestamp
-			array('V', $crc),           # crc32 of data
-			array('V', $zlen),          # compressed data length
-			array('V', $len),           # uncompressed data length
-			array('v', $nlen),          # filename length
-			array('v', 0),              # extra data len
+			array('V', 0x04034b50), # local file header signature
+			array('v', 0x0014), # version needed to extract
+			array('v', 0x00), # general purpose bit flag
+			array('v', $meth), # compresion method (deflate or store)
+			array('V', $dts), # dos timestamp
+			array('V', $crc), # crc32 of data
+			array('V', $zlen), # compressed data length
+			array('V', $len), # uncompressed data length
+			array('v', $nlen), # filename length
+			array('v', 0), # extra data len
 	);
 
 	# pack fields and calculate "total" length
@@ -344,7 +347,7 @@ class ZipStream {
 		if ($meth_str == 'store') {
 			# store method
 			$meth = 0x00;
-		$crc  = unpack('N', hash_file($algo, $path, true));
+		$crc = unpack('N', hash_file($algo, $path, true));
 		$crc = $crc[1];
 		} elseif ($meth_str == 'deflate') {
 			# deflate method
@@ -378,8 +381,9 @@ class ZipStream {
 
 		# send file blocks
 		while ($data = fread($fh, $block_size)) {
-			if ($meth_str == 'deflate')
-				$data = gzdeflate($data);
+			if ($meth_str == 'deflate') {
+							$data = gzdeflate($data);
+			}
 
 			# send data
 			$this->send($data);
@@ -423,22 +427,22 @@ class ZipStream {
 		$dts = $this->dostime($opt['time']);
 
 		$fields = array(                  # (from V,F of APPNOTE.TXT)
-				array('V', 0x02014b50),           # central file header signature
-				array('v', 0x0014),               # version made by
-				array('v', 0x0014),               # version needed to extract
-				array('v', 0x00),                 # general purpose bit flag
-				array('v', $meth),                # compresion method (deflate or store)
-				array('V', $dts),                 # dos timestamp
-				array('V', $crc),                 # crc32 of data
-				array('V', $zlen),                # compressed data length
-				array('V', $len),                 # uncompressed data length
-				array('v', strlen($name)),        # filename length
-				array('v', 0),                    # extra data len
-				array('v', strlen($comment)),     # file comment length
-				array('v', 0),                    # disk number start
-				array('v', 0),                    # internal file attributes
-				array('V', 32),                   # external file attributes
-				array('V', $ofs),                 # relative offset of local header
+				array('V', 0x02014b50), # central file header signature
+				array('v', 0x0014), # version made by
+				array('v', 0x0014), # version needed to extract
+				array('v', 0x00), # general purpose bit flag
+				array('v', $meth), # compresion method (deflate or store)
+				array('V', $dts), # dos timestamp
+				array('V', $crc), # crc32 of data
+				array('V', $zlen), # compressed data length
+				array('V', $len), # uncompressed data length
+				array('v', strlen($name)), # filename length
+				array('v', 0), # extra data len
+				array('v', strlen($comment)), # file comment length
+				array('v', 0), # disk number start
+				array('v', 0), # internal file attributes
+				array('V', 32), # external file attributes
+				array('V', $ofs), # relative offset of local header
 		);
 
 		# pack fields, then append name and comment
@@ -465,14 +469,14 @@ class ZipStream {
 		}
 
 		$fields = array(                # (from V,F of APPNOTE.TXT)
-				array('V', 0x06054b50),         # end of central file header signature
-				array('v', 0x00),               # this disk number
-				array('v', 0x00),               # number of disk with cdr
-				array('v', $num),               # number of entries in the cdr on this disk
-				array('v', $num),               # number of entries in the cdr
-				array('V', $cdr_len),           # cdr size
-				array('V', $cdr_ofs),           # cdr ofs
-				array('v', strlen($comment)),   # zip file comment length
+				array('V', 0x06054b50), # end of central file header signature
+				array('v', 0x00), # this disk number
+				array('v', 0x00), # number of disk with cdr
+				array('v', $num), # number of entries in the cdr on this disk
+				array('v', $num), # number of entries in the cdr
+				array('V', $cdr_len), # cdr size
+				array('V', $cdr_ofs), # cdr ofs
+				array('v', strlen($comment)), # zip file comment length
 		);
 
 		$ret = $this->pack_fields($fields) . $comment;
@@ -483,8 +487,9 @@ class ZipStream {
 	# Add CDR (Central Directory Record) footer.
 	#
 	private function add_cdr($opt = null) {
-		foreach ($this->files as $file)
-			$this->add_cdr_file($file);
+		foreach ($this->files as $file) {
+					$this->add_cdr_file($file);
+		}
 		$this->add_cdr_eof($opt);
 	}
 
@@ -512,16 +517,19 @@ class ZipStream {
 
 	# grab content type from options
 	$content_type = 'application/zip';
-	if (isset($opt['content_type']))
-		$content_type = $this->opt['content_type'];
+	if (isset($opt['content_type'])) {
+			$content_type = $this->opt['content_type'];
+	}
 
 	# grab content disposition
 	$disposition = 'attachment';
-	if (isset($opt['content_disposition']))
-		$disposition = $opt['content_disposition'];
+	if (isset($opt['content_disposition'])) {
+			$disposition = $opt['content_disposition'];
+	}
 
-	if ($this->output_name)
-		$disposition .= "; filename=\"{$this->output_name}\"";
+	if ($this->output_name) {
+			$disposition .= "; filename=\"{$this->output_name}\"";
+	}
 
 	$headers = array(
 			'Content-Type'              => $content_type,
@@ -531,16 +539,18 @@ class ZipStream {
 			'Content-Transfer-Encoding' => 'binary',
 	);
 
-	foreach ($headers as $key => $val)
-		header("$key: $val");
+	foreach ($headers as $key => $val) {
+			header("$key: $val");
+	}
 	}
 
 	#
 	# Send string, sending HTTP headers if necessary.
 	#
 	private function send($str) {
-		if ($this->need_headers)
-			$this->send_http_headers();
+		if ($this->need_headers) {
+					$this->send_http_headers();
+		}
 		$this->need_headers = false;
 
 		echo $str;

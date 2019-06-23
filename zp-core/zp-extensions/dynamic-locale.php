@@ -180,7 +180,10 @@ function printLanguageSelector($flags = NULL) {
 							$path = $uri . $separator . 'locale=';
 						}
 						?>
-						<option value="<?php echo html_encode($path); ?>"<?php if ($current) echo ' selected="selected"'; ?>>
+						<option value="<?php echo html_encode($path); ?>"<?php if ($current) {
+	echo ' selected="selected"';
+}
+?>>
 						<span class="locale_name">
 							<?php echo html_encode($text); ?>
 						</span>

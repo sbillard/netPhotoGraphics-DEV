@@ -226,11 +226,26 @@ printAdminHeader('admin');
 			<?php echo gettext('Order by'); ?>
 
 			<select name="tagsort" id="tagsort_selector" class="ignoredirty" onchange="window.location = '?tagsort=' + $('#tagsort_selector').val();">
-				<option value="alpha" <?php if ($tagsort == 'alpha') echo ' selected="selected"'; ?>><?php echo gettext('Alphabetic'); ?></option>
-				<option value="mostused" <?php if ($tagsort == 'mostused') echo ' selected="selected"'; ?>><?php echo gettext('Most used'); ?></option>
-				<option value="language" <?php if ($tagsort == 'language') echo ' selected="selected"'; ?>><?php echo gettext('Language'); ?></option>
-				<option value="recent" <?php if ($tagsort == 'recent') echo ' selected="selected"'; ?>><?php echo gettext('Most recent'); ?></option>
-				<option value="private" <?php if ($tagsort == 'private') echo ' selected="selected"'; ?>><?php echo gettext('Private first'); ?></option>
+				<option value="alpha" <?php if ($tagsort == 'alpha') {
+	echo ' selected="selected"';
+}
+?>><?php echo gettext('Alphabetic'); ?></option>
+				<option value="mostused" <?php if ($tagsort == 'mostused') {
+	echo ' selected="selected"';
+}
+?>><?php echo gettext('Most used'); ?></option>
+				<option value="language" <?php if ($tagsort == 'language') {
+	echo ' selected="selected"';
+}
+?>><?php echo gettext('Language'); ?></option>
+				<option value="recent" <?php if ($tagsort == 'recent') {
+	echo ' selected="selected"';
+}
+?>><?php echo gettext('Most recent'); ?></option>
+				<option value="private" <?php if ($tagsort == 'private') {
+	echo ' selected="selected"';
+}
+?>><?php echo gettext('Private first'); ?></option>
 			</select>
 			<div class="buttons floatright">
 				<button type="reset" onclick="$('#tag_action_form').trigger('reset');
@@ -263,19 +278,28 @@ printAdminHeader('admin');
 							?>
 						</div>
 
-						<p class="buttons"<?php if (getOption('multi_lingual')) echo ' style="padding-bottom: 27px;"'; ?>>
+						<p class="buttons"<?php if (getOption('multi_lingual')) {
+	echo ' style="padding-bottom: 27px;"';
+}
+?>>
 							<button type="submit" id="delete_tags" onclick="$('#tag_action').val('delete');	this.form.submit();">
 								<?php echo WASTEBASKET; ?>
 								<?php echo gettext("Delete checked tags"); ?>
 							</button>
 						</p>
-						<p class="buttons"<?php if (getOption('multi_lingual')) echo ' style="padding-bottom: 27px;"'; ?>>
+						<p class="buttons"<?php if (getOption('multi_lingual')) {
+	echo ' style="padding-bottom: 27px;"';
+}
+?>>
 							<button type="submit" id="delete_tags" onclick="$('#tag_action').val('private');	this.form.submit();">
 								<?php echo LOCK; ?>
 								<?php echo gettext("Mark checked tags private"); ?>
 							</button>
 						</p>
-						<p class="buttons"<?php if (getOption('multi_lingual')) echo ' style="padding-bottom: 27px;"'; ?>>
+						<p class="buttons"<?php if (getOption('multi_lingual')) {
+	echo ' style="padding-bottom: 27px;"';
+}
+?>>
 							<button type="submit" id="delete_tags" onclick="$('#tag_action').val('notprivate');	this.form.submit();">
 								<?php echo LOCK_OPEN; ?>
 								<?php echo gettext("Mark checked tags public"); ?>
@@ -398,7 +422,10 @@ printAdminHeader('admin');
 								?>
 							</ul>
 						</div>
-						<span class="buttons"<?php if (getOption('multi_lingual')) echo ' style="padding-bottom: 25px;"'; ?>>
+						<span class="buttons"<?php if (getOption('multi_lingual')) {
+	echo ' style="padding-bottom: 25px;"';
+}
+?>>
 							<button type="submit" id='save_tags' value="<?php echo gettext("Add tags"); ?>">
 								<?php echo PLUS_ICON; ?>
 								<?php echo gettext("Add tags"); ?>

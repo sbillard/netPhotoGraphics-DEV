@@ -1,7 +1,8 @@
 <?php
 // force UTF-8 Ø
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -95,7 +96,10 @@ if (!defined('WEBPATH'))
 			}
 			?>
 			<?php @call_user_func('printUserLogin_out', '', ' | '); ?>
-			<?php if (class_exists('RSS')) printRSSLink('Gallery', '', 'RSS', ' | '); ?>
+			<?php if (class_exists('RSS')) {
+	printRSSLink('Gallery', '', 'RSS', ' | ');
+}
+?>
 			<?php printCustomPageURL(gettext("Archive View"), "archive"); ?> |
 			<?php
 			if (extensionEnabled('daily-summary')) {

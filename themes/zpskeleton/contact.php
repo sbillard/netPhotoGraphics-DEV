@@ -14,7 +14,7 @@
 			</div>
 			<?php if (!$zpskel_ismobile) { ?>
 			<div class="five columns offset-by-one noshow-mobile">
-				<?php printRandomImages(1,'scale-with-grid','all','',420,420,true); ?>
+				<?php printRandomImages(1, 'scale-with-grid', 'all', '', 420, 420, true); ?>
 			</div>
 			<?php } ?>
 		</div>

@@ -5,8 +5,9 @@
  *
  * @package admin/clone
  */
-if (!defined('OFFSET_PATH'))
+if (!defined('OFFSET_PATH')) {
 	define('OFFSET_PATH', 4);
+}
 require_once(dirname(dirname(dirname(__FILE__))) . '/admin-globals.php');
 
 admin_securityChecks(ADMIN_RIGHTS, currentRelativeURL());
@@ -208,10 +209,11 @@ scriptLoader(CORE_SERVERPATH . 'js/sprintf.js');
 								</a>
 							</span>
 							<span class="icons"<?php
-							if (empty($folderlist))
-								echo
+							if (empty($folderlist)) {
+															echo
 
 								' style="display:none;"';
+							}
 							?>>
 								<a id="downbutton" href="javascript:buttonAction($('#cloneFolder').val());" title="">
 									<?php echo ARROW_DOWN_GREEN; ?>
@@ -231,8 +233,9 @@ scriptLoader(CORE_SERVERPATH . 'js/sprintf.js');
 							<br />
 							<div class="buttons pad_button" id="cloneButton">
 								<button id="cloneButton" class="tooltip" type="submit" title=""<?php
-								if (empty($folderlist))
-									echo ' disabled="disabled"';
+								if (empty($folderlist)) {
+																	echo ' disabled="disabled"';
+								}
 								?> >
 									<img src="<?php echo WEBPATH . '/' . CORE_FOLDER; ?>/images/folder.png" alt="" /> <?php echo gettext("Clone installation"); ?>
 								</button>

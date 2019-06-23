@@ -14,9 +14,10 @@ require_once(dirname(dirname(__FILE__)) . '/admin-globals.php');
 
 // need the class plugins to handle video, etc.
 foreach (getEnabledPlugins() as $extension => $plugin) {
-	if ($plugin['priority'] & CLASS_PLUGIN)
-		require_once($plugin['path']);
-}
+	if ($plugin['priority'] & CLASS_PLUGIN) {
+			require_once($plugin['path']);
+	}
+	}
 
 require_once(CORE_SERVERPATH . 'template-functions.php');
 
@@ -126,10 +127,12 @@ if (isset($_GET['refresh'])) {
 			$albumwhere = "WHERE `parentid`=$id";
 		}
 	}
-	if (isset($_REQUEST['return']))
-		$ret = sanitize($_REQUEST['return']);
-	if (!empty($ret))
-		$ret = '&amp;return=' . $ret;
+	if (isset($_REQUEST['return'])) {
+			$ret = sanitize($_REQUEST['return']);
+	}
+	if (!empty($ret)) {
+			$ret = '&amp;return=' . $ret;
+	}
 	$metaURL = $starturl = '?' . $type . 'refresh=start' . $albumparm . '&amp;XSRFToken=' . getXSRFToken('refresh') . $ret;
 }
 

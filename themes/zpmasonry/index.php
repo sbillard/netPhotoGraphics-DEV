@@ -28,13 +28,17 @@
 	<div id="mason">
 		<?php if (($zpmas_ss) && ($_current_page == 1)) { ?>
 			<div id="cycle" class="box <?php echo $zpmas_col_ss; ?> album">
-				<?php if ($zpmas_sscount > $_gallery->getNumImages(2)) $zpmas_sscount = $_gallery->getNumImages(2); ?>
+				<?php if ($zpmas_sscount > $_gallery->getNumImages(2)) {
+	$zpmas_sscount = $_gallery->getNumImages(2);
+}
+?>
 				<?php
 				if ($zpmas_albumorimage == 'image') {
 					printImageStatistic($zpmas_sscount, $zpmas_functionoption, '', true, false, false, 40, '', $zpmas_ss_size_w, $zpmas_ss_size_h, true);
 				} else if ($zpmas_albumorimage == 'album') {
-					if ($zpmas_sscount > $_gallery->getNumAlbums(false, true))
-						$zpmas_sscount = $_gallery->getNumAlbums(false, true);
+					if ($zpmas_sscount > $_gallery->getNumAlbums(false, true)) {
+											$zpmas_sscount = $_gallery->getNumAlbums(false, true);
+					}
 					printAlbumStatistic($zpmas_sscount, $zpmas_functionoption, true, false, false, 40, '', $zpmas_ss_size_w, $zpmas_ss_size_h, true);
 				} else {
 					?>
@@ -81,7 +85,10 @@
 				$tagstring = implode(', ', $singletag);
 				?>
 				<ul class="album-info">
-					<li class="counts <?php if (($zpmas_thumbsize == 'small') && (getNumAlbums() > 0)) echo 'smallthumbs'; ?>">
+					<li class="counts <?php if (($zpmas_thumbsize == 'small') && (getNumAlbums() > 0)) {
+	echo 'smallthumbs';
+}
+?>">
 						<?php
 						if (getNumAlbums() > 0) {
 							echo getNumAlbums() . ' ' . gettext('subalbums');

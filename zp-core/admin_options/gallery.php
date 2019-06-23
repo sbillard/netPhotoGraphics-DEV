@@ -129,7 +129,10 @@ function getOptionContent() {
 						</span>
 					</td>
 				</tr>
-				<tr id="sitelogotitle"<?php if (empty($sitelogo)) echo ' style="display: none;"'; ?>>
+				<tr id="sitelogotitle"<?php if (empty($sitelogo)) {
+	echo ' style="display: none;"';
+}
+?>>
 					<td class="option_name"><?php echo gettext("Branding logo title"); ?></td>
 					<td class="option_value">
 						<?php print_language_string_list($_gallery->getSiteLogoTitle('all'), 'sitelogotitle', false, null, '', '100%'); ?>
@@ -147,12 +150,18 @@ function getOptionContent() {
 					<td class="option_name"><?php echo gettext('Gallery type'); ?></td>
 					<td class="option_value">
 						<label>
-							<input type="radio" name="gallery_security" value="public" alt="<?php echo gettext('public'); ?>"<?php if (GALLERY_SECURITY == 'public') echo ' checked="checked"' ?> onclick="$('.public_gallery').show();" />
-							<?php echo gettext('public'); ?>
+							<input type="radio" name="gallery_security" value="public" alt="<?php echo gettext('public'); ?>"<?php if (GALLERY_SECURITY == 'public') {
+	echo ' checked="checked"' ?> onclick="$('.public_gallery').show();" />
+							<?php echo gettext('public');
+}
+?>
 						</label>
 						<label>
-							<input type="radio" name="gallery_security" value="private" alt="<?php echo gettext('private'); ?>"<?php if (GALLERY_SECURITY != 'public') echo 'checked="checked"' ?> onclick="$('.public_gallery').hide();" />
-							<?php echo gettext('private'); ?>
+							<input type="radio" name="gallery_security" value="private" alt="<?php echo gettext('private'); ?>"<?php if (GALLERY_SECURITY != 'public') {
+	echo 'checked="checked"' ?> onclick="$('.public_gallery').hide();" />
+							<?php echo gettext('private');
+}
+?>
 						</label>
 					</td>
 					<td class="option_desc">
@@ -458,12 +467,18 @@ function getOptionContent() {
 					<td class="option_name"><?php echo gettext("Gallery behavior"); ?></td>
 					<td class="option_value">
 						<label>
-							<input type="checkbox" name="album_default"	value="1"<?php if ($_gallery->getAlbumPublish()) echo ' checked="checked"'; ?> />
+							<input type="checkbox" name="album_default"	value="1"<?php if ($_gallery->getAlbumPublish()) {
+	echo ' checked="checked"';
+}
+?> />
 							<?php echo gettext("publish albums by default"); ?>
 						</label>
 						<br />
 						<label>
-							<input type="checkbox" name="image_default"	value="1"<?php if ($_gallery->getImagePublish()) echo ' checked="checked"'; ?> />
+							<input type="checkbox" name="image_default"	value="1"<?php if ($_gallery->getImagePublish()) {
+	echo ' checked="checked"';
+}
+?> />
 							<?php echo gettext("publish images by default"); ?>
 						</label>
 						<br />

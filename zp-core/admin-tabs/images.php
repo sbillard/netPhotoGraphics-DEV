@@ -196,8 +196,9 @@ if (isset($_GET['action'])) {
 			if ($notify == '&') {
 				$notify = '';
 			} else {
-				if (empty($notify))
-					$notify = '&saved';
+				if (empty($notify)) {
+									$notify = '&saved';
+				}
 			}
 			if ($notify == '&saved' && $subpage && $subpage == 'object') {
 				if (isset($image)) {
@@ -387,8 +388,9 @@ echo "\n</head>";
 					$albumowner = $album->getOwner();
 
 					$sql = 'SELECT * FROM ' . prefix('images') . ' WHERE (`albumid`=' . $album->getID() . ') AND (`owner`="' . $requestor . '") ORDER BY `' . $oldalbumimagesort . '`';
-					if ($direction)
-						$sql .= ' DESC';
+					if ($direction) {
+											$sql .= ' DESC';
+					}
 
 					$result = query($sql);
 					if ($result) {
@@ -441,8 +443,9 @@ echo "\n</head>";
 					if (isset($_GET['subpage'])) {
 						if (is_numeric($_GET['subpage'])) {
 							$pagenum = max(intval($_GET['subpage']), 1);
-							if (($pagenum - 1) * $imagesTab_imageCount >= $allimagecount)
-								$pagenum--;
+							if (($pagenum - 1) * $imagesTab_imageCount >= $allimagecount) {
+															$pagenum--;
+							}
 						} else {
 							$pagenum = sanitize($_GET['subpage']);
 						}
@@ -500,7 +503,7 @@ echo "\n</head>";
 					while ($row = db_fetch_assoc($result)) {
 						$folder = $row['folder'];
 						if (isset($albums[$folder])) {
-							$albums[$folder]['image_count'] ++;
+							$albums[$folder]['image_count']++;
 						} else {
 							$albums[$folder] = array('folder' => $folder, 'image_count' => 1);
 						}

@@ -16,71 +16,93 @@ if (function_exists('printAddThis')) {
 }
 
 $zpfocus_tagline = get_language_string(getOption('zpfocus_tagline'));
-if (is_null($zpfocus_tagline))
+if (is_null($zpfocus_tagline)) {
 	$zpfocus_tagline = 'A netPhotoGraphics / ZenPage Powered Theme';
+}
 $zpfocus_allow_search = getOption('zpfocus_allow_search');
-if (is_null($zpfocus_allow_search))
+if (is_null($zpfocus_allow_search)) {
 	$zpfocus_allow_search = true;
+}
 $zpfocus_show_archive = getOption('zpfocus_show_archive');
-if (is_null($zpfocus_show_archive))
+if (is_null($zpfocus_show_archive)) {
 	$zpfocus_show_archive = true;
+}
 $zpfocus_use_colorbox = getOption('zpfocus_use_colorbox');
-if (is_null($zpfocus_use_colorbox))
+if (is_null($zpfocus_use_colorbox)) {
 	$zpfocus_use_colorbox = true;
+}
 $zpfocus_use_colorbox_slideshow = getOption('zpfocus_use_colorbox_slideshow');
-if (is_null($zpfocus_use_colorbox_slideshow))
+if (is_null($zpfocus_use_colorbox_slideshow)) {
 	$zpfocus_use_colorbox_slideshow = true;
+}
 $zpfocus_homepage = getOption('zpfocus_homepage');
-if (is_null($zpfocus_homepage))
+if (is_null($zpfocus_homepage)) {
 	$zpfocus_homepage = 'none';
+}
 $zpfocus_spotlight = getOption('zpfocus_spotlight');
-if (is_null($zpfocus_spotlight))
+if (is_null($zpfocus_spotlight)) {
 	$zpfocus_spotlight = 'manual';
+}
 $zpfocus_spotlight_text = get_language_string(getOption('zpfocus_spotlight_text'));
-if (is_null($zpfocus_spotlight_text))
+if (is_null($zpfocus_spotlight_text)) {
 	$zpfocus_spotlight_text = '<p>This is the <span class="spotlight-span">spotlight</span> area that can be set in the theme options.  You can either enter the text manually in the options or set it to display the latest news if ZenPage is being used. If you want nothing to appear here, set the spotlight to none.</p>';
+}
 $zpfocus_show_credit = getOption('zpfocus_show_credit');
-if (is_null($zpfocus_show_credit))
+if (is_null($zpfocus_show_credit)) {
 	$zpfocus_show_credit = false;
+}
 $zpfocus_menutype = getOption('zpfocus_menutype');
-if (is_null($zpfocus_menutype))
+if (is_null($zpfocus_menutype)) {
 	$zpfocus_menutype = 'dropdown';
+}
 $zpfocus_logotype = getOption('zpfocus_logotype');
-if (is_null($zpfocus_logotype))
+if (is_null($zpfocus_logotype)) {
 	$zpfocus_logotype = true;
+}
 $zpfocus_logofile = getOption('zpfocus_logofile');
-if (is_null($zpfocus_logofile))
+if (is_null($zpfocus_logofile)) {
 	$zpfocus_logofile = 'logo.jpg';
+}
 $zpfocus_showrandom = getOption('zpfocus_showrandom');
-if (is_null($zpfocus_showrandom))
+if (is_null($zpfocus_showrandom)) {
 	$zpfocus_showrandom = 'rotator';
+}
 $zpfocus_cbtarget = getOption('zpfocus_cbtarget');
-if (is_null($zpfocus_cbtarget))
+if (is_null($zpfocus_cbtarget)) {
 	$zpfocus_cbtarget = true;
+}
 $zpfocus_cbstyle = getOption('zpfocus_cbstyle');
-if (is_null($zpfocus_cbstyle))
+if (is_null($zpfocus_cbstyle)) {
 	$zpfocus_cbstyle = 'example3';
+}
 $zpfocus_cbtransition = getOption('zpfocus_cbtransition');
-if (is_null($zpfocus_cbtransition))
+if (is_null($zpfocus_cbtransition)) {
 	$zpfocus_cbtransition = 'fade';
+}
 $zpfocus_cbssspeed = getOption('zpfocus_cbssspeed');
-if (is_null($zpfocus_cbssspeed))
+if (is_null($zpfocus_cbssspeed)) {
 	$zpfocus_cbssspeed = '2500';
+}
 $zpfocus_final_link = getOption('zpfocus_final_link');
-if (is_null($zpfocus_final_link))
+if (is_null($zpfocus_final_link)) {
 	$zpfocus_final_link = 'nolink';
+}
 $zpfocus_rotatorcount = getOption('zpfocus_rotatorcount');
-if (is_null($zpfocus_rotatorcount))
+if (is_null($zpfocus_rotatorcount)) {
 	$zpfocus_rotatorcount = '5';
+}
 $zpfocus_rotatoreffect = getOption('zpfocus_rotatoreffect');
-if (is_null($zpfocus_rotatoreffect))
+if (is_null($zpfocus_rotatoreffect)) {
 	$zpfocus_rotatoreffect = 'fade';
+}
 $zpfocus_rotatorspeed = getOption('zpfocus_rotatorspeed');
-if (is_null($zpfocus_rotatorspeed))
+if (is_null($zpfocus_rotatorspeed)) {
 	$zpfocus_rotatorspeed = '3000';
+}
 $zpfocus_news = getOption('zpfocus_news');
-if (is_null($zpfocus_news))
+if (is_null($zpfocus_news)) {
 	$zpfocus_news = true;
+}
 
 // Sets expanded titles (breadcrumbs) for Title meta
 function getTitleBreadcrumb($before = ' ( ', $between = ' | ', $after = ' ) ') {
@@ -110,8 +132,9 @@ function getTitleBreadcrumb($before = ' ( ', $between = ' | ', $after = ' ) ') {
 		$titlebreadcrumb .= $before;
 		$i = 0;
 		foreach ($parents as $parent) {
-			if ($i > 0)
-				$titlebreadcrumb .= $between;
+			if ($i > 0) {
+							$titlebreadcrumb .= $between;
+			}
 			$titlebreadcrumb .= $parent->getTitle();
 			$i++;
 		}

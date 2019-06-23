@@ -218,8 +218,9 @@ if (@$_loggedin) {
 			}
 
 			if ($_loggedin & THEMES_RIGHTS) {
-				if (empty($optiondefault))
-					$optiondefault = '&tab=theme';
+				if (empty($optiondefault)) {
+									$optiondefault = '&tab=theme';
+				}
 				$subtabs[gettext("theme")] = 'admin-tabs/options.php?page=options&tab=theme';
 			}
 			$_admin_menu['options'] = array('text' => gettext("options"),

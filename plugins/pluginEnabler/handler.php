@@ -124,5 +124,5 @@ if (isset($_REQUEST['pluginsEnable'])) {
 		}
 	}
 }
-header('Location: ' . getAdminLink('admin.php').'?report=' . $report);
+header('Location: ' . getAdminLink('admin.php') . '?report=' . $report);
 ?>
