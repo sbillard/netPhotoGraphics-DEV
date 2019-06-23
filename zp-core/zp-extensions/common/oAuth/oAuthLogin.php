@@ -95,8 +95,9 @@ class oAuthLogin {
 				$userobj->setName($name);
 			}
 			$credentials = array('auth' => $oAuthAuthority . 'OAuth', 'user' => 'user', 'email' => 'email');
-			if ($name)
-				$credentials['name'] = 'name';
+			if ($name) {
+							$credentials['name'] = 'name';
+			}
 			if ($credentials != $userobj->getCredentials()) {
 				$save = true;
 				$userobj->setCredentials($credentials);
@@ -168,8 +169,9 @@ class oAuthLogin {
 		global $_current_admin_obj;
 		$class = get_called_class();
 		$oAuthAuthority = ucfirst(str_replace('Login', '', $class));
-		if (empty($_current_admin_obj) || !$userobj->getValid())
-			return $html;
+		if (empty($_current_admin_obj) || !$userobj->getValid()) {
+					return $html;
+		}
 		$federated = $userobj->getCredentials(); //	came from federated logon, disable the e-mail field
 		if (!in_array($oAuthAuthority . 'OAuth', $federated)) {
 			$federated = false;

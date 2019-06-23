@@ -17,9 +17,10 @@ $persona = safe_glob('*', GLOB_ONLYDIR);
 chdir($cwd);
 $personalities = array();
 foreach ($persona as $personality) {
-	if (file_exists(SERVERPATH . '/' . THEMEFOLDER . '/effervescence+/' . $personality . '/functions.php'))
-		$personalities[ucfirst(str_replace('_', ' ', $personality))] = $personality;
-}
+	if (file_exists(SERVERPATH . '/' . THEMEFOLDER . '/effervescence+/' . $personality . '/functions.php')) {
+			$personalities[ucfirst(str_replace('_', ' ', $personality))] = $personality;
+	}
+	}
 
 
 
@@ -232,8 +233,9 @@ function printHeadingImage($randomImage) {
 /* Custom caption functions */
 
 function getCustomAlbumDesc() {
-	if (!in_context(NPG_ALBUM))
-		return false;
+	if (!in_context(NPG_ALBUM)) {
+			return false;
+	}
 	global $_current_album;
 	$desc = $_current_album->getDesc();
 	if (strlen($desc) == 0) {
@@ -419,8 +421,9 @@ function printFooter($admin = true) {
 		?>
 		<?php
 		if ($_gallery_page == 'gallery.php') {
-			if (class_exists('RSS'))
-				printRSSLink('Gallery', '', 'Gallery', '');
+			if (class_exists('RSS')) {
+							printRSSLink('Gallery', '', 'Gallery', '');
+			}
 			echo '<br />';
 		}
 		?>
@@ -455,7 +458,10 @@ function commonNewsLoop($paged) {
 			$newstypedisplay .= ' <small><em>' . gettext('sticky') . '</em></small>';
 		}
 		?>
-		<div class="newsarticle<?php if (stickyNews()) echo ' sticky'; ?>">
+		<div class="newsarticle<?php if (stickyNews()) {
+	echo ' sticky';
+}
+?>">
 			<h3><?php printNewsURL(); ?><?php echo " <span class='newstype'>[" . $newstypedisplay . "]</span>"; ?></h3>
 			<div class="newsarticlecredit">
 				<span class="newsarticlecredit-left">

@@ -99,7 +99,10 @@ class ef_colorbox {
 				<?php @call_user_func('printRating'); ?>
 			</div><!-- main -->
 			<div class="clearage"></div>
-			<?php if (isset($firstImage)) printNofM('Photo', $firstImage, $lastImage, getNumImages()); ?>
+			<?php if (isset($firstImage)) {
+	printNofM('Photo', $firstImage, $lastImage, getNumImages());
+}
+?>
 		</div><!-- content -->
 		<?php
 	}

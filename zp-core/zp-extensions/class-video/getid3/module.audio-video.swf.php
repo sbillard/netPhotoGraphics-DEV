@@ -31,7 +31,7 @@ class getid3_swf extends getid3_handler
 
 		$SWFfileData = $this->fread($info['avdataend'] - $info['avdataoffset']); // 8 + 2 + 2 + max(9) bytes NOT including Frame_Size RECT data
 
-		$info['swf']['header']['signature']  = substr($SWFfileData, 0, 3);
+		$info['swf']['header']['signature'] = substr($SWFfileData, 0, 3);
 		switch ($info['swf']['header']['signature']) {
 			case 'FWS':
 				$info['swf']['header']['compressed'] = false;
@@ -42,7 +42,7 @@ class getid3_swf extends getid3_handler
 				break;
 
 			default:
-				$info['error'][] = 'Expecting "FWS" or "CWS" at offset '.$info['avdataoffset'].', found "'.getid3_lib::PrintHexBytes($info['swf']['header']['signature']).'"';
+				$info['error'][] = 'Expecting "FWS" or "CWS" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['swf']['header']['signature']) . '"';
 				unset($info['swf']);
 				unset($info['fileformat']);
 				return false;
@@ -55,9 +55,9 @@ class getid3_swf extends getid3_handler
 			$SWFHead     = substr($SWFfileData, 0, 8);
 			$SWFfileData = substr($SWFfileData, 8);
 			if ($decompressed = @gzuncompress($SWFfileData)) {
-				$SWFfileData = $SWFHead.$decompressed;
+				$SWFfileData = $SWFHead . $decompressed;
 			} else {
-				$info['error'][] = 'Error decompressing compressed SWF data ('.strlen($SWFfileData).' bytes compressed, should be '.($info['swf']['header']['length'] - 8).' bytes uncompressed)';
+				$info['error'][] = 'Error decompressing compressed SWF data (' . strlen($SWFfileData) . ' bytes compressed, should be ' . ($info['swf']['header']['length'] - 8) . ' bytes uncompressed)';
 				return false;
 			}
 		}
@@ -79,11 +79,11 @@ class getid3_swf extends getid3_handler
 		// Example: 0x000C  ->  0x0C  ->  12     So the frame rate is 12 fps.
 
 		// Byte at (8 + $FrameSizeDataLength) is always zero and ignored
-		$info['swf']['header']['frame_rate']  = getid3_lib::LittleEndian2Int(substr($SWFfileData,  9 + $FrameSizeDataLength, 1));
+		$info['swf']['header']['frame_rate']  = getid3_lib::LittleEndian2Int(substr($SWFfileData, 9 + $FrameSizeDataLength, 1));
 		$info['swf']['header']['frame_count'] = getid3_lib::LittleEndian2Int(substr($SWFfileData, 10 + $FrameSizeDataLength, 2));
 
 		$info['video']['frame_rate']         = $info['swf']['header']['frame_rate'];
-		$info['video']['resolution_x']       = intval(round($info['swf']['header']['frame_width']  / 20));
+		$info['video']['resolution_x']       = intval(round($info['swf']['header']['frame_width'] / 20));
 		$info['video']['resolution_y']       = intval(round($info['swf']['header']['frame_height'] / 20));
 		$info['video']['pixel_aspect_ratio'] = (float) 1;
 

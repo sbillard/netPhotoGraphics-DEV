@@ -211,23 +211,27 @@ function printCommentForm($showcomments = true, $addcommenttext = NULL, $addhead
 	}
 	switch ($_gallery_page) {
 		case 'album.php':
-			if (!getOption('comment_form_albums'))
-				return;
+			if (!getOption('comment_form_albums')) {
+							return;
+			}
 			$obj = $_current_album;
 			break;
 		case 'image.php':
-			if (!getOption('comment_form_images'))
-				return;
+			if (!getOption('comment_form_images')) {
+							return;
+			}
 			$obj = $_current_image;
 			break;
 		case 'pages.php':
-			if (!getOption('comment_form_pages'))
-				return;
+			if (!getOption('comment_form_pages')) {
+							return;
+			}
 			$obj = $_CMS_current_page;
 			break;
 		case 'news.php':
-			if (!getOption('comment_form_articles') || !is_NewsArticle())
-				return;
+			if (!getOption('comment_form_articles') || !is_NewsArticle()) {
+							return;
+			}
 			$obj = $_CMS_current_article;
 			break;
 		default:
@@ -243,12 +247,14 @@ function printCommentForm($showcomments = true, $addcommenttext = NULL, $addhead
 			<?php
 			if ($showcomments) {
 				if ($num == 0) {
-					if ($addheader)
-						echo '<h3 class="empty">' . gettext('No Comments') . '</h3>';
+					if ($addheader) {
+											echo '<h3 class="empty">' . gettext('No Comments') . '</h3>';
+					}
 					$display = '';
 				} else {
-					if ($addheader)
-						echo '<h3>' . sprintf(ngettext('%u Comment', '%u Comments', $num), $num) . '</h3>';
+					if ($addheader) {
+											echo '<h3>' . sprintf(ngettext('%u Comment', '%u Comments', $num), $num) . '</h3>';
+					}
 					if (getOption('comment_form_toggle')) {
 						?>
 						<div id="comment_toggle"><!-- place holder for toggle button --></div>
@@ -326,8 +332,9 @@ function printCommentForm($showcomments = true, $addcommenttext = NULL, $addhead
 					$stored = array_merge(array('email' => '', 'custom' => ''), $disabled, getCommentStored());
 					$addresses = getSerializedArray(@$stored['addresses']);
 					foreach ($addresses as $key => $value) {
-						if (!empty($value))
-							$stored[$key] = $value;
+						if (!empty($value)) {
+													$stored[$key] = $value;
+						}
 					}
 
 					foreach ($stored as $key => $value) {

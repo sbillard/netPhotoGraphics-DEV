@@ -1,17 +1,19 @@
 <?php
 // force UTF-8 Ø
-if (!defined('WEBPATH')) die();
+if (!defined('WEBPATH')) {
+	die();
+}
 npgFilters::apply('theme_file_top');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<?php include("inc-head.php");?>
+		<?php include("inc-head.php"); ?>
 	</head>
 	<body>
 		<?php include ('inc-header.php'); ?>
 
-		<div class="title border colour" <?php echo $titleStyle;?>>
+		<div class="title border colour" <?php echo $titleStyle; ?>>
 			<h3><?php echo gettext('Password required'); ?></h3>
 		</div>
 

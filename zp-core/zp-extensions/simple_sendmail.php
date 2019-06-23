@@ -42,8 +42,9 @@ function simple_sendmail($msg, $email_list, $subject, $message, $from_mail, $fro
 		$result = $result && utf8::send_mail($to_mail, $subject, $message, $headers, '', $html);
 	}
 	if (!$result) {
-		if (!empty($msg))
-			$msg .= '<br />';
+		if (!empty($msg)) {
+					$msg .= '<br />';
+		}
 		$msg .= sprintf(gettext('<code>simple_sendmail</code> failed to send <em>%s</em> to one or more recipients.'), $subject);
 	}
 	return $msg;

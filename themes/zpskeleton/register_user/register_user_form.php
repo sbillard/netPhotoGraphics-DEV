@@ -14,10 +14,11 @@
 
 	<div>
 		<label for="adminuser"><?php
-			if (getOption('register_user_email_is_id'))
-				echo gettext("Email:");
-			else
-				echo gettext("User ID:");
+			if (getOption('register_user_email_is_id')) {
+							echo gettext("Email:");
+			} else {
+							echo gettext("User ID:");
+			}
 			?></label>
 		<input type="text" id="adminuser" name="user" value="<?php echo html_encode($user); ?>" size="22" />
 	</div>
@@ -36,8 +37,9 @@
 
 	<?php
 	$html = npgFilters::apply('register_user_form', '');
-	if (!empty($html))
-		echo $html;
+	if (!empty($html)) {
+			echo $html;
+	}
 	?>
 
 	<?php
@@ -50,16 +52,19 @@
 				$class = ' ' . $captcha['submitButton']['class'];
 				$buttonExtra = ' ' . $captcha['submitButton']['extra'];
 			}
-			if (isset($captcha['html']) && isset($captcha['input']))
-				echo $captcha['html'];
+			if (isset($captcha['html']) && isset($captcha['input'])) {
+							echo $captcha['html'];
+			}
 			if (isset($captcha['input'])) {
 				echo $captcha['input'];
 			} else {
-				if (isset($captcha['html']))
-					echo $captcha['html'];
+				if (isset($captcha['html'])) {
+									echo $captcha['html'];
+				}
 			}
-			if (isset($captcha['hidden']))
-				echo $captcha['hidden'];
+			if (isset($captcha['hidden'])) {
+							echo $captcha['hidden'];
+			}
 			?>
 		</div>
 		<?php

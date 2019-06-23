@@ -1,7 +1,8 @@
 <?php
 // force UTF-8
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,8 +13,9 @@ if (!defined('WEBPATH'))
 		scriptLoader($zenCSS);
 		scriptLoader(dirname(dirname($zenCSS)) . '/common.css');
 
-		if (class_exists('RSS'))
-			printRSSHeaderLink('Gallery', gettext('Gallery'));
+		if (class_exists('RSS')) {
+					printRSSHeaderLink('Gallery', gettext('Gallery'));
+		}
 		?>
 	</head>
 	<body>
@@ -90,7 +92,10 @@ if (!defined('WEBPATH'))
 									while (next_page()) {
 										$c++;
 										?>
-										<li<?php if ($c > SHOW_ITEMS) echo ' class="pages_extrashow" style="display:none;"'; ?>>
+										<li<?php if ($c > SHOW_ITEMS) {
+	echo ' class="pages_extrashow" style="display:none;"';
+}
+?>>
 											<?php printPageURL(); ?>
 											<p style="text-indent:1em;"><?php echo shortenContent($_CMS_current_page->getContent(), TRUNCATE_LENGTH, getOption("zenpage_textshorten_indicator")); ?></p>
 										</li>
@@ -102,8 +107,9 @@ if (!defined('WEBPATH'))
 							<?php
 						}
 						if ($numnews > 0) {
-							if ($numpages > 0)
-								echo '<br />';
+							if ($numpages > 0) {
+															echo '<br />';
+							}
 							?>
 							<div>
 								<h3><?php printf(gettext('Articles (%s)'), $numnews); ?></h3>
@@ -123,7 +129,10 @@ if (!defined('WEBPATH'))
 									while (next_news()) {
 										$c++;
 										?>
-										<li<?php if ($c > SHOW_ITEMS) echo ' class="news_extrashow" style="display:none;"'; ?>>
+										<li<?php if ($c > SHOW_ITEMS) {
+	echo ' class="news_extrashow" style="display:none;"';
+}
+?>>
 											<?php printNewsURL(); ?>
 											<p style="text-indent:1em;"><?php echo shortenContent($_CMS_current_article->getContent(), TRUNCATE_LENGTH, getOption("zenpage_textshorten_indicator")); ?></p>
 										</li>
@@ -208,7 +217,10 @@ if (!defined('WEBPATH'))
 				printFavoritesURL(NULL, '', ' | ', '<br />');
 			}
 			?>
-			<?php if (class_exists('RSS')) printRSSLink('Gallery', '', gettext('Gallery'), ' | '); ?>
+			<?php if (class_exists('RSS')) {
+	printRSSLink('Gallery', '', gettext('Gallery'), ' | ');
+}
+?>
 			<?php printCustomPageURL(gettext("Archive View"), "archive"); ?> |
 			<?php
 			if (extensionEnabled('daily-summary')) {

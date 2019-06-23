@@ -72,11 +72,17 @@ class image_page {
 					@call_user_func('printSlideShowLink', NULL, 'text-align:center;');
 					?>
 				</div><!-- images -->
-				<?php if (function_exists('printAddToFavorites')) printAddToFavorites($_current_album); ?>
+				<?php if (function_exists('printAddToFavorites')) {
+	printAddToFavorites($_current_album);
+}
+?>
 				<?php @call_user_func('printRating'); ?>
 			</div> <!-- main -->
 			<div class="clearage"></div>
-			<?php if (isset($firstImage)) printNofM('Photo', $firstImage, $lastImage, getNumImages()); ?>
+			<?php if (isset($firstImage)) {
+	printNofM('Photo', $firstImage, $lastImage, getNumImages());
+}
+?>
 		</div> <!-- content -->
 		<?php
 	}

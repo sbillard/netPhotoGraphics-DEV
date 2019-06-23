@@ -10,8 +10,7 @@ require_once(CORE_SERVERPATH . 'lib-config.php');
 admin_securityChecks(ALBUM_RIGHTS, currentRelativeURL());
 
 switch (isset($_GET['siteState']) ? $_GET['siteState'] : NULL) {
-	case 'closed':
-		$report = '';
+	case 'closed' : $report = '';
 		setSiteState('closed');
 		npgFilters::apply('security_misc', true, 'site_upgrade', 'admin_auth', 'closed');
 

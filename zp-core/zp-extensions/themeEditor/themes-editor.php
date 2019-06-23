@@ -22,7 +22,7 @@ $ok_extensions = array('css', 'php', 'js', 'txt', 'inc');
 function isTextFile($file) {
 	global $ok_extensions;
 	$ext = strtolower(getSuffix($file));
-	return (in_array($ext, $ok_extensions) );
+	return (in_array($ext, $ok_extensions));
 }
 
 $messages = $file_to_edit = $file_content = null;

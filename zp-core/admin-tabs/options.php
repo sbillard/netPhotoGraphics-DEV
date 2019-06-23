@@ -11,7 +11,7 @@
 define('OFFSET_PATH', 1);
 require_once(dirname(dirname(__FILE__)) . '/admin-globals.php');
 require_once(CORE_SERVERPATH . 'lib-config.php');
-require_once(CORE_SERVERPATH .  PLUGIN_FOLDER . '/tag_suggest.php');
+require_once(CORE_SERVERPATH . PLUGIN_FOLDER . '/tag_suggest.php');
 
 if (isset($_GET['tab'])) {
 	$_admin_subtab = sanitize($_GET['tab'], 3);
@@ -42,8 +42,9 @@ if (file_exists(CORE_SERVERPATH . 'admin_options/' . $_admin_subtab . '.php')) {
 				$returntab = processCustomOptionSave($returntab, $themename, $themealbum);
 			}
 
-			if (empty($notify))
-				$notify = '?saved';
+			if (empty($notify)) {
+							$notify = '?saved';
+			}
 			header("Location: " . $notify . $returntab);
 			exit();
 		}

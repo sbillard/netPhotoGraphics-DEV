@@ -144,18 +144,24 @@ class register_user {
 	 */
 	static function getUserInfo($i) {
 		$result = array();
-		if (isset($_POST[$i . '-comment_form_website']))
-			$result['website'] = sanitize($_POST[$i . '-comment_form_website'], 1);
-		if (isset($_POST[$i . '-comment_form_street']))
-			$result['street'] = sanitize($_POST[$i . '-comment_form_street'], 1);
-		if (isset($_POST[$i . '-comment_form_city']))
-			$result['city'] = sanitize($_POST[$i . '-comment_form_city'], 1);
-		if (isset($_POST[$i . '-comment_form_state']))
-			$result['state'] = sanitize($_POST[$i . '-comment_form_state'], 1);
-		if (isset($_POST[$i . '-comment_form_country']))
-			$result['country'] = sanitize($_POST[$i . '-comment_form_country'], 1);
-		if (isset($_POST[$i . '-comment_form_postal']))
-			$result['postal'] = sanitize($_POST[$i . '-comment_form_postal'], 1);
+		if (isset($_POST[$i . '-comment_form_website'])) {
+					$result['website'] = sanitize($_POST[$i . '-comment_form_website'], 1);
+		}
+		if (isset($_POST[$i . '-comment_form_street'])) {
+					$result['street'] = sanitize($_POST[$i . '-comment_form_street'], 1);
+		}
+		if (isset($_POST[$i . '-comment_form_city'])) {
+					$result['city'] = sanitize($_POST[$i . '-comment_form_city'], 1);
+		}
+		if (isset($_POST[$i . '-comment_form_state'])) {
+					$result['state'] = sanitize($_POST[$i . '-comment_form_state'], 1);
+		}
+		if (isset($_POST[$i . '-comment_form_country'])) {
+					$result['country'] = sanitize($_POST[$i . '-comment_form_country'], 1);
+		}
+		if (isset($_POST[$i . '-comment_form_postal'])) {
+					$result['postal'] = sanitize($_POST[$i . '-comment_form_postal'], 1);
+		}
 		return $result;
 	}
 
@@ -372,8 +378,9 @@ function printRegistrationForm($thanks = NULL) {
 	if (!empty($_notify)) {
 		switch ($_notify) {
 			case'verified':
-				if (is_null($thanks))
-					$thanks = gettext("Thank you for registering.");
+				if (is_null($thanks)) {
+									$thanks = gettext("Thank you for registering.");
+				}
 				?>
 				<div class="messagebox fade-message">
 					<p><?php echo $thanks; ?></p>
@@ -388,7 +395,7 @@ function printRegistrationForm($thanks = NULL) {
 				} else {
 					$_SERVER['REQUEST_URI'] = $_link . '&login=true';
 				}
-				require_once(CORE_SERVERPATH .  PLUGIN_FOLDER . '/user_login-out.php');
+				require_once(CORE_SERVERPATH . PLUGIN_FOLDER . '/user_login-out.php');
 				printPasswordForm(NULL, true, false, FULLWEBPATH);
 				$_notify = 'success';
 				break;
@@ -399,8 +406,10 @@ function printRegistrationForm($thanks = NULL) {
 					<p><?php echo gettext(get_language_string(getOption('register_user_accepted'))); ?></p>
 				</div>
 				<?php
-				if ($_notify != 'honeypot')
-					$_notify = 'success'; // of course honeypot catches are no success!
+				if ($_notify != 'honeypot') {
+									$_notify = 'success';
+				}
+				// of course honeypot catches are no success!
 				break;
 			case 'exists':
 				?>

@@ -302,8 +302,9 @@ if (is_array($result)) {
 					?>
 					<form class="dirtylistening" onReset="setClean('add');" autocomplete="off"  method="post" id="add" name="add" action="<?php echo getAdminLink(PLUGIN_FOLDER . '/menu_manager/menu_tab_edit.php'); ?>?save<?php
 					echo $add;
-					if ($menuset)
-						echo '&amp;menuset=' . $menuset;
+					if ($menuset) {
+											echo '&amp;menuset=' . $menuset;
+					}
 					?>" style="display: none">
 								<?php XSRFToken('update_menu'); ?>
 						<input type="hidden" name="update" id="update" value="<?php echo html_encode($action); ?>" />

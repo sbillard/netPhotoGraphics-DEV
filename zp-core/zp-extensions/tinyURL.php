@@ -21,18 +21,19 @@ if (defined('SETUP_PLUGIN')) { //	gettext debugging aid
 
 $option_interface = 'tinyURL';
 
-if (getOption('tinyURL_agressive'))
+if (getOption('tinyURL_agressive')) {
 	npgFilters::register('getLink', 'tinyURL::getTinyURL');
+}
 
 switch (OFFSET_PATH) {
-	case 0:
-		npgFilters::register('load_request', 'tinyURL::parse');
-		break;
-	case 2:
-		setOptionDefault('tinyURL_agressive', 0);
-		break;
-	default:
-		break;
+		case 0:
+			npgFilters::register('load_request', 'tinyURL::parse');
+			break;
+		case 2:
+			setOptionDefault('tinyURL_agressive', 0);
+			break;
+		default:
+			break;
 }
 $_conf_vars['special_pages']['tiny'] = array('define' => '_TINY_', 'rewrite' => getOption('tinyURL_text'),
 		'option' => 'tinyURL_text', 'default' => 'tiny/');
@@ -71,28 +72,43 @@ class tinyURL {
 	function handleOption($option, $currentValue) {
 		?>
 		<label class="nowrap">
-			<input type="checkbox" name="tinyURL_albums" value="<?php echo self::albums; ?>" <?php if ($currentValue & self::albums) echo 'checked="checked" '; ?>/>
+			<input type="checkbox" name="tinyURL_albums" value="<?php echo self::albums; ?>" <?php if ($currentValue & self::albums) {
+	echo 'checked="checked" ';
+}
+?>/>
 			<?php echo gettext('albums'); ?>
 		</label>
 		<label class="nowrap">
-			<input type="checkbox" name="tinyURL_images" value="<?php echo self::images; ?>" <?php if ($currentValue & self::images) echo 'checked="checked" '; ?>/>
+			<input type="checkbox" name="tinyURL_images" value="<?php echo self::images; ?>" <?php if ($currentValue & self::images) {
+	echo 'checked="checked" ';
+}
+?>/>
 			<?php echo gettext('images'); ?>
 		</label>
 		<?php
 		if (extensionEnabled('zenpage')) {
 			?>
 			<label class="nowrap">
-				<input type="checkbox" name="tinyURL_news" value="<?php echo self::news; ?>" <?php if ($currentValue & self::news) echo 'checked="checked" '; ?>/>
+				<input type="checkbox" name="tinyURL_news" value="<?php echo self::news; ?>" <?php if ($currentValue & self::news) {
+	echo 'checked="checked" ';
+}
+?>/>
 				<?php echo gettext('news'); ?>
 			</label>
 
 			<label class="nowrap">
-				<input type="checkbox" name="tinyURL_news_categories" value="<?php echo self::news_categories; ?>" <?php if ($currentValue & self::news_categories) echo 'checked="checked" '; ?>/>
+				<input type="checkbox" name="tinyURL_news_categories" value="<?php echo self::news_categories; ?>" <?php if ($currentValue & self::news_categories) {
+	echo 'checked="checked" ';
+}
+?>/>
 				<?php echo gettext('news categories'); ?>
 			</label>
 
 			<label class="nowrap">
-				<input type="checkbox" name="tinyURL_pages" value="<?php echo self::pages; ?>" <?php if ($currentValue & self::pages) echo 'checked="checked" '; ?>/>
+				<input type="checkbox" name="tinyURL_pages" value="<?php echo self::pages; ?>" <?php if ($currentValue & self::pages) {
+	echo 'checked="checked" ';
+}
+?>/>
 				<?php echo gettext('pages'); ?>
 			</label>
 			<?php
@@ -101,16 +117,21 @@ class tinyURL {
 
 	function handleOptionSave($themename, $themealbum) {
 		$result = 0;
-		if (isset($_POST['tinyURL_albums']))
-			$result = $result | self::albums;
-		if (isset($_POST['tinyURL_images']))
-			$result = $result | self::images;
-		if (isset($_POST['tinyURL_news']))
-			$result = $result | self::news;
-		if (isset($_POST['tinyURL_news_categories']))
-			$result = $result | self::news_categories;
-		if (isset($_POST['tinyURL_pages']))
-			$result = $result | self::pages;
+		if (isset($_POST['tinyURL_albums'])) {
+					$result = $result | self::albums;
+		}
+		if (isset($_POST['tinyURL_images'])) {
+					$result = $result | self::images;
+		}
+		if (isset($_POST['tinyURL_news'])) {
+					$result = $result | self::news;
+		}
+		if (isset($_POST['tinyURL_news_categories'])) {
+					$result = $result | self::news_categories;
+		}
+		if (isset($_POST['tinyURL_pages'])) {
+					$result = $result | self::pages;
+		}
 		setOption('tinyURL_agressive', $result);
 		return false;
 	}
@@ -124,16 +145,18 @@ class tinyURL {
 		$asoc = array_flip(self::$tableAsoc);
 		$tiny = ($obj->getID() << 3) | $asoc[$obj->table];
 		if (MOD_REWRITE) {
-			if ($page > 1)
-				$tiny .= '/' . $page;
+			if ($page > 1) {
+							$tiny .= '/' . $page;
+			}
 			if (class_exists('seo_locale')) {
 				return seo_locale::localePath(false) . '/' . _TINY_ . $tiny;
 			} else {
 				return WEBPATH . '/' . _TINY_ . $tiny;
 			}
 		} else {
-			if ($page > 1)
-				$tiny .= '&page=' . $page;
+			if ($page > 1) {
+							$tiny .= '&page=' . $page;
+			}
 			return WEBPATH . '/index.php?p=' . $tiny . '&t';
 		}
 	}

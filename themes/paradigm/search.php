@@ -1,8 +1,9 @@
 <?php
 // force UTF-8 Ø
 
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 ?>
 <!DOCTYPE html>
 
@@ -10,7 +11,7 @@ if (!defined('WEBPATH'))
 <?php include(SERVERPATH . '/' . THEMEFOLDER . '/paradigm/includes/_header.php'); ?>
 
 <div id="background-main" class="background">
-	<div class="container<?php if (getOption('full_width')) {echo '-fluid';}?>">
+	<div class="container<?php if (getOption('full_width')) {echo '-fluid'; }?>">
 	<?php include(SERVERPATH . '/' . THEMEFOLDER . '/paradigm/includes/_breadcrumbs.php'); ?>
 		<div id="center" class="row" itemscope itemtype="http://schema.org/WebPage">
 			<div class="col-sm-9" id="main" itemprop="mainContentOfPage">
@@ -117,7 +118,7 @@ if (!defined('WEBPATH'))
 <?php if (getNumImages() > 0) { ?>
 					<div id="images" class="row">
 	<?php while (next_image()): ?>
-									<div class="col-lg-3 col-md-4 col-sm-6" style="height:<?php echo html_encode(getOption('thumb_size')+55); ?>px">
+									<div class="col-lg-3 col-md-4 col-sm-6" style="height:<?php echo html_encode(getOption('thumb_size') + 55); ?>px">
 										<div class="thumbnail" itemtype="http://schema.org/image"><a href="<?php echo html_encode(getFullImageURL()); ?>" title="<?php printBareImageTitle(); ?>" rel="lightbox-search"><?php printImageThumb(getBareImageTitle()); ?></a>
 											<div class="caption">
 												<p><a href="<?php echo html_encode(getImageURL()); ?>"><?php printBareImageTitle(); ?></a></p>

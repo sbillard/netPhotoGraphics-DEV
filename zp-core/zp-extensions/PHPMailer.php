@@ -42,8 +42,9 @@ class _PHPMailer {
 			setOptionDefault('PHPMailer_password', '');
 			setOptionDefault('PHPMailer_secure', 0);
 		}
-		if (getOption('PHPMailer_secure') == 1)
-			setOption('PHPMailer_secure', 'ssl');
+		if (getOption('PHPMailer_secure') == 1) {
+					setOption('PHPMailer_secure', 'ssl');
+		}
 	}
 
 	/**
@@ -162,8 +163,9 @@ function _PHPMailer($msg, $email_list, $subject, $message, $from_mail, $from_nam
 		$mail->addReplyTo(array_shift($replyTo), array_shift($names));
 	}
 	if (!$mail->Send()) {
-		if (!empty($msg))
-			$msg .= '<br />';
+		if (!empty($msg)) {
+					$msg .= '<br />';
+		}
 		$msg .= sprintf(gettext('<code>PHPMailer</code> failed to send <em>%1$s</em>. ErrorInfo:%2$s'), $subject, $mail->ErrorInfo);
 	}
 	return $msg;

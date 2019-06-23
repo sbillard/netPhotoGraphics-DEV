@@ -5,7 +5,10 @@
 </div>
 </div> <!-- close #header -->
 <div id="content">
-	<div id="main"<?php if ($zpmin_switch) echo ' class="switch"'; ?>>
+	<div id="main"<?php if ($zpmin_switch) {
+	echo ' class="switch"';
+}
+?>>
 		<?php
 		if (function_exists('printThumbNav')) {
 			printThumbNav(2, 77, 77, 77, 77);
@@ -37,7 +40,10 @@
 		<?php if (function_exists('printRating')) { ?><div class="section"><?php printRating(); ?></div><?php } ?>
 		<?php if (function_exists('printCommentForm')) { ?><div class="section"><?php printCommentForm(); ?></div><?php } ?>
 	</div>
-	<div id="sidebar"<?php if ($zpmin_switch) echo ' class="switch"'; ?>>
+	<div id="sidebar"<?php if ($zpmin_switch) {
+	echo ' class="switch"';
+}
+?>>
 		<div class="image-nav">
 			<?php if (hasPrevImage()) { ?><a class="image-prev" href="<?php echo html_encode(getPrevImageURL()); ?>" title="<?php echo gettext("Previous Image"); ?>">&laquo; <?php echo gettext("prev"); ?></a><?php } ?>
 			<?php if (hasNextImage()) { ?><a class="image-next" href="<?php echo html_encode(getNextImageURL()); ?>" title="<?php echo gettext("Next Image"); ?>"><?php echo gettext("next"); ?> &raquo;</a><?php } ?>

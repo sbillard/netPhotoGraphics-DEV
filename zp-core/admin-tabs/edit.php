@@ -263,8 +263,9 @@ if (isset($_GET['action'])) {
 		case "sortorder":
 			XSRFdefender('albumsortorder');
 			$oldsort = strtolower($_gallery->getSortType('image'));
-			if ($_gallery->getSortDirection('image'))
-				$oldsort = $oldsort . '_DESC';
+			if ($_gallery->getSortDirection('image')) {
+							$oldsort = $oldsort . '_DESC';
+			}
 			$newsort = sanitize($_POST['albumimagesort'], 3);
 			if ($newsort != $oldsort && in_array(str_replace('_DESC', '', $newsort), $_sortby)) {
 				if (strpos($newsort, '_DESC')) {
@@ -286,8 +287,9 @@ if (isset($_GET['action'])) {
 				$pg = false;
 			}
 			$filter = sanitize($_REQUEST['filter']);
-			if ($filter)
-				$filter = '&filter=' . $filter;
+			if ($filter) {
+							$filter = '&filter=' . $filter;
+			}
 
 			header('Location: ' . getAdminLink('admin-tabs/edit.php') . '?page=edit&album=' . $albumname . $pg . '&tagsort=' . $tagsort . '&tab=imageinfo' . $filter);
 			exit();
@@ -317,8 +319,9 @@ if (isset($_GET['action'])) {
 		case "subalbum_sortorder":
 			XSRFdefender('subalbum_sortorder');
 			$oldsort = strtolower($album->getSortType('album'));
-			if ($album->getSortDirection('albums'))
-				$oldsort = $oldsort . '_DESC';
+			if ($album->getSortDirection('albums')) {
+							$oldsort = $oldsort . '_DESC';
+			}
 			$newsort = sanitize($_POST['subalbum_sortby'], 3);
 			if ($newsort != $oldsort && in_array(str_replace('_DESC', '', $newsort), $_sortby)) {
 				if (strpos($newsort, '_DESC')) {
@@ -401,8 +404,9 @@ if (isset($_GET['action'])) {
 			if ($notify == '&') {
 				$notify = '';
 			} else {
-				if (empty($notify))
-					$notify = '&saved';
+				if (empty($notify)) {
+									$notify = '&saved';
+				}
 			}
 			if ($notify == '&saved' && $subpage && $subpage == 'object') {
 				if (isset($image)) {
@@ -459,8 +463,9 @@ if (isset($_GET['action'])) {
 			}
 			$uploaddir = $_gallery->albumdir . internalToFilesystem($folder);
 			if (is_dir($uploaddir)) {
-				if ($name != $seoname)
-					$name .= ' (' . $seoname . ')';
+				if ($name != $seoname) {
+									$name .= ' (' . $seoname . ')';
+				}
 				if (isset($_GET['albumtab'])) {
 					if (empty($albumdir)) {
 						$tab = '';
@@ -697,8 +702,9 @@ echo "\n</head>";
 							$retunNull = '';
 						}
 						$sql = 'SELECT * FROM ' . prefix('images') . ' WHERE (`albumid`=' . $album->getID() . ') AND (' . $retunNull . ' `owner`="' . $requestor . '") ORDER BY `' . $oldalbumimagesort . '`';
-						if ($direction)
-							$sql .= ' DESC';
+						if ($direction) {
+													$sql .= ' DESC';
+						}
 
 						$result = query($sql);
 						if ($result) {
@@ -751,8 +757,9 @@ echo "\n</head>";
 					if (isset($_GET['subpage'])) {
 						if (is_numeric($_GET['subpage'])) {
 							$pagenum = max(intval($_GET['subpage']), 1);
-							if (($pagenum - 1) * $imagesTab_imageCount >= $allimagecount)
-								$pagenum--;
+							if (($pagenum - 1) * $imagesTab_imageCount >= $allimagecount) {
+															$pagenum--;
+							}
 						} else {
 							$pagenum = sanitize($_GET['subpage']);
 						}

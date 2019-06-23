@@ -26,7 +26,7 @@ class DailySummary extends Gallery {
 			}
 			$sql .= '`albumid` NOT IN (' . implode(',', $hidealbums) . ')';
 		}
-		$sql .=' ORDER BY `date` DESC';
+		$sql .= ' ORDER BY `date` DESC';
 		$result = query($sql);
 		while ($row = db_fetch_assoc($result)) {
 			if (!empty($row['date'])) {

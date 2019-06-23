@@ -18,10 +18,12 @@ $plugin_description = gettext('Outputs a "Cache-control" header with selected ca
 $option_interface = 'cacheHeader_options';
 
 $_cacheHeader_side = getOption('cacheHeader_sides');
-if ($_cacheHeader_side == 'admin' || $_cacheHeader_side == 'all')
+if ($_cacheHeader_side == 'admin' || $_cacheHeader_side == 'all') {
 	npgFilters::register('admin_headers', 'cacheHeader');
-if ($_cacheHeader_side == 'gallery' || $_cacheHeader_side == 'all')
+}
+if ($_cacheHeader_side == 'gallery' || $_cacheHeader_side == 'all') {
 	npgFilters::register('theme_headers', 'cacheHeader');
+}
 npgFilters::register('plugin_tabs', 'cacheHeader_options::tab');
 unset($_cacheHeader_side);
 

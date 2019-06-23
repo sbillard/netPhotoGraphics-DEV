@@ -10,11 +10,9 @@
  * jake@olefsky.com
  *
  * Please see exif.php for the complete information about this software.
-
  * This program is free software; you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details. http://www.gnu.org/copyleft/gpl.html
@@ -72,8 +70,9 @@ function formatOlympusData($type, $tag, $intel, $data) {
 
 	} else if ($type == "URATIONAL" || $type == "SRATIONAL") {
 		$data = unRational($data, $type, $intel);
-		if ($intel == 1)
-			$data = intel2Moto($data);
+		if ($intel == 1) {
+					$data = intel2Moto($data);
+		}
 
 		if ($tag == "0204") { //DigitalZoom
 			$data = $data . "x";
@@ -84,30 +83,32 @@ function formatOlympusData($type, $tag, $intel, $data) {
 		$data = rational($data, $type, $intel);
 
 		if ($tag == "0201") { //JPEGQuality
-			if ($data == 1)
-				$data = "SQ";
-			else if ($data == 2)
-				$data = "HQ";
-
-			else if ($data == 3)
-				$data = "SHQ";
-			else
-				$data = '!unknown!: ' . $data;
+			if ($data == 1) {
+							$data = "SQ";
+			} else if ($data == 2) {
+							$data = "HQ";
+			} else if ($data == 3) {
+							$data = "SHQ";
+			} else {
+							$data = '!unknown!: ' . $data;
+			}
 		}
 		if ($tag == "0202") { //Macro
-			if ($data == 0)
-				$data = '!normal!';
-			else if ($data == 1)
-				$data = '!macro!';
-			else
-				$data = '!unknown!: ' . $data;
+			if ($data == 0) {
+							$data = '!normal!';
+			} else if ($data == 1) {
+							$data = '!macro!';
+			} else {
+							$data = '!unknown!: ' . $data;
+			}
 		}
 	} else if ($type == "UNDEFINED") {
 
 	} else {
 		$data = bin2hex($data);
-		if ($intel == 1)
-			$data = intel2Moto($data);
+		if ($intel == 1) {
+					$data = intel2Moto($data);
+		}
 	}
 
 	return $data;
@@ -125,10 +126,11 @@ function formatOlympusData($type, $tag, $intel, $data) {
  */
 function parseOlympus($block, &$result, $seek, $globalOffset) {
 
-	if ($result['Endien'] == "Intel")
-		$intel = 1;
-	else
-		$intel = 0;
+	if ($result['Endien'] == "Intel") {
+			$intel = 1;
+	} else {
+			$intel = 0;
+	}
 
 	$model = $result['IFD0']['Model'];
 
@@ -154,13 +156,14 @@ function parseOlympus($block, &$result, $seek, $globalOffset) {
 	// New makernote repeats 1-byte value twice, so increment $place by 2 in either case.
 	$num = bin2hex(substr($block, $place, $countfieldbits));
 	$place += 2;
-	if ($intel == 1)
-		$num = intel2Moto($num);
+	if ($intel == 1) {
+			$num = intel2Moto($num);
+	}
 	$ntags = hexdec($num);
 	$result['SubIFD']['MakerNote']['MakerNoteNumTags'] = $ntags;
 
 	//loop thru all tags  Each field is 12 bytes
-	for ($i = 0; $i < $ntags; $i ++) {
+	for ($i = 0; $i < $ntags; $i++) {
 		//2 byte tag
 		$tag = bin2hex(substr($block, $place, 2));
 		$place += 2;
@@ -177,7 +180,7 @@ function parseOlympus($block, &$result, $seek, $globalOffset) {
 
 		//4 byte count of number of data units
 		$count = bin2hex(substr($block, $place, 4));
-		$place+=4;
+		$place += 4;
 		if ($intel == 1)
 			$count = intel2Moto($count);
 		$bytesofdata = $size * hexdec($count);
@@ -191,13 +194,14 @@ function parseOlympus($block, &$result, $seek, $globalOffset) {
 			$data = substr($value, 0, $bytesofdata);
 		} else {
 			$value = bin2hex($value);
-			if ($intel == 1)
-				$value = intel2Moto($value);
+			if ($intel == 1) {
+							$value = intel2Moto($value);
+			}
 			$v = fseek($seek, $globalOffset + hexdec($value)); //offsets are from TIFF header which is 12 bytes from the start of the file
 			if (isset($GLOBALS['exiferFileSize']) && $v == 0 && $bytesofdata < $GLOBALS['exiferFileSize']) {
 				$data = fread($seek, $bytesofdata);
 			} else {
-				$result['Errors'] = $result['Errors'] ++;
+				$result['Errors'] = $result['Errors']++;
 				$data = '';
 			}
 		}
@@ -207,8 +211,9 @@ function parseOlympus($block, &$result, $seek, $globalOffset) {
 			$result['SubIFD']['MakerNote'][$tag_name] = $formated_data;
 			if ($type == "URATIONAL" || $type == "SRATIONAL" || $type == "USHORT" || $type == "SSHORT" || $type == "ULONG" || $type == "SLONG" || $type == "FLOAT" || $type == "DOUBLE") {
 				$data = bin2hex($data);
-				if ($intel == 1)
-					$data = intel2Moto($data);
+				if ($intel == 1) {
+									$data = intel2Moto($data);
+				}
 			}
 			$result['SubIFD']['MakerNote'][$tag_name . "_Verbose"]['RawData'] = $data;
 			$result['SubIFD']['MakerNote'][$tag_name . "_Verbose"]['Type'] = $type;

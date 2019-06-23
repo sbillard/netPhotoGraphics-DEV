@@ -101,13 +101,15 @@ class Video extends Image {
 
 		$new = $this->instantiate('images', array('filename' => $filename, 'albumid' => $this->album->getID()), 'filename', true, empty($album_name));
 		if ($new || $this->filemtime != $this->get('mtime')) {
-			if ($new)
-				$this->setTitle($this->displayname);
+			if ($new) {
+							$this->setTitle($this->displayname);
+			}
 			$this->updateMetaData();
 			$this->set('mtime', $this->filemtime);
 			$this->save();
-			if ($new)
-				npgFilters::apply('new_image', $this);
+			if ($new) {
+							npgFilters::apply('new_image', $this);
+			}
 		}
 	}
 
@@ -166,8 +168,9 @@ class Video extends Image {
 	 */
 	function getThumbImageFile($path = NULL) {
 		global $_gallery;
-		if (is_null($path))
-			$path = SERVERPATH;
+		if (is_null($path)) {
+					$path = SERVERPATH;
+		}
 		if (is_null($this->objectsThumb)) {
 			$suffix = getSuffix($this->filename);
 			foreach (array(THEMEFOLDER . '/' . internalToFilesystem($_gallery->getCurrentTheme()) . '/images/', CORE_FOLDER . '/' . PLUGIN_FOLDER . '/' . stripSuffix(basename(__FILE__))) as $folder) {

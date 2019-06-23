@@ -24,14 +24,18 @@ if ($plugin_disable) {
 	enableExtension('tweet_news', 0);
 } else {
 	npgFilters::register('show_change', 'tweet::published');
-	if (getOption('tweet_news_albums'))
-		npgFilters::register('new_album', 'tweet::published');
-	if (getOption('tweet_news_images'))
-		npgFilters::register('new_image', 'tweet::published');
-	if (getOption('tweet_news_news'))
-		npgFilters::register('new_article', 'tweet::newZenpageObject');
-	if (getOption('tweet_news_pages'))
-		npgFilters::register('new_page', 'tweet::newZenpageObject');
+	if (getOption('tweet_news_albums')) {
+			npgFilters::register('new_album', 'tweet::published');
+	}
+	if (getOption('tweet_news_images')) {
+			npgFilters::register('new_image', 'tweet::published');
+	}
+	if (getOption('tweet_news_news')) {
+			npgFilters::register('new_article', 'tweet::newZenpageObject');
+	}
+	if (getOption('tweet_news_pages')) {
+			npgFilters::register('new_page', 'tweet::newZenpageObject');
+	}
 	npgFilters::register('admin_overview', 'tweet::errorsOnOverview');
 	npgFilters::register('admin_note', 'tweet::errorsOnAdmin');
 	npgFilters::register('edit_album_utilities', 'tweet::tweeter');
@@ -42,7 +46,7 @@ if ($plugin_disable) {
 	npgFilters::register('save_article_data', 'tweet::tweeterZenpageExecute');
 	npgFilters::register('save_page_data', 'tweet::tweeterZenpageExecute');
 
-	require_once(CORE_SERVERPATH .  PLUGIN_FOLDER . "/common/oAuth/twitteroauth.php");
+	require_once(CORE_SERVERPATH . PLUGIN_FOLDER . "/common/oAuth/twitteroauth.php");
 }
 
 /**

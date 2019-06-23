@@ -32,7 +32,7 @@ class Configuration extends Github\Sanity
 		$this->clientId = $clientId;
 		$this->clientSecret = $clientSecret;
 		$this->scopes = $scopes;
-    }
+	}
 
 
 	/**

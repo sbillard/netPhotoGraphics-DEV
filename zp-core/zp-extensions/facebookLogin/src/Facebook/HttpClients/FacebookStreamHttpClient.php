@@ -52,7 +52,7 @@ class FacebookStreamHttpClient implements FacebookHttpable {
    */
   public function __construct(FacebookStream $facebookStream = null)
   {
-    self::$facebookStream = $facebookStream ?: new FacebookStream();
+	self::$facebookStream = $facebookStream ?: new FacebookStream();
   }
 
   /**
@@ -63,7 +63,7 @@ class FacebookStreamHttpClient implements FacebookHttpable {
    */
   public function addRequestHeader($key, $value)
   {
-    $this->requestHeaders[$key] = $value;
+	$this->requestHeaders[$key] = $value;
   }
 
   /**
@@ -73,7 +73,7 @@ class FacebookStreamHttpClient implements FacebookHttpable {
    */
   public function getResponseHeaders()
   {
-    return $this->responseHeaders;
+	return $this->responseHeaders;
   }
 
   /**
@@ -83,7 +83,7 @@ class FacebookStreamHttpClient implements FacebookHttpable {
    */
   public function getResponseHttpStatusCode()
   {
-    return $this->responseHttpStatusCode;
+	return $this->responseHttpStatusCode;
   }
 
   /**
@@ -99,40 +99,40 @@ class FacebookStreamHttpClient implements FacebookHttpable {
    */
   public function send($url, $method = 'GET', $parameters = array())
   {
-    $options = array(
-      'http' => array(
-        'method' => $method,
-        'timeout' => 60,
-        'ignore_errors' => true
-      ),
-      'ssl' => array(
-        'verify_peer' => true,
-        'verify_peer_name' => true,
-        'allow_self_signed' => true, // All root certificates are self-signed
-        'cafile' => __DIR__ . '/certs/DigiCertHighAssuranceEVRootCA.pem',
-      ),
-    );
+	$options = array(
+	  'http' => array(
+		'method' => $method,
+		'timeout' => 60,
+		'ignore_errors' => true
+	  ),
+	  'ssl' => array(
+		'verify_peer' => true,
+		'verify_peer_name' => true,
+		'allow_self_signed' => true, // All root certificates are self-signed
+		'cafile' => __DIR__ . '/certs/DigiCertHighAssuranceEVRootCA.pem',
+	  ),
+	);
 
-    if ($parameters) {
-      $options['http']['content'] = http_build_query($parameters, null, '&');
+	if ($parameters) {
+	  $options['http']['content'] = http_build_query($parameters, null, '&');
 
-      $this->addRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    }
+	  $this->addRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	}
 
-    $options['http']['header'] = $this->compileHeader();
+	$options['http']['header'] = $this->compileHeader();
 
-    self::$facebookStream->streamContextCreate($options);
-    $rawResponse = self::$facebookStream->fileGetContents($url);
-    $rawHeaders = self::$facebookStream->getResponseHeaders();
+	self::$facebookStream->streamContextCreate($options);
+	$rawResponse = self::$facebookStream->fileGetContents($url);
+	$rawHeaders = self::$facebookStream->getResponseHeaders();
 
-    if ($rawResponse === false || !$rawHeaders) {
-      throw new FacebookSDKException('Stream returned an empty response', 660);
-    }
+	if ($rawResponse === false || !$rawHeaders) {
+	  throw new FacebookSDKException('Stream returned an empty response', 660);
+	}
 
-    $this->responseHeaders = self::formatHeadersToArray($rawHeaders);
-    $this->responseHttpStatusCode = self::getStatusCodeFromHeader($this->responseHeaders['http_code']);
+	$this->responseHeaders = self::formatHeadersToArray($rawHeaders);
+	$this->responseHttpStatusCode = self::getStatusCodeFromHeader($this->responseHeaders['http_code']);
 
-    return $rawResponse;
+	return $rawResponse;
   }
 
   /**
@@ -142,12 +142,12 @@ class FacebookStreamHttpClient implements FacebookHttpable {
    */
   public function compileHeader()
   {
-    $header = [];
-    foreach($this->requestHeaders as $k => $v) {
-      $header[] = $k . ': ' . $v;
-    }
+	$header = [];
+	foreach($this->requestHeaders as $k => $v) {
+	  $header[] = $k . ': ' . $v;
+	}
 
-    return implode("\r\n", $header);
+	return implode("\r\n", $header);
   }
 
   /**
@@ -160,18 +160,18 @@ class FacebookStreamHttpClient implements FacebookHttpable {
    */
   public static function formatHeadersToArray(array $rawHeaders)
   {
-    $headers = array();
+	$headers = array();
 
-    foreach ($rawHeaders as $line) {
-      if (strpos($line, ':') === false) {
-        $headers['http_code'] = $line;
-      } else {
-        list ($key, $value) = explode(': ', $line);
-        $headers[$key] = $value;
-      }
-    }
+	foreach ($rawHeaders as $line) {
+	  if (strpos($line, ':') === false) {
+		$headers['http_code'] = $line;
+	  } else {
+		list ($key, $value) = explode(': ', $line);
+		$headers[$key] = $value;
+	  }
+	}
 
-    return $headers;
+	return $headers;
   }
 
   /**
@@ -183,8 +183,8 @@ class FacebookStreamHttpClient implements FacebookHttpable {
    */
   public static function getStatusCodeFromHeader($header)
   {
-    preg_match('|HTTP/\d\.\d\s+(\d+)\s+.*|', $header, $match);
-    return (int) $match[1];
+	preg_match('|HTTP/\d\.\d\s+(\d+)\s+.*|', $header, $match);
+	return (int) $match[1];
   }
 
 }

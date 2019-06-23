@@ -1,6 +1,8 @@
 <?php
 // force UTF-8 Ø
-if (!defined('WEBPATH')) die();
+if (!defined('WEBPATH')) {
+	die();
+}
 npgFilters::apply('theme_file_top')
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -40,12 +42,12 @@ npgFilters::apply('theme_file_top')
 		$stageStyle = ($stageWidth > 0) ? 'style="max-width: ' . $stageWidth . 'px"' : '';
 		$thumbstageStyle = (getOption('zenfluid_stagethumb')) ? $stageStyle : ''; 
 		?>
-		<div class="stage" <?php echo $stageStyle;?>>
+		<div class="stage" <?php echo $stageStyle; ?>>
 			<?php 
-			if ($total > 0 ) { 
+			if ($total > 0) { 
 				?>
 				<div class="title border colour">
-					<?php printf(ngettext('%1$u Hit for <em>%2$s</em>','%1$u Hits for <em>%2$s</em>',$total), $total, html_encode($searchwords)); ?>
+					<?php printf(ngettext('%1$u Hit for <em>%2$s</em>', '%1$u Hits for <em>%2$s</em>', $total), $total, html_encode($searchwords)); ?>
 				</div>
 				<?php 
 			}
@@ -55,7 +57,7 @@ npgFilters::apply('theme_file_top')
 					$c = 0; 
 					?>
 					<div class="title border colour">
-						<?php printf(gettext('Pages (%s)'), $numpages);?>
+						<?php printf(gettext('Pages (%s)'), $numpages); ?>
 						<span id="searchshowmore"><?php printZDSearchShowMoreLink("pages", $number_to_show); ?></span>
 						<ul class="searchresults">
 							<?php 
@@ -106,14 +108,14 @@ npgFilters::apply('theme_file_top')
 				<div class="title border colour">
 					<?php printf(gettext('Albums (%s)'), $numalbums); ?>
 				</div>
-				<div class="thumbstage" <?php echo $thumbstageStyle;?>>
+				<div class="thumbstage" <?php echo $thumbstageStyle; ?>>
 					<?php 
 					while (next_album()) {
 						?>
 						<div class="thumbs border colour">
-							<a href="<?php echo html_encode(getAlbumURL());?>" title="<?php echo gettext('View: '); printBareAlbumTitle();?>">
+							<a href="<?php echo html_encode(getAlbumURL()); ?>" title="<?php echo gettext('View: '); printBareAlbumTitle(); ?>">
 								<div class="thumbimage">
-									<?php printAlbumThumbImage(getBareAlbumTitle(),"border"); ?>
+									<?php printAlbumThumbImage(getBareAlbumTitle(), "border"); ?>
 									<div class="thumbtitle">
 										<?php 
 										$numItems = getNumImages() + getNumAlbums();
@@ -138,15 +140,15 @@ npgFilters::apply('theme_file_top')
 				<div class="title border colour">
 					<?php printf(gettext('Images and Videos (%s)'), $numimages); ?>
 				</div>
-				<div class="thumbstage" <?php echo $thumbstageStyle;?>>
+				<div class="thumbstage" <?php echo $thumbstageStyle; ?>>
 					<?php 
 					while (next_image()) {
 						?>
 						<div class="thumbs border">
-							<a href="<?php echo html_encode(getImageURL());?>" title="<?php echo gettext('View: '); printBareImageTitle();?>">
+							<a href="<?php echo html_encode(getImageURL()); ?>" title="<?php echo gettext('View: '); printBareImageTitle(); ?>">
 								<div class="thumbimage">
 									<?php 
-									printImageThumb(getBareImageTitle(),"border");
+									printImageThumb(getBareImageTitle(), "border");
 									if (isImageVideo()) { 
 										?>
 										<img class="videoplay" src="<?php echo $_themeroot; ?>/images/videoplay.png">
@@ -191,7 +193,7 @@ npgFilters::apply('theme_file_top')
 			} 
 			?>
 		</div>
-		<?php include("inc-footer.php");?>
+		<?php include("inc-footer.php"); ?>
 	</body>
 </html>
 <?php

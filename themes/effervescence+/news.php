@@ -1,7 +1,8 @@
 <?php
 // force UTF-8 Ø
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 if (class_exists('CMS')) {
 	?>
 	<!DOCTYPE html>
@@ -10,7 +11,10 @@ if (class_exists('CMS')) {
 
 			<?php npgFilters::apply('theme_head'); ?>
 
-			<?php if (class_exists('RSS')) printRSSHeaderLink("News", "Zenpage news", ""); ?>
+			<?php if (class_exists('RSS')) {
+	printRSSHeaderLink("News", "Zenpage news", "");
+}
+?>
 		</head>
 
 		<body onload="blurAnchors()">

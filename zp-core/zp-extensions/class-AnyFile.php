@@ -131,10 +131,12 @@ class AnyFile extends TextObject {
 	 */
 	function getContent($w = NULL, $h = NULL) {
 		$this->updateDimensions();
-		if (is_null($w))
-			$w = $this->getWidth();
-		if (is_null($h))
-			$h = $this->getHeight();
+		if (is_null($w)) {
+					$w = $this->getWidth();
+		}
+		if (is_null($h)) {
+					$h = $this->getHeight();
+		}
 		/*
 		 * just return the thumbnail as we do not know how to
 		 * render the file.

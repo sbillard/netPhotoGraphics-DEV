@@ -89,9 +89,15 @@ function reconfigureAction($mandatory) {
 				<?php reconfigureCS(); ?>
 			</head>
 			<body>
-				<?php if ($_gallery) printLogoAndLinks(); ?>
+				<?php if ($_gallery) {
+	printLogoAndLinks();
+}
+?>
 				<div id="main">
-					<?php if ($_gallery) printTabs(); ?>
+					<?php if ($_gallery) {
+	printTabs();
+}
+?>
 					<div id="content">
 						<h1><?php echo gettext('Setup request'); ?></h1>
 						<div class="tabbox">
@@ -144,8 +150,9 @@ function checkSignature($mandatory) {
 		}
 		$old = array('CONFIGURATION' => $reason);
 
-		if (!$mandatory)
-			$mandatory = 6;
+		if (!$mandatory) {
+					$mandatory = 6;
+		}
 	}
 
 	$diff = array();

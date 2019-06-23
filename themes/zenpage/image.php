@@ -1,8 +1,9 @@
 <?php
 // force UTF-8 Ø
 
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,7 +36,10 @@ if (!defined('WEBPATH'))
 				// ]]> -->
 			</script>
 		<?php } ?>
-		<?php if (class_exists('RSS')) printRSSHeaderLink('Album', getAlbumTitle()); ?>
+		<?php if (class_exists('RSS')) {
+	printRSSHeaderLink('Album', getAlbumTitle());
+}
+?>
 	</head>
 	<body>
 		<?php npgFilters::apply('theme_body_open'); ?>
@@ -125,8 +129,9 @@ if (!defined('WEBPATH'))
 
 						<br style="clear:both" />
 						<?php
-						If (function_exists('printAddToFavorites'))
-							printAddToFavorites($_current_image);
+						If (function_exists('printAddToFavorites')) {
+													printAddToFavorites($_current_image);
+						}
 						@call_user_func('printRating');
 						simpleMap::printMap();
 						?>

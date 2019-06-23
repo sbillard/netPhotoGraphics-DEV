@@ -19,8 +19,9 @@ $imagelist = array();
 function getSubalbumImages($folder) {
 	global $imagelist, $_gallery;
 	$album = newAlbum($folder);
-	if ($album->isDynamic())
-		return;
+	if ($album->isDynamic()) {
+			return;
+	}
 	$images = $album->getImages();
 	foreach ($images as $image) {
 		$imagelist[] = '/' . $folder . '/' . $image;
@@ -255,7 +256,8 @@ echo "<h1>" . gettext("Create Dynamic Album") . "</h1>\n";
 				<td>
 					<input type="text" size="60" name="words" value="<?php echo html_encode($words); ?>" />
 					<label>
-						<input type="checkbox" name="return_albums" value="1"<?php if (!getOption('search_no_albums')) echo ' checked="checked"' ?> />
+						<input type="checkbox" name="return_albums" value="1"<?php if (!getOption('search_no_albums')) {
+	echo ' checked="checked"' ?> />
 						<?php echo gettext('Return albums found') ?>
 					</label>
 					<label>
@@ -271,7 +273,9 @@ echo "<h1>" . gettext("Create Dynamic Album") . "</h1>\n";
 			<tr>
 				<td></td>
 				<td>
-					<?php echo gettext('within'); ?>
+					<?php echo gettext('within');
+}
+?>
 					<input type="text" size="60" name="albumlist" value="<?php echo html_encode($inalbums); ?>" />
 				</td>
 			</tr>

@@ -25,7 +25,6 @@
  * @author Marcus Wong (wongm) with updates by Stephen Billard
  * @package plugins/daily-summary
  * @pluginCategory theme
-
  */
 $plugin_is_filter = 5 | THEME_PLUGIN;
 $plugin_description = gettext("Generates a list of albums containg the summary of all photos taken that day.");

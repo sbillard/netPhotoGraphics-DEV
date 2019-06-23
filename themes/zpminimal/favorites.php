@@ -8,7 +8,10 @@ if (class_exists('favorites')) {
 	</div>
 	</div> <!-- close #header -->
 	<div id="content">
-		<div id="main"<?php if ($zpmin_switch) echo ' class="switch"'; ?>>
+		<div id="main"<?php if ($zpmin_switch) {
+	echo ' class="switch"';
+}
+?>>
 			<div id="albums-wrap">
 				<?php while (next_album()): ?>
 					<div class="album-maxspace">
@@ -51,7 +54,10 @@ if (class_exists('favorites')) {
 			<?php if (function_exists('printRating')) { ?><div class="section"><?php printRating(); ?></div><?php } ?>
 			<?php if (function_exists('printCommentForm')) { ?><div class="section"><?php printCommentForm(); ?></div><?php } ?>
 		</div>
-		<div id="sidebar"<?php if ($zpmin_switch) echo ' class="switch"'; ?>>
+		<div id="sidebar"<?php if ($zpmin_switch) {
+	echo ' class="switch"';
+}
+?>>
 			<div class="sidebar-divide">
 				<h3><?php printAlbumTitle(true); ?></h3>
 				<div class="sidebar-section"><?php printAlbumDate('', '', null, true); ?></div>

@@ -196,16 +196,21 @@ $tagsort = 'alpha';
 				$locked = !checkIfLocked($result);
 				$me = 'news';
 				$backurl = getAdminLink(PLUGIN_FOLDER . '/zenpage/news.php') . '?' . $page;
-				if (isset($_GET['category']))
-					$backurl .= '&amp;category=' . html_encode(sanitize($_GET['category']));
-				if (isset($_GET['date']))
-					$backurl .= '&amp;date=' . html_encode(sanitize($_GET['date']));
-				if (isset($_GET['published']))
-					$backurl .= '&amp;published=' . html_encode(sanitize($_GET['published']));
-				if (isset($_GET['sortorder']))
-					$backurl .= '&amp;sortorder=' . html_encode(sanitize($_GET['sortorder']));
-				if (isset($_GET['articles_page']))
-					$backurl .= '&amp;articles_page=' . html_encode(sanitize($_GET['articles_page']));
+				if (isset($_GET['category'])) {
+									$backurl .= '&amp;category=' . html_encode(sanitize($_GET['category']));
+				}
+				if (isset($_GET['date'])) {
+									$backurl .= '&amp;date=' . html_encode(sanitize($_GET['date']));
+				}
+				if (isset($_GET['published'])) {
+									$backurl .= '&amp;published=' . html_encode(sanitize($_GET['published']));
+				}
+				if (isset($_GET['sortorder'])) {
+									$backurl .= '&amp;sortorder=' . html_encode(sanitize($_GET['sortorder']));
+				}
+				if (isset($_GET['articles_page'])) {
+									$backurl .= '&amp;articles_page=' . html_encode(sanitize($_GET['articles_page']));
+				}
 			}
 
 			if (is_AdminEditPage('newscategory')) {
@@ -579,9 +584,18 @@ $tagsort = 'alpha';
 													?>
 													<p><?php echo gettext("Position:"); ?>
 														<select id="sticky" name="sticky">
-															<option value="<?php echo NEWS_POSITION_NORMAL; ?>" <?php if ($sticky == NEWS_POSITION_NORMAL) echo 'selected="selected"'; ?>><?php echo gettext("normal"); ?></option>
-															<option value="<?php echo NEWS_POSITION_STICKY; ?>" <?php if ($sticky == NEWS_POSITION_STICKY) echo 'selected="selected"'; ?>><?php echo gettext("sticky"); ?></option>
-															<option value="<?php echo NEWS_POSITION_STICK_TO_TOP; ?>" <?php if ($sticky == NEWS_POSITION_STICK_TO_TOP) echo 'selected="selected"'; ?>><?php echo gettext("Stick to top"); ?></option>
+															<option value="<?php echo NEWS_POSITION_NORMAL; ?>" <?php if ($sticky == NEWS_POSITION_NORMAL) {
+	echo 'selected="selected"';
+}
+?>><?php echo gettext("normal"); ?></option>
+															<option value="<?php echo NEWS_POSITION_STICKY; ?>" <?php if ($sticky == NEWS_POSITION_STICKY) {
+	echo 'selected="selected"';
+}
+?>><?php echo gettext("sticky"); ?></option>
+															<option value="<?php echo NEWS_POSITION_STICK_TO_TOP; ?>" <?php if ($sticky == NEWS_POSITION_STICK_TO_TOP) {
+	echo 'selected="selected"';
+}
+?>><?php echo gettext("Stick to top"); ?></option>
 														</select>
 													</p>
 													<?php
@@ -595,7 +609,10 @@ $tagsort = 'alpha';
 												}
 												if (is_AdminEditPage('page') || is_AdminEditPage('newscategory')) {
 													?>
-													<p class="passwordextrashow" <?php if (GALLERY_SECURITY != 'public') echo 'style="display:none"'; ?>>
+													<p class="passwordextrashow" <?php if (GALLERY_SECURITY != 'public') {
+	echo 'style="display:none"';
+}
+?>>
 														<input	type="hidden" name="password_enabled" id="password_enabled" value="0" />
 														<?php
 														if (GALLERY_SECURITY == 'public') {
@@ -752,7 +769,10 @@ $tagsort = 'alpha';
 														</script>
 														<?php echo gettext('Publish date'); ?> <small>(YYYY-MM-DD)</small>
 														<?php $date = $result->getPublishDate(); ?>
-														<input name="pubdate" type="text" id="pubdate" value="<?php echo $date; ?>" onchange="checkFuturePub();" <?php if ($date > date('Y-m-d H:i:s')) echo 'style="color:blue"'; ?> />
+														<input name="pubdate" type="text" id="pubdate" value="<?php echo $date; ?>" onchange="checkFuturePub();" <?php if ($date > date('Y-m-d H:i:s')) {
+	echo 'style="color:blue"';
+}
+?> />
 													</p>
 													<p>
 														<script type="text/javascript">
@@ -830,7 +850,10 @@ $tagsort = 'alpha';
 														$hc = $result->getHitcounter();
 														?>
 														<p class="checkbox">
-															<input name="resethitcounter" type="checkbox" id="resethitcounter" value="1"<?php if (!$hc) echo ' disabled="disabled"'; ?> />
+															<input name="resethitcounter" type="checkbox" id="resethitcounter" value="1"<?php if (!$hc) {
+	echo ' disabled="disabled"';
+}
+?> />
 															<label for="resethitcounter"> <?php printf(ngettext("Reset hitcounter (%u hit)", "Reset hitcounter (%u hits)", $hc), $hc); ?></label>
 														</p>
 														<?php

@@ -145,20 +145,26 @@ class imagegallery {
 						}
 						?>
 
-						<div id="caption"<?php if (getOption('effervescence_caption_location') == 'none') echo ' style="display:none"' ?>>
+						<div id="caption"<?php if (getOption('effervescence_caption_location') == 'none') {
+	echo ' style="display:none"' ?>>
 						</div>
 						<div class="clearage"></div>
 						<?php
 						if (!empty($points) && $map) {
 							?>
 							<div id="map_link">
-								<?php simplemap::printMap($points, array('obj' => 'album_page')); ?>
+								<?php simplemap::printMap($points, array('obj' => 'album_page'));
+}
+?>
 							</div>
 							<?php
 						}
 						?>
 					</div><!-- images -->
-					<?php if (function_exists('printAddToFavorites')) printAddToFavorites($_current_album); ?>
+					<?php if (function_exists('printAddToFavorites')) {
+	printAddToFavorites($_current_album);
+}
+?>
 					<?php @call_user_func('printRating'); ?>
 				</div><!-- main -->
 				<div class="clearage"></div>

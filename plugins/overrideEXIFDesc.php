@@ -31,8 +31,9 @@ function exifDescIsNPGdesc($image) {
 	$desc = $image->get('EXIFDescription');
 	if ($desc) {
 		$image->set('EXIFDescription', '');
-		if (!$image->get('IPTCImageCaption'))
-			$image->set('IPTCImageCaption', $desc);
+		if (!$image->get('IPTCImageCaption')) {
+					$image->set('IPTCImageCaption', $desc);
+		}
 	}
 	return $image;
 }

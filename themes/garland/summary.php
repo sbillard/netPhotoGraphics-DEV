@@ -1,6 +1,7 @@
 <?php
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 ?>
 <!DOCTYPE html>
 <html>

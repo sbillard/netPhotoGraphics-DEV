@@ -56,7 +56,7 @@ class FacebookGuzzleHttpClient implements FacebookHttpable {
    */
   public function __construct(Client $guzzleClient = null)
   {
-    self::$guzzleClient = $guzzleClient ?: new Client();
+	self::$guzzleClient = $guzzleClient ?: new Client();
   }
 
   /**
@@ -67,7 +67,7 @@ class FacebookGuzzleHttpClient implements FacebookHttpable {
    */
   public function addRequestHeader($key, $value)
   {
-    $this->requestHeaders[$key] = $value;
+	$this->requestHeaders[$key] = $value;
   }
 
   /**
@@ -77,7 +77,7 @@ class FacebookGuzzleHttpClient implements FacebookHttpable {
    */
   public function getResponseHeaders()
   {
-    return $this->responseHeaders;
+	return $this->responseHeaders;
   }
 
   /**
@@ -87,7 +87,7 @@ class FacebookGuzzleHttpClient implements FacebookHttpable {
    */
   public function getResponseHttpStatusCode()
   {
-    return $this->responseHttpStatusCode;
+	return $this->responseHttpStatusCode;
   }
 
   /**
@@ -103,32 +103,32 @@ class FacebookGuzzleHttpClient implements FacebookHttpable {
    */
   public function send($url, $method = 'GET', $parameters = array())
   {
-    $options = array();
-    if ($parameters) {
-      $options = array('body' => $parameters);
-    }
+	$options = array();
+	if ($parameters) {
+	  $options = array('body' => $parameters);
+	}
 
-    $options['verify'] = __DIR__ . '/certs/DigiCertHighAssuranceEVRootCA.pem';
+	$options['verify'] = __DIR__ . '/certs/DigiCertHighAssuranceEVRootCA.pem';
 
-    $request = self::$guzzleClient->createRequest($method, $url, $options);
+	$request = self::$guzzleClient->createRequest($method, $url, $options);
 
-    foreach($this->requestHeaders as $k => $v) {
-      $request->setHeader($k, $v);
-    }
+	foreach($this->requestHeaders as $k => $v) {
+	  $request->setHeader($k, $v);
+	}
 
-    try {
-      $rawResponse = self::$guzzleClient->send($request);
-    } catch (RequestException $e) {
-      if ($e->getPrevious() instanceof AdapterException) {
-        throw new FacebookSDKException($e->getMessage(), $e->getCode());
-      }
-      $rawResponse = $e->getResponse();
-    }
+	try {
+	  $rawResponse = self::$guzzleClient->send($request);
+	} catch (RequestException $e) {
+	  if ($e->getPrevious() instanceof AdapterException) {
+		throw new FacebookSDKException($e->getMessage(), $e->getCode());
+	  }
+	  $rawResponse = $e->getResponse();
+	}
 
-    $this->responseHttpStatusCode = $rawResponse->getStatusCode();
-    $this->responseHeaders = $rawResponse->getHeaders();
+	$this->responseHttpStatusCode = $rawResponse->getStatusCode();
+	$this->responseHeaders = $rawResponse->getHeaders();
 
-    return $rawResponse->getBody();
+	return $rawResponse->getBody();
   }
 
 }

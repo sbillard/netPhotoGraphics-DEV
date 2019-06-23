@@ -11,7 +11,6 @@
  * @license GPL v3 or later
  *
  * @author Malte Müller (acrylian), Fred Sondaar (fretzl), Vincent Bourganel (vincent3569), Stephen Billard (netPhotoGraphics migration)
-
  * @package plugin/cookieconsent
  * @pluginCategory theme
  */
@@ -139,7 +138,7 @@ class cookieConsent {
 		}
 		$color_popup = getOption('zpcookieconsent_colorpopup');
 		$color_button = getOption('zpcookieconsent_colorbutton');
-		scriptLoader(CORE_SERVERPATH .  PLUGIN_FOLDER . '/cookieconsent/cookieconsent.min.js');
+		scriptLoader(CORE_SERVERPATH . PLUGIN_FOLDER . '/cookieconsent/cookieconsent.min.js');
 		?>
 		<script>
 			window.addEventListener("load", function () {

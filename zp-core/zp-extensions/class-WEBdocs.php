@@ -152,10 +152,12 @@ class WEBdocs extends TextObject {
 	 */
 	function getContent($w = NULL, $h = NULL) {
 		$this->updateDimensions();
-		if (is_null($w))
-			$w = $this->getWidth();
-		if (is_null($h))
-			$h = $this->getHeight();
+		if (is_null($w)) {
+					$w = $this->getWidth();
+		}
+		if (is_null($h)) {
+					$h = $this->getHeight();
+		}
 		$providers = array('' => '<img src="' . html_encode($this->getThumb()) . '">',
 				'google' => '<iframe src="http://docs.google.com/viewer?url=%s&amp;embedded=true" width="' . $w . 'px" height="' . $h . 'px" frameborder="0" border="none" scrolling="auto"></iframe>',
 				'zoho' => '<iframe src="http://viewer.zoho.com/api/urlview.do?url=%s&amp;embed=true" width="' . $w . 'px" height="' . $h . 'px" frameborder="0" border="none" scrolling="auto"></iframe>',

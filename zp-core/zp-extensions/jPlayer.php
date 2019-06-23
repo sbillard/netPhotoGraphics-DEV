@@ -2,7 +2,6 @@
 /**
  * Support for the jPlayer jQuery/Flash 2.0.0 multimedia player (jplayer.org). It will play natively via HTML5 in capable browser
  * if the appropiate multimedia formats are provided.
-
  * Audio: <var>.mp3</var>, <var>.m4a</var>, <var>.fla</var> - Counterpart formats <var>.oga</var> and <var>.webma</var> supported (see note below!)<br>
  * Video: <var>.m4v</var>/<var>.mp4</var>, <var>.flv</var> - Counterpart formats <var>.ogv</var> and <var>.webmv</var> supported (see note below!)
  *

@@ -300,8 +300,9 @@ function getTitleBreadcrumb($before = ' ( ', $between = ' | ', $after = ' ) ') {
 		$titlebreadcrumb .= $before;
 		$i = 0;
 		foreach ($parents as $parent) {
-			if ($i > 0)
-				$titlebreadcrumb .= $between;
+			if ($i > 0) {
+							$titlebreadcrumb .= $between;
+			}
 			$titlebreadcrumb .= $parent->getTitle();
 			$i++;
 		}

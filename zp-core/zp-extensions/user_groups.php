@@ -124,8 +124,10 @@ class user_groups {
 			}
 		}
 		$groups = array_merge($membership, array(array('name' => '', 'user' => '', 'other_credentials' => '')), $groups);
-		if (empty($groups))
-			return gettext('no groups established'); // no groups setup yet
+		if (empty($groups)) {
+					return gettext('no groups established');
+		}
+		// no groups setup yet
 
 		$grouppart = '<ul class="customchecklist scrollable_list" >' . "\n";
 
@@ -206,8 +208,9 @@ class user_groups {
 	 * @return string
 	 */
 	static function edit_admin($html, $userobj, $i, $background, $current) {
-		if (!$userobj->getValid())
-			return $html;
+		if (!$userobj->getValid()) {
+					return $html;
+		}
 		if (npg_loggedin(ADMIN_RIGHTS)) {
 			if ($userobj->getID() >= 0) {
 				$notice = ' ' . gettext("Applying a template will merge the template with the current <em>rights</em> and <em>objects</em>.");

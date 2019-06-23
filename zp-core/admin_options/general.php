@@ -106,8 +106,9 @@ function saveOptions() {
 	}
 	setOption('multi_lingual', (int) isset($_POST['multi_lingual']));
 	$f = sanitize($_POST['date_format_list'], 3);
-	if ($f == 'custom')
-		$f = sanitize($_POST['date_format'], 3);
+	if ($f == 'custom') {
+			$f = sanitize($_POST['date_format'], 3);
+	}
 	setOption('date_format', $f);
 	setOption('UTF8_image_URI', (int) !isset($_POST['UTF8_image_URI']));
 	foreach ($_POST as $key => $value) {
@@ -248,9 +249,11 @@ function getOptionContent() {
 						<br />
 						<label>
 							<input type="checkbox" name="unique_image_prefix"<?php
-							if (UNIQUE_IMAGE)
-								echo ' checked="checked";'
-								?>> <?php echo gettext("unique images"); ?>
+							if (UNIQUE_IMAGE) {
+															echo ' checked="checked";'
+								?>> <?php echo gettext("unique images");
+							}
+							?>
 						</label>
 					</td>
 					<td class="option_desc">
@@ -261,8 +264,9 @@ function getOptionContent() {
 									<?php
 									echo gettext("If you have Apache <em>mod rewrite</em> (or equivalent), put a checkmark on the <em>mod rewrite</em> option and you will get nice cruft-free URLs.");
 									echo sprintf(gettext('The <em>tokens</em> used in rewritten URIs may be altered to your taste. See the <a href="%s">plugin options</a> for <code>rewriteTokens</code>.'), getAdminLink('admin-tabs/options.php') . '?page=options&tab=plugin&single=rewriteTokens');
-									if (!getOption('mod_rewrite_detected'))
-										echo '<p class="notebox">' . gettext('Setup did not detect a working <em>mod_rewrite</em> facility.'), '</p>';
+									if (!getOption('mod_rewrite_detected')) {
+																			echo '<p class="notebox">' . gettext('Setup did not detect a working <em>mod_rewrite</em> facility.'), '</p>';
+									}
 									?>
 								</p>
 								<?php
@@ -451,8 +455,9 @@ function getOptionContent() {
 							} else {
 								$dsp = 'block';
 							}
-							if (array_search($cv, $formatlist) === false)
-								$cv = 'custom';
+							if (array_search($cv, $formatlist) === false) {
+															$cv = 'custom';
+							}
 							generateListFromArray(array($cv), $formatlist, false, true);
 							?>
 						</select>
@@ -552,16 +557,25 @@ function getOptionContent() {
 					<td class="option_name"><?php echo gettext("Usage policy"); ?></td>
 					<td class="option_value">
 						<label>
-							<input type="checkbox" name="GDPR_acknowledge" value="1" <?php checked(1, getOption('GDPR_acknowledge')); ?> onclick="$('#GDR_Details').toggle();<?php if (!extensionEnabled('GDPR_required')) echo '$(\'#GDPR_clear\').toggle();'; ?>" />
+							<input type="checkbox" name="GDPR_acknowledge" value="1" <?php checked(1, getOption('GDPR_acknowledge')); ?> onclick="$('#GDR_Details').toggle();<?php if (!extensionEnabled('GDPR_required')) {
+	echo '$(\'#GDPR_clear\').toggle();';
+}
+?>" />
 							<?php echo gettext('require acknowledgement'); ?>
 						</label>
-						<p id="GDPR_clear" <?php if (!(getOption('GDPR_acknowledge') || extensionEnabled('GDPR_required'))) echo ' style="display:none"'; ?>>
+						<p id="GDPR_clear" <?php if (!(getOption('GDPR_acknowledge') || extensionEnabled('GDPR_required'))) {
+	echo ' style="display:none"';
+}
+?>>
 							<label>
 								<input type="checkbox" name="GDPR_re-acknowledge" value="1" />
 								<?php echo gettext('clear remembered acknowledgements'); ?>
 							</label>
 						</p>
-						<div id="GDR_Details" <?php if (!GetOption('GDPR_acknowledge')) echo ' style="display:none"'; ?>>
+						<div id="GDR_Details" <?php if (!GetOption('GDPR_acknowledge')) {
+	echo ' style="display:none"';
+}
+?>>
 
 							<?php echo gettext('policy URL'); ?>
 							<input type="text" class="fullwidth" name="GDPR_URL" value="<?php echo getOption('GDPR_URL'); ?>" />
@@ -653,7 +667,10 @@ Standard forms which collect user data will have a policy acknowledgement checkb
 						<?php
 						$mailinglist = $_authority->getAdminEmail(ADMIN_RIGHTS);
 						?>
-						<label><input type="checkbox" id="site_email" name="register_user_notify"  value="1" <?php checked('1', getOption('register_user_notify') && $mailinglist); ?> <?php if (!$mailinglist) echo ' disabled="disabled"'; ?> /> <?php echo gettext('notify'); ?></label>
+						<label><input type="checkbox" id="site_email" name="register_user_notify"  value="1" <?php checked('1', getOption('register_user_notify') && $mailinglist); ?> <?php if (!$mailinglist) {
+	echo ' disabled="disabled"';
+}
+?> /> <?php echo gettext('notify'); ?></label>
 					</td>
 					<td class="option_desc">
 						<span class="option_info">

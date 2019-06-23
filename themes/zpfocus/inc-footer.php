@@ -1,6 +1,9 @@
 </div> <!-- END WRAP -->
 <div class="footerwrap">
-	<?php if (getOption('zpfocus_center_site')) echo "<div class=\"center\">"; ?>
+	<?php if (getOption('zpfocus_center_site')) {
+	echo "<div class=\"center\">";
+}
+?>
 	<div class="left">
 		<div id="copyright">
 			<p>&copy; <?php echo html_encode(getBareGalleryTitle()); ?>, <?php echo gettext('all rights reserved'); ?></p>

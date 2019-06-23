@@ -202,29 +202,29 @@ function printItemsList($items) {
 			$open[$indent] = 0;
 		} else if ($level < $indent) {
 			while ($indent > $level) {
-				$open[$indent] --;
+				$open[$indent]--;
 				$indent--;
 				echo "</li>\n" . str_pad("\t", $indent, "\t") . "</ul>\n";
 			}
 		} else { // indent == level
 			if ($open[$indent]) {
 				echo str_pad("\t", $indent, "\t") . "</li>\n";
-				$open[$indent] --;
+				$open[$indent]--;
 			} else {
 				echo "\n";
 			}
 		}
 		if ($open[$indent]) {
 			echo str_pad("\t", $indent, "\t") . "</li>\n";
-			$open[$indent] --;
+			$open[$indent]--;
 		}
 		echo str_pad("\t", $indent - 1, "\t") . "<li id=\"id_" . $item['id'] . "\">";
 		echo printItemsListTable($item, $toodeep);
-		$open[$indent] ++;
+		$open[$indent]++;
 	}
 	while ($indent > 1) {
 		echo "</li>\n";
-		$open[$indent] --;
+		$open[$indent]--;
 		$indent--;
 		echo str_pad("\t", $indent, "\t") . "</ul>";
 	}
@@ -1039,13 +1039,15 @@ function processMenuBulkActions() {
 				foreach ($ids as $id) {
 					$n++;
 					$sql .= " id = '" . sanitize_numeric($id) . "' ";
-					if ($n < $total)
-						$sql .= "OR ";
+					if ($n < $total) {
+											$sql .= "OR ";
+					}
 				}
 				query($sql);
 			}
-			if (!is_null($message))
-				$report = "<p class = 'messagebox fade-message'>" . $message . "</p>";
+			if (!is_null($message)) {
+							$report = "<p class = 'messagebox fade-message'>" . $message . "</p>";
+			}
 		}
 	}
 	return $report;

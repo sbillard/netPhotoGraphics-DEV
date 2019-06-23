@@ -52,22 +52,34 @@ echo '</head>' . "\n";
 				<form action="?action=search&tab=checkdeprecated" method="post">
 					<?php XSRFToken('deprecated'); ?>
 					<select name="target">
-						<option value=1<?php if ($selected <= 1) echo ' selected="selected"'; ?>>
+						<option value=1<?php if ($selected <= 1) {
+	echo ' selected="selected"';
+}
+?>>
 							<?php echo gettext('In Themes'); ?>
 						</option>
-						<option value=2<?php if ($selected == 2) echo ' selected="selected"'; ?>>
+						<option value=2<?php if ($selected == 2) {
+	echo ' selected="selected"';
+}
+?>>
 							<?php echo gettext('In User plugins'); ?>
 						</option>
 						<?php
 						if (TEST_RELEASE) {
 							?>
-							<option value=3<?php if ($selected == 3) echo ' selected="selected"'; ?>>
+							<option value=3<?php if ($selected == 3) {
+	echo ' selected="selected"';
+}
+?>>
 								<?php echo gettext('In netPhotoGraphics code'); ?>
 							</option>
 							<?php
 						}
 						?>
-						<option value=4<?php if ($selected == 4) echo ' selected="selected"'; ?>>
+						<option value=4<?php if ($selected == 4) {
+	echo ' selected="selected"';
+}
+?>>
 							<?php echo gettext('In Codeblocks'); ?>
 						</option>
 					</select>

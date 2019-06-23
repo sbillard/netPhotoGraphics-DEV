@@ -39,8 +39,9 @@ if (!function_exists('gl_graphicsLibInfo')) {
 	$_lib_GD_info['Library'] = 'None';
 	$_lib_GD_info['Library_desc'] = '<p class="error">' . gettext('There is no PHP Graphics support.') . '</p>';
 
-	if (DEBUG_IMAGE)
-		debugLog($_lib_GD_info['Library_desc']);
+	if (DEBUG_IMAGE) {
+			debugLog($_lib_GD_info['Library_desc']);
+	}
 
 	function gl_imageGet($imgfile) {
 		return false;

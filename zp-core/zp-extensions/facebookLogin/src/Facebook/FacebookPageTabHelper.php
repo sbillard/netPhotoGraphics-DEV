@@ -44,13 +44,13 @@ class FacebookPageTabHelper extends FacebookCanvasLoginHelper
    */
   public function __construct($appId = null, $appSecret = null)
   {
-    parent::__construct($appId, $appSecret);
+	parent::__construct($appId, $appSecret);
 
-    if (!$this->signedRequest) {
-      return;
-    }
+	if (!$this->signedRequest) {
+	  return;
+	}
 
-    $this->pageData = $this->signedRequest->get('page');
+	$this->pageData = $this->signedRequest->get('page');
   }
 
   /**
@@ -63,10 +63,10 @@ class FacebookPageTabHelper extends FacebookCanvasLoginHelper
    */
   public function getPageData($key, $default = null)
   {
-    if (isset($this->pageData[$key])) {
-      return $this->pageData[$key];
-    }
-    return $default;
+	if (isset($this->pageData[$key])) {
+	  return $this->pageData[$key];
+	}
+	return $default;
   }
 
   /**
@@ -76,7 +76,7 @@ class FacebookPageTabHelper extends FacebookCanvasLoginHelper
    */
   public function isLiked()
   {
-    return $this->getPageData('liked') === true;
+	return $this->getPageData('liked') === true;
   }
 
   /**
@@ -86,7 +86,7 @@ class FacebookPageTabHelper extends FacebookCanvasLoginHelper
    */
   public function isAdmin()
   {
-    return $this->getPageData('admin') === true;
+	return $this->getPageData('admin') === true;
   }
 
   /**
@@ -96,7 +96,7 @@ class FacebookPageTabHelper extends FacebookCanvasLoginHelper
    */
   public function getPageId()
   {
-    return $this->getPageData('id');
+	return $this->getPageData('id');
   }
 
 }

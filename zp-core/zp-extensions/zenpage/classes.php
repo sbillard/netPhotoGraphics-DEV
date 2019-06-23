@@ -58,8 +58,9 @@ class CMS {
 	/*	 * ********************************* */
 
 	function visibleCategory($cat) {
-		if (npg_loggedin(MANAGE_ALL_NEWS_RIGHTS | VIEW_UNPUBLISHED_NEWS_RIGHTS))
-			return true;
+		if (npg_loggedin(MANAGE_ALL_NEWS_RIGHTS | VIEW_UNPUBLISHED_NEWS_RIGHTS)) {
+					return true;
+		}
 		$vis = $this->categoryStructure[$cat['cat_id']]['show'];
 		if (!$vis && npg_loggedin()) {
 			$catobj = newCategory($cat['titlelink']);
@@ -101,12 +102,14 @@ class CMS {
 
 		$gettop = '';
 		if ($published) {
-			if ($toplevel)
-				$gettop = " AND parentid IS NULL";
+			if ($toplevel) {
+							$gettop = " AND parentid IS NULL";
+			}
 			$show = " WHERE `show`=1 AND date <= '" . $now . "'" . $gettop;
 		} else {
-			if ($toplevel)
-				$gettop = " WHERE parentid IS NULL";
+			if ($toplevel) {
+							$gettop = " WHERE parentid IS NULL";
+			}
 			$show = $gettop;
 		}
 		if ($sortdirection) {
@@ -125,8 +128,9 @@ class CMS {
 				$sortorder = 'total_votes';
 				break;
 			case 'toprated':
-				if (empty($sortdir))
-					$sortdir = ' DESC';
+				if (empty($sortdir)) {
+									$sortdir = ' DESC';
+				}
 				$sortorder = '(total_value/total_votes) ' . $sortdir . ', total_value';
 				break;
 			case 'random':

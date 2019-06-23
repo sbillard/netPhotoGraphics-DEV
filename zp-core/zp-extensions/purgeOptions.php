@@ -25,8 +25,9 @@ require_once(CORE_SERVERPATH . PLUGIN_FOLDER . '/favoritesHandler/favoritesClass
 npgFilters::register('admin_tabs', 'purgeOptions_admin_tabs');
 
 function purgeOptions_admin_tabs($tabs) {
-	if (npg_loggedin(ADMIN_RIGHTS))
-		$tabs['options']['subtabs'][gettext("purge")] = PLUGIN_FOLDER . '/purgeOptions/purgeOptions_tab.php?page=options&tab=purge';
+	if (npg_loggedin(ADMIN_RIGHTS)) {
+			$tabs['options']['subtabs'][gettext("purge")] = PLUGIN_FOLDER . '/purgeOptions/purgeOptions_tab.php?page=options&tab=purge';
+	}
 	return $tabs;
 }
 
@@ -49,7 +50,10 @@ function listOwners($owners, $nest = '') {
 				}
 				?>
 				<span class="purgeOptionsClass"><?php echo $ownerN; ?></span> <input type="checkbox" id="<?php echo $autocheck; ?>" onclick="$('.<?php echo $autocheck; ?>').prop('checked', $('#<?php echo $autocheck; ?>').prop('checked'));">
-				<ul class="purgeOptionsBlock"<?php if ($size > 1) echo ' style="' . "column-count:$size;	-moz-column-count: $size;	-webkit-column-count: $size;" . '"'; ?>>
+				<ul class="purgeOptionsBlock"<?php if ($size > 1) {
+	echo ' style="' . "column-count:$size;	-moz-column-count: $size;	-webkit-column-count: $size;" . '"';
+}
+?>>
 					<?php listOwners($detail, $nest . $owner . '/'); ?>
 				</ul>
 			</div>
@@ -94,7 +98,10 @@ function listOwners($owners, $nest = '') {
 			?>
 			<li>
 				<label class="<?php echo $labelclass; ?>">
-					<input type="checkbox" name="del[]" class="<?php echo $autocheck . $missing; ?>" value="<?php echo $nest . $detail; ?>"<?php echo $checked; ?> /><span <?php if ($active) echo 'class="active" title="' . $active . '"'; ?>><?php echo $display; ?></span>
+					<input type="checkbox" name="del[]" class="<?php echo $autocheck . $missing; ?>" value="<?php echo $nest . $detail; ?>"<?php echo $checked; ?> /><span <?php if ($active) {
+	echo 'class="active" title="' . $active . '"';
+}
+?>><?php echo $display; ?></span>
 				</label>
 			</li>
 			<?php

@@ -37,13 +37,17 @@
 				<td colspan="3" style="padding-top:5px;">
 					<?php if (getOption('comment_form_anon') && !$disabled['anon']) { ?>
 						<span><input type="checkbox" name="anon" value="1"<?php
-							if ($stored['anon'])
-								echo ' checked="checked"';
+							if ($stored['anon']) {
+															echo ' checked="checked"';
+							}
 							echo $disabled['anon'];
 							?> /> <?php echo gettext("Anonymous"); ?></span>
 					<?php } ?>&nbsp;&nbsp;
 						<?php if (getOption('comment_form_private') && !$disabled['private']) { ?>
-						<span><input type="checkbox" name="private" value="1"<?php if ($stored['private']) echo ' checked="checked"'; ?> />
+						<span><input type="checkbox" name="private" value="1"<?php if ($stored['private']) {
+	echo ' checked="checked"';
+}
+?> />
 						<?php echo gettext("Private comment (don't publish)"); ?></span>
 <?php } ?>
 				</td>
@@ -65,16 +69,21 @@
 			?>
 			<p><?php echo gettext("Enter CAPTCHA"); ?><span><?php echo '*'; ?></span></p>
 			<div id="captcha">
-				<?php if (isset($captcha['html']) && isset($captcha['input'])) echo $captcha['html']; ?>
+				<?php if (isset($captcha['html']) && isset($captcha['input'])) {
+	echo $captcha['html'];
+}
+?>
 				<?php
 				if (isset($captcha['input'])) {
 					echo $captcha['input'];
 				} else {
-					if (isset($captcha['html']))
-						echo $captcha['html'];
+					if (isset($captcha['html'])) {
+											echo $captcha['html'];
+					}
 				}
-				if (isset($captcha['hidden']))
-					echo $captcha['hidden'];
+				if (isset($captcha['hidden'])) {
+									echo $captcha['hidden'];
+				}
 				?>
 			</div>
 		</div>

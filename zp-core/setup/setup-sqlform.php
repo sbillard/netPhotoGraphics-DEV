@@ -62,10 +62,11 @@ foreach ($engines as $engine) {
 								?>
 								<option value="<?php echo $handler; ?>" <?php echo $modifiers; ?>>
 									<?php
-									if (isset($engine['experimental']))
-										printf(gettext('%s (experimental)'), $handler);
-									else
-										echo $handler;
+									if (isset($engine['experimental'])) {
+																			printf(gettext('%s (experimental)'), $handler);
+									} else {
+																			echo $handler;
+									}
 									?>
 								</option>
 								<?php

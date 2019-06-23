@@ -3,8 +3,9 @@
 global $_conf_vars;
 $_options = array();
 
-if (!isset($_SERVER['HTTP_HOST']))
+if (!isset($_SERVER['HTTP_HOST'])) {
 	die();
+}
 
 if (!function_exists("gettext")) {
 	require_once(dirname(__FILE__) . '/php-gettext/gettext.inc');
@@ -13,12 +14,15 @@ require_once(dirname(__FILE__) . '/version.php'); // Include the version info.
 
 define('NPG_LAST_MODIFIED', gmdate('D, d M Y H:i:s') . ' GMT');
 
-if (!defined('SORT_FLAG_CASE'))
+if (!defined('SORT_FLAG_CASE')) {
 	define('SORT_FLAG_CASE', 0);
-if (!defined('SORT_NATURAL'))
+}
+if (!defined('SORT_NATURAL')) {
 	define('SORT_NATURAL', 0);
-if (!defined('SORT_LOCALE_STRING'))
+}
+if (!defined('SORT_LOCALE_STRING')) {
 	define('SORT_LOCALE_STRING', 0);
+}
 
 define('NEWLINE', "\n");
 

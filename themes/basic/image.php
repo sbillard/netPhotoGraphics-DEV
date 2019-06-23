@@ -1,8 +1,9 @@
 <?php
 // force UTF-8 Ø
 
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,7 +37,10 @@ if (!defined('WEBPATH'))
 				// ]]> -->
 			</script>
 		<?php } ?>
-		<?php if (class_exists('RSS')) printRSSHeaderLink('Gallery', gettext('Gallery')); ?>
+		<?php if (class_exists('RSS')) {
+	printRSSHeaderLink('Gallery', gettext('Gallery'));
+}
+?>
 	</head>
 	<body>
 		<?php npgFilters::apply('theme_body_open'); ?>
@@ -156,7 +160,10 @@ if (!defined('WEBPATH'))
 				printFavoritesURL(NULL, '', ' | ', '<br />');
 			}
 			?>
-			<?php if (class_exists('RSS')) printRSSLink('Gallery', '', 'RSS', ' | '); ?>
+			<?php if (class_exists('RSS')) {
+	printRSSLink('Gallery', '', 'RSS', ' | ');
+}
+?>
 			<?php printCustomPageURL(gettext("Archive View"), "archive"); ?> | <?php printSoftwareLink(); ?>
 			<?php
 			if (extensionEnabled('daily-summary')) {

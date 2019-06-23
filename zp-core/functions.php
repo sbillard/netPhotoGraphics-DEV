@@ -279,8 +279,9 @@ function rewrite_path($rewrite, $plain, $webpath = NULL) {
  * @return object
  */
 function getUrAlbum($album) {
-	if (!is_object($album))
-		return NULL;
+	if (!is_object($album)) {
+			return NULL;
+	}
 	while (true) {
 		$parent = $album->getParent();
 		if (is_null($parent)) {
@@ -399,8 +400,9 @@ function sortByMultilingual($dbresult, $field, $descending) {
 function accessAllAlbums($action) {
 	global $_admin_owner_list, $_loggedin;
 	if (npg_loggedin(MANAGE_ALL_ALBUM_RIGHTS)) {
-		if (npg_loggedin($action))
-			return true;
+		if (npg_loggedin($action)) {
+					return true;
+		}
 	}
 	if (npg_loggedin(ALL_ALBUMS_RIGHTS) && ($action == LIST_RIGHTS)) { // sees all
 		return $_loggedin;
@@ -480,8 +482,9 @@ function checkAlbumPassword($album, &$hint = NULL) {
  * @return array
  */
 function getPluginFiles($pattern, $folder = '', $stripsuffix = true) {
-	if (!empty($folder) && substr($folder, -1) != '/')
-		$folder .= '/';
+	if (!empty($folder) && substr($folder, -1) != '/') {
+			$folder .= '/';
+	}
 	$list = array();
 	$curdir = getcwd();
 	$sources = array(CORE_SERVERPATH . PLUGIN_FOLDER . '/' . $folder, SERVERPATH . '/' . USER_PLUGIN_FOLDER . '/' . $folder);
@@ -541,8 +544,9 @@ function getPlugin($plugin, $inTheme = false, $webpath = false) {
 
 	if ($pluginFile) {
 		if ($webpath) {
-			if (!is_string($webpath))
-				$webpath = WEBPATH;
+			if (!is_string($webpath)) {
+							$webpath = WEBPATH;
+			}
 			return $webpath . filesystemToInternal($pluginFile);
 		} else {
 			return SERVERPATH . $pluginFile;
@@ -1150,10 +1154,11 @@ function generateListFromArray($currentValue, $list, $descending, $localize) {
 		if (in_array($item, $currentValue)) {
 			echo ' selected="selected"';
 		}
-		if ($localize)
-			$display = $key;
-		else
-			$display = $item;
+		if ($localize) {
+					$display = $key;
+		} else {
+					$display = $item;
+		}
 		echo '>' . $display . "</option>" . "\n";
 	}
 }
@@ -1214,8 +1219,9 @@ function printLinkHTML($url, $text, $title = NULL, $class = NULL, $id = NULL) {
 function printStandardMeta() {
 	$lang = substr(i18n::getUserLocale(), 0, 2);
 	echo '<meta http-equiv="content-type" content="text/html; charset=' . LOCAL_CHARSET . '"';
-	if ($lang)
-		echo ' lang="' . $lang . '"';
+	if ($lang) {
+			echo ' lang="' . $lang . '"';
+	}
 	echo " />\n";
 }
 
@@ -1380,8 +1386,10 @@ function sortMultiArray($data, $field, $desc = false, $nat = true, $case = false
  */
 function getNotViewableAlbums() {
 	global $_not_viewable_album_list;
-	if (npg_loggedin(ADMIN_RIGHTS | MANAGE_ALL_ALBUM_RIGHTS))
-		return array(); //admins can see all
+	if (npg_loggedin(ADMIN_RIGHTS | MANAGE_ALL_ALBUM_RIGHTS)) {
+			return array();
+	}
+	//admins can see all
 	if (is_null($_not_viewable_album_list)) {
 		$sql = 'SELECT `folder`, `id` FROM ' . prefix('albums');
 		$result = query($sql);
@@ -1494,7 +1502,6 @@ function npg_image_types($quote) {
 }
 
 /**
-
  * Returns video argument of the current Image.
  *
  * @param object $image optional image object
@@ -1502,8 +1509,9 @@ function npg_image_types($quote) {
  */
 function isImageVideo($image = NULL) {
 	if (is_null($image)) {
-		if (!in_context(NPG_IMAGE))
-			return false;
+		if (!in_context(NPG_IMAGE)) {
+					return false;
+		}
 		global $_current_image;
 		$image = $_current_image;
 	}
@@ -1519,8 +1527,9 @@ function isImageVideo($image = NULL) {
 function isImagePhoto($image = NULL) {
 	global $_current_image;
 	if (is_null($image)) {
-		if (!in_context(NPG_IMAGE))
-			return false;
+		if (!in_context(NPG_IMAGE)) {
+					return false;
+		}
 		$image = $_current_image;
 	}
 	$class = strtolower(get_class($image));
@@ -1535,18 +1544,20 @@ function isImagePhoto($image = NULL) {
  */
 function dircopy($srcdir, $dstdir) {
 	$num = 0;
-	if (!is_dir($dstdir))
-		mkdir($dstdir);
+	if (!is_dir($dstdir)) {
+			mkdir($dstdir);
+	}
 	if ($curdir = opendir($srcdir)) {
 		while ($file = readdir($curdir)) {
 			if ($file != '.' && $file != '..') {
 				$srcfile = $srcdir . '/' . $file;
 				$dstfile = $dstdir . '/' . $file;
 				if (is_file($srcfile)) {
-					if (is_file($dstfile))
-						$ow = filemtime($srcfile) - filemtime($dstfile);
-					else
-						$ow = 1;
+					if (is_file($dstfile)) {
+											$ow = filemtime($srcfile) - filemtime($dstfile);
+					} else {
+											$ow = 1;
+					}
 					if ($ow > 0) {
 						if (copy($srcfile, $dstfile)) {
 							touch($dstfile, filemtime($srcfile));
@@ -1570,8 +1581,9 @@ function dircopy($srcdir, $dstdir) {
  * @return string
  */
 function byteConvert($bytes) {
-	if ($bytes <= 0)
-		return gettext('0 Bytes');
+	if ($bytes <= 0) {
+			return gettext('0 Bytes');
+	}
 	$convention = 1024; //[1000->10^x|1024->2^x]
 	$s = array('Bytes', 'kB', 'mB', 'GB', 'TB', 'PB', 'EB', 'ZB');
 	$e = floor(log($bytes, $convention));
@@ -1589,10 +1601,12 @@ function dateTimeConvert($datetime, $raw = false) {
 // Convert 'yyyy:mm:dd hh:mm:ss' to 'yyyy-mm-dd hh:mm:ss' for Windows' strtotime compatibility
 	$datetime = preg_replace('/(\d{4}):(\d{2}):(\d{2})/', ' \1-\2-\3', $datetime);
 	$time = strtotime($datetime);
-	if ($time == -1 || $time === false)
-		return NULL;
-	if ($raw)
-		return $time;
+	if ($time == -1 || $time === false) {
+			return NULL;
+	}
+	if ($raw) {
+			return $time;
+	}
 	return date('Y-m-d H:i:s', $time);
 }
 
@@ -1723,8 +1737,9 @@ function handle_password($authType = NULL, $check_auth = NULL, $check_user = NUL
 				$pageobj = $_CMS_current_page;
 				while (empty($check_auth)) {
 					$parentID = $pageobj->getParentID();
-					if ($parentID == 0)
-						break;
+					if ($parentID == 0) {
+											break;
+					}
 					$pageobj = getItemByID('pages', $parentID);
 					if ($pageobj) {
 						$authType = "zenpage_page_auth_" . $pageobj->getID();
@@ -1798,8 +1813,9 @@ function handle_password($authType = NULL, $check_auth = NULL, $check_user = NUL
 						} else {
 							$success = ($auth == $check_auth);
 						}
-						if (DEBUG_LOGIN)
-							debugLog("handle_password($success): \$post_user=$post_user; \$post_pass=$post_pass; \$check_auth=$check_auth; \$auth=$auth; \$hash=$hash;");
+						if (DEBUG_LOGIN) {
+													debugLog("handle_password($success): \$post_user=$post_user; \$post_pass=$post_pass; \$check_auth=$check_auth; \$auth=$auth; \$hash=$hash;");
+						}
 						if ($success) {
 							break 2;
 						}
@@ -1811,8 +1827,9 @@ function handle_password($authType = NULL, $check_auth = NULL, $check_user = NUL
 
 			if ($success) {
 				// Correct auth info. Set the cookie.
-				if (DEBUG_LOGIN)
-					debugLog("handle_password: valid credentials");
+				if (DEBUG_LOGIN) {
+									debugLog("handle_password: valid credentials");
+				}
 				setNPGCookie($authType, $auth);
 				if (isset($_POST['redirect'])) {
 					$redirect_to = sanitizeRedirect($_POST['redirect']);
@@ -1823,8 +1840,9 @@ function handle_password($authType = NULL, $check_auth = NULL, $check_user = NUL
 				}
 			} else {
 				// Clear the cookie, just in case
-				if (DEBUG_LOGIN)
-					debugLog("handle_password: invalid credentials");
+				if (DEBUG_LOGIN) {
+									debugLog("handle_password: invalid credentials");
+				}
 				clearNPGCookie($authType);
 				$_login_error = true;
 			}
@@ -1838,13 +1856,15 @@ function handle_password($authType = NULL, $check_auth = NULL, $check_user = NUL
 		$authType = $try['authType'];
 		if (($saved_auth = getNPGCookie($authType)) != '') {
 			if ($saved_auth == $check_auth) {
-				if (DEBUG_LOGIN)
-					debugLog("handle_password: valid cookie");
+				if (DEBUG_LOGIN) {
+									debugLog("handle_password: valid cookie");
+				}
 				return true;
 			} else {
 // Clear the cookie
-				if (DEBUG_LOGIN)
-					debugLog("handle_password: invalid cookie");
+				if (DEBUG_LOGIN) {
+									debugLog("handle_password: invalid cookie");
+				}
 				clearNPGCookie($authType);
 			}
 		}
@@ -1906,8 +1926,9 @@ function setThemeOption($key, $value, $album = NULL, $theme = NULL, $default = f
 	}
 	$sql .= ') ';
 	if ($default) {
-		if (!isset($_options[$key = strtolower($key)]))
-			$_options[$key] = $value;
+		if (!isset($_options[$key = strtolower($key)])) {
+					$_options[$key] = $value;
+		}
 	} else {
 		$sql .= $sqlu;
 		$_options[strtolower($key)] = $value;
@@ -2515,8 +2536,9 @@ function applyMacros($text) {
 					$parms = array_reverse($parms, true);
 					preg_match_all('/\$\d+/', $macro['value'], $replacements);
 					foreach ($replacements as $rkey => $v) {
-						if (empty($v))
-							unset($replacements[$rkey]);
+						if (empty($v)) {
+													unset($replacements[$rkey]);
+						}
 					}
 					if (count($parms) == count($replacements)) {
 

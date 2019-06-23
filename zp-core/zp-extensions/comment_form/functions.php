@@ -220,18 +220,24 @@ function comment_form_print10Most() {
  */
 function getCommentAddress($i) {
 	$result = array();
-	if (isset($_POST[$i . '-comment_form_website']))
-		$result['website'] = sanitize($_POST[$i . '-comment_form_website'], 1);
-	if (isset($_POST[$i . '-comment_form_street']))
-		$result['street'] = sanitize($_POST[$i . '-comment_form_street'], 1);
-	if (isset($_POST[$i . '-comment_form_city']))
-		$result['city'] = sanitize($_POST[$i . '-comment_form_city'], 1);
-	if (isset($_POST[$i . '-comment_form_state']))
-		$result['state'] = sanitize($_POST[$i . '-comment_form_state'], 1);
-	if (isset($_POST[$i . '-comment_form_country']))
-		$result['country'] = sanitize($_POST[$i . '-comment_form_country'], 1);
-	if (isset($_POST[$i . '-comment_form_postal']))
-		$result['postal'] = sanitize($_POST[$i . '-comment_form_postal'], 1);
+	if (isset($_POST[$i . '-comment_form_website'])) {
+			$result['website'] = sanitize($_POST[$i . '-comment_form_website'], 1);
+	}
+	if (isset($_POST[$i . '-comment_form_street'])) {
+			$result['street'] = sanitize($_POST[$i . '-comment_form_street'], 1);
+	}
+	if (isset($_POST[$i . '-comment_form_city'])) {
+			$result['city'] = sanitize($_POST[$i . '-comment_form_city'], 1);
+	}
+	if (isset($_POST[$i . '-comment_form_state'])) {
+			$result['state'] = sanitize($_POST[$i . '-comment_form_state'], 1);
+	}
+	if (isset($_POST[$i . '-comment_form_country'])) {
+			$result['country'] = sanitize($_POST[$i . '-comment_form_country'], 1);
+	}
+	if (isset($_POST[$i . '-comment_form_postal'])) {
+			$result['postal'] = sanitize($_POST[$i . '-comment_form_postal'], 1);
+	}
 	return $result;
 }
 
@@ -312,12 +318,15 @@ function comment_form_addComment($name, $email, $website, $comment, $code, $code
 	global $_captcha, $_gallery, $_authority, $_comment_on_hold, $_spamFilter;
 	if ($check === false) {
 		$whattocheck = 0;
-		if (getOption('comment_email_required') == 'required')
-			$whattocheck = $whattocheck | COMMENT_EMAIL_REQUIRED;
-		if (getOption('comment_name_required'))
-			$whattocheck = $whattocheck | COMMENT_NAME_REQUIRED;
-		if (getOption('comment_web_required') == 'required')
-			$whattocheck = $whattocheck | COMMENT_WEB_REQUIRED;
+		if (getOption('comment_email_required') == 'required') {
+					$whattocheck = $whattocheck | COMMENT_EMAIL_REQUIRED;
+		}
+		if (getOption('comment_name_required')) {
+					$whattocheck = $whattocheck | COMMENT_NAME_REQUIRED;
+		}
+		if (getOption('comment_web_required') == 'required') {
+					$whattocheck = $whattocheck | COMMENT_WEB_REQUIRED;
+		}
 		switch (getOption('Use_Captcha')) {
 			case 0:
 				break;
@@ -331,8 +340,9 @@ function comment_form_addComment($name, $email, $website, $comment, $code, $code
 		}
 
 		$whattocheck = $whattocheck | COMMENT_BODY_REQUIRED;
-		IF (getOption('email_new_comments'))
-			$whattocheck = $whattocheck | COMMENT_SEND_EMAIL;
+		IF (getOption('email_new_comments')) {
+					$whattocheck = $whattocheck | COMMENT_SEND_EMAIL;
+		}
 	} else {
 		$whattocheck = $check;
 	}
@@ -346,14 +356,16 @@ function comment_form_addComment($name, $email, $website, $comment, $code, $code
 	$comment = trim($comment);
 	$receiverid = $receiver->getID();
 	$goodMessage = 2;
-	if ($private)
-		$private = 1;
-	else
-		$private = 0;
-	if ($anon)
-		$anon = 1;
-	else
-		$anon = 0;
+	if ($private) {
+			$private = 1;
+	} else {
+			$private = 0;
+	}
+	if ($anon) {
+			$anon = 1;
+	} else {
+			$anon = 0;
+	}
 	$commentobj = new Comment();
 
 	$commentobj->transient = false; // otherwise we won't be able to save it....
@@ -538,7 +550,7 @@ function commentFormUseCaptcha() {
  */
 function comment_form_postcomment($error) {
 	global $_current_album, $_current_image, $_CMS_current_article, $_CMS_current_page;
-	if (( (commentsAllowed('comment_form_albums') && in_context(NPG_ALBUM) && !in_context(NPG_IMAGE) && $_current_album->getCommentsAllowed()) ||
+	if (((commentsAllowed('comment_form_albums') && in_context(NPG_ALBUM) && !in_context(NPG_IMAGE) && $_current_album->getCommentsAllowed()) ||
 					(commentsAllowed('comment_form_images') && in_context(NPG_IMAGE) && $_current_image->getCommentsAllowed()) ||
 					(commentsAllowed('comment_form_articles') && in_context(ZENPAGE_NEWS_ARTICLE) && $_CMS_current_article->getCommentsAllowed()) ||
 					(commentsAllowed('comment_form_pages') && in_context(ZENPAGE_PAGE) && $_CMS_current_page->getCommentsAllowed()))
@@ -904,7 +916,6 @@ function getLatestComments($number, $type = "all", $id = NULL) {
  * @param int $item the record id of element to get the comments for if $type != "all".
  * @param string $ulid id for the <ul> element.
  * @param string $shortenindicator indicator to show that the string is truncated.
-
  */
 function printLatestComments($number, $shorten = '123', $type = "all", $item = NULL, $ulid = 'showlatestcomments', $shortenindicator = NULL) {
 	$comments = getLatestComments($number, $type, $item);
@@ -960,12 +971,14 @@ function printLatestComments($number, $shorten = '123', $type = "all", $item = N
 function getCommentCount() {
 	global $_current_image, $_current_album, $_CMS_current_page, $_CMS_current_article;
 	if (in_context(NPG_IMAGE) && in_context(NPG_ALBUM)) {
-		if (is_null($_current_image))
-			return false;
+		if (is_null($_current_image)) {
+					return false;
+		}
 		return $_current_image->getCommentCount();
 	} else if (!in_context(NPG_IMAGE) && in_context(NPG_ALBUM)) {
-		if (is_null($_current_album))
-			return false;
+		if (is_null($_current_album)) {
+					return false;
+		}
 		return $_current_album->getCommentCount();
 	}
 	if (function_exists('is_News')) {
@@ -990,8 +1003,9 @@ function next_comment($desc = false) {
 	//ZENPAGE: comments support
 	if (is_null($_current_comment)) {
 		if (in_context(NPG_IMAGE) AND in_context(NPG_ALBUM)) {
-			if (is_null($_current_image))
-				return false;
+			if (is_null($_current_image)) {
+							return false;
+			}
 			$_comments = $_current_image->getComments(false, false, $desc);
 		} else if (!in_context(NPG_IMAGE) AND in_context(NPG_ALBUM)) {
 			$_comments = $_current_album->getComments(false, false, $desc);

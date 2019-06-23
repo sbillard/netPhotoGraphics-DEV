@@ -10,11 +10,9 @@
  * jake@olefsky.com
  *
  * Please see exif.php for the complete information about this software.
-
  * This program is free software; you can redistribute it and/or modify it under the terms of
  * the GNU General Public License as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details. http://www.gnu.org/copyleft/gpl.html
@@ -141,8 +139,9 @@ function formatGPSData($type, $tag, $intel, $data) {
 
 	} else if ($type == "UBYTE") {
 		$data = bin2hex($data);
-		if ($intel == 1)
-			$num = intel2Moto($data);
+		if ($intel == 1) {
+					$num = intel2Moto($data);
+		}
 
 
 		if ($tag == "0000") { // VersionID
@@ -159,8 +158,9 @@ function formatGPSData($type, $tag, $intel, $data) {
 		}
 	} else {
 		$data = bin2hex($data);
-		if ($intel == 1)
-			$data = intel2Moto($data);
+		if ($intel == 1) {
+					$data = intel2Moto($data);
+		}
 	}
 
 	return $data;
@@ -182,19 +182,21 @@ function formatGPSData($type, $tag, $intel, $data) {
  */
 function parseGPS($block, &$result, $offset, $seek, $globalOffset) {
 
-	if ($result['Endien'] == "Intel")
-		$intel = 1;
-	else
-		$intel = 0;
+	if ($result['Endien'] == "Intel") {
+			$intel = 1;
+	} else {
+			$intel = 0;
+	}
 
 	$v = fseek($seek, $globalOffset + $offset); //offsets are from TIFF header which is 12 bytes from the start of the file
 	if ($v == -1) {
-		$result['Errors'] = $result['Errors'] ++;
+		$result['Errors'] = $result['Errors']++;
 	}
 
 	$num = bin2hex(fread($seek, 2));
-	if ($intel == 1)
-		$num = intel2Moto($num);
+	if ($intel == 1) {
+			$num = intel2Moto($num);
+	}
 	$num = hexdec($num);
 	$result['GPS']['NumTags'] = $num;
 
@@ -209,44 +211,45 @@ function parseGPS($block, &$result, $offset, $seek, $globalOffset) {
 	for ($i = 0; $i < $num; $i++) {
 		//2 byte tag
 		$tag = bin2hex(substr($block, $place, 2));
-		$place+=2;
+		$place += 2;
 		if ($intel == 1)
 			$tag = intel2Moto($tag);
 		$tag_name = lookup_GPS_tag($tag);
 
 		//2 byte datatype
 		$type = bin2hex(substr($block, $place, 2));
-		$place+=2;
+		$place += 2;
 		if ($intel == 1)
 			$type = intel2Moto($type);
 		lookup_type($type, $size);
 
 		//4 byte number of elements
 		$count = bin2hex(substr($block, $place, 4));
-		$place+=4;
+		$place += 4;
 		if ($intel == 1)
 			$count = intel2Moto($count);
 		$bytesofdata = validSize($size * hexdec($count));
 
 		//4 byte value or pointer to value if larger than 4 bytes
 		$value = substr($block, $place, 4);
-		$place+=4;
+		$place += 4;
 		if ($bytesofdata <= 4) {
 			$data = substr($value, 0, $bytesofdata);
 		} else {
 			if (strpos('unknown', $tag_name) !== false || $bytesofdata > 1024) {
-				$result['Errors'] = $result['Errors'] ++;
+				$result['Errors'] = $result['Errors']++;
 				$data = '';
 				$type = 'ASCII';
 			} else {
 				$value = bin2hex($value);
-				if ($intel == 1)
-					$value = intel2Moto($value);
+				if ($intel == 1) {
+									$value = intel2Moto($value);
+				}
 				$v = fseek($seek, $globalOffset + hexdec($value)); //offsets are from TIFF header which is 12 bytes from the start of the file
 				if ($v == 0) {
 					$data = fread($seek, $bytesofdata);
 				} else {
-					$result['Errors'] = $result['Errors'] ++;
+					$result['Errors'] = $result['Errors']++;
 					$data = '';
 					$type = 'ASCII';
 				}

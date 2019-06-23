@@ -344,8 +344,9 @@ function prefix($tablename = NULL) {
  * @since 0.6
  */
 function getWhereClause($unique_set) {
-	if (empty($unique_set))
-		return ' ';
+	if (empty($unique_set)) {
+			return ' ';
+	}
 	$unique_set = array_change_key_case($unique_set, CASE_LOWER);
 	$where = ' WHERE';
 	foreach ($unique_set as $var => $value) {
@@ -493,8 +494,9 @@ function debugLog($message, $reset = false, $log = 'debug') {
 		global $_mutex;
 		$path = SERVERPATH . '/' . DATA_FOLDER . '/' . $log . '.log';
 		$me = getmypid();
-		if (is_object($_mutex))
-			$_mutex->lock();
+		if (is_object($_mutex)) {
+					$_mutex->lock();
+		}
 		if ($reset || ($size = @filesize($path)) == 0 || (defined('DEBUG_LOG_SIZE') && DEBUG_LOG_SIZE && $size > DEBUG_LOG_SIZE)) {
 			if (!$reset && $size > 0) {
 				$perms = fileperms($path);
@@ -534,8 +536,9 @@ function debugLog($message, $reset = false, $log = 'debug') {
 			fclose($f);
 			clearstatcache();
 		}
-		if (is_object($_mutex))
-			$_mutex->unlock();
+		if (is_object($_mutex)) {
+					$_mutex->unlock();
+		}
 	}
 }
 
@@ -1644,7 +1647,7 @@ function build_url($parts) {
  * @return array
  */
 function mb_parse_url($url) {
-	$enc_url = preg_replace_callback('%[^:/@?&=#]+%usD', function ($matches) {
+	$enc_url = preg_replace_callback('%[^:/@?&=#]+%usD', function($matches) {
 		return urlencode($matches[0]);
 	}, $url);
 
@@ -1700,8 +1703,9 @@ function getAlbumFolder($root = SERVERPATH) {
 			setOption('album_folder_class', 'external');
 			$_album_folder = str_replace('\\', '/', getOption('external_album_folder'));
 		}
-		if (substr($_album_folder, -1) != '/')
-			$_album_folder .= '/';
+		if (substr($_album_folder, -1) != '/') {
+					$_album_folder .= '/';
+		}
 	}
 	$root = str_replace('\\', '/', $root);
 	switch (getOption('album_folder_class')) {
@@ -1788,8 +1792,9 @@ function getAlbumArray($albumstring, $includepaths = false) {
  * @return string
  */
 function imgSrcURI($uri) {
-	if (UTF8_IMAGE_URI)
-		$uri = filesystemToInternal($uri);
+	if (UTF8_IMAGE_URI) {
+			$uri = filesystemToInternal($uri);
+	}
 	return $uri;
 }
 
@@ -1811,8 +1816,9 @@ function getAlbumInherited($folder, $field, &$id) {
 	}
 	$sql = 'SELECT `id`, `' . $field . '` FROM ' . prefix('albums') . ' WHERE `folder`' . $like;
 	$result = query_full_array($sql);
-	if (!is_array($result))
-		return '';
+	if (!is_array($result)) {
+			return '';
+	}
 	while (count($result) > 0) {
 		$try = array_pop($result);
 		if (!empty($try[$field])) {
@@ -1900,15 +1906,17 @@ function safe_glob($pattern, $flags = 0) {
 	} else {
 		$path_return = $path_return . '/';
 	}
-	if (!is_dir($path))
-		return array();
+	if (!is_dir($path)) {
+			return array();
+	}
 	if (($dir = opendir($path)) !== false) {
 		$glob = array();
 		while (($file = readdir($dir)) !== false) {
 			if (@preg_match($match, $file) && $file{0} != '.') {
 				if (is_dir("$path/$file")) {
-					if ($flags & GLOB_MARK)
-						$file .= '/';
+					if ($flags & GLOB_MARK) {
+											$file .= '/';
+					}
 					$glob[] = $path_return . $file;
 				} else if (!is_dir("$path/$file") && !($flags & GLOB_ONLYDIR)) {
 					$glob[] = $path_return . $file;
@@ -1916,8 +1924,9 @@ function safe_glob($pattern, $flags = 0) {
 			}
 		}
 		closedir($dir);
-		if (!($flags & GLOB_NOSORT))
-			sort($glob);
+		if (!($flags & GLOB_NOSORT)) {
+					sort($glob);
+		}
 		return $glob;
 	} else {
 		return array();

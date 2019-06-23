@@ -1,7 +1,8 @@
 <?php
 // force UTF-8 Ø
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,7 +30,10 @@ if (!defined('WEBPATH'))
 				<div class="content-primary">
 					<h2>Gallery</h2>
 					<?php printGalleryDesc(); ?>
-					<?php if (hasPrevPage() || hasNextPage()) printPageListWithNav(gettext("prev"), gettext("next"), false, true, 'pagelist', NULL, true, 7); ?>
+					<?php if (hasPrevPage() || hasNextPage()) {
+	printPageListWithNav(gettext("prev"), gettext("next"), false, true, 'pagelist', NULL, true, 7);
+}
+?>
 					<ul data-role="listview" data-inset="true">
 						<?php while (next_album()): ?>
 							<li>
@@ -46,7 +50,10 @@ if (!defined('WEBPATH'))
 							</li>
 					<?php endwhile; ?>
 					</ul>
-<?php if (hasPrevPage() || hasNextPage()) printPageListWithNav(gettext("prev"), gettext("next"), false, true, 'pagelist', NULL, true, 7); ?>
+<?php if (hasPrevPage() || hasNextPage()) {
+	printPageListWithNav(gettext("prev"), gettext("next"), false, true, 'pagelist', NULL, true, 7);
+}
+?>
 
 				</div>
 				<div class="content-secondary">

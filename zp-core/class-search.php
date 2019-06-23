@@ -300,16 +300,21 @@ class SearchEngine {
 	 */
 	protected function numericFields($fields) {
 		debugLogBacktrace(gettext('Numeric search fields are deprecated'));
-		if ($fields == 0)
-			$fields = 0x0fff;
-		if ($fields & 0x01)
-			$list[$this->search_structure['title']] = 'title';
-		if ($fields & 0x02)
-			$list[$this->search_structure['desc']] = 'desc';
-		if ($fields & 0x04)
-			$list[$this->search_structure['tags']] = 'tags';
-		if ($fields & 0x08)
-			$list[$this->search_structure['filename']] = 'filename';
+		if ($fields == 0) {
+					$fields = 0x0fff;
+		}
+		if ($fields & 0x01) {
+					$list[$this->search_structure['title']] = 'title';
+		}
+		if ($fields & 0x02) {
+					$list[$this->search_structure['desc']] = 'desc';
+		}
+		if ($fields & 0x04) {
+					$list[$this->search_structure['tags']] = 'tags';
+		}
+		if ($fields & 0x08) {
+					$list[$this->search_structure['filename']] = 'filename';
+		}
 		return $list;
 	}
 
@@ -593,8 +598,9 @@ class SearchEngine {
 	 * @return mixed
 	 */
 	function getSearchFields($array = false) {
-		if ($array)
-			return $this->fieldList;
+		if ($array) {
+					return $this->fieldList;
+		}
 		return implode(',', $this->fieldList);
 	}
 
@@ -710,16 +716,19 @@ class SearchEngine {
 					$c2 = substr($searchstring, $i + 1, 1);
 					switch ($c2) {
 						case 'A':
-							if (substr($searchstring . ' ', $i + 1, 4) == 'AND ')
-								$c2 = '&';
+							if (substr($searchstring . ' ', $i + 1, 4) == 'AND ') {
+															$c2 = '&';
+							}
 							break;
 						case 'O':
-							if (substr($searchstring . ' ', $i + 1, 3) == 'OR ')
-								$c2 = '|';
+							if (substr($searchstring . ' ', $i + 1, 3) == 'OR ') {
+															$c2 = '|';
+							}
 							break;
 						case 'N':
-							if (substr($searchstring . ' ', $i + 1, 4) == 'NOT ')
-								$c2 = '!';
+							if (substr($searchstring . ' ', $i + 1, 4) == 'NOT ') {
+															$c2 = '!';
+							}
 							break;
 					}
 					if (!((isset($opChars[$c2]) && $opChars[$c2] == 1) || (isset($opChars[$last]) && $opChars[$last] == 1))) {
@@ -891,8 +900,9 @@ class SearchEngine {
 	 */
 	protected function subsetNewsCategories() {
 		global $_CMS;
-		if (!is_array($this->category_list))
-			return false;
+		if (!is_array($this->category_list)) {
+					return false;
+		}
 		$cat = '';
 		$list = $_CMS->getAllCategories();
 		if (!empty($list)) {
@@ -1514,8 +1524,9 @@ class SearchEngine {
 						}
 					} else {
 						list($key, $sortdirection) = $this->sortKey($sorttype, $sortdirection, 'title', 'images');
-						if ($sortdirection)
-							$key .= ' DESC';
+						if ($sortdirection) {
+													$key .= ' DESC';
+						}
 					}
 					break;
 			}

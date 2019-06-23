@@ -5,7 +5,10 @@ if (class_exists('favorites')) {
 	?>
 
 	<div class="right">
-		<?php if ($zpfocus_social) include ("inc-social.php"); ?>
+		<?php if ($zpfocus_social) {
+	include ("inc-social.php");
+}
+?>
 		<h1 id="tagline"><?php
 			printParentBreadcrumb("", " / ", " / ");
 			printAlbumTitle();
@@ -152,7 +155,10 @@ if (class_exists('favorites')) {
 			</div>
 		<?php } ?>
 		<?php printCodeblock(); ?>
-		<?php if (function_exists('printCommentForm')) printCommentForm(); ?>
+		<?php if (function_exists('printCommentForm')) {
+	printCommentForm();
+}
+?>
 
 	</div>
 

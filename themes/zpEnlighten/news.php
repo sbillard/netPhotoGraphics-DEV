@@ -1,6 +1,7 @@
 <?php
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 ?>
 <!DOCTYPE html>
 <head>
@@ -70,8 +71,9 @@ if (!defined('WEBPATH'))
 					echo '<div class="newsarticlewrapper">';
 					$u = 0;
 					while (next_news()):;
-						if ($u > 0)
-							echo '<p class="newsseparator"/>';
+						if ($u > 0) {
+													echo '<p class="newsseparator"/>';
+						}
 						$u++;
 						?>
 						<div class="newsarticle">

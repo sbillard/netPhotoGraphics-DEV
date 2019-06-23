@@ -51,7 +51,7 @@ if (defined('SETUP_PLUGIN')) { //	gettext debugging aid
 	$plugin_notice = (extensionEnabled('optionalObjectFields')) ? '' : gettext('<strong>IMPORTANT</strong>: This plugin enables the "tags" database fields. If disabled the admin <em>tags</em> tab will not be present. Click on the <em>More information</em> icon for details.');
 }
 
-require_once(CORE_SERVERPATH .  PLUGIN_FOLDER . '/common/fieldExtender.php');
+require_once(CORE_SERVERPATH . PLUGIN_FOLDER . '/common/fieldExtender.php');
 
 class optionalObjectFields extends fieldExtender {
 
@@ -381,12 +381,15 @@ class optionalObjectFields extends fieldExtender {
 				$wmt = sanitize($_POST[$i . '-' . $field['name']], 3);
 				$image->setWatermark($wmt);
 				$wmuse = 0;
-				if (isset($_POST['wm_image-' . $i]))
-					$wmuse = $wmuse | WATERMARK_IMAGE;
-				if (isset($_POST['wm_thumb-' . $i]))
-					$wmuse = $wmuse | WATERMARK_THUMB;
-				if (isset($_POST['wm_full-' . $i]))
-					$wmuse = $wmuse | WATERMARK_FULL;
+				if (isset($_POST['wm_image-' . $i])) {
+									$wmuse = $wmuse | WATERMARK_IMAGE;
+				}
+				if (isset($_POST['wm_thumb-' . $i])) {
+									$wmuse = $wmuse | WATERMARK_THUMB;
+				}
+				if (isset($_POST['wm_full-' . $i])) {
+									$wmuse = $wmuse | WATERMARK_FULL;
+				}
 				$image->setWMUse($wmuse);
 			}
 			return NULL;
@@ -397,31 +400,47 @@ class optionalObjectFields extends fieldExtender {
 				ob_start();
 				?>
 				<select id="image_watermark-<?php echo $i; ?>" name="<?php echo $i . '-' . $field['name']; ?>" onclick="toggleWMUse(<?php echo $i; ?>);">
-					<option value="<?php echo NO_WATERMARK; ?>" <?php if ($current == NO_WATERMARK) echo ' selected = "selected"' ?> style="background-color:LightGray"><?php echo gettext('*no watermark'); ?></option>
-					<option value="" <?php if (empty($current)) echo ' selected = "selected"' ?> style="background-color:LightGray"><?php echo gettext('*default'); ?></option>
+					<option value="<?php echo NO_WATERMARK; ?>" <?php if ($current == NO_WATERMARK) {
+	echo ' selected = "selected"' ?> style="background-color:LightGray"><?php echo gettext('*no watermark');
+}
+?></option>
+					<option value="" <?php if (empty($current)) {
+	echo ' selected = "selected"' ?> style="background-color:LightGray"><?php echo gettext('*default');
+}
+?></option>
 					<?php
 					$watermarks = getWatermarks();
 					generateListFromArray(array($current), $watermarks, false, false);
 					?>
 				</select>
 				<?php
-				if ($current == '')
-					$displaystyle = 'none';
-				else
-					$displaystyle = 'inline';
+				if ($current == '') {
+									$displaystyle = 'none';
+				} else {
+									$displaystyle = 'inline';
+				}
 				?>
 				<span id="WMUSE_<?php echo $i; ?>" style="display:<?php echo $displaystyle; ?>">
 					<?php $wmuse = $image->getWMUse(); ?>
 					<label>
-						<input type="checkbox" value="1" id="wm_image-<?php echo $i; ?>" name="wm_image-<?php echo $i; ?>" <?php if ($wmuse & WATERMARK_IMAGE) echo 'checked="checked"'; ?> />
+						<input type="checkbox" value="1" id="wm_image-<?php echo $i; ?>" name="wm_image-<?php echo $i; ?>" <?php if ($wmuse & WATERMARK_IMAGE) {
+	echo 'checked="checked"';
+}
+?> />
 						<?php echo gettext('image'); ?>
 					</label>
 					<label>
-						<input type="checkbox" value="1" id="wm_thumb-<?php echo $i; ?>" name="wm_thumb-<?php echo $i; ?>" <?php if ($wmuse & WATERMARK_THUMB) echo 'checked="checked"'; ?> />
+						<input type="checkbox" value="1" id="wm_thumb-<?php echo $i; ?>" name="wm_thumb-<?php echo $i; ?>" <?php if ($wmuse & WATERMARK_THUMB) {
+	echo 'checked="checked"';
+}
+?> />
 						<?php echo gettext('thumb'); ?>
 					</label>
 					<label>
-						<input type="checkbox" value="1" id="wm_full-<?php echo $i; ?>" name="wm_full-<?php echo $i; ?>" <?php if ($wmuse & WATERMARK_FULL) echo 'checked="checked"'; ?> />
+						<input type="checkbox" value="1" id="wm_full-<?php echo $i; ?>" name="wm_full-<?php echo $i; ?>" <?php if ($wmuse & WATERMARK_FULL) {
+	echo 'checked="checked"';
+}
+?> />
 						<?php echo gettext('full image'); ?>
 					</label>
 				</span>

@@ -71,8 +71,9 @@ if (!function_exists('gl_graphicsLibInfo')) {
 		unset($imgtypes);
 		unset($info);
 
-		if (DEBUG_IMAGE)
-			debugLog("Loading " . $_lib_GD_info['Library']);
+		if (DEBUG_IMAGE) {
+					debugLog("Loading " . $_lib_GD_info['Library']);
+		}
 
 		/**
 		 * Takes an image filename and returns a GD Image using the correct function
@@ -264,18 +265,22 @@ if (!function_exists('gl_graphicsLibInfo')) {
 			// $img is an image that is already created within php using
 			// imgcreatetruecolor. No url! $img must be a truecolor image.
 			// Attempt to calibrate the parameters to Photoshop:
-			if ($amount > 500)
-				$amount = 500;
+			if ($amount > 500) {
+							$amount = 500;
+			}
 			$amount = $amount * 0.016;
-			if ($radius > 50)
-				$radius = 50;
+			if ($radius > 50) {
+							$radius = 50;
+			}
 			$radius = $radius * 2;
-			if ($threshold > 255)
-				$threshold = 255;
+			if ($threshold > 255) {
+							$threshold = 255;
+			}
 
 			$radius = abs(round($radius)); // Only integers make sense.
-			if ($radius == 0)
-				return $img;
+			if ($radius == 0) {
+							return $img;
+			}
 			$w = imagesx($img);
 			$h = imagesy($img);
 			$imgCanvas = imagecreatetruecolor($w, $h);

@@ -283,8 +283,9 @@ function getOptionContent() {
 						<span class="nowrap">
 							<select id="imagesortselect" name="image_sorttype" onchange="update_direction(this, 'image_sortdirection', 'customTextBox3')">
 								<?php
-								if (array_search($cv, $sort) === false)
-									$cv = 'custom';
+								if (array_search($cv, $sort) === false) {
+																	$cv = 'custom';
+								}
 								generateListFromArray(array($cv), $sort, false, true);
 								?>
 							</select>
@@ -456,7 +457,10 @@ function getOptionContent() {
 								<td class="image_option_tablerow">
 									<select id="fullimage_watermark" name="fullimage_watermark">
 										<?php $current = IMAGE_WATERMARK; ?>
-										<option value="" <?php if (empty($current)) echo ' selected="selected"' ?> style="background-color:LightGray"><?php echo gettext('none'); ?></option>
+										<option value="" <?php if (empty($current)) {
+	echo ' selected="selected"' ?> style="background-color:LightGray"><?php echo gettext('none');
+}
+?></option>
 										<?php
 										$watermarks = getWatermarks();
 										generateListFromArray(array($current), $watermarks, false, false);
@@ -469,7 +473,10 @@ function getOptionContent() {
 								<td class="image_option_tablerow">
 									<select id="fullsizeimage_watermark" name="fullsizeimage_watermark">
 										<?php $current = FULLIMAGE_WATERMARK; ?>
-										<option value="" <?php if (empty($current)) echo ' selected="selected"' ?> style="background-color:LightGray"><?php echo gettext('none'); ?></option>
+										<option value="" <?php if (empty($current)) {
+	echo ' selected="selected"' ?> style="background-color:LightGray"><?php echo gettext('none');
+}
+?></option>
 										<?php
 										$watermarks = getWatermarks();
 										generateListFromArray(array($current), $watermarks, false, false);
@@ -490,16 +497,18 @@ function getOptionContent() {
 									</td>
 									<td class="image_option_tablerow">
 										<select id="<?php echo $opt; ?>" name="<?php echo $opt; ?>">
-											<option value="" <?php if (empty($current)) echo ' selected="selected"' ?> style="background-color:LightGray">
+											<option value="" <?php if (empty($current)) {
+	echo ' selected="selected"' ?> style="background-color:LightGray">
 												<?php
 												if ($plugin == 'Image')
 													echo gettext('none');
-												else
-													echo gettext('image thumbnail')
+} else {
+																									echo gettext('image thumbnail')
 													?>
 											</option>
 											<?php
 											$watermarks = getWatermarks();
+												}
 											generateListFromArray(array($current), $watermarks, false, false);
 											?>
 										</select>
@@ -559,14 +568,20 @@ function getOptionContent() {
 					<td class="option_name"><?php echo gettext("Cache as"); ?></td>
 					<td class="option_value">
 						<?php $type = IMAGE_CACHE_SUFFIX; ?>
-						<input type="radio" name="image_cache_suffix" value=""<?php if (empty($type)) echo ' checked="checked"'; ?> />&nbsp;<?php echo gettext("original"); ?>
+						<input type="radio" name="image_cache_suffix" value=""<?php if (empty($type)) {
+	echo ' checked="checked"';
+}
+?> />&nbsp;<?php echo gettext("original"); ?>
 						<?php
 						$cachesuffix = array_unique($_cachefileSuffix);
 						foreach ($cachesuffix as $suffix) {
 							if ($suffix) {
 								?>
 								<label>
-									<input type="radio" name="image_cache_suffix" value="<?php echo $suffix; ?>"<?php if ($type == $suffix) echo ' checked="checked"'; ?> />&nbsp;<?php echo $suffix; ?>
+									<input type="radio" name="image_cache_suffix" value="<?php echo $suffix; ?>"<?php if ($type == $suffix) {
+	echo ' checked="checked"';
+}
+?> />&nbsp;<?php echo $suffix; ?>
 								</label>
 								<?php
 							}

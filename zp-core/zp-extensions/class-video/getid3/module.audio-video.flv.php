@@ -52,25 +52,25 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
-define('GETID3_FLV_TAG_AUDIO',          8);
-define('GETID3_FLV_TAG_VIDEO',          9);
-define('GETID3_FLV_TAG_META',          18);
+define('GETID3_FLV_TAG_AUDIO', 8);
+define('GETID3_FLV_TAG_VIDEO', 9);
+define('GETID3_FLV_TAG_META', 18);
 
-define('GETID3_FLV_VIDEO_H263',         2);
-define('GETID3_FLV_VIDEO_SCREEN',       3);
-define('GETID3_FLV_VIDEO_VP6FLV',       4);
+define('GETID3_FLV_VIDEO_H263', 2);
+define('GETID3_FLV_VIDEO_SCREEN', 3);
+define('GETID3_FLV_VIDEO_VP6FLV', 4);
 define('GETID3_FLV_VIDEO_VP6FLV_ALPHA', 5);
-define('GETID3_FLV_VIDEO_SCREENV2',     6);
-define('GETID3_FLV_VIDEO_H264',         7);
+define('GETID3_FLV_VIDEO_SCREENV2', 6);
+define('GETID3_FLV_VIDEO_H264', 7);
 
-define('H264_AVC_SEQUENCE_HEADER',          0);
-define('H264_PROFILE_BASELINE',            66);
-define('H264_PROFILE_MAIN',                77);
-define('H264_PROFILE_EXTENDED',            88);
-define('H264_PROFILE_HIGH',               100);
-define('H264_PROFILE_HIGH10',             110);
-define('H264_PROFILE_HIGH422',            122);
-define('H264_PROFILE_HIGH444',            144);
+define('H264_AVC_SEQUENCE_HEADER', 0);
+define('H264_PROFILE_BASELINE', 66);
+define('H264_PROFILE_MAIN', 77);
+define('H264_PROFILE_EXTENDED', 88);
+define('H264_PROFILE_HIGH', 100);
+define('H264_PROFILE_HIGH10', 110);
+define('H264_PROFILE_HIGH422', 122);
+define('H264_PROFILE_HIGH444', 144);
 define('H264_PROFILE_HIGH444_PREDICTIVE', 244);
 
 class getid3_flv extends getid3_handler {
@@ -88,12 +88,12 @@ class getid3_flv extends getid3_handler {
 		$FLVheader = $this->fread(5);
 
 		$info['fileformat'] = 'flv';
-		$info['flv']['header']['signature'] =                           substr($FLVheader, 0, 3);
+		$info['flv']['header']['signature'] = substr($FLVheader, 0, 3);
 		$info['flv']['header']['version']   = getid3_lib::BigEndian2Int(substr($FLVheader, 3, 1));
 		$TypeFlags                          = getid3_lib::BigEndian2Int(substr($FLVheader, 4, 1));
 
 		if ($info['flv']['header']['signature'] != self::magic) {
-			$info['error'][] = 'Expecting "'.getid3_lib::PrintHexBytes(self::magic).'" at offset '.$info['avdataoffset'].', found "'.getid3_lib::PrintHexBytes($info['flv']['header']['signature']).'"';
+			$info['error'][] = 'Expecting "' . getid3_lib::PrintHexBytes(self::magic) . '" at offset ' . $info['avdataoffset'] . ', found "' . getid3_lib::PrintHexBytes($info['flv']['header']['signature']) . '"';
 			unset($info['flv'], $info['fileformat']);
 			return false;
 		}
@@ -114,13 +114,13 @@ class getid3_flv extends getid3_handler {
 		$tagParseCount = 0;
 		$info['flv']['framecount'] = array('total'=>0, 'audio'=>0, 'video'=>0);
 		$flv_framecount = &$info['flv']['framecount'];
-		while ((($this->ftell() + 16) < $info['avdataend']) && (($tagParseCount++ <= $this->max_frames) || !$found_valid_meta_playtime))  {
+		while ((($this->ftell() + 16) < $info['avdataend']) && (($tagParseCount++ <= $this->max_frames) || !$found_valid_meta_playtime)) {
 			$ThisTagHeader = $this->fread(16);
 
-			$PreviousTagLength = getid3_lib::BigEndian2Int(substr($ThisTagHeader,  0, 4));
-			$TagType           = getid3_lib::BigEndian2Int(substr($ThisTagHeader,  4, 1));
-			$DataLength        = getid3_lib::BigEndian2Int(substr($ThisTagHeader,  5, 3));
-			$Timestamp         = getid3_lib::BigEndian2Int(substr($ThisTagHeader,  8, 3));
+			$PreviousTagLength = getid3_lib::BigEndian2Int(substr($ThisTagHeader, 0, 4));
+			$TagType           = getid3_lib::BigEndian2Int(substr($ThisTagHeader, 4, 1));
+			$DataLength        = getid3_lib::BigEndian2Int(substr($ThisTagHeader, 5, 3));
+			$Timestamp         = getid3_lib::BigEndian2Int(substr($ThisTagHeader, 8, 3));
 			$LastHeaderByte    = getid3_lib::BigEndian2Int(substr($ThisTagHeader, 15, 1));
 			$NextOffset = $this->ftell() - 1 + $DataLength;
 			if ($Timestamp > $Duration) {
@@ -136,7 +136,7 @@ class getid3_flv extends getid3_handler {
 						$info['flv']['audio']['audioFormat']     = ($LastHeaderByte >> 4) & 0x0F;
 						$info['flv']['audio']['audioRate']       = ($LastHeaderByte >> 2) & 0x03;
 						$info['flv']['audio']['audioSampleSize'] = ($LastHeaderByte >> 1) & 0x01;
-						$info['flv']['audio']['audioType']       =  $LastHeaderByte       & 0x01;
+						$info['flv']['audio']['audioType']       = $LastHeaderByte & 0x01;
 					}
 					break;
 
@@ -154,11 +154,11 @@ class getid3_flv extends getid3_handler {
 							$AVCPacketType = getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 0, 1));
 							if ($AVCPacketType == H264_AVC_SEQUENCE_HEADER) {
 								//	read AVCDecoderConfigurationRecord
-								$configurationVersion       = getid3_lib::BigEndian2Int(substr($FLVvideoHeader,  4, 1));
-								$AVCProfileIndication       = getid3_lib::BigEndian2Int(substr($FLVvideoHeader,  5, 1));
-								$profile_compatibility      = getid3_lib::BigEndian2Int(substr($FLVvideoHeader,  6, 1));
-								$lengthSizeMinusOne         = getid3_lib::BigEndian2Int(substr($FLVvideoHeader,  7, 1));
-								$numOfSequenceParameterSets = getid3_lib::BigEndian2Int(substr($FLVvideoHeader,  8, 1));
+								$configurationVersion       = getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 4, 1));
+								$AVCProfileIndication       = getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 5, 1));
+								$profile_compatibility      = getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 6, 1));
+								$lengthSizeMinusOne         = getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 7, 1));
+								$numOfSequenceParameterSets = getid3_lib::BigEndian2Int(substr($FLVvideoHeader, 8, 1));
 
 								if (($numOfSequenceParameterSets & 0x1F) != 0) {
 									//	there is at least one SequenceParameterSet
@@ -236,7 +236,7 @@ class getid3_flv extends getid3_handler {
 
 							}
 
-						} elseif ($info['flv']['video']['videoCodec'] ==  GETID3_FLV_VIDEO_VP6FLV_ALPHA) {
+						} elseif ($info['flv']['video']['videoCodec'] == GETID3_FLV_VIDEO_VP6FLV_ALPHA) {
 
 							/* contributed by schouwerwouØgmail*com */
 							if (!isset($info['video']['resolution_x'])) { // only when meta data isn't set
@@ -304,11 +304,11 @@ class getid3_flv extends getid3_handler {
 		}
 
 		if ($info['flv']['header']['hasAudio']) {
-			$info['audio']['codec']           =   self::audioFormatLookup($info['flv']['audio']['audioFormat']);
-			$info['audio']['sample_rate']     =     self::audioRateLookup($info['flv']['audio']['audioRate']);
+			$info['audio']['codec']           = self::audioFormatLookup($info['flv']['audio']['audioFormat']);
+			$info['audio']['sample_rate']     = self::audioRateLookup($info['flv']['audio']['audioRate']);
 			$info['audio']['bits_per_sample'] = self::audioBitDepthLookup($info['flv']['audio']['audioSampleSize']);
 
-			$info['audio']['channels']   =  $info['flv']['audio']['audioType'] + 1; // 0=mono,1=stereo
+			$info['audio']['channels']   = $info['flv']['audio']['audioType'] + 1; // 0=mono,1=stereo
 			$info['audio']['lossless']   = ($info['flv']['audio']['audioFormat'] ? false : true); // 0=uncompressed
 			$info['audio']['dataformat'] = 'flv';
 		}
@@ -391,7 +391,7 @@ class AMFStream {
 	public $pos;
 
 	public function __construct(&$bytes) {
-		$this->bytes =& $bytes;
+		$this->bytes = & $bytes;
 		$this->pos = 0;
 	}
 
@@ -474,7 +474,7 @@ class AMFReader {
 	public $stream;
 
 	public function __construct(&$stream) {
-		$this->stream =& $stream;
+		$this->stream = & $stream;
 	}
 
 	public function readData() {
@@ -642,35 +642,35 @@ class AVCSequenceParameterSetReader {
 	public function readData() {
 		$this->skipBits(8);
 		$this->skipBits(8);
-		$profile = $this->getBits(8);                               // read profile
+		$profile = $this->getBits(8); // read profile
 		if ($profile > 0) {
 			$this->skipBits(8);
-			$level_idc = $this->getBits(8);                         // level_idc
-			$this->expGolombUe();                                   // seq_parameter_set_id // sps
-			$this->expGolombUe();                                   // log2_max_frame_num_minus4
-			$picOrderType = $this->expGolombUe();                   // pic_order_cnt_type
+			$level_idc = $this->getBits(8); // level_idc
+			$this->expGolombUe(); // seq_parameter_set_id // sps
+			$this->expGolombUe(); // log2_max_frame_num_minus4
+			$picOrderType = $this->expGolombUe(); // pic_order_cnt_type
 			if ($picOrderType == 0) {
-				$this->expGolombUe();                               // log2_max_pic_order_cnt_lsb_minus4
+				$this->expGolombUe(); // log2_max_pic_order_cnt_lsb_minus4
 			} elseif ($picOrderType == 1) {
-				$this->skipBits(1);                                 // delta_pic_order_always_zero_flag
-				$this->expGolombSe();                               // offset_for_non_ref_pic
-				$this->expGolombSe();                               // offset_for_top_to_bottom_field
+				$this->skipBits(1); // delta_pic_order_always_zero_flag
+				$this->expGolombSe(); // offset_for_non_ref_pic
+				$this->expGolombSe(); // offset_for_top_to_bottom_field
 				$num_ref_frames_in_pic_order_cnt_cycle = $this->expGolombUe(); // num_ref_frames_in_pic_order_cnt_cycle
 				for ($i = 0; $i < $num_ref_frames_in_pic_order_cnt_cycle; $i++) {
-					$this->expGolombSe();                           // offset_for_ref_frame[ i ]
+					$this->expGolombSe(); // offset_for_ref_frame[ i ]
 				}
 			}
-			$this->expGolombUe();                                   // num_ref_frames
-			$this->skipBits(1);                                     // gaps_in_frame_num_value_allowed_flag
-			$pic_width_in_mbs_minus1 = $this->expGolombUe();        // pic_width_in_mbs_minus1
+			$this->expGolombUe(); // num_ref_frames
+			$this->skipBits(1); // gaps_in_frame_num_value_allowed_flag
+			$pic_width_in_mbs_minus1 = $this->expGolombUe(); // pic_width_in_mbs_minus1
 			$pic_height_in_map_units_minus1 = $this->expGolombUe(); // pic_height_in_map_units_minus1
 
-			$frame_mbs_only_flag = $this->getBits(1);               // frame_mbs_only_flag
+			$frame_mbs_only_flag = $this->getBits(1); // frame_mbs_only_flag
 			if ($frame_mbs_only_flag == 0) {
-				$this->skipBits(1);                                 // mb_adaptive_frame_field_flag
+				$this->skipBits(1); // mb_adaptive_frame_field_flag
 			}
-			$this->skipBits(1);                                     // direct_8x8_inference_flag
-			$frame_cropping_flag = $this->getBits(1);               // frame_cropping_flag
+			$this->skipBits(1); // direct_8x8_inference_flag
+			$frame_cropping_flag = $this->getBits(1); // frame_cropping_flag
 
 			$frame_crop_left_offset   = 0;
 			$frame_crop_right_offset  = 0;
@@ -678,12 +678,12 @@ class AVCSequenceParameterSetReader {
 			$frame_crop_bottom_offset = 0;
 
 			if ($frame_cropping_flag) {
-				$frame_crop_left_offset   = $this->expGolombUe();   // frame_crop_left_offset
-				$frame_crop_right_offset  = $this->expGolombUe();   // frame_crop_right_offset
-				$frame_crop_top_offset    = $this->expGolombUe();   // frame_crop_top_offset
-				$frame_crop_bottom_offset = $this->expGolombUe();   // frame_crop_bottom_offset
+				$frame_crop_left_offset   = $this->expGolombUe(); // frame_crop_left_offset
+				$frame_crop_right_offset  = $this->expGolombUe(); // frame_crop_right_offset
+				$frame_crop_top_offset    = $this->expGolombUe(); // frame_crop_top_offset
+				$frame_crop_bottom_offset = $this->expGolombUe(); // frame_crop_bottom_offset
 			}
-			$this->skipBits(1);                                     // vui_parameters_present_flag
+			$this->skipBits(1); // vui_parameters_present_flag
 			// etc
 
 			$this->width  = (($pic_width_in_mbs_minus1 + 1) * 16) - ($frame_crop_left_offset * 2) - ($frame_crop_right_offset * 2);
@@ -693,7 +693,7 @@ class AVCSequenceParameterSetReader {
 
 	public function skipBits($bits) {
 		$newBits = $this->currentBits + $bits;
-		$this->currentBytes += (int)floor($newBits / 8);
+		$this->currentBytes += (int) floor($newBits / 8);
 		$this->currentBits = $newBits % 8;
 	}
 

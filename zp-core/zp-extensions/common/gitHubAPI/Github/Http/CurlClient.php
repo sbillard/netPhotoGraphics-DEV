@@ -79,7 +79,7 @@ class CurlClient extends AbstractClient
 					$responseHeaders = [];
 
 				} elseif (in_array(substr($line, 0, 1), [' ', "\t"], TRUE)) {
-					$responseHeaders[$last] .= ' ' . trim($line);  # RFC2616, 2.2
+					$responseHeaders[$last] .= ' ' . trim($line); # RFC2616, 2.2
 
 				} elseif ($line !== "\r\n") {
 					list($name, $value) = explode(':', $line, 2);

@@ -60,8 +60,9 @@ function saveOptions() {
 	$themeswitch = $_set_theme_album = $notify = $table = NULL;
 	$themename = urldecode(sanitize($_POST['optiontheme'], 3));
 	$returntab = "&tab=theme";
-	if ($themename)
-		$returntab .= '&optiontheme=' . urlencode($themename);
+	if ($themename) {
+			$returntab .= '&optiontheme=' . urlencode($themename);
+	}
 	// all theme specific options are custom options, handled below
 	if (!isset($_POST['themealbum']) || empty($_POST['themealbum'])) {
 		$themeswitch = urldecode(sanitize_path($_POST['old_themealbum'])) != '';
@@ -95,10 +96,12 @@ function saveOptions() {
 			setThemeOption('constructed', 1, $_set_theme_album, $themename);
 			$ncw = $cw = getThemeOption('thumb_crop_width', $_set_theme_album, $themename);
 			$nch = $ch = getThemeOption('thumb_crop_height', $_set_theme_album, $themename);
-			if (isset($_POST['image_size']))
-				setThemeOption('image_size', sanitize_numeric($_POST['image_size']), $_set_theme_album, $themename);
-			if (isset($_POST['image_use_side']))
-				setThemeOption('image_use_side', sanitize($_POST['image_use_side']), $_set_theme_album, $themename);
+			if (isset($_POST['image_size'])) {
+							setThemeOption('image_size', sanitize_numeric($_POST['image_size']), $_set_theme_album, $themename);
+			}
+			if (isset($_POST['image_use_side'])) {
+							setThemeOption('image_use_side', sanitize($_POST['image_use_side']), $_set_theme_album, $themename);
+			}
 			setThemeOption('thumb_crop', (int) isset($_POST['thumb_crop']), $_set_theme_album, $themename);
 			if (isset($_POST['thumb_size'])) {
 				$ts = sanitize_numeric($_POST['thumb_size']);
@@ -137,16 +140,21 @@ function saveOptions() {
 			}
 			setThemeOption('theme_head_listparents', (int) isset($_POST['theme_head_listparents']), $_set_theme_album, $themename);
 
-			if (isset($_POST['thumb_transition']))
-				setThemeOption('thumb_transition', (int) ((sanitize_numeric($_POST['thumb_transition']) - 1) && true), $_set_theme_album, $themename);
+			if (isset($_POST['thumb_transition'])) {
+							setThemeOption('thumb_transition', (int) ((sanitize_numeric($_POST['thumb_transition']) - 1) && true), $_set_theme_album, $themename);
+			}
 			$otg = getThemeOption('thumb_gray', $_set_theme_album, $themename);
 			setThemeOption('thumb_gray', (int) isset($_POST['thumb_gray']), $_set_theme_album, $themename);
-			if ($otg = getThemeOption('thumb_gray', $_set_theme_album, $themename))
-				$wmo = 99; // force cache clear
+			if ($otg = getThemeOption('thumb_gray', $_set_theme_album, $themename)) {
+							$wmo = 99;
+			}
+			// force cache clear
 			$oig = getThemeOption('image_gray', $_set_theme_album, $themename);
 			setThemeOption('image_gray', (int) isset($_POST['image_gray']), $_set_theme_album, $themename);
-			if ($oig = getThemeOption('image_gray', $_set_theme_album, $themename))
-				$wmo = 99; // force cache clear
+			if ($oig = getThemeOption('image_gray', $_set_theme_album, $themename)) {
+							$wmo = 99;
+			}
+			// force cache clear
 			if ($nch != $ch || $ncw != $cw) { // the crop height/width has been changed
 				$sql = 'UPDATE ' . prefix('images') . ' SET `thumbX`=NULL,`thumbY`=NULL,`thumbW`=NULL,`thumbH`=NULL WHERE `thumbY` IS NOT NULL';
 				query($sql);
@@ -493,22 +501,34 @@ function getOptionContent() {
 																																			 <?php echo $disable; ?> /></td>
 									<td style="margin: 0; padding: 0"><label> <input type="radio"
 																																	 id="image_use_side1" name="image_use_side" value="height"
-																																	 <?php if ($side == 'height') echo ' checked="checked"'; ?>
+																																	 <?php if ($side == 'height') {
+	echo ' checked="checked"';
+}
+?>
 																																	 <?php echo $disableside; ?> /> <?php echo gettext('height') ?> </label>
 										<label> <input type="radio" id="image_use_side2"
 																	 name="image_use_side" value="width"
-																	 <?php if ($side == 'width') echo ' checked="checked"'; ?>
+																	 <?php if ($side == 'width') {
+	echo ' checked="checked"';
+}
+?>
 																	 <?php echo $disableside; ?> /> <?php echo gettext('width') ?> </label>
 									</td>
 								</tr>
 								<tr>
 									<td style="margin: 0; padding: 0"><label> <input type="radio"
 																																	 id="image_use_side3" name="image_use_side" value="shortest"
-																																	 <?php if ($side == 'shortest') echo ' checked="checked"'; ?>
+																																	 <?php if ($side == 'shortest') {
+	echo ' checked="checked"';
+}
+?>
 																																	 <?php echo $disableside; ?> /> <?php echo gettext('shortest side') ?>
 										</label> <label> <input type="radio" id="image_use_side4"
 																						name="image_use_side" value="longest"
-																						<?php if ($side == 'longest') echo ' checked="checked"'; ?>
+																						<?php if ($side == 'longest') {
+	echo ' checked="checked"';
+}
+?>
 																						<?php echo $disableside; ?> /> <?php echo gettext('longest side') ?> </label>
 									</td>
 								</tr>
@@ -531,7 +551,10 @@ function getOptionContent() {
 							<td class="option_name"><?php echo gettext("Theme head &lt;title&gt; tag"); ?></td>
 							<td class="option_value">
 								<label>
-									<input type="checkbox" name="theme_head_listparents" value="1"<?php if (getThemeOption('theme_head_listparents', $album, $themename)) echo ' checked="checked"'; ?> />
+									<input type="checkbox" name="theme_head_listparents" value="1"<?php if (getThemeOption('theme_head_listparents', $album, $themename)) {
+	echo ' checked="checked"';
+}
+?> />
 									<?php echo gettext('enabled'); ?>
 								</label>
 								<br />

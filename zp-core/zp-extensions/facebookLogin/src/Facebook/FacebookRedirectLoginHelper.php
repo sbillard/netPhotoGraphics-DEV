@@ -72,9 +72,9 @@ class FacebookRedirectLoginHelper
    */
   public function __construct($redirectUrl, $appId = null, $appSecret = null)
   {
-    $this->appId = FacebookSession::_getTargetAppId($appId);
-    $this->appSecret = FacebookSession::_getTargetAppSecret($appSecret);
-    $this->redirectUrl = $redirectUrl;
+	$this->appId = FacebookSession::_getTargetAppId($appId);
+	$this->appSecret = FacebookSession::_getTargetAppSecret($appSecret);
+	$this->redirectUrl = $redirectUrl;
   }
 
   /**
@@ -90,24 +90,24 @@ class FacebookRedirectLoginHelper
    */
   public function getLoginUrl($scope = array(), $version = null, $displayAsPopup = false)
   {
-    $version = ($version ?: FacebookRequest::GRAPH_API_VERSION);
-    $this->state = $this->random(16);
-    $this->storeState($this->state);
-    $params = array(
-      'client_id' => $this->appId,
-      'redirect_uri' => $this->redirectUrl,
-      'state' => $this->state,
-      'sdk' => 'php-sdk-' . FacebookRequest::VERSION,
-      'scope' => implode(',', $scope)
-    );
+	$version = ($version ?: FacebookRequest::GRAPH_API_VERSION);
+	$this->state = $this->random(16);
+	$this->storeState($this->state);
+	$params = array(
+	  'client_id' => $this->appId,
+	  'redirect_uri' => $this->redirectUrl,
+	  'state' => $this->state,
+	  'sdk' => 'php-sdk-' . FacebookRequest::VERSION,
+	  'scope' => implode(',', $scope)
+	);
     
-    if ($displayAsPopup)
-    {
-      $params['display'] = 'popup';
-    }
+	if ($displayAsPopup)
+	{
+	  $params['display'] = 'popup';
+	}
     
-    return 'https://www.facebook.com/' . $version . '/dialog/oauth?' .
-      http_build_query($params, null, '&');
+	return 'https://www.facebook.com/' . $version . '/dialog/oauth?' .
+	  http_build_query($params, null, '&');
   }
 
   /**
@@ -120,19 +120,19 @@ class FacebookRedirectLoginHelper
    */
   public function getReRequestUrl($scope = array(), $version = null)
   {
-    $version = ($version ?: FacebookRequest::GRAPH_API_VERSION);
-    $this->state = $this->random(16);
-    $this->storeState($this->state);
-    $params = array(
-      'client_id' => $this->appId,
-      'redirect_uri' => $this->redirectUrl,
-      'state' => $this->state,
-      'sdk' => 'php-sdk-' . FacebookRequest::VERSION,
-      'auth_type' => 'rerequest',
-      'scope' => implode(',', $scope)
-    );
-    return 'https://www.facebook.com/' . $version . '/dialog/oauth?' .
-      http_build_query($params, null, '&');
+	$version = ($version ?: FacebookRequest::GRAPH_API_VERSION);
+	$this->state = $this->random(16);
+	$this->storeState($this->state);
+	$params = array(
+	  'client_id' => $this->appId,
+	  'redirect_uri' => $this->redirectUrl,
+	  'state' => $this->state,
+	  'sdk' => 'php-sdk-' . FacebookRequest::VERSION,
+	  'auth_type' => 'rerequest',
+	  'scope' => implode(',', $scope)
+	);
+	return 'https://www.facebook.com/' . $version . '/dialog/oauth?' .
+	  http_build_query($params, null, '&');
   }
 
   /**
@@ -148,16 +148,16 @@ class FacebookRedirectLoginHelper
    */
   public function getLogoutUrl(FacebookSession $session, $next)
   {
-    if ($session->getAccessToken()->isAppSession()) {
-      throw new FacebookSDKException(
-        'Cannot generate a Logout URL with an App Session.', 722
-      );
-    }
-    $params = array(
-      'next' => $next,
-      'access_token' => $session->getToken()
-    );
-    return 'https://www.facebook.com/logout.php?' . http_build_query($params, null, '&');
+	if ($session->getAccessToken()->isAppSession()) {
+	  throw new FacebookSDKException(
+		'Cannot generate a Logout URL with an App Session.', 722
+	  );
+	}
+	$params = array(
+	  'next' => $next,
+	  'access_token' => $session->getToken()
+	);
+	return 'https://www.facebook.com/logout.php?' . http_build_query($params, null, '&');
   }
 
   /**
@@ -168,26 +168,26 @@ class FacebookRedirectLoginHelper
    */
   public function getSessionFromRedirect()
   {
-    $this->loadState();
-    if ($this->isValidRedirect()) {
-      $params = array(
-        'client_id' => FacebookSession::_getTargetAppId($this->appId),
-        'redirect_uri' => $this->redirectUrl,
-        'client_secret' =>
-          FacebookSession::_getTargetAppSecret($this->appSecret),
-        'code' => $this->getCode()
-      );
-      $response = (new FacebookRequest(
-        FacebookSession::newAppSession($this->appId, $this->appSecret),
-        'GET',
-        '/oauth/access_token',
-        $params
-      ))->execute()->getResponse();
-      if (isset($response->access_token)) {
-        return new FacebookSession($response->access_token);
-      }
-    }
-    return null;
+	$this->loadState();
+	if ($this->isValidRedirect()) {
+	  $params = array(
+		'client_id' => FacebookSession::_getTargetAppId($this->appId),
+		'redirect_uri' => $this->redirectUrl,
+		'client_secret' =>
+		  FacebookSession::_getTargetAppSecret($this->appSecret),
+		'code' => $this->getCode()
+	  );
+	  $response = (new FacebookRequest(
+		FacebookSession::newAppSession($this->appId, $this->appSecret),
+		'GET',
+		'/oauth/access_token',
+		$params
+	  ))->execute()->getResponse();
+	  if (isset($response->access_token)) {
+		return new FacebookSession($response->access_token);
+	  }
+	}
+	return null;
   }
 
   /**
@@ -197,8 +197,8 @@ class FacebookRedirectLoginHelper
    */
   protected function isValidRedirect()
   {
-    return $this->getCode() && isset($_GET['state'])
-        && $_GET['state'] == $this->state;
+	return $this->getCode() && isset($_GET['state'])
+		&& $_GET['state'] == $this->state;
   }
 
   /**
@@ -208,7 +208,7 @@ class FacebookRedirectLoginHelper
    */
   protected function getCode()
   {
-    return isset($_GET['code']) ? $_GET['code'] : null;
+	return isset($_GET['code']) ? $_GET['code'] : null;
   }
 
   /**
@@ -222,13 +222,13 @@ class FacebookRedirectLoginHelper
    */
   protected function storeState($state)
   {
-    if ($this->checkForSessionStatus === true
-      && session_status() !== PHP_SESSION_ACTIVE) {
-      throw new FacebookSDKException(
-        'Session not active, could not store state.', 720
-      );
-    }
-    $_SESSION[$this->sessionPrefix . 'state'] = $state;
+	if ($this->checkForSessionStatus === true
+	  && session_status() !== PHP_SESSION_ACTIVE) {
+	  throw new FacebookSDKException(
+		'Session not active, could not store state.', 720
+	  );
+	}
+	$_SESSION[$this->sessionPrefix . 'state'] = $state;
   }
 
   /**
@@ -242,17 +242,17 @@ class FacebookRedirectLoginHelper
    */
   protected function loadState()
   {
-    if ($this->checkForSessionStatus === true
-      && session_status() !== PHP_SESSION_ACTIVE) {
-      throw new FacebookSDKException(
-        'Session not active, could not load state.', 721
-      );
-    }
-    if (isset($_SESSION[$this->sessionPrefix . 'state'])) {
-      $this->state = $_SESSION[$this->sessionPrefix . 'state'];
-      return $this->state;
-    }
-    return null;
+	if ($this->checkForSessionStatus === true
+	  && session_status() !== PHP_SESSION_ACTIVE) {
+	  throw new FacebookSDKException(
+		'Session not active, could not load state.', 721
+	  );
+	}
+	if (isset($_SESSION[$this->sessionPrefix . 'state'])) {
+	  $this->state = $_SESSION[$this->sessionPrefix . 'state'];
+	  return $this->state;
+	}
+	return null;
   }
   
   /**
@@ -268,42 +268,42 @@ class FacebookRedirectLoginHelper
    */
   public function random($bytes)
   {
-    if (!is_numeric($bytes)) {
-      throw new FacebookSDKException(
-        "random() expects an integer"
-      );
-    }
-    if ($bytes < 1) {
-      throw new FacebookSDKException(
-        "random() expects an integer greater than zero"
-      );
-    }
-    $buf = '';
-    // http://sockpuppet.org/blog/2014/02/25/safely-generate-random-numbers/
-    if (!ini_get('open_basedir')
-      && is_readable('/dev/urandom')) {
-      $fp = fopen('/dev/urandom', 'rb');
-      if ($fp !== FALSE) {
-        $buf = fread($fp, $bytes);
-        fclose($fp);
-        if($buf !== FALSE) {
-          return bin2hex($buf);
-        }
-      }
-    }
+	if (!is_numeric($bytes)) {
+	  throw new FacebookSDKException(
+		"random() expects an integer"
+	  );
+	}
+	if ($bytes < 1) {
+	  throw new FacebookSDKException(
+		"random() expects an integer greater than zero"
+	  );
+	}
+	$buf = '';
+	// http://sockpuppet.org/blog/2014/02/25/safely-generate-random-numbers/
+	if (!ini_get('open_basedir')
+	  && is_readable('/dev/urandom')) {
+	  $fp = fopen('/dev/urandom', 'rb');
+	  if ($fp !== FALSE) {
+		$buf = fread($fp, $bytes);
+		fclose($fp);
+		if($buf !== FALSE) {
+		  return bin2hex($buf);
+		}
+	  }
+	}
 
-    if (function_exists('mcrypt_create_iv')) {
-        $buf = mcrypt_create_iv($bytes, MCRYPT_DEV_URANDOM);
-        if ($buf !== FALSE) {
-          return bin2hex($buf);
-        }
-    }
+	if (function_exists('mcrypt_create_iv')) {
+		$buf = mcrypt_create_iv($bytes, MCRYPT_DEV_URANDOM);
+		if ($buf !== FALSE) {
+		  return bin2hex($buf);
+		}
+	}
     
-    while (strlen($buf) < $bytes) {
-      $buf .= md5(uniqid(mt_rand(), true), true); 
-      // We are appending raw binary
-    }
-    return bin2hex(substr($buf, 0, $bytes));
+	while (strlen($buf) < $bytes) {
+	  $buf .= md5(uniqid(mt_rand(), true), true); 
+	  // We are appending raw binary
+	}
+	return bin2hex(substr($buf, 0, $bytes));
   }
 
   /**
@@ -311,7 +311,7 @@ class FacebookRedirectLoginHelper
    */
   public function disableSessionStatusCheck()
   {
-    $this->checkForSessionStatus = false;
+	$this->checkForSessionStatus = false;
   }
 
 }

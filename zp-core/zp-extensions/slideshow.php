@@ -375,8 +375,9 @@ class slideshow {
 				<div id="slides" class="pics">
 				';
 
-		if ($cntr > 1)
-			$cntr = 1;
+		if ($cntr > 1) {
+					$cntr = 1;
+		}
 		for ($imgnr = 0, $idx = $imagenumber; $imgnr <= $cntr; $idx++) {
 			if ($idx >= $numberofimages) {
 				$idx = 0;
@@ -422,8 +423,9 @@ class slideshow {
 							</object>
 							<a>';
 				} else {
-					if ($linkslides)
-						$slideshow .= '<a href="' . html_encode($image->getLink()) . '">';
+					if ($linkslides) {
+											$slideshow .= '<a href="' . html_encode($image->getLink()) . '">';
+					}
 					if ($crop) {
 						$img = $image->getCustomImage(NULL, $width, $height, $width, $height, NULL, NULL, NULL, NULL);
 					} else {
@@ -433,8 +435,9 @@ class slideshow {
 						$img = $image->getCustomImage(NULL, $maxwidth, $maxheight, NULL, NULL, NULL, NULL, NULL, NULL);
 					}
 					$slideshow .= '<img src="' . html_encode($img) . '" alt="" />';
-					if ($linkslides)
-						$slideshow .= '</a>';
+					if ($linkslides) {
+											$slideshow .= '</a>';
+					}
 				}
 				if ($showdesc) {
 					$desc = $image->getDesc();
@@ -478,8 +481,9 @@ class slideshow {
 	 * @return string;
 	 */
 	static function is_valid($image, $valid_types) {
-		if (is_object($image))
-			$image = $image->filename;
+		if (is_object($image)) {
+					$image = $image->filename;
+		}
 		$ext = getSuffix($image);
 		if (in_array($ext, $valid_types)) {
 			return $ext;
@@ -557,7 +561,10 @@ if (extensionEnabled('slideshow') && !OFFSET_PATH) {
 						<input type="hidden" name="imagefile" value="<?php echo html_encode($imagefile); ?>" />
 
 					</form>
-					<?php if (!empty($linkstyle)) echo '<p style="' . $linkstyle . '">'; ?>
+					<?php if (!empty($linkstyle)) {
+	echo '<p style="' . $linkstyle . '">';
+}
+?>
 					<a class="slideshowlink" id="slideshowlink_<?php echo $slideshow_instance; ?>" 	href="javascript:document.slideshow_<?php echo $slideshow_instance; ?>.submit()"><?php echo $linktext; ?></a><?php echo html_encodeTagged($after); ?>
 					<?php
 					if (!empty($linkstyle)) {
@@ -694,7 +701,7 @@ if (extensionEnabled('slideshow') && !OFFSET_PATH) {
 	function printSlideShow($heading = true, $speedctl = false, $albumobj = NULL, $imageobj = NULL, $width = NULL, $height = NULL, $crop = false, $shuffle = false, $linkslides = false, $controls = true) {
 		global $_myFavorites, $_conf_vars, $_gallery, $_gallery_page, $__slideshow_scripts;
 
-		if (!isset($_POST['albumid']) AND ! is_object($albumobj)) {
+		if (!isset($_POST['albumid']) AND !is_object($albumobj)) {
 			echo '<div class="errorbox" id="message"><h2>' . gettext('Invalid linking to the slideshow page.') . '</h2></div>';
 			return;
 		}
@@ -703,7 +710,7 @@ if (extensionEnabled('slideshow') && !OFFSET_PATH) {
 		}
 
 		//getting the image to start with
-		if (!empty($_POST['imagenumber']) AND ! is_object($imageobj)) {
+		if (!empty($_POST['imagenumber']) AND !is_object($imageobj)) {
 			$imagenumber = sanitize_numeric($_POST['imagenumber']) - 1; // slideshows starts with 0, but $_POST['imagenumber'] with 1.
 		} elseif (is_object($imageobj)) {
 			$imagenumber = $imageobj->getIndex();

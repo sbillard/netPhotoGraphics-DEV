@@ -625,7 +625,6 @@ function getCurrentTheme() {
  * If we're already in the album context, this is a sub-albums loop, which,
  * quite simply, changes the source of the album list.
  * Switch back to the previous context when there are no more albums.
-
  * Returns true if there are albums, false if none
  *
  * @param bool $all true to go through all the albums
@@ -690,10 +689,12 @@ function getCurrentPage() {
  */
 function getAllAlbums($album = NULL) {
 	global $_current_album, $_gallery;
-	if (is_null($album))
-		$album = $_current_album;
-	if (!is_object($album))
-		return;
+	if (is_null($album)) {
+			$album = $_current_album;
+	}
+	if (!is_object($album)) {
+			return;
+	}
 	$list = array();
 	$subalbums = $album->getAlbums(0);
 	if (is_array($subalbums)) {
@@ -956,7 +957,10 @@ function printPageListWithNav($prevtext, $nexttext, $_oneImagePage = false, $nex
 		$current = getCurrentPage();
 		$nav = getPageNavList($_oneImagePage, $navlen, $firstlast, $current, $total);
 		?>
-		<div <?php if ($id) echo ' id="' . $id . '"'; ?> class="<?php echo $class; ?>">
+		<div <?php if ($id) {
+	echo ' id="' . $id . '"';
+}
+?> class="<?php echo $class; ?>">
 			<ul class="<?php echo $class; ?>">
 				<?php
 				$prev = $nav['prev'];
@@ -982,10 +986,11 @@ function printPageListWithNav($prevtext, $nexttext, $_oneImagePage = false, $nex
 				if ($firstlast) {
 					?>
 					<li class="<?php
-					if ($current == 1)
-						echo 'current';
-					else
-						echo 'first';
+					if ($current == 1) {
+											echo 'current';
+					} else {
+											echo 'first';
+					}
 					?>">
 								<?php
 								if ($current == 1) {
@@ -1021,7 +1026,10 @@ function printPageListWithNav($prevtext, $nexttext, $_oneImagePage = false, $nex
 						<?php
 					}
 					?>
-					<li<?php if ($current == $i) echo ' class="current"'; ?>>
+					<li<?php if ($current == $i) {
+	echo ' class="current"';
+}
+?>>
 						<?php
 						if ($i == $current) {
 							echo $i;
@@ -1057,7 +1065,10 @@ function printPageListWithNav($prevtext, $nexttext, $_oneImagePage = false, $nex
 							<?php
 						}
 						?>
-						<li class="last<?php if ($current == $i) echo ' current'; ?>">
+						<li class="last<?php if ($current == $i) {
+	echo ' current';
+}
+?>">
 							<?php
 							if ($current == $i) {
 								echo $i;
@@ -1111,8 +1122,9 @@ function makeAlbumCurrent($album) {
  * @return string
  */
 function getAlbumTitle() {
-	if (!in_context(NPG_ALBUM))
-		return false;
+	if (!in_context(NPG_ALBUM)) {
+			return false;
+	}
 	global $_current_album;
 	return $_current_album->getTitle();
 }
@@ -1555,8 +1567,9 @@ function printAlbumLocation() {
  * @return string
  */
 function getAlbumDesc() {
-	if (!in_context(NPG_ALBUM))
-		return false;
+	if (!in_context(NPG_ALBUM)) {
+			return false;
+	}
 	global $_current_album;
 	return $_current_album->getDesc();
 }
@@ -1591,8 +1604,9 @@ function printBareAlbumDesc() {
  * @return string
  */
 function getAlbumData($field) {
-	if (!in_context(NPG_IMAGE))
-		return false;
+	if (!in_context(NPG_IMAGE)) {
+			return false;
+	}
 	global $_album_image;
 	return get_language_string($_album_image->get($field));
 }
@@ -1643,12 +1657,14 @@ function getAlbumPage($album = NULL) {
  */
 function getAlbumURL($album = NULL) {
 	global $_current_album;
-	if (is_null($album))
-		$album = $_current_album;
+	if (is_null($album)) {
+			$album = $_current_album;
+	}
 	if (in_context(NPG_IMAGE)) {
 		$page = getAlbumPage($album);
-		if ($page <= 1)
-			$page = 0;
+		if ($page <= 1) {
+					$page = 0;
+		}
 	} else {
 		$page = 0;
 	}
@@ -1795,8 +1811,9 @@ function printCustomAlbumThumbImage($alt, $size, $width = NULL, $height = NULL, 
 				$height = $size;
 			}
 			$s = round($height * ($cropw / $croph));
-			if (!empty($s))
-				$sizing = ' width="' . $s . '"';
+			if (!empty($s)) {
+							$sizing = ' width="' . $s . '"';
+			}
 		}
 	} else {
 		$sizing = ' width="' . $width . '"';
@@ -1807,8 +1824,9 @@ function printCustomAlbumThumbImage($alt, $size, $width = NULL, $height = NULL, 
 				$width = $size;
 			}
 			$s = round($width * ($croph / $cropw));
-			if (!empty($s))
-				$sizing = $sizing . ' height="' . $s . '"';
+			if (!empty($s)) {
+							$sizing = $sizing . ' height="' . $s . '"';
+			}
 		}
 	} else {
 		$sizing = $sizing . ' height="' . $height . '"';
@@ -1851,17 +1869,20 @@ function getMaxSpaceContainer(&$width, &$height, $image, $thumb = false) {
 		$s_height = gl_imageHeight($image);
 	} else {
 		$s_width = $image->get('width');
-		if ($s_width == 0)
-			$s_width = max($width, $height, 1);
+		if ($s_width == 0) {
+					$s_width = max($width, $height, 1);
+		}
 		$s_height = $image->get('height');
-		if ($s_height == 0)
-			$s_height = max($width, $height, 1);
+		if ($s_height == 0) {
+					$s_height = max($width, $height, 1);
+		}
 	}
 
 	$newW = round($height / $s_height * $s_width);
 	$newH = round($width / $s_width * $s_height);
-	if (DEBUG_IMAGE)
-		debugLog("getMaxSpaceContainer($width, $height, $imagename, $thumb): \$s_width=$s_width; \$s_height=$s_height; \$newW=$newW; \$newH=$newH; \$upscale=$upscale;");
+	if (DEBUG_IMAGE) {
+			debugLog("getMaxSpaceContainer($width, $height, $imagename, $thumb): \$s_width=$s_width; \$s_height=$s_height; \$newW=$newW; \$newH=$newH; \$upscale=$upscale;");
+	}
 	if ($newW > $width) {
 		if ($upscale || $s_height > $newH) {
 			$height = $newH;
@@ -1981,8 +2002,10 @@ function isImagePage() {
 	if (getNumImages()) {
 		global $_current_page, $_firstPageImages;
 		$imagestart = getTotalPages(2); // # of album pages
-		if (!$_firstPageImages)
-			$imagestart++; // then images start on the last album page.
+		if (!$_firstPageImages) {
+					$imagestart++;
+		}
+		// then images start on the last album page.
 		return $_current_page >= $imagestart;
 	}
 	return false;
@@ -2038,7 +2061,6 @@ function getTotalImagesIn($album) {
 /**
  * Returns the next image on a page.
  * sets $_current_image to the next image in the album.
-
  * Returns true if there is an image to be shown
  *
  * @param bool $all set to true disable pagination
@@ -2109,8 +2131,9 @@ function next_image($all = false, $firstPageCount = NULL, $mine = NULL) {
  * @param object $image the image to become current
  */
 function makeImageCurrent($image) {
-	if (!is_object($image))
-		return;
+	if (!is_object($image)) {
+			return;
+	}
 	global $_current_album, $_current_image;
 	$_current_image = $image;
 	$_current_album = $_current_image->getAlbum();
@@ -2124,8 +2147,9 @@ function makeImageCurrent($image) {
  * @return string
  */
 function getImageTitle() {
-	if (!in_context(NPG_IMAGE))
-		return false;
+	if (!in_context(NPG_IMAGE)) {
+			return false;
+	}
 	global $_current_image;
 	return $_current_image->getTitle();
 }
@@ -2202,8 +2226,9 @@ function imageNumber() {
  * @return string
  */
 function getImageDate($format = null) {
-	if (!in_context(NPG_IMAGE))
-		return false;
+	if (!in_context(NPG_IMAGE)) {
+			return false;
+	}
 	global $_current_image;
 	$d = $_current_image->getDateTime();
 	if (empty($d)) {
@@ -2242,8 +2267,9 @@ function printImageDate($before = '', $format = null) {
  * @return string
  */
 function getImageLocation() {
-	if (!in_context(NPG_IMAGE))
-		return false;
+	if (!in_context(NPG_IMAGE)) {
+			return false;
+	}
 	global $_current_image;
 	return $_current_image->getLocation();
 }
@@ -2254,8 +2280,9 @@ function getImageLocation() {
  * @return string
  */
 function getImageCity() {
-	if (!in_context(NPG_IMAGE))
-		return false;
+	if (!in_context(NPG_IMAGE)) {
+			return false;
+	}
 	global $_current_image;
 	return $_current_image->getcity();
 }
@@ -2266,8 +2293,9 @@ function getImageCity() {
  * @return string
  */
 function getImageState() {
-	if (!in_context(NPG_IMAGE))
-		return false;
+	if (!in_context(NPG_IMAGE)) {
+			return false;
+	}
 	global $_current_image;
 	return $_current_image->getState();
 }
@@ -2278,8 +2306,9 @@ function getImageState() {
  * @return string
  */
 function getImageCountry() {
-	if (!in_context(NPG_IMAGE))
-		return false;
+	if (!in_context(NPG_IMAGE)) {
+			return false;
+	}
 	global $_current_image;
 	return $_current_image->getCountry();
 }
@@ -2291,8 +2320,9 @@ function getImageCountry() {
  * @return string
  */
 function getImageDesc() {
-	if (!in_context(NPG_IMAGE))
-		return false;
+	if (!in_context(NPG_IMAGE)) {
+			return false;
+	}
 	global $_current_image;
 	return $_current_image->getDesc();
 }
@@ -2326,8 +2356,9 @@ function printBareImageDesc() {
  * @return string
  */
 function getImageData($field) {
-	if (!in_context(NPG_IMAGE))
-		return false;
+	if (!in_context(NPG_IMAGE)) {
+			return false;
+	}
 	global $_current_image;
 	return get_language_string($_current_image->get($field));
 }
@@ -2368,8 +2399,9 @@ function getFullImageFilesize() {
  */
 function hasNextImage() {
 	global $_current_image;
-	if (is_null($_current_image))
-		return false;
+	if (is_null($_current_image)) {
+			return false;
+	}
 	return $_current_image->getNextImage();
 }
 
@@ -2380,8 +2412,9 @@ function hasNextImage() {
  */
 function hasPrevImage() {
 	global $_current_image;
-	if (is_null($_current_image))
-		return false;
+	if (is_null($_current_image)) {
+			return false;
+	}
 	return $_current_image->getPrevImage();
 }
 
@@ -2392,10 +2425,12 @@ function hasPrevImage() {
  */
 function getNextImageURL() {
 	global $_current_image;
-	if (!in_context(NPG_IMAGE))
-		return false;
-	if (is_null($_current_image))
-		return false;
+	if (!in_context(NPG_IMAGE)) {
+			return false;
+	}
+	if (is_null($_current_image)) {
+			return false;
+	}
 	$nextimg = $_current_image->getNextImage();
 	return $nextimg->getLink();
 }
@@ -2407,10 +2442,12 @@ function getNextImageURL() {
  */
 function getPrevImageURL() {
 	global $_current_image;
-	if (!in_context(NPG_IMAGE))
-		return false;
-	if (is_null($_current_image))
-		return false;
+	if (!in_context(NPG_IMAGE)) {
+			return false;
+	}
+	if (is_null($_current_image)) {
+			return false;
+	}
 	$previmg = $_current_image->getPrevImage();
 	return $previmg->getLink();
 }
@@ -2421,11 +2458,13 @@ function getPrevImageURL() {
  * @return string
  */
 function getPrevImageThumb() {
-	if (!in_context(NPG_IMAGE))
-		return false;
+	if (!in_context(NPG_IMAGE)) {
+			return false;
+	}
 	global $_current_image;
-	if (is_null($_current_image))
-		return false;
+	if (is_null($_current_image)) {
+			return false;
+	}
 	$img = $_current_image->getPrevImage();
 	return $img->getThumb();
 }
@@ -2436,11 +2475,13 @@ function getPrevImageThumb() {
  * @return string
  */
 function getNextImageThumb() {
-	if (!in_context(NPG_IMAGE))
-		return false;
+	if (!in_context(NPG_IMAGE)) {
+			return false;
+	}
 	global $_current_image;
-	if (is_null($_current_image))
-		return false;
+	if (is_null($_current_image)) {
+			return false;
+	}
 	$img = $_current_image->getNextImage();
 	return $img->getThumb();
 }
@@ -2451,11 +2492,13 @@ function getNextImageThumb() {
  * @return string
  */
 function getImageURL() {
-	if (!in_context(NPG_IMAGE))
-		return false;
+	if (!in_context(NPG_IMAGE)) {
+			return false;
+	}
 	global $_current_image;
-	if (is_null($_current_image))
-		return false;
+	if (is_null($_current_image)) {
+			return false;
+	}
 	return $_current_image->getLink();
 }
 
@@ -2481,8 +2524,9 @@ function printImageURL($text, $title, $class = NULL, $id = NULL) {
 function getImageMetaData($image = NULL, $displayonly = true) {
 	global $_current_image, $_exifvars;
 	require_once(CORE_SERVERPATH . 'exif/exifTranslations.php');
-	if (is_null($image))
-		$image = $_current_image;
+	if (is_null($image)) {
+			$image = $_current_image;
+	}
 	if (is_null($image) || !$image->get('hasMetadata')) {
 		return false;
 	}
@@ -2584,10 +2628,12 @@ function printImageMetadata($title = NULL, $toggle = true, $id = 'imagemetadata'
  */
 function getSizeCustomImage($size, $width = NULL, $height = NULL, $cw = NULL, $ch = NULL, $cx = NULL, $cy = NULL, $image = NULL) {
 	global $_current_image;
-	if (is_null($image))
-		$image = $_current_image;
-	if (is_null($image))
-		return false;
+	if (is_null($image)) {
+			$image = $_current_image;
+	}
+	if (is_null($image)) {
+			return false;
+	}
 
 	$h = $image->getHeight();
 	$w = $image->getWidth();
@@ -2659,8 +2705,9 @@ function getSizeCustomImage($size, $width = NULL, $height = NULL, $cw = NULL, $c
  * @return array
  */
 function getSizeDefaultImage($size = NULL, $image = NULL) {
-	if (is_null($size))
-		$size = getOption('image_size');
+	if (is_null($size)) {
+			$size = getOption('image_size');
+	}
 	return getSizeCustomImage($size, NULL, NULL, NULL, NULL, NULL, NULL, $image);
 }
 
@@ -2673,10 +2720,12 @@ function getSizeDefaultImage($size = NULL, $image = NULL) {
  */
 function getSizeFullImage($image = NULL) {
 	global $_current_image;
-	if (is_null($image))
-		$image = $_current_image;
-	if (is_null($image))
-		return false;
+	if (is_null($image)) {
+			$image = $_current_image;
+	}
+	if (is_null($image)) {
+			return false;
+	}
 	return array($image->getWidth(), $image->getHeight());
 }
 
@@ -2713,10 +2762,12 @@ function getDefaultHeight($size = NULL, $image = NULL) {
  */
 function getFullWidth($image = NULL) {
 	global $_current_image;
-	if (is_null($image))
-		$image = $_current_image;
-	if (is_null($image))
-		return false;
+	if (is_null($image)) {
+			$image = $_current_image;
+	}
+	if (is_null($image)) {
+			return false;
+	}
 	return $image->getWidth();
 }
 
@@ -2729,10 +2780,12 @@ function getFullWidth($image = NULL) {
  */
 function getFullHeight($image = NULL) {
 	global $_current_image;
-	if (is_null($image))
-		$image = $_current_image;
-	if (is_null($image))
-		return false;
+	if (is_null($image)) {
+			$image = $_current_image;
+	}
+	if (is_null($image)) {
+			return false;
+	}
 	return $image->getHeight();
 }
 
@@ -2744,8 +2797,9 @@ function getFullHeight($image = NULL) {
  * @return bool
  */
 function isLandscape($image = NULL) {
-	if (getFullWidth($image) >= getFullHeight($image))
-		return true;
+	if (getFullWidth($image) >= getFullHeight($image)) {
+			return true;
+	}
 	return false;
 }
 
@@ -2758,10 +2812,12 @@ function isLandscape($image = NULL) {
  */
 function getDefaultSizedImage($image = NULL) {
 	global $_current_image;
-	if (is_null($image))
-		$image = $_current_image;
-	if (is_null($image))
-		return false;
+	if (is_null($image)) {
+			$image = $_current_image;
+	}
+	if (is_null($image)) {
+			return false;
+	}
 	return $image->getSizedImage(getOption('image_size'));
 }
 
@@ -2775,8 +2831,9 @@ function getDefaultSizedImage($image = NULL) {
  */
 function printDefaultSizedImage($alt, $class = NULL, $id = NULL, $title = NULL) {
 	global $_current_image;
-	if (is_null($_current_image))
-		return;
+	if (is_null($_current_image)) {
+			return;
+	}
 	if (!$_current_image->getShow()) {
 		$class .= " not_visible";
 	}
@@ -2812,8 +2869,9 @@ function printDefaultSizedImage($alt, $class = NULL, $id = NULL, $title = NULL) 
  */
 function getImageThumb() {
 	global $_current_image;
-	if (is_null($_current_image))
-		return false;
+	if (is_null($_current_image)) {
+			return false;
+	}
 	return $_current_image->getThumb();
 }
 
@@ -2825,8 +2883,9 @@ function getImageThumb() {
  */
 function printImageThumb($alt, $class = NULL, $id = NULL, $title = NULL) {
 	global $_current_image;
-	if (is_null($_current_image))
-		return;
+	if (is_null($_current_image)) {
+			return;
+	}
 	if (!$_current_image->getShow()) {
 		$class .= " not_visible";
 	}
@@ -2940,13 +2999,16 @@ function getProtectedImageURL($image = NULL, $disposal = NULL) {
 	if (is_null($disposal)) {
 		$disposal = getOption('protect_full_image');
 	}
-	if ($disposal == 'No access')
-		return NULL;
+	if ($disposal == 'No access') {
+			return NULL;
+	}
 	if (is_null($image)) {
-		if (!in_context(NPG_IMAGE))
-			return false;
-		if (is_null($_current_image))
-			return false;
+		if (!in_context(NPG_IMAGE)) {
+					return false;
+		}
+		if (is_null($_current_image)) {
+					return false;
+		}
 		$image = $_current_image;
 	}
 
@@ -3054,8 +3116,9 @@ function getSizedImageURL($size) {
  */
 function getCustomImageURL($size, $width = NULL, $height = NULL, $cropw = NULL, $croph = NULL, $cropx = NULL, $cropy = NULL, $thumbStandin = false, $effects = NULL) {
 	global $_current_image;
-	if (is_null($_current_image))
-		return false;
+	if (is_null($_current_image)) {
+			return false;
+	}
 	return $_current_image->getCustomImage($size, $width, $height, $cropw, $croph, $cropx, $cropy, $thumbStandin, $effects);
 }
 
@@ -3086,8 +3149,9 @@ function getCustomImageURL($size, $width = NULL, $height = NULL, $cropw = NULL, 
  * */
 function printCustomSizedImage($alt, $size, $width = NULL, $height = NULL, $cropw = NULL, $croph = NULL, $cropx = NULL, $cropy = NULL, $class = NULL, $id = NULL, $thumbStandin = false, $effects = NULL, $title = NULL) {
 	global $_current_image;
-	if (is_null($_current_image))
-		return;
+	if (is_null($_current_image)) {
+			return;
+	}
 	if (!$_current_image->getShow()) {
 		$class .= " not_visible";
 	}
@@ -3099,15 +3163,19 @@ function printCustomSizedImage($alt, $size, $width = NULL, $height = NULL, $crop
 	$sizing = '';
 	if ($size) {
 		$dims = getSizeCustomImage($size);
-		if ($dims[0])
-			$sizing = ' width="' . $dims[0] . '"';
-		if ($dims[1])
-			$sizing .= ' height="' . $dims[1] . '"';
+		if ($dims[0]) {
+					$sizing = ' width="' . $dims[0] . '"';
+		}
+		if ($dims[1]) {
+					$sizing .= ' height="' . $dims[1] . '"';
+		}
 	} else {
-		if ($width)
-			$sizing .= ' width="' . $width . '"';
-		if ($height)
-			$sizing .= ' height="' . $height . '"';
+		if ($width) {
+					$sizing .= ' width="' . $width . '"';
+		}
+		if ($height) {
+					$sizing .= ' height="' . $height . '"';
+		}
 	}
 	if ($id) {
 		$id = ' id="' . $id . '"';
@@ -3139,8 +3207,9 @@ function printCustomSizedImage($alt, $size, $width = NULL, $height = NULL, $crop
  */
 function getCustomSizedImageMaxSpace($width, $height) {
 	global $_current_image;
-	if (is_null($_current_image))
-		return false;
+	if (is_null($_current_image)) {
+			return false;
+	}
 	getMaxSpaceContainer($width, $height, $_current_image);
 	return getCustomImageURL(NULL, $width, $height);
 }
@@ -3155,8 +3224,9 @@ function getCustomSizedImageMaxSpace($width, $height) {
  */
 function getCustomSizedImageThumbMaxSpace($width, $height) {
 	global $_current_image;
-	if (is_null($_current_image))
-		return false;
+	if (is_null($_current_image)) {
+			return false;
+	}
 	getMaxSpaceContainer($width, $height, $_current_image, true);
 	return getCustomImageURL(NULL, $width, $height, NULL, NULL, NULL, NULL, true);
 }
@@ -3173,8 +3243,9 @@ function getCustomSizedImageThumbMaxSpace($width, $height) {
  */
 function printCustomSizedImageThumbMaxSpace($alt, $width, $height, $class = NULL, $id = NULL, $title = NULL) {
 	global $_current_image;
-	if (is_null($_current_image))
-		return;
+	if (is_null($_current_image)) {
+			return;
+	}
 	getMaxSpaceContainer($width, $height, $_current_image, true);
 	printCustomSizedImage($alt, NULL, $width, $height, NULL, NULL, NULL, NULL, $class, $id, true, null, $title);
 }
@@ -3192,8 +3263,9 @@ function printCustomSizedImageThumbMaxSpace($alt, $width, $height, $class = NULL
  */
 function printCustomSizedImageMaxSpace($alt, $width, $height, $class = NULL, $id = NULL, $thumb = false, $title = NULL) {
 	global $_current_image;
-	if (is_null($_current_image))
-		return;
+	if (is_null($_current_image)) {
+			return;
+	}
 	getMaxSpaceContainer($width, $height, $_current_image, $thumb);
 	printCustomSizedImage($alt, NULL, $width, $height, NULL, NULL, NULL, NULL, $class, $id, $thumb, null, $title);
 }
@@ -3348,8 +3420,9 @@ function getRandomImagesAlbum($rootAlbum = NULL, $daily = false) {
 	} else {
 		$album->setSortType('random', 'album');
 		foreach ($album->getAlbums() as $subalbum) {
-			if ($image = getRandomImagesAlbum($subalbum))
-				break;
+			if ($image = getRandomImagesAlbum($subalbum)) {
+							break;
+			}
 		}
 	}
 
@@ -3379,10 +3452,12 @@ function printRandomImages($number = 5, $class = null, $option = 'all', $rootAlb
 	if (is_null($crop) && is_null($width) && is_null($height)) {
 		$crop = 2;
 	} else {
-		if (is_null($width))
-			$width = 85;
-		if (is_null($height))
-			$height = 85;
+		if (is_null($width)) {
+					$width = 85;
+		}
+		if (is_null($height)) {
+					$height = 85;
+		}
 		if (is_null($crop)) {
 			$crop = 1;
 		} else {
@@ -4041,11 +4116,17 @@ function printSearchForm($prevtext = NULL, $id = 'search', $buttonSource = NULL,
 						if ($searchwords) {
 							?>
 							<label>
-								<input type="radio" name="search_within" id="search_within-1" value="1"<?php if ($within) echo ' checked="checked"'; ?> onclick="search_(1);" />
+								<input type="radio" name="search_within" id="search_within-1" value="1"<?php if ($within) {
+	echo ' checked="checked"';
+}
+?> onclick="search_(1);" />
 								<?php echo gettext('Within'); ?>
 							</label>
 							<label>
-								<input type="radio" name="search_within" id="search_within-0" value="1"<?php if (!$within) echo ' checked="checked"'; ?> onclick="search_(0);" />
+								<input type="radio" name="search_within" id="search_within-0" value="1"<?php if (!$within) {
+	echo ' checked="checked"';
+}
+?> onclick="search_(0);" />
 								<?php echo gettext('New'); ?>
 							</label>
 							<?php
@@ -4085,8 +4166,9 @@ function printSearchForm($prevtext = NULL, $id = 'search', $buttonSource = NULL,
  */
 function getSearchWords() {
 	global $_current_search;
-	if (!in_context(NPG_SEARCH))
-		return '';
+	if (!in_context(NPG_SEARCH)) {
+			return '';
+	}
 	return stripcslashes($_current_search->codifySearchString());
 }
 
@@ -4130,10 +4212,12 @@ function getSearchDate($format = '%B %Y') {
 function setThemeColumns() {
 	global $_current_album, $_firstPageImages, $_oneImagePage;
 	$_firstPageImages = false;
-	if (($albumColumns = getOption('albums_per_row')) <= 1)
-		$albumColumns = false;
-	if (($imageColumns = getOption('images_per_row')) <= 1)
-		$imageColumns = false;
+	if (($albumColumns = getOption('albums_per_row')) <= 1) {
+			$albumColumns = false;
+	}
+	if (($imageColumns = getOption('images_per_row')) <= 1) {
+			$imageColumns = false;
+	}
 	$albcount = max(1, getOption('albums_per_page'));
 	if (($albumColumns) && (($albcount % $albumColumns) != 0)) {
 		setOption('albums_per_page', $albcount = ((floor($albcount / $albumColumns) + 1) * $albumColumns), false);
@@ -4170,18 +4254,21 @@ function setThemeColumns() {
 function checkForGuest(&$hint = NULL, &$show = NULL) {
 	global $_gallery, $_gallery_page, $_CMS_current_page, $_CMS_current_category, $_CMS_current_article;
 	$authType = npgFilters::apply('checkForGuest', NULL);
-	if (!is_null($authType))
-		return $authType;
+	if (!is_null($authType)) {
+			return $authType;
+	}
 	if (in_context(NPG_SEARCH)) { // search page
 		$hash = getOption('search_password');
-		if (getOption('search_user') != '')
-			$show = true;
+		if (getOption('search_user') != '') {
+					$show = true;
+		}
 		$hint = get_language_string(getOption('search_hint'));
 		$authType = 'search_auth';
 		if (empty($hash)) {
 			$hash = $_gallery->getPassword();
-			if ($_gallery->getUser() != '')
-				$show = true;
+			if ($_gallery->getUser() != '') {
+							$show = true;
+			}
 			$hint = $_gallery->getPasswordHint();
 			$authType = 'gallery_auth';
 		}
@@ -4197,21 +4284,24 @@ function checkForGuest(&$hint = NULL, &$show = NULL) {
 			return $authType;
 		} else {
 			$alb = newAlbum($album);
-			if ($alb->getUser() != '')
-				$show = true;
+			if ($alb->getUser() != '') {
+							$show = true;
+			}
 			return false;
 		}
 	} else { // other page
 		$hash = $_gallery->getPassword();
-		if ($_gallery->getUser() != '')
-			$show = true;
+		if ($_gallery->getUser() != '') {
+					$show = true;
+		}
 		$hint = $_gallery->getPasswordHint();
 		if (!empty($hash) && getNPGCookie('gallery_auth') == $hash) {
 			return 'gallery_auth';
 		}
 	}
-	if (empty($hash))
-		return 'public_access';
+	if (empty($hash)) {
+			return 'public_access';
+	}
 	return false;
 }
 
@@ -4232,10 +4322,14 @@ function checkForGuest(&$hint = NULL, &$show = NULL) {
 function checkAccess(&$hint = NULL, &$show = NULL) {
 	global $_current_album, $_current_search, $_gallery, $_gallery_page,
 	$_CMS_current_page, $_CMS_current_article;
-	if (GALLERY_SECURITY != 'public') // only registered users allowed
-		$show = true; //	therefore they will need to supply their user id if something fails below
-	if ($_gallery->isUnprotectedPage(stripSuffix($_gallery_page)))
-		return true;
+	if (GALLERY_SECURITY != 'public') {
+		// only registered users allowed
+		$show = true;
+	}
+	//	therefore they will need to supply their user id if something fails below
+	if ($_gallery->isUnprotectedPage(stripSuffix($_gallery_page))) {
+			return true;
+	}
 	if (npg_loggedin()) {
 		$fail = npgFilters::apply('isMyItemToView', NULL);
 		if (!is_null($fail)) { //	filter had something to say about access, honor it
@@ -4279,8 +4373,9 @@ function checkAccess(&$hint = NULL, &$show = NULL) {
 function printPasswordForm($_password_hint, $_password_showuser = NULL, $_password_showProtected = true, $_password_redirect = NULL) {
 	global $_login_error, $_password_form_printed, $_current_search, $_gallery, $_gallery_page,
 	$_current_album, $_current_image, $theme, $_CMS_current_page, $_authority;
-	if ($_password_form_printed)
-		return;
+	if ($_password_form_printed) {
+			return;
+	}
 	$_password_form_printed = true;
 	if (is_null($_password_redirect)) {
 		$parts = mb_parse_url(getRequestURI());

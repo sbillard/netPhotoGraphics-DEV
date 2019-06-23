@@ -114,8 +114,9 @@ function loadAlbum($album) {
 				$count = $count + $countit;
 			}
 		}
-		if ($count)
-			echo '} ';
+		if ($count) {
+					echo '} ';
+		}
 		printf(ngettext('[%u image]', '[%u images]', $count), $count);
 		echo "<br />\n";
 	}

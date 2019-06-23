@@ -52,12 +52,12 @@ class SignedRequest
    */
   public function __construct($rawSignedRequest = null, $state = null, $appSecret = null)
   {
-    if (!$rawSignedRequest) {
-      return;
-    }
+	if (!$rawSignedRequest) {
+	  return;
+	}
 
-    $this->rawSignedRequest = $rawSignedRequest;
-    $this->payload = static::parse($rawSignedRequest, $state, $appSecret);
+	$this->rawSignedRequest = $rawSignedRequest;
+	$this->payload = static::parse($rawSignedRequest, $state, $appSecret);
   }
 
   /**
@@ -67,7 +67,7 @@ class SignedRequest
    */
   public function getRawSignedRequest()
   {
-    return $this->rawSignedRequest;
+	return $this->rawSignedRequest;
   }
 
   /**
@@ -77,7 +77,7 @@ class SignedRequest
    */
   public function getPayload()
   {
-    return $this->payload;
+	return $this->payload;
   }
 
   /**
@@ -90,10 +90,10 @@ class SignedRequest
    */
   public function get($key, $default = null)
   {
-    if (isset($this->payload[$key])) {
-      return $this->payload[$key];
-    }
-    return $default;
+	if (isset($this->payload[$key])) {
+	  return $this->payload[$key];
+	}
+	return $default;
   }
 
   /**
@@ -103,7 +103,7 @@ class SignedRequest
    */
   public function getUserId()
   {
-    return $this->get('user_id');
+	return $this->get('user_id');
   }
 
   /**
@@ -113,7 +113,7 @@ class SignedRequest
    */
   public function hasOAuthData()
   {
-    return isset($this->payload['oauth_token']) || isset($this->payload['code']);
+	return isset($this->payload['oauth_token']) || isset($this->payload['code']);
   }
 
   /**
@@ -126,14 +126,14 @@ class SignedRequest
    */
   public static function make(array $payload, $appSecret = null)
   {
-    $payload['algorithm'] = 'HMAC-SHA256';
-    $payload['issued_at'] = time();
-    $encodedPayload = static::base64UrlEncode(json_encode($payload));
+	$payload['algorithm'] = 'HMAC-SHA256';
+	$payload['issued_at'] = time();
+	$encodedPayload = static::base64UrlEncode(json_encode($payload));
 
-    $hashedSig = static::hashSignature($encodedPayload, $appSecret);
-    $encodedSig = static::base64UrlEncode($hashedSig);
+	$hashedSig = static::hashSignature($encodedPayload, $appSecret);
+	$encodedSig = static::base64UrlEncode($hashedSig);
 
-    return $encodedSig.'.'.$encodedPayload;
+	return $encodedSig.'.'.$encodedPayload;
   }
 
   /**
@@ -148,21 +148,21 @@ class SignedRequest
    */
   public static function parse($signedRequest, $state = null, $appSecret = null)
   {
-    list($encodedSig, $encodedPayload) = static::split($signedRequest);
+	list($encodedSig, $encodedPayload) = static::split($signedRequest);
 
-    // Signature validation
-    $sig = static::decodeSignature($encodedSig);
-    $hashedSig = static::hashSignature($encodedPayload, $appSecret);
-    static::validateSignature($hashedSig, $sig);
+	// Signature validation
+	$sig = static::decodeSignature($encodedSig);
+	$hashedSig = static::hashSignature($encodedPayload, $appSecret);
+	static::validateSignature($hashedSig, $sig);
 
-    // Payload validation
-    $data = static::decodePayload($encodedPayload);
-    static::validateAlgorithm($data);
-    if ($state) {
-      static::validateCsrf($data, $state);
-    }
+	// Payload validation
+	$data = static::decodePayload($encodedPayload);
+	static::validateAlgorithm($data);
+	if ($state) {
+	  static::validateCsrf($data, $state);
+	}
 
-    return $data;
+	return $data;
   }
 
   /**
@@ -174,13 +174,13 @@ class SignedRequest
    */
   public static function validateFormat($signedRequest)
   {
-    if (strpos($signedRequest, '.') !== false) {
-      return;
-    }
+	if (strpos($signedRequest, '.') !== false) {
+	  return;
+	}
 
-    throw new FacebookSDKException(
-      'Malformed signed request.', 606
-    );
+	throw new FacebookSDKException(
+	  'Malformed signed request.', 606
+	);
   }
 
   /**
@@ -192,9 +192,9 @@ class SignedRequest
    */
   public static function split($signedRequest)
   {
-    static::validateFormat($signedRequest);
+	static::validateFormat($signedRequest);
 
-    return explode('.', $signedRequest, 2);
+	return explode('.', $signedRequest, 2);
   }
 
   /**
@@ -208,15 +208,15 @@ class SignedRequest
    */
   public static function decodeSignature($encodedSig)
   {
-    $sig = static::base64UrlDecode($encodedSig);
+	$sig = static::base64UrlDecode($encodedSig);
 
-    if ($sig) {
-      return $sig;
-    }
+	if ($sig) {
+	  return $sig;
+	}
 
-    throw new FacebookSDKException(
-      'Signed request has malformed encoded signature data.', 607
-    );
+	throw new FacebookSDKException(
+	  'Signed request has malformed encoded signature data.', 607
+	);
   }
 
   /**
@@ -230,19 +230,19 @@ class SignedRequest
    */
   public static function decodePayload($encodedPayload)
   {
-    $payload = static::base64UrlDecode($encodedPayload);
+	$payload = static::base64UrlDecode($encodedPayload);
 
-    if ($payload) {
-      $payload = json_decode($payload, true);
-    }
+	if ($payload) {
+	  $payload = json_decode($payload, true);
+	}
 
-    if (is_array($payload)) {
-      return $payload;
-    }
+	if (is_array($payload)) {
+	  return $payload;
+	}
 
-    throw new FacebookSDKException(
-      'Signed request has malformed encoded payload data.', 607
-    );
+	throw new FacebookSDKException(
+	  'Signed request has malformed encoded payload data.', 607
+	);
   }
 
   /**
@@ -254,13 +254,13 @@ class SignedRequest
    */
   public static function validateAlgorithm(array $data)
   {
-    if (isset($data['algorithm']) && $data['algorithm'] === 'HMAC-SHA256') {
-      return;
-    }
+	if (isset($data['algorithm']) && $data['algorithm'] === 'HMAC-SHA256') {
+	  return;
+	}
 
-    throw new FacebookSDKException(
-      'Signed request is using the wrong algorithm.', 605
-    );
+	throw new FacebookSDKException(
+	  'Signed request is using the wrong algorithm.', 605
+	);
   }
 
   /**
@@ -275,17 +275,17 @@ class SignedRequest
    */
   public static function hashSignature($encodedData, $appSecret = null)
   {
-    $hashedSig = hash_hmac(
-      'sha256', $encodedData, FacebookSession::_getTargetAppSecret($appSecret), $raw_output = true
-    );
+	$hashedSig = hash_hmac(
+	  'sha256', $encodedData, FacebookSession::_getTargetAppSecret($appSecret), $raw_output = true
+	);
 
-    if ($hashedSig) {
-      return $hashedSig;
-    }
+	if ($hashedSig) {
+	  return $hashedSig;
+	}
 
-    throw new FacebookSDKException(
-      'Unable to hash signature from encoded payload data.', 602
-    );
+	throw new FacebookSDKException(
+	  'Unable to hash signature from encoded payload data.', 602
+	);
   }
 
   /**
@@ -298,19 +298,19 @@ class SignedRequest
    */
   public static function validateSignature($hashedSig, $sig)
   {
-    if (mb_strlen($hashedSig) === mb_strlen($sig)) {
-      $validate = 0;
-      for ($i = 0; $i < mb_strlen($sig); $i++) {
-        $validate |= ord($hashedSig[$i]) ^ ord($sig[$i]);
-      }
-      if ($validate === 0) {
-        return;
-      }
-    }
+	if (mb_strlen($hashedSig) === mb_strlen($sig)) {
+	  $validate = 0;
+	  for ($i = 0; $i < mb_strlen($sig); $i++) {
+		$validate |= ord($hashedSig[$i]) ^ ord($sig[$i]);
+	  }
+	  if ($validate === 0) {
+		return;
+	  }
+	}
 
-    throw new FacebookSDKException(
-      'Signed request has an invalid signature.', 602
-    );
+	throw new FacebookSDKException(
+	  'Signed request has an invalid signature.', 602
+	);
   }
 
   /**
@@ -323,13 +323,13 @@ class SignedRequest
    */
   public static function validateCsrf(array $data, $state)
   {
-    if (isset($data['state']) && $data['state'] === $state) {
-      return;
-    }
+	if (isset($data['state']) && $data['state'] === $state) {
+	  return;
+	}
 
-    throw new FacebookSDKException(
-      'Signed request did not pass CSRF validation.', 604
-    );
+	throw new FacebookSDKException(
+	  'Signed request did not pass CSRF validation.', 604
+	);
   }
 
   /**
@@ -344,9 +344,9 @@ class SignedRequest
    */
   public static function base64UrlDecode($input)
   {
-    $urlDecodedBase64 = strtr($input, '-_', '+/');
-    static::validateBase64($urlDecodedBase64);
-    return base64_decode($urlDecodedBase64);
+	$urlDecodedBase64 = strtr($input, '-_', '+/');
+	static::validateBase64($urlDecodedBase64);
+	return base64_decode($urlDecodedBase64);
   }
 
   /**
@@ -361,7 +361,7 @@ class SignedRequest
    */
   public static function base64UrlEncode($input)
   {
-    return strtr(base64_encode($input), '+/', '-_');
+	return strtr(base64_encode($input), '+/', '-_');
   }
 
   /**
@@ -373,14 +373,14 @@ class SignedRequest
    */
   public static function validateBase64($input)
   {
-    $pattern = '/^[a-zA-Z0-9\/\r\n+]*={0,2}$/';
-    if (preg_match($pattern, $input)) {
-      return;
-    }
+	$pattern = '/^[a-zA-Z0-9\/\r\n+]*={0,2}$/';
+	if (preg_match($pattern, $input)) {
+	  return;
+	}
 
-    throw new FacebookSDKException(
-      'Signed request contains malformed base64 encoding.', 608
-    );
+	throw new FacebookSDKException(
+	  'Signed request contains malformed base64 encoding.', 608
+	);
   }
 
 }

@@ -1,8 +1,9 @@
 <?php
 // force UTF-8 Ø
 
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,8 +13,9 @@ if (!defined('WEBPATH'))
 
 		scriptLoader($_themeroot . '/style.css');
 
-		if (class_exists('RSS'))
-			printRSSHeaderLink('Gallery', gettext('Gallery'));
+		if (class_exists('RSS')) {
+					printRSSHeaderLink('Gallery', gettext('Gallery'));
+		}
 		?>
 	</head>
 

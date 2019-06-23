@@ -7,8 +7,9 @@
  */
 $_contents = @file_get_contents(dirname(dirname(dirname(__FILE__))) . '/CORE_FOLDER/CONFIGFILE');
 if ($_contents) {
-	if (strpos($_contents, '<?php') !== false)
-		$_contents = '?>' . $_contents;
+	if (strpos($_contents, '<?php') !== false) {
+			$_contents = '?>' . $_contents;
+	}
 	@eval($_contents);
 	$_conf_vars = $_zp_conf_vars;
 	if (@$_conf_vars['site_upgrade_state'] == 'open') {

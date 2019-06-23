@@ -39,7 +39,7 @@ class FacebookJavaScriptLoginHelper extends FacebookSignedRequestFromInputHelper
    */
   public function getRawSignedRequest()
   {
-    return $this->getRawSignedRequestFromCookie();
+	return $this->getRawSignedRequestFromCookie();
   }
 
 }

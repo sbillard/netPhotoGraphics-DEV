@@ -148,11 +148,13 @@ class Article extends CMSItems {
 				$catobj = newCategory($cat['titlelink']);
 				$password = $catobj->getPassword();
 				if (!empty($password)) {
-					if (!$only)
-						return true;
+					if (!$only) {
+											return true;
+					}
 				} else {
-					if ($only)
-						return false;
+					if ($only) {
+											return false;
+					}
 				}
 			}
 			return $only;
@@ -172,8 +174,9 @@ class Article extends CMSItems {
 	 * returns true if the article exists in any published category (or in no categories)
 	 */
 	function categoryIsVisible() {
-		if (npg_loggedin(MANAGE_ALL_NEWS_RIGHTS))
-			return true;
+		if (npg_loggedin(MANAGE_ALL_NEWS_RIGHTS)) {
+					return true;
+		}
 		global $_CMS;
 		$categories = $this->getCategories(false);
 		if (count($categories) > 0) {
@@ -297,8 +300,9 @@ class Article extends CMSItems {
 	 * @param string $show
 	 */
 	function checkAccess(&$hint = NULL, &$show = NULL) {
-		if (npg_loggedin(ALL_NEWS_RIGHTS))
-			return true;
+		if (npg_loggedin(ALL_NEWS_RIGHTS)) {
+					return true;
+		}
 		$categories = $this->getCategories();
 		if (empty($categories)) { //	no protection on un-categorized news articles
 			return true;

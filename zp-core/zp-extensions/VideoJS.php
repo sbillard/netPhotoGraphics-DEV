@@ -4,7 +4,6 @@
  * Support for the Video.JS video player (videojs.com). It will play video natively via HTML5 in capable browsers
  * if the appropiate multimedia formats are provided. It will fall back to flash in older browsers.
  * The player size is responsive to the browser size.
-
  * Audio: This plugin does not play audio files.<br>
  * Video: <var>.m4v</var>/<var>.mp4</var> - Counterpart formats <var>.ogv</var> and <var>.webm</var> supported (see note below!)
  *

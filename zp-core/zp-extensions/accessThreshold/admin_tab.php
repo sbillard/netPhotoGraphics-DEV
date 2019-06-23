@@ -145,10 +145,22 @@ echo "\n</head>";
 						<span class="nowrap">
 							<?php echo gettext('Sort by:'); ?>
 							<select id="sortselect" name="data_sortby" onchange="this.form.submit();">
-								<option value="<?php echo gettext('interval'); ?>" <?php if ($sort == 'interval') echo 'selected="selected"'; ?>><?php echo gettext('interval'); ?></option>
-								<option value="<?php echo gettext('date'); ?>" <?php if ($sort == 'accessTime') echo 'selected="selected"'; ?>><?php echo gettext('date'); ?></option>
-								<option value="<?php echo gettext('ip'); ?>" <?php if ($sort == 'ip') echo 'selected="selected"'; ?>><?php echo gettext('IP'); ?></option>
-								<option value="<?php echo gettext('blocked'); ?>" <?php if ($sort == 'blocked') echo 'selected="selected"'; ?>><?php echo gettext('blocked'); ?></option>
+								<option value="<?php echo gettext('interval'); ?>" <?php if ($sort == 'interval') {
+	echo 'selected="selected"';
+}
+?>><?php echo gettext('interval'); ?></option>
+								<option value="<?php echo gettext('date'); ?>" <?php if ($sort == 'accessTime') {
+	echo 'selected="selected"';
+}
+?>><?php echo gettext('date'); ?></option>
+								<option value="<?php echo gettext('ip'); ?>" <?php if ($sort == 'ip') {
+	echo 'selected="selected"';
+}
+?>><?php echo gettext('IP'); ?></option>
+								<option value="<?php echo gettext('blocked'); ?>" <?php if ($sort == 'blocked') {
+	echo 'selected="selected"';
+}
+?>><?php echo gettext('blocked'); ?></option>
 							</select>
 						</span>
 					</form>

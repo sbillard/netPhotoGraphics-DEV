@@ -98,7 +98,7 @@ class FacebookRequest
    */
   public function getSession()
   {
-    return $this->session;
+	return $this->session;
   }
 
   /**
@@ -108,7 +108,7 @@ class FacebookRequest
    */
   public function getPath()
   {
-    return $this->path;
+	return $this->path;
   }
 
   /**
@@ -118,7 +118,7 @@ class FacebookRequest
    */
   public function getParameters()
   {
-    return $this->params;
+	return $this->params;
   }
 
   /**
@@ -128,7 +128,7 @@ class FacebookRequest
    */
   public function getMethod()
   {
-    return $this->method;
+	return $this->method;
   }
 
   /**
@@ -138,7 +138,7 @@ class FacebookRequest
    */
   public function getETag()
   {
-    return $this->etag;
+	return $this->etag;
   }
 
   /**
@@ -149,7 +149,7 @@ class FacebookRequest
    */
   public static function setHttpClientHandler(FacebookHttpable $handler)
   {
-    static::$httpClientHandler = $handler;
+	static::$httpClientHandler = $handler;
   }
 
   /**
@@ -160,10 +160,10 @@ class FacebookRequest
    */
   public static function getHttpClientHandler()
   {
-    if (static::$httpClientHandler) {
-      return static::$httpClientHandler;
-    }
-    return function_exists('curl_init') ? new FacebookCurlHttpClient() : new FacebookStreamHttpClient();
+	if (static::$httpClientHandler) {
+	  return static::$httpClientHandler;
+	}
+	return function_exists('curl_init') ? new FacebookCurlHttpClient() : new FacebookStreamHttpClient();
   }
 
   /**
@@ -179,31 +179,31 @@ class FacebookRequest
    * @param string|null $etag
    */
   public function __construct(
-    FacebookSession $session, $method, $path, $parameters = null, $version = null, $etag = null
+	FacebookSession $session, $method, $path, $parameters = null, $version = null, $etag = null
   )
   {
-    $this->session = $session;
-    $this->method = $method;
-    $this->path = $path;
-    if ($version) {
-      $this->version = $version;
-    } else {
-      $this->version = static::GRAPH_API_VERSION;
-    }
-    $this->etag = $etag;
+	$this->session = $session;
+	$this->method = $method;
+	$this->path = $path;
+	if ($version) {
+	  $this->version = $version;
+	} else {
+	  $this->version = static::GRAPH_API_VERSION;
+	}
+	$this->etag = $etag;
 
-    $params = ($parameters ?: array());
-    if ($session
-      && !isset($params["access_token"])) {
-      $params["access_token"] = $session->getToken();
-    }
-    if (FacebookSession::useAppSecretProof()
-      && !isset($params["appsecret_proof"])) {
-      $params["appsecret_proof"] = $this->getAppSecretProof(
-        $params["access_token"]
-      );
-    }
-    $this->params = $params;
+	$params = ($parameters ?: array());
+	if ($session
+	  && !isset($params["access_token"])) {
+	  $params["access_token"] = $session->getToken();
+	}
+	if (FacebookSession::useAppSecretProof()
+	  && !isset($params["appsecret_proof"])) {
+	  $params["appsecret_proof"] = $this->getAppSecretProof(
+		$params["access_token"]
+	  );
+	}
+	$this->params = $params;
   }
 
   /**
@@ -213,7 +213,7 @@ class FacebookRequest
    */
   protected function getRequestURL()
   {
-    return static::BASE_GRAPH_URL . '/' . $this->version . $this->path;
+	return static::BASE_GRAPH_URL . '/' . $this->version . $this->path;
   }
 
   /**
@@ -226,49 +226,49 @@ class FacebookRequest
    */
   public function execute()
   {
-    $url = $this->getRequestURL();
-    $params = $this->getParameters();
+	$url = $this->getRequestURL();
+	$params = $this->getParameters();
 
-    if ($this->method === "GET") {
-      $url = self::appendParamsToUrl($url, $params);
-      $params = array();
-    }
+	if ($this->method === "GET") {
+	  $url = self::appendParamsToUrl($url, $params);
+	  $params = array();
+	}
 
-    $connection = self::getHttpClientHandler();
-    $connection->addRequestHeader('User-Agent', 'fb-php-' . self::VERSION);
-    $connection->addRequestHeader('Accept-Encoding', '*'); // Support all available encodings.
+	$connection = self::getHttpClientHandler();
+	$connection->addRequestHeader('User-Agent', 'fb-php-' . self::VERSION);
+	$connection->addRequestHeader('Accept-Encoding', '*'); // Support all available encodings.
 
-    // ETag
-    if (isset($this->etag)) {
-      $connection->addRequestHeader('If-None-Match', $this->etag);
-    }
+	// ETag
+	if (isset($this->etag)) {
+	  $connection->addRequestHeader('If-None-Match', $this->etag);
+	}
 
-    // Should throw `FacebookSDKException` exception on HTTP client error.
-    // Don't catch to allow it to bubble up.
-    $result = $connection->send($url, $this->method, $params);
+	// Should throw `FacebookSDKException` exception on HTTP client error.
+	// Don't catch to allow it to bubble up.
+	$result = $connection->send($url, $this->method, $params);
 
-    static::$requestCount++;
+	static::$requestCount++;
 
-    $etagHit = 304 == $connection->getResponseHttpStatusCode();
+	$etagHit = 304 == $connection->getResponseHttpStatusCode();
 
-    $headers = $connection->getResponseHeaders();
-    $etagReceived = isset($headers['ETag']) ? $headers['ETag'] : null;
+	$headers = $connection->getResponseHeaders();
+	$etagReceived = isset($headers['ETag']) ? $headers['ETag'] : null;
 
-    $decodedResult = json_decode($result);
-    if ($decodedResult === null) {
-      $out = array();
-      parse_str($result, $out);
-      return new FacebookResponse($this, $out, $result, $etagHit, $etagReceived);
-    }
-    if (isset($decodedResult->error)) {
-      throw FacebookRequestException::create(
-        $result,
-        $decodedResult->error,
-        $connection->getResponseHttpStatusCode()
-      );
-    }
+	$decodedResult = json_decode($result);
+	if ($decodedResult === null) {
+	  $out = array();
+	  parse_str($result, $out);
+	  return new FacebookResponse($this, $out, $result, $etagHit, $etagReceived);
+	}
+	if (isset($decodedResult->error)) {
+	  throw FacebookRequestException::create(
+		$result,
+		$decodedResult->error,
+		$connection->getResponseHttpStatusCode()
+	  );
+	}
 
-    return new FacebookResponse($this, $decodedResult, $result, $etagHit, $etagReceived);
+	return new FacebookResponse($this, $decodedResult, $result, $etagHit, $etagReceived);
   }
 
   /**
@@ -280,7 +280,7 @@ class FacebookRequest
    */
   public function getAppSecretProof($token)
   {
-    return hash_hmac('sha256', $token, FacebookSession::_getTargetAppSecret());
+	return hash_hmac('sha256', $token, FacebookSession::_getTargetAppSecret());
   }
 
   /**
@@ -293,21 +293,21 @@ class FacebookRequest
    */
   public static function appendParamsToUrl($url, $params = array())
   {
-    if (!$params) {
-      return $url;
-    }
+	if (!$params) {
+	  return $url;
+	}
 
-    if (strpos($url, '?') === false) {
-      return $url . '?' . http_build_query($params, null, '&');
-    }
+	if (strpos($url, '?') === false) {
+	  return $url . '?' . http_build_query($params, null, '&');
+	}
 
-    list($path, $query_string) = explode('?', $url, 2);
-    parse_str($query_string, $query_array);
+	list($path, $query_string) = explode('?', $url, 2);
+	parse_str($query_string, $query_array);
 
-    // Favor params from the original URL over $params
-    $params = array_merge($params, $query_array);
+	// Favor params from the original URL over $params
+	$params = array_merge($params, $query_array);
 
-    return $path . '?' . http_build_query($params, null, '&');
+	return $path . '?' . http_build_query($params, null, '&');
   }
 
 }

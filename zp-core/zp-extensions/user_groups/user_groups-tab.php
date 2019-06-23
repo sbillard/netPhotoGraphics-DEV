@@ -251,7 +251,7 @@ echo '</head>' . "\n";
 												if (!isset($user_count[$group])) {
 													$user_count[$group] = 1;
 												} else {
-													$user_count[$group] ++;
+													$user_count[$group]++;
 												}
 											}
 										} else {
@@ -376,8 +376,11 @@ echo '</head>' . "\n";
 												<textarea name="user[<?php echo $id; ?>][desc]" cols="40" rows="4"><?php echo html_encode($desc); ?></textarea>
 
 												<br /><br />
-												<div id="users<?php echo $id; ?>" <?php if ($grouptype == 'template') echo ' style="display:none"' ?>>
-													<h2 class="h2_bordered_edit"><?php echo gettext("Assign users"); ?></h2>
+												<div id="users<?php echo $id; ?>" <?php if ($grouptype == 'template') {
+	echo ' style="display:none"' ?>>
+													<h2 class="h2_bordered_edit"><?php echo gettext("Assign users");
+}
+?></h2>
 													<div class="box-tags-unpadded">
 														<?php
 														$members = array();

@@ -10,7 +10,7 @@
 	<div class="wrapper">
 		<div class="container">
 			<div class="sixteen columns">
-				<?php printUserLogin_out("","",true); ?>
+				<?php printUserLogin_out("", "", true); ?>
 			</div>
 		</div>
 	</div>	

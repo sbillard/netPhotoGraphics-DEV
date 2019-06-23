@@ -15,8 +15,9 @@
  */
 function getExpiryDatePost() {
 	$expiredate = sanitize($_POST['expiredate']);
-	if ($expiredate > date(date('Y-m-d H:i:s')))
-		return $expiredate;
+	if ($expiredate > date(date('Y-m-d H:i:s'))) {
+			return $expiredate;
+	}
 	return NULL;
 }
 
@@ -750,7 +751,10 @@ function printSortOrderDropdown() {
 			);
 			foreach ($selections as $sortorder => $text) {
 				?>
-				<option<?php if ($sortorder == $selected) echo ' selected="selected"'; ?> value="news.php<?php echo getNewsAdminOptionPath(array_merge(array('sortorder' => $sortorder), $option)); ?>"><?php echo $text; ?></option>
+				<option<?php if ($sortorder == $selected) {
+	echo ' selected="selected"';
+}
+?> value="news.php<?php echo getNewsAdminOptionPath(array_merge(array('sortorder' => $sortorder), $option)); ?>"><?php echo $text; ?></option>
 				<?php
 			}
 			?>
@@ -842,11 +846,17 @@ function printArticlesPerPageDropdown($subpage) {
 			sort($list);
 			foreach ($list as $count) {
 				?>
-				<option <?php if ($articles_page == $count) echo 'selected="selected"'; ?> value="news.php<?php echo getNewsAdminOptionPath(array_merge(array('articles_page' => $count, 'subpage' => (int) ($subpage * $articles_page / $count)), $option)); ?>"><?php printf(gettext('%u per page'), $count); ?></option>
+				<option <?php if ($articles_page == $count) {
+	echo 'selected="selected"';
+}
+?> value="news.php<?php echo getNewsAdminOptionPath(array_merge(array('articles_page' => $count, 'subpage' => (int) ($subpage * $articles_page / $count)), $option)); ?>"><?php printf(gettext('%u per page'), $count); ?></option>
 				<?php
 			}
 			?>
-			<option <?php if ($articles_page == 0) echo 'selected="selected"'; ?> value="news.php<?php echo getNewsAdminOptionPath(array_merge(array('articles_page' => 'all'), $option)); ?>"><?php echo gettext("All"); ?></option>
+			<option <?php if ($articles_page == 0) {
+	echo 'selected="selected"';
+}
+?> value="news.php<?php echo getNewsAdminOptionPath(array_merge(array('articles_page' => 'all'), $option)); ?>"><?php echo gettext("All"); ?></option>
 		</select>
 
 	</form>
@@ -1153,21 +1163,21 @@ function printNestedItemsList($listtype = 'cats-sortablelist', $articleid = '', 
 				$open[$indent] = 0;
 			} else if ($level < $indent) {
 				while ($indent > $level) {
-					$open[$indent] --;
+					$open[$indent]--;
 					$indent--;
 					echo "</li>\n" . str_pad("\t", $indent, "\t") . "</ul>\n";
 				}
 			} else { // indent == level
 				if ($open[$indent]) {
 					echo str_pad("\t", $indent, "\t") . "</li>\n";
-					$open[$indent] --;
+					$open[$indent]--;
 				} else {
 					echo "\n";
 				}
 			}
 			if ($open[$indent]) {
 				echo str_pad("\t", $indent, "\t") . "</li>\n";
-				$open[$indent] --;
+				$open[$indent]--;
 			}
 			switch ($listtype) {
 				case 'cats-checkboxlist':
@@ -1183,12 +1193,12 @@ function printNestedItemsList($listtype = 'cats-sortablelist', $articleid = '', 
 					printPagesListTable($itemobj, $toodeep);
 					break;
 			}
-			$open[$indent] ++;
+			$open[$indent]++;
 		}
 	}
 	while ($indent > 1) {
 		echo "</li>\n";
-		$open[$indent] --;
+		$open[$indent]--;
 		$indent--;
 		echo str_pad("\t", $indent, "\t") . "</ul>";
 	}

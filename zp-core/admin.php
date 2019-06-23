@@ -563,8 +563,9 @@ $buttonlist = array();
 										?>
 										<form name="<?php echo $button['formname']; ?>"	id="<?php echo $button['formname']; ?>" action="<?php echo $button['action']; ?>" class="overview_utility_buttons">
 											<?php
-											if (isset($button['XSRFTag']) && $button['XSRFTag'])
-												XSRFToken($button['XSRFTag']);
+											if (isset($button['XSRFTag']) && $button['XSRFTag']) {
+																							XSRFToken($button['XSRFTag']);
+											}
 											echo $button['hidden'];
 											if (isset($button['onclick'])) {
 												$type = 'type="button" onclick="' . $button['onclick'] . '"';
@@ -573,7 +574,10 @@ $buttonlist = array();
 											}
 											?>
 											<div class="buttons tooltip" title="<?php echo html_encode($button['title']); ?>">
-												<button class="fixedwidth<?php if ($disable) echo ' disabled_button'; ?>" <?php echo $type . $disable; ?>>
+												<button class="fixedwidth<?php if ($disable) {
+	echo ' disabled_button';
+}
+?>" <?php echo $type . $disable; ?>>
 													<?php
 													if (!empty($button_icon)) {
 														if (strpos($button_icon, 'images/') === 0) {

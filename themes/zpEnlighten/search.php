@@ -1,6 +1,7 @@
 <?php
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 ?>
 <!DOCTYPE html>
 <head>
@@ -85,11 +86,13 @@ if (!defined('WEBPATH'))
 						$number_to_show = 3;
 						$c = 0;
 						$art = 'article';
-						if ($numnews > 1)
-							$art .= 's'
+						if ($numnews > 1) {
+													$art .= 's'
 							?>
 
-						<h3 class="searchheader"><?php printf(gettext('%s ' . $art . ' found'), $numnews); ?> </h3>
+						<h3 class="searchheader"><?php printf(gettext('%s ' . $art . ' found'), $numnews);
+						}
+						?> </h3>
 						<div style="text-align: right; margin-right: 20px;" class="moreresults"><small><?php printZDSearchShowMoreLink("news", $number_to_show); ?></small></div>
 						<ul class="searchresults news">
 							<?php
@@ -112,10 +115,12 @@ if (!defined('WEBPATH'))
 					<?php
 					$alb = 'album';
 					$imgs = 'image';
-					if ($numalbums > 1)
-						$alb .= 's';
-					if ($numimages > 1)
-						$imgs .= 's';
+					if ($numalbums > 1) {
+											$alb .= 's';
+					}
+					if ($numimages > 1) {
+											$imgs .= 's';
+					}
 					if (getOption('search_no_albums')) {
 						if (!getOption('search_no_images') && ($numpages + $numnews) > 0) {
 							printf(gettext('%s ' . $imgs . ' found'), $numimages);

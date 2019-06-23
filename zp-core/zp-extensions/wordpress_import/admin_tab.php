@@ -36,8 +36,9 @@ function wp_query_full_array($sql) {
 	$result = wp_query($sql);
 	if ($result) {
 		$allrows = array();
-		while ($row = mysqli_fetch_assoc($result))
-			$allrows[] = $row;
+		while ($row = mysqli_fetch_assoc($result)) {
+					$allrows[] = $row;
+		}
 		return $allrows;
 	} else {
 		if ($wpdbconnection) {
@@ -69,14 +70,18 @@ if (isset($_REQUEST['dbname']) || isset($_REQUEST['dbuser']) || isset($_REQUEST[
 	$db_notselected = '';
 	$missingmessage = '<span style="color: red">' . gettext('Missing') . '</span>';
 	if (empty($wp_dbname) || empty($wp_dbbuser) || empty($wp_dbpassword) || empty($wp_dbhost)) {
-		if (empty($wp_dbname))
-			$wp_dbname = $missingmessage;
-		if (empty($wp_dbbuser))
-			$wp_dbbuser = $missingmessage;
-		if (empty($wp_dbpassword))
-			$wp_dbpassword = $missingmessage;
-		if (empty($wp_dbhost))
-			$wp_dbhost = $missingmessage;
+		if (empty($wp_dbname)) {
+					$wp_dbname = $missingmessage;
+		}
+		if (empty($wp_dbbuser)) {
+					$wp_dbbuser = $missingmessage;
+		}
+		if (empty($wp_dbpassword)) {
+					$wp_dbpassword = $missingmessage;
+		}
+		if (empty($wp_dbhost)) {
+					$wp_dbhost = $missingmessage;
+		}
 	}
 	$dbinfo = '
 		<h2>' . gettext('Wordpress-Database info') . '</h2>

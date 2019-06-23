@@ -290,8 +290,9 @@ $showDefaultThumbs = array();
 foreach (getOptionsLike('album_tab_default_thumbs_') as $option => $value) {
 	if ($value) {
 		$tab = str_replace('album_tab_default_thumbs_', '', $option);
-		if (empty($tab))
-			$tab = '*';
+		if (empty($tab)) {
+					$tab = '*';
+		}
 		$showDefaultThumbs[$tab] = $tab;
 	}
 	purgeOption($option);
@@ -353,7 +354,7 @@ if (isset($_POST['setUTF8URI'])) {
 		setupLog(gettext('Setup could not find a configuration that allows image URIs containing diacritical marks.'), true);
 		setOptionDefault('UTF8_image_URI', 1);
 	} else {
-		setOptionDefault('UTF8_image_URI', (int) ( $_POST['setUTF8URI'] == 'internal'));
+		setOptionDefault('UTF8_image_URI', (int) ($_POST['setUTF8URI'] == 'internal'));
 	}
 }
 setOptionDefault('unique_image_prefix', NULL);
@@ -682,12 +683,15 @@ if (!isset($data['Gallery_description'])) {
 		$data['Gallery_description'] = gettext('You can insert your Gallery description on the Admin Options Gallery tab.');
 	}
 }
-if (!isset($data['gallery_password']))
+if (!isset($data['gallery_password'])) {
 	$data['gallery_password'] = getOption('gallery_password');
-if (!isset($data['gallery_user']))
+}
+if (!isset($data['gallery_user'])) {
 	$data['gallery_user'] = getOption('gallery_user');
-if (!isset($data['gallery_hint']))
+}
+if (!isset($data['gallery_hint'])) {
 	$data['gallery_hint'] = getOption('gallery_hint');
+}
 if (!isset($data['hitcounter'])) {
 	$data['hitcounter'] = $result = getOption('Page-Hitcounter-index');
 	purgeOption('Page-Hitcounter-index');
@@ -698,24 +702,30 @@ if (!isset($data['current_theme'])) {
 		$data['current_theme'] = 'default';
 	}
 }
-if (!isset($data['website_title']))
+if (!isset($data['website_title'])) {
 	$data['website_title'] = getOption('website_title');
-if (!isset($data['website_url']))
+}
+if (!isset($data['website_url'])) {
 	$data['website_url'] = getOption('website_url');
+}
 if (!isset($data['gallery_security'])) {
 	$data['gallery_security'] = getOption('gallery_security');
 	if (is_null($data['gallery_security'])) {
 		$data['gallery_security'] = 'public';
 	}
 }
-if (!isset($data['login_user_field']))
+if (!isset($data['login_user_field'])) {
 	$data['login_user_field'] = getOption('login_user_field');
-if (!isset($data['album_use_new_image_date']))
+}
+if (!isset($data['album_use_new_image_date'])) {
 	$data['album_use_new_image_date'] = getOption('album_use_new_image_date');
-if (!isset($data['thumb_select_images']))
+}
+if (!isset($data['thumb_select_images'])) {
 	$data['thumb_select_images'] = getOption('thumb_select_images');
-if (!isset($data['unprotected_pages']))
+}
+if (!isset($data['unprotected_pages'])) {
 	$data['unprotected_pages'] = getOption('unprotected_pages');
+}
 if ($data['unprotected_pages']) {
 	$unprotected = $data['unprotected_pages'];
 } else {
@@ -735,27 +745,31 @@ $unprotected = array_unique($unprotected);
 
 if (!isset($data['album_publish'])) {
 	$set = getOption('album_default');
-	if (is_null($set))
-		$set = 1;
+	if (is_null($set)) {
+			$set = 1;
+	}
 	$data['album_publish'] = $set;
 }
 if (!isset($data['image_publish'])) {
 	$set = getOption('image_default');
-	if (is_null($set))
-		$set = 1;
+	if (is_null($set)) {
+			$set = 1;
+	}
 	$data['image_publish'] = $set;
 }
 $data['unprotected_pages'] = $unprotected;
 if (!isset($data['image_sorttype'])) {
 	$set = getOption('image_sorttype');
-	if (is_null($set))
-		$set = 'Filename';
+	if (is_null($set)) {
+			$set = 'Filename';
+	}
 	$data['image_sorttype'] = $set;
 }
 if (!isset($data['image_sortdirection'])) {
 	$set = getOption('image_sortdirection');
-	if (is_null($set))
-		$set = 0;
+	if (is_null($set)) {
+			$set = 0;
+	}
 	$data['image_sorttype'] = $set;
 }
 

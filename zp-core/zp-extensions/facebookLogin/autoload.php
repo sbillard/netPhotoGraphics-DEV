@@ -40,7 +40,7 @@ if (version_compare(PHP_VERSION, '5.4.0', '<')) {
  * @param string $class The fully-qualified class name.
  * @return void
  */
-spl_autoload_register(function ($class)
+spl_autoload_register(function($class)
 {
   // project-specific namespace prefix
   $prefix = 'Facebook\\';
@@ -51,8 +51,8 @@ spl_autoload_register(function ($class)
   // does the class use the namespace prefix?
   $len = strlen($prefix);
   if (strncmp($prefix, $class, $len) !== 0) {
-    // no, move to the next registered autoloader
-    return;
+	// no, move to the next registered autoloader
+	return;
   }
 
   // get the relative class name
@@ -65,6 +65,6 @@ spl_autoload_register(function ($class)
 
   // if the file exists, require it
   if (file_exists($file)) {
-    require $file;
+	require $file;
   }
 });

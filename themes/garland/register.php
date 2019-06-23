@@ -1,6 +1,7 @@
 <?php
-if (!defined('WEBPATH'))
+if (!defined('WEBPATH')) {
 	die();
+}
 if (function_exists('printRegistrationForm')) {
 	?>
 	<!DOCTYPE html>
@@ -11,8 +12,9 @@ if (function_exists('printRegistrationForm')) {
 
 			scriptLoader($_themeroot . '/zen.css');
 
-			if (class_exists('RSS'))
-				printRSSHeaderLink('Gallery', gettext('Gallery'));
+			if (class_exists('RSS')) {
+							printRSSHeaderLink('Gallery', gettext('Gallery'));
+			}
 			?>
 		</head>
 		<body class="sidebars">

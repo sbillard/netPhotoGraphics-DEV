@@ -60,9 +60,18 @@ if (isset($_GET['singleimage']) && $_GET['singleimage'] || $totalimages == 1) {
 
 				<?php echo gettext('Image filter'); ?>
 				<select id="filter" name="filter" onchange="launchScript('<?php echo getAdminLink('admin-tabs/edit.php'); ?>', ['page=edit', 'album=<?php echo html_encode($album->name); ?>', 'subpage=1', 'tab=imageinfo', 'filter=' + $('#filter').val()]);">
-					<option value=""<?php if (empty($filter)) echo ' selected="selected"'; ?>><?php echo gettext('all'); ?></option>
-					<option value="unpublished"<?php if ($filter == 'unpublished') echo ' selected="selected"'; ?>><?php echo gettext('unpublished'); ?></option>
-					<option value="published"<?php if ($filter == 'published') echo ' selected="selected"'; ?>><?php echo gettext('published'); ?></option>
+					<option value=""<?php if (empty($filter)) {
+	echo ' selected="selected"';
+}
+?>><?php echo gettext('all'); ?></option>
+					<option value="unpublished"<?php if ($filter == 'unpublished') {
+	echo ' selected="selected"';
+}
+?>><?php echo gettext('unpublished'); ?></option>
+					<option value="published"<?php if ($filter == 'published') {
+	echo ' selected="selected"';
+}
+?>><?php echo gettext('published'); ?></option>
 				</select>
 				<?php
 				$sort = $_sortby;
@@ -71,8 +80,9 @@ if (isset($_GET['singleimage']) && $_GET['singleimage'] || $totalimages == 1) {
 					$sort[sprintf(gettext('%s (descending)'), $key)] = $value . '_DESC';
 				}
 				$sort[gettext('Manual')] = 'manual';
-				if ($direction)
-					$oldalbumimagesort = $oldalbumimagesort . '_DESC';
+				if ($direction) {
+									$oldalbumimagesort = $oldalbumimagesort . '_DESC';
+				}
 				echo gettext("Display images by:");
 				echo '<select id="albumimagesort" name="albumimagesort" onchange="this.form.submit();">';
 				generateListFromArray(array($oldalbumimagesort), $sort, false, true);
@@ -136,7 +146,10 @@ if (isset($_GET['singleimage']) && $_GET['singleimage'] || $totalimages == 1) {
 						<strong><?php echo gettext('View Album'); ?></strong>
 					</a>
 				</p>
-				<?php if (!$singleimage) printBulkActions($checkarray_images, true); ?>
+				<?php if (!$singleimage) {
+	printBulkActions($checkarray_images, true);
+}
+?>
 
 				<?php
 				$bglevels = array('#fff', '#f8f8f8', '#efefef', '#e8e8e8', '#dfdfdf', '#d8d8d8', '#cfcfcf', '#c8c8c8');
@@ -331,7 +344,10 @@ if (isset($_GET['singleimage']) && $_GET['singleimage'] || $totalimages == 1) {
 									<label class="checkboxlabel">
 										<input type="checkbox" id="Visible-<?php echo $currentimage; ?>"
 													 name="<?php echo $currentimage; ?>-Visible"
-													 value="1" <?php if ($image->getShow()) echo ' checked = "checked"'; ?>
+													 value="1" <?php if ($image->getShow()) {
+	echo ' checked = "checked"';
+}
+?>
 													 onclick="$('#publishdate-<?php echo $currentimage; ?>').val('');
 																		 $('#expirationdate-<?php echo $currentimage; ?>').val('');
 																		 $('#publishdate-<?php echo $currentimage; ?>').css('color', 'black ');
@@ -359,7 +375,10 @@ if (isset($_GET['singleimage']) && $_GET['singleimage'] || $totalimages == 1) {
 										}
 										?>
 										<label class="checkboxlabel">
-											<input type="checkbox" name="reset_hitcounter<?php echo $currentimage; ?>"<?php if (!$hc) echo ' disabled = "disabled"'; ?> />
+											<input type="checkbox" name="reset_hitcounter<?php echo $currentimage; ?>"<?php if (!$hc) {
+	echo ' disabled = "disabled"';
+}
+?> />
 											<?php echo sprintf(ngettext("Reset hitcounter (%u hit)", "Reset hitcounter (%u hits)", $hc), $hc); ?>
 										</label>
 										<?php
@@ -425,7 +444,10 @@ if (isset($_GET['singleimage']) && $_GET['singleimage'] || $totalimages == 1) {
 									<hr />
 									<p>
 										<label for="publishdate-<?php echo $currentimage; ?>"><?php echo gettext('Publish date'); ?> <small>(YYYY-MM-DD)</small></label>
-										<br /><input value="<?php echo $publishdate; ?>" type="text" size="20" maxlength="30" name="publishdate-<?php echo $currentimage; ?>" id="publishdate-<?php echo $currentimage; ?>" <?php if ($publishdate > date('Y-m-d H:i:s')) echo 'style="color:blue"'; ?> />
+										<br /><input value="<?php echo $publishdate; ?>" type="text" size="20" maxlength="30" name="publishdate-<?php echo $currentimage; ?>" id="publishdate-<?php echo $currentimage; ?>" <?php if ($publishdate > date('Y-m-d H:i:s')) {
+	echo 'style="color:blue"';
+}
+?> />
 										<br /><label for="expirationdate-<?php echo $currentimage; ?>"><?php echo gettext('Expiration date'); ?> <small>(YYYY-MM-DD)</small></label>
 										<br /><input value="<?php echo $expirationdate; ?>" type="text" size="20" maxlength="30" name="expirationdate-<?php echo $currentimage; ?>" id="expirationdate-<?php echo $currentimage; ?>" />
 										<strong class="expire-<?php echo $currentimage; ?>" style="color:red">

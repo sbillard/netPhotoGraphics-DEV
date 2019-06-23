@@ -8,8 +8,9 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/admin-globals.php');
 admin_securityChecks(FILES_RIGHTS | UPLOAD_RIGHTS, currentRelativeURL());
 setNPGCookie('uploadtype', 'elFinder');
 $locale = substr(getOption('locale'), 0, 2);
-if (empty($locale))
+if (empty($locale)) {
 	$locale = 'en';
+}
 printAdminHeader('upload', 'files');
 
 if (isset($_REQUEST['themeEdit'])) {

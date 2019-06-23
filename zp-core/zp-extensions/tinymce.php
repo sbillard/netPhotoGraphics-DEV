@@ -22,10 +22,11 @@ $plugin_is_filter = defaultExtension(5 | ADMIN_PLUGIN);
 $plugin_description = gettext("TinyMCE WYSIWYG editor");
 $option_interface = 'tinymce';
 
-if (!defined('EDITOR_SANITIZE_LEVEL'))
+if (!defined('EDITOR_SANITIZE_LEVEL')) {
 	define('EDITOR_SANITIZE_LEVEL', 4);
+}
 if (!defined('TINYMCE')) {
-	define('TINYMCE', CORE_SERVERPATH .  PLUGIN_FOLDER . '/tinymce');
+	define('TINYMCE', CORE_SERVERPATH . PLUGIN_FOLDER . '/tinymce');
 }
 npgFilters::register('texteditor_config', 'tinymce::configJS');
 

@@ -43,10 +43,10 @@ switch ($descriptionPosition) {
 		$descriptionStyle = ($descriptionWidth > 0) ? 'style="max-width:' . $descriptionWidth . 'px; margin-left: auto;"' : 'style="margin-left: auto;"';
 		break;
 }
-$titleStyle = 'style="text-align: '.getOption('zenfluid_titleposition').';"';
-$buttonStyle = 'style="text-align: '.getOption('zenfluid_buttonposition').';"';
-$menuStyle = 'style="text-align: '.getOption('zenfluid_menuposition').';"';
-$justifyStyle = 'style="text-align: '.getOption('zenfluid_descriptionjustification').';"';
+$titleStyle = 'style="text-align: ' . getOption('zenfluid_titleposition') . ';"';
+$buttonStyle = 'style="text-align: ' . getOption('zenfluid_buttonposition') . ';"';
+$menuStyle = 'style="text-align: ' . getOption('zenfluid_menuposition') . ';"';
+$justifyStyle = 'style="text-align: ' . getOption('zenfluid_descriptionjustification') . ';"';
 
 $homeLink = getOption('zenfluid_homelink') ? 'Home<br>&nbsp' : '';
 
@@ -57,10 +57,10 @@ $homeLink = getOption('zenfluid_homelink') ? 'Home<br>&nbsp' : '';
 			if (getOption('zenfluid_showheader')) {
 				?>
 				<div class="header border colour">
-					<div class="headertitle" <?php echo $titleStyle;?>>
-						<a href="<?php echo getGalleryIndexURL(); ?>"><?php printGalleryTitle();?></a>
+					<div class="headertitle" <?php echo $titleStyle; ?>>
+						<a href="<?php echo getGalleryIndexURL(); ?>"><?php printGalleryTitle(); ?></a>
 						<div class="headersubtitle">
-							<?php printGalleryDesc();echo "\n";?>
+							<?php printGalleryDesc(); echo "\n"; ?>
 						</div>
 					</div>
 				</div>

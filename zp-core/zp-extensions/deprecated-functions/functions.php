@@ -140,8 +140,9 @@ function listDBUses($pattern) {
 						$what = $row['folder'] . '::' . $key;
 						break;
 				}
-				if (formatList($what, $codeblock, $pattern))
-					$output = true;
+				if (formatList($what, $codeblock, $pattern)) {
+									$output = true;
+				}
 			}
 		}
 		if ($output) {

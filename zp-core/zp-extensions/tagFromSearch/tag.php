@@ -154,14 +154,18 @@ echo "\n</head>";
 					}
 					$tags = array_unique($tags);
 					$totag = array();
-					if ($imagechecked)
-						$totag['newImage'] = $images;
-					if ($albumchecked)
-						$totag['newAlbum'] = array_merge($albums);
-					if ($articlechecked)
-						$totag['newArticle'] = $articles;
-					if ($pagechecked)
-						$totag['newPage'] = $pages;
+					if ($imagechecked) {
+											$totag['newImage'] = $images;
+					}
+					if ($albumchecked) {
+											$totag['newAlbum'] = array_merge($albums);
+					}
+					if ($articlechecked) {
+											$totag['newArticle'] = $articles;
+					}
+					if ($pagechecked) {
+											$totag['newPage'] = $pages;
+					}
 
 					foreach ($totag as $instantiate => $list) {
 						foreach ($list as $item) {
@@ -188,28 +192,40 @@ echo "\n</head>";
 							if (count($images) > 0) {
 								?>
 								<li>
-									<input name="image_tag" type="checkbox" value="1" <?php if ($imagechecked) echo ' checked="checked"'; ?> /><?php printf(ngettext('Tag %d image', 'Tag %d images', $c = count($images)), $c); ?>
+									<input name="image_tag" type="checkbox" value="1" <?php if ($imagechecked) {
+	echo ' checked="checked"';
+}
+?> /><?php printf(ngettext('Tag %d image', 'Tag %d images', $c = count($images)), $c); ?>
 								</li>
 								<?php
 							}
 							if (count($albums) > 0) {
 								?>
 								<li>
-									<input name="album_tag" type="checkbox" value="1" <?php if ($albumchecked) echo ' checked="checked"'; ?> /><?php printf(ngettext('Tag %d album', 'Tag %d albums', $c = count($albums)), $c); ?>
+									<input name="album_tag" type="checkbox" value="1" <?php if ($albumchecked) {
+	echo ' checked="checked"';
+}
+?> /><?php printf(ngettext('Tag %d album', 'Tag %d albums', $c = count($albums)), $c); ?>
 								</li>
 								<?php
 							}
 							if (count($articles) > 0) {
 								?>
 								<li>
-									<input name="article_tag" type="checkbox" value="1" <?php if ($articlechecked) echo ' checked="checked"'; ?> /><?php printf(ngettext('Tag %d article', 'Tag %d articles', $c = count($articles)), $c); ?>
+									<input name="article_tag" type="checkbox" value="1" <?php if ($articlechecked) {
+	echo ' checked="checked"';
+}
+?> /><?php printf(ngettext('Tag %d article', 'Tag %d articles', $c = count($articles)), $c); ?>
 								</li>
 								<?php
 							}
 							if (count($pages) > 0) {
 								?>
 								<li>
-									<input name="page_tag" type="checkbox" value="1" <?php if ($pagechecked) echo ' checked="checked"'; ?> /><?php printf(ngettext('Tag %d page', 'Tag %d pages', $c = count($pages)), $c); ?>
+									<input name="page_tag" type="checkbox" value="1" <?php if ($pagechecked) {
+	echo ' checked="checked"';
+}
+?> /><?php printf(ngettext('Tag %d page', 'Tag %d pages', $c = count($pages)), $c); ?>
 								</li>
 								<?php
 							}

@@ -571,9 +571,15 @@ if (extensionEnabled('slideshow2') && !OFFSET_PATH) {
 						<input type="hidden" name="imagenumber" value="<?php echo $imagenumber; ?>" />
 						<input type="hidden" name="imagefile" value="<?php echo html_encode($imagefile); ?>" />
 					</form>
-					<?php if (!empty($linkstyle)) echo '<p style="' . $linkstyle . '">'; ?>
+					<?php if (!empty($linkstyle)) {
+	echo '<p style="' . $linkstyle . '">';
+}
+?>
 					<a class="slideshowlink" id="slideshowlink_<?php echo $slideshow_instance; ?>" 	href="javascript:document.slideshow_<?php echo $slideshow_instance; ?>.submit()"><?php echo $linktext; ?></a><?php echo html_encodeTagged($after); ?>
-					<?php if (!empty($linkstyle)) echo '</p>'; ?>
+					<?php if (!empty($linkstyle)) {
+	echo '</p>';
+}
+?>
 
 					<?php
 				}
@@ -696,7 +702,7 @@ if (extensionEnabled('slideshow2') && !OFFSET_PATH) {
 		}
 
 //getting the image to start with
-		if (!empty($_POST['imagenumber']) AND ! is_object($imageobj)) {
+		if (!empty($_POST['imagenumber']) AND !is_object($imageobj)) {
 			$imagenumber = sanitize_numeric($_POST['imagenumber']) - 1; // slideshows starts with 0, but $_POST['imagenumber'] with 1.
 		} elseif (is_object($imageobj)) {
 			$imagenumber = $imageobj->getIndex();

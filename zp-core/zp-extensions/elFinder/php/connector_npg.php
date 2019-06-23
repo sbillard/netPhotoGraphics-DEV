@@ -32,7 +32,7 @@ include_once CORE_SERVERPATH . PLUGIN_FOLDER . '/elFinder/php/elFinderVolumeLoca
  * */
 function access($attr, $path, $data, $volume) {
 	return strpos(basename($path), '.') === 0 // if file/folder begins with '.' (dot)
-					? !($attr == 'read' || $attr == 'write' ) // set read+write to false, other (locked+hidden) set to true
+					? !($attr == 'read' || $attr == 'write') // set read+write to false, other (locked+hidden) set to true
 					: null; // else elFinder decide it itself
 }
 

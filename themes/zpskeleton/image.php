@@ -57,7 +57,10 @@
 			<?php } ?>
 		</div>
 		<div class="five columns offset-by-one sidebar">
-				<?php if ($zpskel_social) include ("inc-social.php"); ?>
+				<?php if ($zpskel_social) {
+	include ("inc-social.php");
+}
+?>
 				<?php if (($nextimg) || ($previmg)) { ?>
 				<div class="img-nav noshow-mobile">
 					<?php if ($nextimg) { ?>

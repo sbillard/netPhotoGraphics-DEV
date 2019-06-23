@@ -53,14 +53,18 @@ class GoogleMap {
 	function getOptionsSupported() {
 
 		$MapTypes = array(); // order matters here because the first allowed map is selected if the 'gmap_starting_map' is not allowed
-		if (getOption('gmap_map_hybrid'))
-			$MapTypes[gettext('Hybrid')] = 'HYBRID';
-		if (getOption('gmap_map_roadmap'))
-			$MapTypes[gettext('Map')] = 'ROADMAP';
-		if (getOption('gmap_map_satellite'))
-			$MapTypes[gettext('Satellite')] = 'SATELLITE';
-		if (getOption('gmap_map_terrain'))
-			$MapTypes[gettext('Terrain')] = 'TERRAIN';
+		if (getOption('gmap_map_hybrid')) {
+					$MapTypes[gettext('Hybrid')] = 'HYBRID';
+		}
+		if (getOption('gmap_map_roadmap')) {
+					$MapTypes[gettext('Map')] = 'ROADMAP';
+		}
+		if (getOption('gmap_map_satellite')) {
+					$MapTypes[gettext('Satellite')] = 'SATELLITE';
+		}
+		if (getOption('gmap_map_terrain')) {
+					$MapTypes[gettext('Terrain')] = 'TERRAIN';
+		}
 
 		$defaultMap = getOption('gmap_starting_map');
 		if (array_search($defaultMap, $MapTypes) === false) { // the starting map is not allowed, pick a new one
@@ -136,8 +140,10 @@ class GoogleMap {
 	 * Add required informations in the header
 	 */
 	static function js() {
-		if (!defined('BASEPATH'))
-			define('BASEPATH', true); //	for no access test in googleMap.php
+		if (!defined('BASEPATH')) {
+					define('BASEPATH', true);
+		}
+		//	for no access test in googleMap.php
 		require_once(dirname(__FILE__) . '/googleMap/CodeIgniter-Google-Maps-V3-API/Googlemaps.php');
 		$key = getOption('gmap_map_api_key');
 		if (!empty($key)) {
@@ -150,9 +156,9 @@ class GoogleMap {
 		?>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp<?php echo $key . $loc; ?>"></script>
 		<?php
-		scriptLoader(CORE_SERVERPATH .  PLUGIN_FOLDER . '/googleMap/markerClustererPlus/markerclusterer.js');
-		scriptLoader(CORE_SERVERPATH .  PLUGIN_FOLDER . '/googleMap/overlappingMarkerSpiderfier/oms.min.js');
-		scriptLoader(CORE_SERVERPATH .  PLUGIN_FOLDER . '/googleMap/googleMap.css');
+		scriptLoader(CORE_SERVERPATH . PLUGIN_FOLDER . '/googleMap/markerClustererPlus/markerclusterer.js');
+		scriptLoader(CORE_SERVERPATH . PLUGIN_FOLDER . '/googleMap/overlappingMarkerSpiderfier/oms.min.js');
+		scriptLoader(CORE_SERVERPATH . PLUGIN_FOLDER . '/googleMap/googleMap.css');
 	}
 
 	/**
@@ -265,7 +271,7 @@ class GoogleMap {
 }
 
 // codeIgniter stuff
-require_once(CORE_SERVERPATH .  COMMON_FOLDER . '/jsMin/JSMin.php');
+require_once(CORE_SERVERPATH . COMMON_FOLDER . '/jsMin/JSMin.php');
 
 class CI_load {
 
@@ -363,14 +369,18 @@ function printGoogleMap($text = NULL, $id = NULL, $hide = NULL, $obj = NULL, $ca
 		$map_control_type = $mapControls;
 
 		$allowedMapTypes = array();
-		if (getOption('gmap_map_hybrid'))
-			$allowedMapTypes[] = 'HYBRID';
-		if (getOption('gmap_map_roadmap'))
-			$allowedMapTypes[] = 'ROADMAP';
-		if (getOption('gmap_map_satellite'))
-			$allowedMapTypes[] = 'SATELLITE';
-		if (getOption('gmap_map_terrain'))
-			$allowedMapTypes[] = 'TERRAIN';
+		if (getOption('gmap_map_hybrid')) {
+					$allowedMapTypes[] = 'HYBRID';
+		}
+		if (getOption('gmap_map_roadmap')) {
+					$allowedMapTypes[] = 'ROADMAP';
+		}
+		if (getOption('gmap_map_satellite')) {
+					$allowedMapTypes[] = 'SATELLITE';
+		}
+		if (getOption('gmap_map_terrain')) {
+					$allowedMapTypes[] = 'TERRAIN';
+		}
 	}
 
 	$config['center'] = '0, 0';
@@ -413,8 +423,9 @@ function printGoogleMap($text = NULL, $id = NULL, $hide = NULL, $obj = NULL, $ca
 			break;
 	}
 
-	if ($_n == 1)
-		$map->zoom = 13;
+	if ($_n == 1) {
+			$map->zoom = 13;
+	}
 
 	if ($_n) {
 		$_x = $_x / $_n;
