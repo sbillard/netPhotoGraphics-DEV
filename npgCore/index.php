@@ -11,6 +11,8 @@ if (!defined('OFFSET_PATH'))
 
 require_once(__DIR__ . '/functions.php');
 
+tracer(__FILE__, __LINE__);
+
 if (GALLERY_SESSION || npg_loggedin()) {
 	npg_session_start();
 }
@@ -41,11 +43,14 @@ if (!DEBUG_PLUGINS) {
 
 require_once(CORE_SERVERPATH . 'rewrite.php');
 require_once(CORE_SERVERPATH . 'template-functions.php');
+
+tracer(__FILE__, __LINE__);
+
 if (!defined('SEO_FULLWEBPATH')) {
 	define('SEO_FULLWEBPATH', FULLWEBPATH);
 	define('SEO_WEBPATH', WEBPATH);
 }
-checkInstall();
+
 // who cares if MOD_REWRITE is set. If we somehow got redirected here, handle the rewrite
 rewriteHandler();
 recordPolicyACK();
@@ -168,6 +173,8 @@ if ($_requested_object && $_themeScript && file_exists($_themeScript = SERVERPAT
 	$_HTML_cache->abortHTMLCache(false);
 	include(CORE_SERVERPATH . '404.php');
 }
+
+tracer(__FILE__, __LINE__);
 
 $_Script_processing_timer['theme load'] = microtime();
 npgFilters::apply('software_information', $_themeScript, $_loaded_plugins, $_index_theme);

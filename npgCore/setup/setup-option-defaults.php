@@ -9,6 +9,7 @@
  * @package setup
  */
 setupLog(gettext('Set default options'), true);
+tracer(__FILE__, __LINE__);
 
 require_once(CORE_SERVERPATH . 'admin-globals.php');
 if (CURL_ENABLED) {
@@ -1247,13 +1248,13 @@ npgFunctions::flushOutput();
 <p>
 	<span class = "floatright delayshow" style = "display:none">
 		<img src = "<?php echo FULLWEBPATH . '/' . CORE_FOLDER . '/setup/icon.php?icon=0'; ?>" alt = "<?php echo gettext('success'); ?>" height = "16px" width = "16px" /> <?php
-echo gettext('Successful initialization');
-if ($thirdParty) {
-	?>
+		echo gettext('Successful initialization');
+		if ($thirdParty) {
+			?>
 			<img src="<?php echo FULLWEBPATH . '/' . CORE_FOLDER . '/setup/icon.php?icon=1'; ?>" alt="<?php echo gettext('success'); ?>" height="16px" width="16px" /> <?php
-		echo gettext('Successful initialization (third party item)');
-	}
-?>
+			echo gettext('Successful initialization (third party item)');
+		}
+		?>
 		<span id="errornote" style="display:<?php echo $displayErrors ? 'show' : 'none'; ?>"><?php echo CROSS_MARK_RED . ' ' . gettext('Error initializing (click to debug)'); ?></span>
 		<?php
 		if ($deprecated) {

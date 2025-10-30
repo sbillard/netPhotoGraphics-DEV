@@ -9,6 +9,8 @@ require_once(__DIR__ . '/lib-kses.php');
 require_once(__DIR__ . '/lib-encryption.php');
 require_once(__DIR__ . '/lib-utf8.php');
 
+tracer(__FILE__, __LINE__, 'w');
+
 $_UTF8 = new utf8();
 
 define('ENT_FLAGS', ENT_QUOTES | ENT_SUBSTITUTE);
@@ -254,5 +256,7 @@ $_tagURLs_values = array(
 		'{*USER_PLUGIN_FOLDER*}' => USER_PLUGIN_FOLDER,
 		'{*USER_PLUGIN_PATH*}' => USER_PLUGIN_PATH
 );
+
+tracer(__FILE__, __LINE__);
 
 $_Script_processing_timer['initialize-basic'] = microtime();

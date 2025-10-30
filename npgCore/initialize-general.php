@@ -53,4 +53,6 @@ $_locale_Subdomains = npgFunctions::languageSubdomains();
 //	use this for labeling "News" pages, etc.
 define('NEWS_LABEL', get_language_string(getSerializedArray(getOption('CMS_news_label'))));
 
+tracer(__FILE__, __LINE__);
+
 $_Script_processing_timer['initialize-general'] = microtime();

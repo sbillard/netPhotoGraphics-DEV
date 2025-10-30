@@ -65,6 +65,9 @@ if (abs(OFFSET_PATH) != 2) {
 		}
 	}
 }
+
+tracer(__FILE__, __LINE__);
+
 if (!defined('EDITOR_SANITIZE_LEVEL'))
 	define('EDITOR_SANITIZE_LEVEL', 1);
 
@@ -315,5 +318,6 @@ if (version_compare(PHP_VERSION, PHP_MIN_SUPPORTED_VERSION, '<')) {
 	npgFilters::register('admin_note', 'phpWarn');
 }
 
-$_Script_processing_timer['admin-globals'] = microtime();
+tracer(__FILE__, __LINE__);
 
+$_Script_processing_timer['admin-globals'] = microtime();

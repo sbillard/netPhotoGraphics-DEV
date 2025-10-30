@@ -523,4 +523,6 @@ if ($npgUpgrade) {
 		}
 	}
 }
+
+tracer(__FILE__, __LINE__);
 ?>

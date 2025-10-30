@@ -13,6 +13,8 @@
 require_once(__DIR__ . '/admin-globals.php');
 require_once(CORE_SERVERPATH . 'reconfigure.php');
 
+tracer(__FILE__, __LINE__);
+
 if (version_compare(PHP_VERSION, 8.0, '>=')) {
 	require_once(GITHUB_API_PATH);
 }
@@ -55,6 +57,8 @@ if (isset($_GET['report'])) {
 if (class_exists('CMS')) {
 	require_once(PLUGIN_SERVERPATH . 'zenpage/admin-functions.php');
 }
+
+tracer(__FILE__, __LINE__);
 
 if (npg_loggedin()) { /* Display the admin pages. Do action handling first. */
 	if (isset($_GET['action'])) {
@@ -303,6 +307,7 @@ if (npg_loggedin()) { /* Display the admin pages. Do action handling first. */
 		}
 	}
 
+	tracer(__FILE__, __LINE__);
 
 	/*	 * ********************************************************************************* */
 	/** End Action Handling ************************************************************ */
@@ -330,6 +335,8 @@ if (npg_loggedin() && $_admin_menu) {
 	admin_securityChecks(OVERVIEW_RIGHTS, currentRelativeURL());
 }
 
+tracer(__FILE__, __LINE__);
+
 // Print our header
 printAdminHeader('overview');
 scriptLoader(PLUGIN_SERVERPATH . 'common/masonry/masonry.pkgd.min.js');
@@ -350,6 +357,8 @@ echo "\n</head>";
 
 if (!npg_loggedin()) {
 	// If they are not logged in, display the login form and exit
+
+	tracer(__FILE__, __LINE__);
 	?>
 	<body style="background-image: none">
 		<?php $_authority->printLoginForm($came_from); ?>
@@ -808,6 +817,8 @@ $buttonlist = array();
 </div><!-- main -->
 </body>
 <?php
+tracer(__FILE__, __LINE__);
+
 // to fool the validator
 echo "\n</html>";
 exit();

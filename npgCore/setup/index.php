@@ -36,10 +36,11 @@ $_initial_session_path = session_save_path();
 require_once(CORE_SERVERPATH . '/functions.php');
 require_once(__DIR__ . '/setup-functions.php');
 require_once(CORE_SERVERPATH . '/lib-utf8.php');
-
 //allow only one setup to run
 $setupMutex = new npgMutex('sP');
 $setupMutex->lock();
+
+tracer(__FILE__, __LINE__);
 
 if ($debug = isset($_REQUEST['debug'])) {
 	if (!$debug = $_REQUEST['debug']) {
@@ -275,6 +276,8 @@ if ($i !== false) {
 	$_config_contents = substr($_config_contents, 0, $i) . substr($_config_contents, $j); // remove this so it won't be defined twice
 }
 
+tracer(__FILE__, __LINE__);
+
 if (isset($_POST['db'])) { //try to update the config file
 	setupXSRFDefender('db');
 	setupLog(gettext("db POST handling"));
@@ -390,6 +393,8 @@ while (($engineMC = readdir($dir)) !== false) {
 }
 ksort($engines, SORT_NATURAL);
 
+tracer(__FILE__, __LINE__);
+
 if (file_exists(SERVERPATH . '/' . DATA_FOLDER . '/' . CONFIGFILE)) {
 	require(SERVERPATH . '/' . DATA_FOLDER . '/' . CONFIGFILE);
 	if (isset($conf)) {
@@ -484,6 +489,8 @@ if ($selected_database) {
 
 require_once(CORE_SERVERPATH . '/admin-functions.php');
 require_once(CORE_SERVERPATH . '/' . PLUGIN_FOLDER . '/security-logger.php');
+
+tracer(__FILE__, __LINE__);
 
 $system_check = !$connection || !$setup_checked && (($upgrade && $autorun) || setupUserAuthorized());
 
@@ -590,6 +597,8 @@ if ($test_release = getOption('markRelease_state')) {
 $testRelease = defined('TEST_RELEASE') && TEST_RELEASE || $test_release !== false;
 
 $taskDisplay = array('create' => gettext("create"), 'update' => gettext("update"));
+
+tracer(__FILE__, __LINE__);
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"<?php i18n::htmlLanguageCode(); ?>>
@@ -614,6 +623,7 @@ $taskDisplay = array('create' => gettext("create"), 'update' => gettext("update"
 		scriptLoader(CORE_SERVERPATH . 'admin.css');
 		scriptLoader(CORE_SERVERPATH . 'setup/setup.css');
 		scriptLoader(CORE_SERVERPATH . 'loginForm.css');
+		tracer(__FILE__, __LINE__);
 		?>
 	</head>
 	<body>
@@ -1697,6 +1707,8 @@ $taskDisplay = array('create' => gettext("create"), 'update' => gettext("update"
 						$dbmsg = gettext("database connected");
 					} // system check
 
+					tracer(__FILE__, __LINE__);
+
 					if (file_exists(SERVERPATH . '/' . DATA_FOLDER . '/' . CONFIGFILE)) {
 						require(SERVERPATH . '/' . DATA_FOLDER . '/' . CONFIGFILE);
 						$task = '';
@@ -1710,6 +1722,7 @@ $taskDisplay = array('create' => gettext("create"), 'update' => gettext("update"
 						$updateErrors = false;
 
 						if (isset($_GET['create']) || isset($_REQUEST['update']) && db_connect($_conf_vars, false)) {
+							tracer(__FILE__, __LINE__);
 							primeMark(gettext('Database update'));
 							if (getOption('UTF-8') !== 'utf8mb4') {
 								$sql = 'SELECT COLLATION_NAME FROM information_schema.columns ' .
@@ -1877,6 +1890,7 @@ $taskDisplay = array('create' => gettext("create"), 'update' => gettext("update"
 							</script>
 							<?php
 						} else if (db_connect($_conf_vars, false)) {
+							tracer(__FILE__, __LINE__);
 							$task = '';
 							if (setupUserAuthorized() || $blindInstall) {
 								if (!empty($dbmsg)) {
@@ -1923,6 +1937,7 @@ $taskDisplay = array('create' => gettext("create"), 'update' => gettext("update"
 									$task = '&' . $task;
 								}
 								$task = html_encode($task);
+								tracer(__FILE__, __LINE__);
 								?>
 								<form id="setup" action="<?php echo WEBPATH . '/' . CORE_FOLDER, '/setup/index.php?checked' . $task . $mod; ?>" method="post"<?php echo $hideGoButton; ?> >
 									<input type="hidden" name="setUTF8URI" id="setUTF8URI" value="internal" />
