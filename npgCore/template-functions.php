@@ -4356,7 +4356,7 @@ function printPasswordForm($password_hint, $password_showuser = NULL, $password_
 			<?php
 		} else {
 			npg_session_destroy();
-			$_authority->printLoginForm($password_redirect, $showLogo, $password_showuser, NULL, $password_hint);
+			$_authority->printLoginForm($password_redirect, $showLogo, $password_showuser, $password_hint);
 		}
 		?>
 	</div>

@@ -8,8 +8,8 @@
  */
 // force UTF-8 Ø
 
-if (isset($_GET['action'])) {
-	define('OFFSET_PATH', -2); //	prevent conflicting plugin loads
+if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+	define('OFFSET_PATH', -2); //	prevent loading plugins which might conflict with the deleted one
 } else {
 	define('OFFSET_PATH', 1);
 }
