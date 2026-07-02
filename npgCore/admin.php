@@ -355,8 +355,7 @@ if (!npg_loggedin()) {
 	<body style="background-image: none">
 		<?php
 		npg_session_destroy();
-		$hint = npgFilters::apply('admin_logon_hint', NULL);
-		$_authority->printLoginForm($came_from, true, true, $hint);
+		$_authority->printLoginForm($came_from);
 		?>
 	</body>
 	<?php
