@@ -2670,7 +2670,6 @@ class elFinder {
 			}
 			return $this->curl_get_contents($new_url, $timeout, $redirect_max - 1, $ua, $outfp, $info);
 		}
-		curl_close($ch);
 		return $outfp ? $outfp : $result;
 	}
 
@@ -5013,7 +5012,6 @@ var go = function() {
 			}
 		}
 
-		curl_close($curl);
 
 		return $result;
 	}

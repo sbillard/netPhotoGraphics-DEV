@@ -121,9 +121,8 @@ class FacebookCurl
   /**
    * Close the resource connection to curl
    */
-  public function close()
-  {
-    curl_close($this->curl);
+	public function close() {
+
   }
 
 }
