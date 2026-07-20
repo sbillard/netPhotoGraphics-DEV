@@ -45,6 +45,9 @@ if (abs(OFFSET_PATH) == 2) {
 	$enabled = getEnabledPlugins();
 }
 
+global $_captcha;
+$_captcha = new _captcha(); // this will be overridden by the plugin if enabled.
+
 foreach ($enabled as $extension => $plugin) {
 	$priority = $plugin['priority'];
 	if ($priority & CLASS_PLUGIN) {

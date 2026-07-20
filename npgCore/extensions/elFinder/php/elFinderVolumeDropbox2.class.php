@@ -255,7 +255,6 @@ class elFinderVolumeDropbox2 extends elFinderVolumeDriver
         ]);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
         $result = curl_exec($ch);
-        curl_close($ch);
 
         $res = $result ? json_decode($result, true) : [];
 

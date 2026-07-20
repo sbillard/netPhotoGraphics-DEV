@@ -141,6 +141,7 @@ class debug {
 								gettext('Debug') => 2
 						),
 						'order' => 2,
+						'deprecated' => true,
 						'desc' => gettext('Adds the <a href="https://jquery.com/upgrade-guide/3.0/">jQuery 3.3 migration</a> tool to the administrative pages.')),
 				gettext('jQuery migration (theme)') => array('key' => 'jQuery_Migrate_theme', 'type' => OPTION_TYPE_RADIO,
 						'buttons' => array(// The definition of the radio buttons to choose from and their values.
@@ -150,6 +151,7 @@ class debug {
 								gettext('No migration') => 3
 						),
 						'order' => 3,
+						'deprecated' => true,
 						'desc' => gettext('Adds the <a href="https://jquery.com/upgrade-guide/">jQuery migration</a> tool to theme pages. (If <em>No migration</em> is selected jQuery v1.12 and jQuery migration v1.4.1 will be loaded instead of jQuery v3.'))
 		);
 

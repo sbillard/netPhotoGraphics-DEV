@@ -1,6 +1,6 @@
 Download custom build of jquery ui from https://jqueryui.com/download/ 
 
-Select all widgets and "basic" as the theme
+Select all widgets and "base" as the theme
 
 Language files can be found in the gitHub repository https://github.com/jquery/jquery-ui
 

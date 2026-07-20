@@ -468,7 +468,6 @@ class http_class {
 		if ($this->debug)
 			$this->OutputDebug("Disconnected from " . $this->connected_host);
 		if ($this->use_curl) {
-			curl_close($this->connection);
 			$this->response = "";
 		} else
 			fclose($this->connection);

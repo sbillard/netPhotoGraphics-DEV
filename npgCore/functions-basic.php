@@ -707,7 +707,11 @@ function debugLogBacktrace($message, $omit = 0, $log = 'debug') {
 	if (!empty($line)) {
 		$output .= 'from ' . $line;
 	}
-	debugLog($output, false, $log);
+	if ($log) {
+		debugLog($output, false, $log);
+	} else {
+		echo '<br/><br/>' . str_replace("\n", '<br/>', $output);
+	}
 }
 
 /**
