@@ -2433,7 +2433,7 @@ function js_encode($this_string) {
  * @param string $modifier optional extra data. Use, for instance to include
  * 																							parts of URL being used for more security
  */
-function getXSRFToken($action, $modifier = NULL) {
+function getXSRFToken($action, $modifier = '') {
 	global $_current_admin_obj;
 	if (is_object($_current_admin_obj)) {
 		$modifier .= $_current_admin_obj->getLastlogon();
