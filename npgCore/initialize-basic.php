@@ -12,11 +12,8 @@ require_once(__DIR__ . '/lib-utf8.php');
 $_UTF8 = new utf8();
 
 define('ENT_FLAGS', ENT_QUOTES | ENT_SUBSTITUTE);
-define('SESSION_TIMEOUT', 36000);
 
 ini_set('session.use_strict_mode', 1);
-ini_set('session.gc_maxlifetime', SESSION_TIMEOUT);
-ini_set('session.cookie_lifetime', SESSION_TIMEOUT);
 
 // Set error reporting
 error_reporting(E_ALL);

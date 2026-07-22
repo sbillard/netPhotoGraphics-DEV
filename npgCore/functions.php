@@ -2434,7 +2434,11 @@ function js_encode($this_string) {
  * 																							parts of URL being used for more security
  */
 function getXSRFToken($action, $modifier = NULL) {
-	return sha1($action . $modifier . session_id());
+	global $_current_admin_obj;
+	if (is_object($_current_admin_obj)) {
+		$modifier .= $_current_admin_obj->getLastlogon();
+	}
+	return sha1($action . $modifier);
 }
 
 /**
