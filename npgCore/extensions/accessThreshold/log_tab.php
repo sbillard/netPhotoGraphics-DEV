@@ -87,7 +87,7 @@ switch (isset($_REQUEST['data_sortby']) ? $_REQUEST['data_sortby'] : '') {
 		break;
 }
 define('SENSITIVITY', getOption('accessThreshold_SIGNIFICANT'));
-$rows = ceil(getOption('accessThreshold_LIMIT') / 3);
+$rows = max(1, ceil(getOption('accessThreshold_LIMIT') / 3));
 $slice = $rows * 3;
 $pages = ceil(count($recentIP) / $slice);
 
