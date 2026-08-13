@@ -30,8 +30,6 @@ if (!file_exists(SERVERPATH . '/' . DATA_FOLDER)) {
 	mkdir(SERVERPATH . '/' . DATA_FOLDER, $chmod | 0311);
 }
 
-$_initial_session_path = session_save_path();
-
 require_once(CORE_SERVERPATH . 'functions.php');
 require_once(__DIR__ . '/setup-functions.php');
 require_once(CORE_SERVERPATH . 'lib-utf8.php');
@@ -95,18 +93,9 @@ if (file_exists(SERVERPATH . '/zp-core')) {
 session_cache_limiter('nocache');
 $session = npg_session_start();
 $setup_checked = false;
-
 if (isset($_REQUEST['xsrfToken']) || isset($_REQUEST['update']) || isset($_REQUEST['checked'])) {
-	if (isset($_SESSION['save_session_path'])) {
-		$setup_checked = isset($_GET['checked']);
-		$_initial_session_path = $_SESSION['save_session_path'];
-	} else {
-		$_initial_session_path = false;
-		unset($_REQUEST['update']);
-		unset($_REQUEST['checked']);
-	}
+	$setup_checked = isset($_GET['checked']);
 }
-$_SESSION['save_session_path'] = session_save_path();
 
 $en_US = CORE_SERVERPATH . 'locale/en_US/';
 if (!file_exists($en_US)) {
@@ -716,7 +705,7 @@ $taskDisplay = array('create' => gettext("create"), 'update' => gettext("update"
 								$dep = $vers = '';
 							}
 							$good = checkMark($err, '<span' . $vers . '>' . sprintf(gettext("PHP version %s"), PHP_VERSION) . '</span>', "", sprintf(gettext('PHP Version %1$s or greater is required. ' . $dep . 'Version %2$s or greater is strongly recommended as earlier versions may not be <a href="https://php.net/supported-versions.php">actively supported</a>. Use earlier versions at your own risk.'), PHP_MIN_VERSION, PHP_DESIRED_VERSION), false) && $good;
-							checkmark($session && session_id() && $_initial_session_path !== false, gettext('PHP <code>Sessions</code>.'), gettext('PHP <code>Sessions</code> [appear to not be working].'), sprintf(gettext('PHP Sessions are required for administrative functions. Check your <code>session.save_path</code> (<code>%1$s</code>) and the PHP configuration <code>[session]</code> settings'), session_save_path()), true);
+							checkmark(session_status() == PHP_SESSION_ACTIVE && $session && session_id(), gettext('PHP <code>Sessions</code>.'), gettext('PHP <code>Sessions</code> [appear to not be working].'), sprintf(gettext('PHP Sessions are required for administrative functions. Check your <code>session.save_path</code> (<code>%1$s</code>) and the PHP configuration <code>[session]</code> settings'), session_save_path()), true);
 
 							if (preg_match('#(1|ON)#i', ini_get('session.use_strict_mode'))) {
 								$strictSession = 1;
@@ -1747,6 +1736,17 @@ $taskDisplay = array('create' => gettext("create"), 'update' => gettext("update"
 								}
 							}
 
+							if (!isset($_SESSION['setup']) || $_SESSION['setup'] != NETPHOTOGRAPHICS_VERSION_CONCISE) {
+								$msg = gettext('There is some kind of problem with PHP Sessions. Data from the initial setup page was not preserved.');
+								setuplog('<span class="logwarning">' . $msg . '</span>', true);
+								$autorun = false;
+								?>
+								<p>
+									<?php echo '<span class="warningbox">' . $msg . '</span>'; ?>
+								</p>
+								<br/>
+								<?php
+							}
 							require_once(CORE_SERVERPATH . 'setup/database.php');
 
 							unset($_tableFields);
@@ -1945,6 +1945,7 @@ $taskDisplay = array('create' => gettext("create"), 'update' => gettext("update"
 								npg_session_destroy();
 								$_authority->printLoginForm('', false);
 							} else {
+								$_SESSION['setup'] = NETPHOTOGRAPHICS_VERSION_CONCISE;
 								if (!empty($task) && substr($task, 0, 1) != '&') {
 									$task = '&' . $task;
 								}

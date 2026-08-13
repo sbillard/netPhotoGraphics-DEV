@@ -60,7 +60,7 @@ class accessThreshold {
 	}
 
 	function getOptionsSupported() {
-		if (str_contains(getOption('accessThreshold_Owner'), ':')) {
+		if (($opt = getOption('accessThreshold_Owner')) && str_contains($opt, ':')) {
 			$max = 8;
 		} else {
 			$max = 4;
