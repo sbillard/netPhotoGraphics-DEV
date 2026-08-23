@@ -342,7 +342,7 @@ function reconfigurePage($diff, $needs, $mandatory) {
 					$required = false;
 					$message = gettext('Plugin setup has been executed for:');
 					foreach ($rslt['old'] as $plugin => $request) {
-						if (array_key_exists($plugin, IMAGE_METADATA_PROVIDERS)) {
+						if (array_key_exists($plugin, IMAGE_METADATA_PROVIDERS) || $plugin == 'Options:Purge Options') {
 							$required = true;
 							$message = gettext('Plugn setup has been requested for:');
 						} else {
