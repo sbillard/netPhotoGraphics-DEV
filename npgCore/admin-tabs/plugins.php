@@ -32,7 +32,7 @@ if (isset($_GET['selection'])) {
 }
 
 $_GET['page'] = 'plugins';
-
+$plugin_default = 'all';
 //compute the subpage the plugin is on
 if (isset($_REQUEST['subpage'])) {
 	$subpage = (int) filter_var($_REQUEST['subpage'], FILTER_SANITIZE_NUMBER_FLOAT);
