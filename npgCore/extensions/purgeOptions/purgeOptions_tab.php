@@ -69,9 +69,6 @@ if (isset($_POST['purge'])) {
 		}
 	}
 
-	if (!empty($purgedActive)) {
-		requestSetup('Options:Purge Options', gettext('Active plugins have been disabled.'));
-	}
 	header("Location: " . getAdminLink(PLUGIN_FOLDER . '/purgeOptions/purgeOptions_tab.php') . '?tab=purge');
 	exit();
 }

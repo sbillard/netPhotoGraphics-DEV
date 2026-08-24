@@ -339,12 +339,10 @@ function reconfigurePage($diff, $needs, $mandatory) {
 								?>
 								<script>
 					<?php
-					$required = false;
-					$message = gettext('Plugin setup has been executed for:');
+					$executed = $required = [];
 					foreach ($rslt['old'] as $plugin => $request) {
-						if (array_key_exists($plugin, IMAGE_METADATA_PROVIDERS) || $plugin == 'Options:Purge Options') {
-							$required = true;
-							$message = gettext('Plugn setup has been requested for:');
+						if (array_key_exists($plugin, IMAGE_METADATA_PROVIDERS)) {
+							$required[] = $plugin;
 						} else {
 							?>
 											$.ajax({
@@ -354,32 +352,49 @@ function reconfigurePage($diff, $needs, $mandatory) {
 												url: '<?php echo FULLWEBPATH . '/' . CORE_FOLDER . '/setup/setup_pluginOptions.php' ?>'
 											});
 							<?php
+							unset($diff['REQUESTS'][$plugin]);
+							$executed[] = $plugin;
 						}
 					}
 					?>
 								</script>
 								<?php
-								$old = getSerializedArray(getOption('netphotographics_install'));
-								unset($old['REQUESTS']);
-								if (!$required) {
-									unset($diff['REQUESTS']);
-								}
-								?>
-								<li>
-									<div id="files">
-										<?php
-										echo $message;
-										?>
-										<ul>
+								if (!empty($required)) {
+									?>
+									<li>
+										<div id="files_1">
 											<?php
-											foreach ($rslt['old'] as $request) {
-												echo '<li>' . $request . '</li>';
-											}
+											echo gettext('Plugin setup has been requested for:');
 											?>
-										</ul>
-									</div>
-								</li>
-								<?php
+											<ul>
+												<?php
+												foreach ($required as $plugin) {
+													echo '<li>' . $rslt['old'][$plugin] . '</li>';
+												}
+												?>
+											</ul>
+										</div>
+									</li>
+									<?php
+								}
+								if (!empty($executed)) {
+									?>
+									<li>
+										<div id="files_2">
+											<?php
+											echo gettext('Plugn setup has been executed for:');
+											?>
+											<ul>
+												<?php
+												foreach ($executed as $plugin) {
+													echo '<li>' . $rslt['old'][$plugin] . '</li>';
+												}
+												?>
+											</ul>
+										</div>
+									</li>
+									<?php
+								}
 							}
 							break;
 						default:
