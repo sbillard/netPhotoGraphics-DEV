@@ -23,6 +23,15 @@ function saveOptions() {
 	if (isset($_GET['single'])) {
 		$returntab = "&tab=plugin&single=" . sanitize($_GET['single']);
 	} else {
+		if (isset($_GET['subpage'])) {
+			$subpage = sanitize_numeric($_GET['subpage']);
+		} else {
+			if (isset($_POST['subpage'])) {
+				$subpage = sanitize_numeric($_POST['subpage']);
+			} else {
+				$subpage = 0;
+			}
+		}
 		$returntab = "&tab=plugin&subpage=$subpage";
 	}
 

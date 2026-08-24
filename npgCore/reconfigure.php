@@ -342,7 +342,7 @@ function reconfigurePage($diff, $needs, $mandatory) {
 					$executed = $required = [];
 					foreach ($rslt['old'] as $plugin => $request) {
 						if (array_key_exists($plugin, IMAGE_METADATA_PROVIDERS)) {
-							$required[] = $plugin;
+							$required[$plugin] = $request;
 						} else {
 							?>
 											$.ajax({
@@ -353,7 +353,7 @@ function reconfigurePage($diff, $needs, $mandatory) {
 											});
 							<?php
 							unset($diff['REQUESTS'][$plugin]);
-							$executed[] = $plugin;
+							$executed[$plugin] = $request;
 						}
 					}
 					?>
@@ -368,8 +368,8 @@ function reconfigurePage($diff, $needs, $mandatory) {
 											?>
 											<ul>
 												<?php
-												foreach ($required as $plugin) {
-													echo '<li>' . $rslt['old'][$plugin] . '</li>';
+												foreach ($required as $plugin => $request) {
+													echo '<li>' . $request . '</li>';
 												}
 												?>
 											</ul>
@@ -386,8 +386,8 @@ function reconfigurePage($diff, $needs, $mandatory) {
 											?>
 											<ul>
 												<?php
-												foreach ($executed as $plugin) {
-													echo '<li>' . $rslt['old'][$plugin] . '</li>';
+												foreach ($executed as $plugin => $request) {
+													echo '<li>' . $request . '</li>';
 												}
 												?>
 											</ul>
@@ -415,7 +415,7 @@ function reconfigurePage($diff, $needs, $mandatory) {
 			if ($mandatory) {
 				printf(gettext('The change detected is critical. %1$s<em>setup</em>%2$s <strong>must</strong> be run for the site to function.'), $l1, $l2);
 			} else {
-				if (!empty($diff)) {
+				if (!empty($required)) {
 					printf(gettext('The change detected may not be critical but you should run %1$ssetup%2$s at your earliest convenience.'), $l1, $l2);
 					$request = mb_parse_url(getRequestURI());
 					if (isset($request['query'])) {
@@ -433,6 +433,13 @@ function reconfigurePage($diff, $needs, $mandatory) {
 					<?php
 				}
 			}
+			$sig = getSerializedArray(getOption('netphotographics_install'));
+			if ($required) {
+				$sig['REQUESTS'] = $required;
+			} else {
+				unset($sig['REQUESTS']);
+			}
+			setOption('netphotographics_install', serialize($sig));
 			?>
 		</p>
 	</div>
