@@ -313,6 +313,7 @@ function reconfigurePage($diff, $needs, $mandatory) {
 	//	leave this as a direct link incase the admin mod_rewrite mechanism has not yet been established
 	$l1 = '<a href="' . WEBPATH . '/' . CORE_FOLDER . '/setup.php' . '?autorun=' . $where . '">';
 	$l2 = '</a>';
+	$showSetupLink = true;
 	?>
 	<div class="reconfigbox">
 		<h1>
@@ -403,6 +404,9 @@ function reconfigurePage($diff, $needs, $mandatory) {
 								unset($sig['REQUESTS']);
 							}
 							setOption('netphotographics_install', serialize($sig));
+							if (empty($required)) {
+								$showSetupLink = false;
+							}
 							break;
 						default:
 							$sz = filesize(CORE_SERVERPATH . $thing);
@@ -422,7 +426,7 @@ function reconfigurePage($diff, $needs, $mandatory) {
 			if ($mandatory) {
 				printf(gettext('The change detected is critical. %1$s<em>setup</em>%2$s <strong>must</strong> be run for the site to function.'), $l1, $l2);
 			} else {
-				if (!empty($required)) {
+				if ($showSetupLink) {
 					printf(gettext('The change detected may not be critical but you should run %1$ssetup%2$s at your earliest convenience.'), $l1, $l2);
 					$request = mb_parse_url(getRequestURI());
 					if (isset($request['query'])) {
