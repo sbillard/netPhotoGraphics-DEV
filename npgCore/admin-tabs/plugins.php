@@ -99,12 +99,10 @@ if (isset($_GET['action'])) {
 							$option_interface = NULL;
 							require_once($p);
 
-							if ($option_interface && is_string($option_interface)) {
-								$if = new $option_interface; //	prime the default options
-							}
-
 							if (function_exists($f)) {
-								$f(true);
+								$f(true); //	run theplugin "enable" function
+							} else if ($option_interface && is_string($option_interface)) {
+								$if = new $option_interface; //	prime the default options
 							}
 							break;
 					}
