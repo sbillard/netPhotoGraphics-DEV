@@ -396,6 +396,13 @@ function reconfigurePage($diff, $needs, $mandatory) {
 									<?php
 								}
 							}
+							$sig = getSerializedArray(getOption('netphotographics_install'));
+							if ($required) {
+								$sig['REQUESTS'] = $required;
+							} else {
+								unset($sig['REQUESTS']);
+							}
+							setOption('netphotographics_install', serialize($sig));
 							break;
 						default:
 							$sz = filesize(CORE_SERVERPATH . $thing);
@@ -433,13 +440,6 @@ function reconfigurePage($diff, $needs, $mandatory) {
 					<?php
 				}
 			}
-			$sig = getSerializedArray(getOption('netphotographics_install'));
-			if ($required) {
-				$sig['REQUESTS'] = $required;
-			} else {
-				unset($sig['REQUESTS']);
-			}
-			setOption('netphotographics_install', serialize($sig));
 			?>
 		</p>
 	</div>

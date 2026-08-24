@@ -24,7 +24,7 @@ require_once(PLUGIN_SERVERPATH . 'common/fieldExtender.php');
 class userAddressFields extends fieldExtender {
 
 	function __construct() {
-		global $_authority, $_userAddressFields;
+		global $_authority, $_userAddressFields, $fullLog;
 		$firstTime = false;
 		$tablecols = db_list_fields('administrators');
 		foreach ($tablecols as $key => $datum) {
@@ -46,12 +46,12 @@ class userAddressFields extends fieldExtender {
 						foreach ($custom as $field => $val) {
 							$sql .= '`' . $field . '`=' . db_quote($val) . ',';
 						}
-						setupQuery($sql);
+						setupQuery($sql, true, TEST_RELEASE || $fullLog, 'Plugin:userAddressFields ');
 					}
 				}
 				db_free_result($result);
 			}
-			setupQuery('ALTER TABLE ' . prefix('administrators') . ' DROP `custom_data`');
+			setupQuery('ALTER TABLE ' . prefix('administrators') . ' DROP `custom_data`', true, TEST_RELEASE || $fulllog, 'Plugin:userAddressFields ');
 		}
 	}
 

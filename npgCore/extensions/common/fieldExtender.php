@@ -71,9 +71,9 @@ class fieldExtender {
 	 * @param array $newfields
 	 */
 	function constructor($me, $newfields) {
+		global $fullLog;
 		if (OFFSET_PATH == 2) {
 			require_once(CORE_SERVERPATH . 'setup/setup-functions.php');
-			setupLog(sprintf(gettext('%1$s::fieldExtender constructor started'), $me), true);
 			//clean up creator fields
 			$sql = 'UPDATE ' . prefix('options') . ' SET `creator`=' . db_quote(replaceScriptPath(__FILE__) . '[' . __LINE__ . ']') . ' WHERE `name`=' . db_quote($me . '_addedFields') . ' AND `creator` IS NULL;';
 			query($sql);
@@ -185,7 +185,7 @@ class fieldExtender {
 						}
 						$sql .= " COMMENT 'optional_$me'";
 
-						if ((!$cmd || setupQuery($sql)) && in_array($newfield['table'], array('albums', 'images', 'news', 'news_categories', 'pages'))) {
+						if ((!$cmd || setupQuery($sql, true, TEST_RELEASE || $fullLog, 'Plugin:' . $me . ' ')) && in_array($newfield['table'], array('albums', 'images', 'news', 'news_categories', 'pages'))) {
 							$fields[] = strtolower($newfield['name']);
 						}
 						$current[$newfield['table']][$newfield['name']] = $dbType;
@@ -209,11 +209,10 @@ class fieldExtender {
 				foreach ($fields as $field => $orphaned) {
 					if ($orphaned['Comment'] == "optional_$me") {
 						$sql = 'ALTER TABLE ' . prefix($table) . ' DROP `' . $field . '`';
-						setupQuery($sql);
+						setupQuery($sql, true, TEST_RELEASE || $fullLog, 'Plugin:' . $me . ' ');
 					}
 				}
 			}
-			setupLog(sprintf(gettext('%1$s::fieldExtender constructor completed'), $me), true);
 		}
 	}
 
