@@ -301,6 +301,13 @@ function adminToolbox() {
 								}
 								// set return to this image page
 								npgFilters::apply('admin_toolbox_image', $albumname, $imagename);
+							} else {
+								?>
+								<li>
+									<a href="<?php echo getImageURL($_current_image); ?>" title="<?php echo gettext('Source of image in dynamic album'); ?>"><?php echo gettext('Image Source'); ?></a>
+								</li>
+
+								<?php
 							}
 						}
 						break;
@@ -4453,7 +4460,7 @@ function policySubmitButton($buttonText, $buttonClass = NULL, $buttonExtra = NUL
 		<span class="policy_acknowledge_check_box">
 			<input id="GDPR_acknowledge" type="checkbox" name="policy_acknowledge" onclick="$(this).parent().next().show();
 						 <?php echo $linked; ?>
-							$(this).parent().hide();" value="<?php echo md5(getUserID() . getOption('GDPR_cookie')); ?>">
+					$(this).parent().hide();" value="<?php echo md5(getUserID() . getOption('GDPR_cookie')); ?>">
 						 <?php
 						 echo sprintf(get_language_string(getOption('GDPR_text')), getOption('GDPR_URL'));
 						 ?>
