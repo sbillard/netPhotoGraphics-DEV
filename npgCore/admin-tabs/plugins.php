@@ -8,7 +8,9 @@
  */
 // force UTF-8 Ø
 
-if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+if (isset($_GET['action']) && $_GET['action'] === 'saveplugins') {
+	define('OFFSET_PATH', 2); //	so the construct method thinks it is in setup
+} else if (isset($_GET['action']) && $_GET['action'] === 'delete') {
 	define('OFFSET_PATH', -2); //	prevent loading plugins which might conflict with the deleted one
 } else {
 	define('OFFSET_PATH', 1);
@@ -30,7 +32,11 @@ if (isset($_GET['selection'])) {
 }
 
 $_GET['page'] = 'plugins';
-localeSort($pluginlist);
+if (isset($_GET['tab'])) {
+	$plugin_default = $_GET['tab'];
+} else {
+	$plugin_default = 'all';
+}
 
 //compute the subpage the plugin is on
 if (isset($_REQUEST['subpage'])) {
@@ -93,12 +99,10 @@ if (isset($_GET['action'])) {
 							$option_interface = NULL;
 							require_once($p);
 
-							if ($option_interface && is_string($option_interface)) {
-								$if = new $option_interface; //	prime the default options
-							}
-
 							if (function_exists($f)) {
-								$f(true);
+								$f(true); //	run theplugin "enable" function
+							} else if ($option_interface && is_string($option_interface)) {
+								$if = new $option_interface; //	prime the default options
 							}
 							break;
 					}
@@ -135,6 +139,7 @@ if (isset($_GET['action'])) {
 	exit();
 }
 
+localeSort($pluginlist);
 $saved = isset($_GET['saved']);
 printAdminHeader('plugins');
 

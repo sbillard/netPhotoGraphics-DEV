@@ -496,17 +496,17 @@ function checkUnique($table, $unique) {
  * @author Stephen Billard
  * @Copyright 2016 by Stephen L Billard for use in {@link https://%GITHUB% netPhotoGraphics} and derivatives
  */
-function setupQuery($sql, $failNotify = true, $log = true) {
+function setupQuery($sql, $failNotify = true, $log = true, $addl = '') {
 	global $updateErrors;
 	$result = query($sql, $failNotify);
 	if (abs(OFFSET_PATH) == 2) { //don't write to setup log if not running setup
 		if ($result) {
-			setupLog(sprintf(gettext('Query Success: %s'), $sql), $log);
+			setupLog(sprintf($addl . gettext('Query Success: %s'), $sql), $log);
 		} else {
 			if ($failNotify) {
 				$updateErrors = true;
 				$error = db_error();
-				setupLog(sprintf(gettext('Query Failed: %1$s ' . NEWLINE . ' Error: %2$s'), $sql, $error), true);
+				setupLog(sprintf($addl . gettext('Query Failed: %1$s ' . NEWLINE . ' Error: %2$s'), $sql, $error), true);
 			}
 		}
 	}

@@ -291,7 +291,9 @@ switch (OFFSET_PATH) {
 		$_zp_captcha = &$_captcha;
 		$_zp_gallery = &$_gallery;
 
-		define('ZENFOLDER', CORE_FOLDER);
+		if (!defined('ZENFOLDER')) {
+			define('ZENFOLDER', CORE_FOLDER);
+		}
 		define('SERVER_HTTP_HOST', FULLHOSTPATH);
 
 		define("ZP_INDEX", NPG_INDEX);

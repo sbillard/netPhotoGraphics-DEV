@@ -313,6 +313,7 @@ function reconfigurePage($diff, $needs, $mandatory) {
 	//	leave this as a direct link incase the admin mod_rewrite mechanism has not yet been established
 	$l1 = '<a href="' . WEBPATH . '/' . CORE_FOLDER . '/setup.php' . '?autorun=' . $where . '">';
 	$l2 = '</a>';
+	$showSetupLink = true;
 	?>
 	<div class="reconfigbox">
 		<h1>
@@ -339,12 +340,10 @@ function reconfigurePage($diff, $needs, $mandatory) {
 								?>
 								<script>
 					<?php
-					$required = false;
-					$message = gettext('Plugin setup has been executed for:');
+					$executed = $required = [];
 					foreach ($rslt['old'] as $plugin => $request) {
 						if (array_key_exists($plugin, IMAGE_METADATA_PROVIDERS)) {
-							$required = true;
-							$message = gettext('Plugn setup has been requested for:');
+							$required[$plugin] = $request;
 						} else {
 							?>
 											$.ajax({
@@ -354,32 +353,59 @@ function reconfigurePage($diff, $needs, $mandatory) {
 												url: '<?php echo FULLWEBPATH . '/' . CORE_FOLDER . '/setup/setup_pluginOptions.php' ?>'
 											});
 							<?php
+							unset($diff['REQUESTS'][$plugin]);
+							$executed[$plugin] = $request;
 						}
 					}
 					?>
 								</script>
 								<?php
-								$old = getSerializedArray(getOption('netphotographics_install'));
-								unset($old['REQUESTS']);
-								if (!$required) {
-									unset($diff['REQUESTS']);
-								}
-								?>
-								<li>
-									<div id="files">
-										<?php
-										echo $message;
-										?>
-										<ul>
+								if (!empty($required)) {
+									?>
+									<li>
+										<div id="files_1">
 											<?php
-											foreach ($rslt['old'] as $request) {
-												echo '<li>' . $request . '</li>';
-											}
+											echo gettext('Plugin setup has been requested for:');
 											?>
-										</ul>
-									</div>
-								</li>
-								<?php
+											<ul>
+												<?php
+												foreach ($required as $plugin => $request) {
+													echo '<li>' . $request . '</li>';
+												}
+												?>
+											</ul>
+										</div>
+									</li>
+									<?php
+								}
+								if (!empty($executed)) {
+									?>
+									<li>
+										<div id="files_2">
+											<?php
+											echo gettext('Plugn setup has been executed for:');
+											?>
+											<ul>
+												<?php
+												foreach ($executed as $plugin => $request) {
+													echo '<li>' . $request . '</li>';
+												}
+												?>
+											</ul>
+										</div>
+									</li>
+									<?php
+								}
+							}
+							$sig = getSerializedArray(getOption('netphotographics_install'));
+							if ($required) {
+								$sig['REQUESTS'] = $required;
+							} else {
+								unset($sig['REQUESTS']);
+							}
+							setOption('netphotographics_install', serialize($sig));
+							if (empty($required)) {
+								$showSetupLink = false;
 							}
 							break;
 						default:
@@ -400,7 +426,7 @@ function reconfigurePage($diff, $needs, $mandatory) {
 			if ($mandatory) {
 				printf(gettext('The change detected is critical. %1$s<em>setup</em>%2$s <strong>must</strong> be run for the site to function.'), $l1, $l2);
 			} else {
-				if (!empty($diff)) {
+				if ($showSetupLink) {
 					printf(gettext('The change detected may not be critical but you should run %1$ssetup%2$s at your earliest convenience.'), $l1, $l2);
 					$request = mb_parse_url(getRequestURI());
 					if (isset($request['query'])) {
