@@ -1,11 +1,14 @@
-<?php include('includes/header.php'); ?>
-
-<h1 class="visually-hidden"><?php echo html_encode(getMainSiteName()); ?></h1>
-
 <?php if (file_exists(__DIR__ . '/images/logo.png')) { ?>
     <section class="home-hero">
         <img class="home-hero__logo" src="<?php echo $_themeroot; ?>/images/logo.png" alt="<?php echo html_encode(getMainSiteName()); ?>">
     </section>
+<?php } ?>
+
+<?php $_nova_galleryTitle = trim(strip_tags(getGalleryTitle())); ?>
+<?php if ($_nova_galleryTitle !== '') { ?>
+    <h1 class="home-title"><?php echo html_encode($_nova_galleryTitle); ?></h1>
+<?php } else { ?>
+    <h1 class="visually-hidden"><?php echo html_encode(getMainSiteName()); ?></h1>
 <?php } ?>
 
 <?php if (trim(strip_tags(getGalleryDesc()))) { ?>
