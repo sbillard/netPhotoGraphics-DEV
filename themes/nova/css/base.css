@@ -137,7 +137,7 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
 	min-height: 60px;
 	display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
 }
-.site-logo { flex: 1 1 auto; min-width: 0; color: var(--header-text); font-weight: 650; font-size: 1.1rem; letter-spacing: .02em; line-height: 1.25; padding: .5rem 0; overflow-wrap: anywhere; }
+.site-logo { flex: 0 0 auto; color: var(--header-text); font-weight: 650; font-size: 1.1rem; letter-spacing: .02em; line-height: 1.25; padding: .5rem 0; white-space: nowrap; }
 .site-nav { flex: 0 1 auto; }
 .site-logo:hover { color: #fff; text-decoration: none; }
 
@@ -172,7 +172,7 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
 .site-nav__list li ul { display: none; }
 
 @media (max-width: 1200px) {
-	.site-logo { font-size: clamp(.92rem, 4.2vw, 1.05rem); }
+	.site-logo { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: clamp(.92rem, 4.2vw, 1.05rem); }
 	.nav-toggle { display: inline-flex; }
 	.site-nav {
 		position: absolute; left: 0; right: 0; top: 100%;
@@ -308,3 +308,6 @@ label { font-weight: 500; }
 }
 
 .site-main:focus { outline: none; }
+
+/* gallery title on the home page */
+.home-title { max-width: var(--container); margin: 2.25rem auto 0; padding: 0 var(--gutter); text-align: center; font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.2; }
