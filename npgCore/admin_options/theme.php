@@ -50,7 +50,7 @@ if (empty($alb)) {
 if (!(false === ($requirePath = getPlugin('themeoptions.php', $themename)))) {
 	require_once($requirePath);
 	$_gallery->setCurrentTheme($themename);
-	$optionHandler = new ThemeOptions(!getThemeOption('constructed', $_set_theme_album, $themename));
+	$optionHandler = new ThemeOptions();
 } else {
 	$optionHandler = NULL;
 }

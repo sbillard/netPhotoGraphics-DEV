@@ -279,9 +279,11 @@ if (count($themelist) == 0) {
 					<br /><br />
 					<a href="<?php echo getAdminLink('admin-tabs/options.php'); ?>?page=options&amp;tab=theme&amp;optiontheme=<?php echo $linkto; ?>" ><?php echo sprintf(gettext('Set <em>%s</em> theme options'), $themeinfo['name']); ?></a>
 					<?php
-					if (!isset($knownThemes[$theme])) {
+					$sql = 'SELECT * FROM ' . prefix('options') . ' WHERE `theme`="' . $theme . '"';
+					$options = query_full_array($sql);
+					if (count($options) == 0) {
 						?>
-						<span class="notebox"><?php echo gettext('The default options for this theme have not been set.'); ?></span>
+						<span class="notebox"><?php echo gettext('The options for this theme have not been set.'); ?></span>
 						<?php
 					}
 					?>

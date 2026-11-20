@@ -29,16 +29,9 @@ if (isset($_POST['purge'])) {
 			$sql = 'DELETE FROM ' . prefix('plugin_storage') . ' WHERE `type`=' . db_quote(basename($owner));
 			query($sql);
 
-			if (preg_match('~^' . THEMEFOLDER . '/~', $owner)) {
-				if (file_exists(SERVERPATH . '/' . THEMEFOLDER . '/' . basename($owner) . '/themeoptions.php')) {
-					$purgedActive[] = true; // theme still exists, need to re-run setup
-				}
-			} else {
+			if (!preg_match('~^' . THEMEFOLDER . '/~', $owner)) {
 				$plugin = basename($owner);
 				if (!(isset($_POST['missingplugin']) && in_array($plugin, $_POST['missingplugin']))) {
-					if (extensionEnabled($plugin)) {
-						$purgedActive[$plugin] = true;
-					}
 					purgeOption('_plugin_' . $plugin);
 					//invoke the enable method if it exists
 					$f = str_replace('-', '_', $plugin) . '_enable';

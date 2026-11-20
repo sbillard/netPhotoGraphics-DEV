@@ -244,8 +244,9 @@ foreach ($plugins as $key => $extension) {
 
 setOption('deleted_deprecated_plugins', serialize($deprecatedDeleted));
 
-setOption('known_themes', serialize(array())); //	reset known themes
+$knownThemes = [];
 foreach ($themes as $key => $theme) {
+	$knownThemes[$theme] = $theme;
 	if (protectedTheme($theme)) {
 		unset($themes[$key]);
 	} else {
@@ -255,6 +256,7 @@ foreach ($themes as $key => $theme) {
 		$deprecated = true;
 	}
 }
+setOption('known_themes', serialize($knownThemes)); //	reset known themes
 
 $salt = 'abcdefghijklmnopqursuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!@#$%^&*()_+-={}[]|;,.<>?/';
 $list = range(0, strlen($salt) - 1);
