@@ -1,3 +1,4 @@
+<?php include('includes/header.php'); ?>
 <?php if (file_exists(__DIR__ . '/images/logo.png')) { ?>
     <section class="home-hero">
         <img class="home-hero__logo" src="<?php echo $_themeroot; ?>/images/logo.png" alt="<?php echo html_encode(getMainSiteName()); ?>">
