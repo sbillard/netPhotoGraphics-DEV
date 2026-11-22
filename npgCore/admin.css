@@ -1905,7 +1905,9 @@ ul.pagelist li.current {
 /* icon legend
 ------------------*/
 .iconlegend {
-	height: 20px;
+	min-height: 20px;
+	line-height: 1.7;
+	margin-bottom: .5em;
 	text-align: right;
 }
 
@@ -1921,7 +1923,9 @@ ul.pagelist li.current {
 	margin: 0 2px 0 0;
 }
 .iconlegend-l {
-	height: 20px;
+	min-height: 20px;
+	line-height: 1.7;
+	margin-bottom: .5em;
 	text-align: left;
 }
 
