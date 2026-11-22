@@ -287,7 +287,7 @@ class getid3_quicktime extends getid3_handler {
 						// some "ilst" atoms contain data atoms that have a numeric name, and the data is far more accessible if the returned array is compacted
 						$allnumericnames = true;
 						foreach ($atom_structure['subatoms'] as $subatomarray) {
-							if (!is_integer($subatomarray['name']) || (count($subatomarray['subatoms']) != 1)) {
+							if (!is_int($subatomarray['name']) || (count($subatomarray['subatoms']) != 1)) {
 								$allnumericnames = false;
 								break;
 							}

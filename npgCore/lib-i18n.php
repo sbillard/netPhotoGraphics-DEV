@@ -90,10 +90,10 @@ class i18n {
 				$active = $_active_languages;
 				$_all_languages = $_active_languages = null;
 				if ($all) {
-					ksort($all);
+					ksort($all, SORT_STRING);
 					return $all;
 				} else {
-					ksort($active);
+					ksort($active, SORT_STRING);
 					return $_active;
 				}
 			}

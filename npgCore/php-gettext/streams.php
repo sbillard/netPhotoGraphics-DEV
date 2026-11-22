@@ -101,11 +101,9 @@ class FileReader {
 			$this->_fd = fopen($filename, 'rb');
 			if (!$this->_fd) {
 				$this->error = 3; // Cannot read file, probably permissions
-				return false;
 			}
 		} else {
 			$this->error = 2; // File doesn't exist
-			return false;
 		}
 	}
 
@@ -148,8 +146,6 @@ class FileReader {
 
 }
 
-;
-
 // Preloads entire file in memory first, then creates a StringReader
 // over it (it assumes knowledge of StringReader internals)
 class CachedFileReader extends StringReader {
@@ -162,13 +158,11 @@ class CachedFileReader extends StringReader {
 
 			if (!$fd) {
 				$this->error = 3; // Cannot read file, probably permissions
-				return false;
 			}
 			$this->_str = fread($fd, $length);
 			fclose($fd);
 		} else {
 			$this->error = 2; // File doesn't exist
-			return false;
 		}
 	}
 
