@@ -816,7 +816,6 @@ $buttonlist = array();
 					npgFilters::apply('admin_overview');
 					?>
 				</div><!-- boxouter -->
-			</div><!-- content -->
 			<?php
 		} else {
 			?>
@@ -826,7 +825,7 @@ $buttonlist = array();
 			<?php
 		}
 		?>
-	</div>
+	</div><!-- content -->
 	<br clear="all">
 	<?php printAdminFooter(); ?>
 </div><!-- main -->
