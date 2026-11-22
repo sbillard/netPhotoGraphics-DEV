@@ -28,7 +28,6 @@ class npgMutex {
 		if (isset($_conf_vars['MUTEX_RUN_FREE'])) {
 			$this->locked = $_conf_vars['MUTEX_RUN_FREE'];
 		}
-		return $this->lock;
 	}
 
 	// returns the id of the lock to be obtained

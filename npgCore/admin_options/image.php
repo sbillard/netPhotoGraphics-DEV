@@ -481,7 +481,7 @@ function getOptionContent() {
 								</tr>
 								<?php
 								$imageplugins = array_unique($_images_classes);
-								ksort($imageplugins, SORT_LOCALE_STRING);
+								localeKsort($imageplugins);
 								foreach ($imageplugins as $plugin) {
 									$opt = $plugin . '_watermark';
 									$current = getOption($opt);
@@ -741,7 +741,7 @@ function getOptionContent() {
 															 name="disclose_password"
 															 id="disclose_password"
 															 onclick="passwordClear('');
-																			 togglePassword('');" />
+																	 togglePassword('');" />
 															 <?php echo gettext('Show'); ?>
 											</label>
 
@@ -937,7 +937,7 @@ function getOptionContent() {
 					</tr>
 					<?php
 					$sets = array_merge($_UTF8->iconv_sets, $_UTF8->mb_sets);
-					ksort($sets, SORT_LOCALE_STRING);
+					localeKsort($sets);
 					if (!empty($sets)) {
 						?>
 						<tr class="optionSet">

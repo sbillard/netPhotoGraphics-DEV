@@ -552,7 +552,7 @@ echo '</head>';
 							<ul class="plugins">
 								<?php
 								if ($c > 0) {
-									ksort($filters, SORT_LOCALE_STRING);
+									localeKsort($filters);
 									foreach ($filters as $filter => $array_of_priority) {
 										krsort($array_of_priority);
 										?>

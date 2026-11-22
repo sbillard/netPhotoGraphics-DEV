@@ -107,7 +107,7 @@ class SearchEngine {
 			// if tag searches exist then allow exact tags as well
 			$this->search_structure['tags_exact'] = ''; //	internal use only field
 		}
-		asort($this->search_structure, SORT_LOCALE_STRING);
+		localeKsort($this->search_structure);
 
 		if (isset($_REQUEST['words'])) {
 			$this->words = self::decode(sanitize($_REQUEST['words'], 4));

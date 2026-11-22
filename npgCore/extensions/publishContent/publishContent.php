@@ -212,7 +212,7 @@ echo "</head>\n";
 					foreach ($result as $row) {
 						$publish_images_list[$row['folder']][$row['filename']] = $row['id'];
 					}
-					ksort($publish_images_list, SORT_LOCALE_STRING);
+					localeKsort($publish_images_list);
 				}
 
 				if (npg_loggedin(ADMIN_RIGHTS)) { //only admin should be allowed to do this

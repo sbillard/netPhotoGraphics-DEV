@@ -200,7 +200,7 @@ class cacheManager {
 			db_free_result($result);
 		}
 
-		ksort($custom, SORT_LOCALE_STRING);
+		localeKsort($custom);
 		$custom[] = array(array('theme' => NULL));
 		$c = 0;
 		self::printShowHide();

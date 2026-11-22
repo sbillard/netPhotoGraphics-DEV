@@ -1872,7 +1872,7 @@ class dynamicAlbum extends AlbumBase {
 			foreach ($this->images as $key => $image) {
 				$this->imageNames[$image['folder'] . '/' . $image['filename']] = $image['filename'];
 			}
-			ksort($this->imageNames, SORT_LOCALE_STRING);
+			localeKsort($this->imageNames);
 		}
 		return parent::getImages($page, $firstPageCount);
 	}

@@ -64,7 +64,7 @@ function getOptionContent() {
 	?>
 	<div id="tab_gallery" class="tabbox">
 		<form class="dirtylistening" onReset="toggle_passwords('', false);
-					setClean('form_options');" id="form_options" action="?action=saveoptions" method="post" autocomplete="off" >
+				setClean('form_options');" id="form_options" action="?action=saveoptions" method="post" autocomplete="off" >
 					<?php XSRFToken('saveoptions'); ?>
 			<input type="hidden" name="saveoptions" value="gallery" />
 			<input type="hidden" name="password_enabled" id="password_enabled" value="0" />
@@ -276,7 +276,7 @@ function getOptionContent() {
 												 name="disclose_password"
 												 id="disclose_password"
 												 onclick="passwordClear('');
-																 togglePassword('');" /><?php echo gettext('Show'); ?>
+														 togglePassword('');" /><?php echo gettext('Show'); ?>
 								</label>
 
 								<br />
@@ -455,7 +455,7 @@ function getOptionContent() {
 							  $sort[gettext('Random')] = 'random';
 							 */
 							$cvt = $cv = strtolower($_gallery->getSortType());
-							ksort($sort, SORT_LOCALE_STRING);
+							localeKsort($sort);
 							$flip = array_flip($sort);
 							if (isset($flip[$cv])) {
 								$dspc = 'style="margin-top:5px;display:none"';

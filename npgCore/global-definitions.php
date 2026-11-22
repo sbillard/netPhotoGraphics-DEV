@@ -58,9 +58,7 @@ if (!defined('SORT_FLAG_CASE')) {
 if (!defined('SORT_NATURAL')) {
 	define('SORT_NATURAL', 0);
 }
-if (!defined('SORT_LOCALE_STRING')) {
-	define('SORT_LOCALE_STRING', 0);
-}
+
 define('NEWLINE', "\n");
 
 define('SCRIPTPATH', str_replace('\\', '/', dirname(__DIR__)));

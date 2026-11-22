@@ -32,7 +32,7 @@ echo "\n</head>";
 					if (empty($macros)) {
 						echo gettext('No macros have been defined.');
 					} else {
-						ksort($macros, SORT_LOCALE_STRING);
+						localeKsort($macros);
 						?>
 						<div>
 							<p><?php echo gettext('These Content macros can be used to insert items as described into <em>descriptions</em>, <em>zenpage content</em>, and <em>zenpage extra content</em>.</p> <p>Replace any parameters (<em>%d</em>) with the appropriate value.'); ?></p>

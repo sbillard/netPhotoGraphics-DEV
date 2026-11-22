@@ -344,7 +344,7 @@ function getOptionContent() {
 									$disallow = getSerializedArray(getOption('locale_disallowed'));
 									$locales = i18n::generateLanguageList('all');
 									$locales[gettext("HTTP_Accept_Language")] = '';
-									ksort($locales, SORT_LOCALE_STRING);
+									localeKsort($locales);
 									$c = 0;
 									foreach ($locales as $language => $dirname) {
 										$languageAlt = $language;

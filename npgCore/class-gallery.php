@@ -403,7 +403,7 @@ class Gallery {
 						}
 					}
 				}
-				ksort($this->themes, SORT_LOCALE_STRING);
+				localeKsort($this->themes);
 			}
 		}
 		return $this->themes;

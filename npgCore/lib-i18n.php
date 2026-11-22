@@ -63,7 +63,7 @@ class i18n {
 	 *
 	 */
 	static function generateLanguageList($all = false) {
-		global $_active_languages, $_all_languages;
+		global $_active_languages, $_all_languages, $Collator;
 		$disallow = getSerializedArray(getOption('locale_disallowed'));
 		if (is_null($_all_languages)) {
 			$_active_languages = $_all_languages = array();
@@ -82,8 +82,21 @@ class i18n {
 					closedir($dir);
 				}
 			}
-			ksort($_all_languages, SORT_LOCALE_STRING);
-			ksort($_active_languages, SORT_LOCALE_STRING);
+			if (isset($Collator)) {
+				localeKsort($_all_languages);
+				localeKsort($_active_languages);
+			} else { //	can't locale sort until $Collator is setup so don't save the list
+				$all = $_all_languages;
+				$active = $_active_languages;
+				$_all_languages = $_active_languages = null;
+				if ($all) {
+					ksort($all);
+					return $all;
+				} else {
+					ksort($active);
+					return $_active;
+				}
+			}
 		}
 		if ($all) {
 			return $_all_languages;
@@ -473,7 +486,7 @@ function getTimezones() {
 		$cities = array_unique($cities);
 
 		// Sort by area/city name.
-		ksort($cities, SORT_LOCALE_STRING);
+		localeKsort($cities);
 	}
 	return $cities;
 }
@@ -553,6 +566,16 @@ function localeSort(&$strings, $case = TRUE) {
 		} else {
 			return natsort($strings);
 		}
+	}
+}
+
+function localeKsort(&$array) {
+	global $Collator;
+	if (isset($Collator)) {
+		$Collator->setAttribute(Collator::CASE_FIRST, Collator::UPPER_FIRST);
+		return uksort($array, static fn(string $a, string $b): int => $Collator->compare($a, $b));
+	} else {
+		return ksort($array, SORT_STRING);
 	}
 }
 
