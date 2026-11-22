@@ -95,10 +95,9 @@ echo '</head>';
 
 <body>
 	<?php printLogoAndLinks(); ?>
-	<div id="main">
-		<span id="top">
-			<?php printTabs(); ?>
-		</span>
+<div id="main">
+		<span id="top"></span>
+		<?php printTabs(); ?>
 		<div id="content">
 			<?php npgFilters::apply('admin_note', 'statistics', ''); ?>
 			<h1><?php echo gettext("Download Statistics"); ?></h1>
