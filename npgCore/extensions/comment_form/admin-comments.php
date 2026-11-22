@@ -457,7 +457,7 @@ printLogoAndLinks();
 								<tr class="newstr">
 									<td class="page_list_short">
 
-										<?php echo ($fulltext) ? $fullcomment : $shortcomment; ?>
+										<?php echo ($fulltext) ? $fullcomment : $shortcomment; ?></td>
 
 									<td><?php echo $comment['date']; ?></td>
 									<td>
