@@ -1572,17 +1572,18 @@ class Album extends AlbumBase {
 	 * @param bool $deep set to true for a thorough cleansing
 	 */
 	function garbageCollect($deep = false) {
-		if (is_null($this->images))
+		if (is_null($this->images)) {
 			$this->getImages();
+		}
+
 		$result = query("SELECT `id`, `filename` FROM " . prefix('images') . " WHERE `albumid` = '" . $this->id . "'");
 		$dead = array();
 		$live = array();
 
-		$files = $this->loadFileNames();
 		if ($result) {
 			// Does the filename from the db row match any in the files on disk?
 			while ($row = db_fetch_assoc($result)) {
-				if (!in_array($row['filename'], $files)) {
+				if (!file_exists($this->localpath . $row['filename'])) {
 					// In the database but not on disk. Kill it.
 					$dead[] = $row['id'];
 				} else if (in_array($row['filename'], $live)) {

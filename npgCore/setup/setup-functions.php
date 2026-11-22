@@ -557,7 +557,15 @@ function shutDownFunction() {
 		$setupMutex->unlock();
 	}
 	$error = error_get_last();
-	if ($error && !in_array($error['type'], array(E_WARNING, E_CORE_WARNING, E_COMPILE_WARNING, E_USER_WARNING, E_NOTICE, E_USER_NOTICE))) {
+	if ($error && !in_array($error['type'], array(
+							E_WARNING,
+							E_CORE_WARNING,
+							E_COMPILE_WARNING,
+							E_USER_WARNING,
+							E_NOTICE,
+							E_USER_NOTICE, E_DEPRECATED,
+							E_USER_DEPRECATED
+					))) {
 		$msg = '<span class="error">' . sprintf(gettext('%1$s *ERROR* "%2$s" in %3$s on line %4$s'), $__script, $error['message'], $error['file'], $error['line']) . '</span>';
 		setupLog($msg, !$nolog);
 		if ($__script && substr($__script, 0, 6) == 'Plugin') {

@@ -124,7 +124,16 @@ function npgShutDownFunction() {
 	}
 	$error = error_get_last();
 
-	if ($error && !in_array($error['type'], array(E_WARNING, E_CORE_WARNING, E_COMPILE_WARNING, E_USER_WARNING, E_NOTICE, E_USER_NOTICE))) {
+	if ($error && !in_array($error['type'], array(
+							E_WARNING,
+							E_CORE_WARNING,
+							E_COMPILE_WARNING,
+							E_USER_WARNING,
+							E_NOTICE,
+							E_USER_NOTICE,
+							E_DEPRECATED,
+							E_USER_DEPRECATED
+					))) {
 		$file = str_replace('\\', '/', $error['file']);
 		preg_match('~(.*)/(' . USER_PLUGIN_FOLDER . '|' . PLUGIN_FOLDER . ')~', $file, $matches);
 		if (isset($matches[2])) {
