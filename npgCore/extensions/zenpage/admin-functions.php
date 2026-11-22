@@ -1386,17 +1386,17 @@ function zenpageJSCSS() {
 function printZenpageIconLegend() {
 	?>
 	<ul class="iconlegend">
-		<li>
-			<?php
-			if (GALLERY_SECURITY == 'public') {
-				?>
+		<?php
+		if (GALLERY_SECURITY == 'public') {
+			?>
+			<li>
 				<?php echo LOCK; ?>
 				<?php echo LOCK_OPEN; ?>
 				<?php echo gettext("has/does not have password"); ?>
-				<?php
-			}
-			?>
-		</li>
+			</li>
+			<?php
+		}
+		?>
 		<li><?php echo CLIPBOARD . ' ' . gettext("pick source"); ?></li>
 		<li>
 			<?php echo CHECKMARK_GREEN; ?>
