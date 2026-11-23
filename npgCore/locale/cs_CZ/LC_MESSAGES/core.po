@@ -12636,7 +12636,7 @@ msgstr[2] "%u alb"
 #, php-format
 msgid "%u image"
 msgid_plural "%u images"
-msgstr[0] "%u fotografií"
+msgstr[0] "%u fotografie"
 msgstr[1] "%u fotografie"
 msgstr[2] "%u fotografií"
 
@@ -43071,54 +43071,323 @@ msgstr "Otevřít plnou editaci"
 msgid "Open in gallery"
 msgstr "Otevřít v galerii"
 
-msgid "Modern, clean look of the administration that also works on a phone. Appearance only, nothing else is changed."
-msgstr "Moderní, přehledný vzhled administrace, který funguje i na mobilu. Mění se pouze vzhled, nic jiného."
+msgid "Terracotta"
+msgstr "Terakota"
 
-msgid "a title that is only the file name counts as missing"
-msgstr "název shodný se jménem souboru se považuje za chybějící"
+msgid "Forest"
+msgstr "Les"
 
-msgid "All photos of the selected album and its sub-albums that still need the text, including the one shown."
-msgstr "Všechny fotky vybraného alba a jeho podalb, které ještě potřebují text, včetně té zobrazené."
+msgid "Ocean"
+msgstr "Oceán"
 
-msgid "In this selection: %s photos to do"
-msgstr "Ve výběru zbývá fotek: %s"
+msgid "Plum"
+msgstr "Švestka"
 
-msgid "%d photos to do in this album"
-msgstr "V tomto albu zbývá fotek: %d"
+msgid "Sand"
+msgstr "Písek"
 
-msgid "The gallery is not multi-lingual, so there is no language to choose: the text is saved as plain text. Switch it on in Options > General > multi-lingual."
-msgstr "Galerie není vícejazyčná, takže se nevybírá jazyk: text se ukládá jako obyčejný text. Zapnete to v Možnosti > Obecné > vícejazyčné."
+msgid "Graphite"
+msgstr "Grafit"
 
-msgid "single language (no language selection)"
-msgstr "jeden jazyk (bez výběru jazyka)"
+msgid "White"
+msgstr "Bílá"
 
-msgid "Language of the texts: %s"
-msgstr "Jazyk textů: %s"
+msgid "Read the story"
+msgstr "Číst příběh"
 
-msgid "single-language gallery"
-msgstr "galerie s jedním jazykem"
+msgid "What clients say"
+msgstr "Co říkají klienti"
 
-msgid "Only one language is enabled, so there is nothing to choose. More languages can be enabled in Options > General."
-msgstr "Je povolený jen jeden jazyk, takže není z čeho vybírat. Další jazyky lze povolit v Možnosti > Obecné."
+msgid "All references"
+msgstr "Všechny reference"
 
-msgid "visual editor (TinyMCE) for the description"
-msgstr "vizuální editor (TinyMCE) pro popisek"
+msgid "From the blog"
+msgstr "Z blogu"
 
-msgid "Visual editor for the description"
-msgstr "Vizuální editor pro popisek"
+msgid "All stories"
+msgstr "Všechny příběhy"
 
-msgid "Edit the description with the TinyMCE editor of the gallery (needs the tinymce plugin enabled and a configuration selected for \"Text editor configuration - gallery\"). It can also be switched on and off on the Quick captions page itself. The plain text field is faster for short texts."
-msgstr "Upravovat popisek editorem TinyMCE z galerie (potřebuje zapnutý plugin tinymce a vybranou konfiguraci v „Konfigurace textového editoru - galerie“). Lze ho zapnout a vypnout i přímo na stránce Rychlé popisování. Prosté textové pole je pro krátké texty rychlejší."
+msgid "Portfolio"
+msgstr "Portfolio"
 
-msgid "Change it in Options > Plugins > quick_caption."
-msgstr "Změna v Možnosti > Pluginy > quick_caption."
+msgid "All albums"
+msgstr "Všechna alba"
 
-msgid "File name counts as missing title"
-msgstr "Název shodný se jménem souboru je chybějící"
+msgid "Similar images"
+msgstr "Podobné fotografie"
 
-msgid "A title that is only the file name of the photo counts as missing (when looking for photos without a title). Switch it off if you use file names as titles on purpose."
-msgstr "Název fotky, který je jen jménem souboru, se považuje za chybějící (při hledání fotek bez názvu). Vypněte, pokud názvy shodné se jmény souborů používáte záměrně."
+msgid "Where it was taken"
+msgstr "Kde to vzniklo"
 
-msgid "Edit the description with the TinyMCE editor of the gallery (needs the tinymce plugin enabled and a configuration selected for \"Text editor configuration - gallery\"). The plain text field is faster for short texts."
-msgstr "Upravovat popisek editorem TinyMCE z galerie (potřebuje zapnutý plugin tinymce a vybranou konfiguraci v „Konfigurace textového editoru - galerie“). Prosté textové pole je pro krátké texty rychlejší."
+msgid "See the portfolio"
+msgstr "Prohlédnout portfolio"
+
+msgid "About me"
+msgstr "O mně"
+
+msgid "More about me"
+msgstr "Více o mně"
+
+msgid "Image map"
+msgstr "Mapa fotografií"
+
+msgid "Filter images on this page"
+msgstr "Filtrovat fotografie na této stránce"
+
+msgid "Album is password protected"
+msgstr "Album je chráněno heslem"
+
+msgid "Enter the password you received from the photographer."
+msgstr "Zadejte heslo, které jste dostali od fotografa."
+
+msgid "Open album"
+msgstr "Otevřít album"
+
+msgid "Welcome back"
+msgstr "Vítejte zpět"
+
+msgid "Enter your user name and password."
+msgstr "Zadejte své uživatelské jméno a heslo."
+
+msgid "No access? Write to me"
+msgstr "Nemáte přístup? Napište mi"
+
+msgid "Client gallery"
+msgstr "Klientská galerie"
+
+msgid "Client area"
+msgstr "Klientská zóna"
+
+msgid "%u min read"
+msgstr "%u min čtení"
+
+msgid "Other articles"
+msgstr "Další články"
+
+msgid "Clients"
+msgstr "Klienti"
+
+msgid "%s images with GPS coordinates. Zoom in to see single images, click a marker to open them."
+msgstr "%s fotografií s GPS souřadnicemi. Přibližte mapu, uvidíte jednotlivé fotografie; kliknutím na značku je otevřete."
+
+msgid "Images in view:"
+msgstr "Fotografií ve výřezu:"
+
+msgid "There are no images with GPS coordinates."
+msgstr "Nejsou zde žádné fotografie s GPS souřadnicemi."
+
+msgid "A modern blog and portfolio theme for photographers, built on Zenpage (news = blog with categories, pages, comments). Hero image, stories, masonry albums, image page with shooting data, similar images, map of all images, references, split login page, six colour schemes with light and dark mode (WCAG AA)."
+msgstr "Moderní blogové a portfolio téma pro fotografy postavené na Zenpage (novinky = blog s kategoriemi, stránky, komentáře). Úvodní fotografie, příběhy, masonry alba, stránka fotografie s údaji o focení, podobné fotografie, mapa všech fotografií, reference, dělené přihlášení, šest barevných schémat se světlým a tmavým režimem (WCAG AA)."
+
+msgid "Built on the structure of the Nova theme. Developed in collaboration with Claude, an AI assistant by Anthropic."
+msgstr "Postaveno na struktuře tématu Nova. Vyvinuto ve spolupráci s Claude, AI asistentem od Anthropic."
+
+msgid "Custom accent colour"
+msgstr "Vlastní barva akcentu"
+
+msgid "Colour choice"
+msgstr "Výběr barvy"
+
+msgid "Click a square to select the colour scheme. The square shows the background and the accent colour (light variant; the dark variant is in the lower right corner). All text and button colours meet the WCAG AA contrast."
+msgstr "Kliknutím na čtvereček vyberete barevné schéma. Čtvereček ukazuje pozadí a barvu akcentu (světlá varianta; tmavá varianta je v pravém dolním rohu). Všechny barvy textu a tlačítek splňují kontrast WCAG AA."
+
+msgid "Colour scheme (technical)"
+msgstr "Barevné schéma (technické)"
+
+msgid "Every scheme has a light and a dark variant. All text and button colours meet the WCAG AA contrast."
+msgstr "Každé schéma má světlou a tmavou variantu. Všechny barvy textu a tlačítek splňují kontrast WCAG AA."
+
+msgid "Used when the scheme \"Custom accent colour\" is selected."
+msgstr "Použije se, když je vybráno schéma „Vlastní barva akcentu“."
+
+msgid "Contrast check"
+msgstr "Kontrola kontrastu"
+
+msgid "A colour that would be hard to read is not rejected: the nearest colour with a sufficient contrast is used instead (and a lighter variant for the dark mode)."
+msgstr "Hůře čitelná barva se neodmítne: použije se nejbližší barva s dostatečným kontrastem (a pro tmavý režim světlejší varianta)."
+
+msgid "Light / dark mode"
+msgstr "Světlý / tmavý režim"
+
+msgid "According to the device"
+msgstr "Podle zařízení"
+
+msgid "Always light"
+msgstr "Vždy světlý"
+
+msgid "Always dark"
+msgstr "Vždy tmavý"
+
+msgid "The default for visitors who have not chosen yet."
+msgstr "Výchozí volba pro návštěvníky, kteří si zatím nevybrali."
+
+msgid "Light / dark toggle in the menu"
+msgstr "Přepínač světlý / tmavý v menu"
+
+msgid "Visitors can switch between the light and dark variant (they never choose the colours). Without the toggle everybody gets the default above."
+msgstr "Návštěvníci mohou přepínat mezi světlou a tmavou variantou (barvy si nevybírají). Bez přepínače mají všichni výchozí režim výše."
+
+msgid "Home page: hero image"
+msgstr "Úvodní stránka: velká fotografie"
+
+msgid "Random landscape image"
+msgstr "Náhodná fotografie na šířku"
+
+msgid "Latest landscape image"
+msgstr "Nejnovější fotografie na šířku"
+
+msgid "Thumbnail of an album"
+msgstr "Náhled alba"
+
+msgid "The big image at the top. Random and latest are chosen from a cached list (random: 6 hours, latest: 1 hour), so the page stays fast."
+msgstr "Velká fotografie nahoře. Náhodná a nejnovější se vybírají z uloženého seznamu (náhodná: 6 hodin, nejnovější: 1 hodina), takže stránka zůstává rychlá."
+
+msgid "Hero album"
+msgstr "Album pro velkou fotografii"
+
+msgid "Folder name of the album (e.g. weddings/2025) - used with \"Thumbnail of an album\"."
+msgstr "Název složky alba (např. svatby/2025) – použije se s volbou „Náhled alba“."
+
+msgid "Hero headline"
+msgstr "Nadpis nad fotografií"
+
+msgid "Empty = the gallery title."
+msgstr "Prázdné = název galerie."
+
+msgid "Hero text"
+msgstr "Text pod nadpisem"
+
+msgid "One sentence below the headline; it is also shown in the footer under the site name. Empty = nothing."
+msgstr "Jedna věta pod nadpisem; zobrazí se také v patičce pod názvem webu. Prázdné = nic."
+
+msgid "Hero button text"
+msgstr "Text tlačítka"
+
+msgid "Empty = \"See the portfolio\". The button leads to the album list."
+msgstr "Prázdné = „Prohlédnout portfolio“. Tlačítko vede na seznam alb."
+
+msgid "Stories on the home page"
+msgstr "Příběhy na úvodní stránce"
+
+msgid "0 to 5 latest articles (one big, the others small). 0 = hide the section. Articles of the references category are not included."
+msgstr "0 až 5 nejnovějších článků (jeden velký, ostatní malé). 0 = sekce se skryje. Články z kategorie referencí se nezahrnují."
+
+msgid "Portfolio on the home page"
+msgstr "Portfolio na úvodní stránce"
+
+msgid "Show the Portfolio section (album tiles) on the home page. Untick to hide it."
+msgstr "Zobrazit na úvodní stránce sekci Portfolio (dlaždice alb). Po odškrtnutí se skryje."
+
+msgid "Blurred preview of protected albums"
+msgstr "Rozmazaný náhled chráněných alb"
+
+msgid "Albums with a password show a blurred version of their cover image with a lock instead of the plain lock picture. Only a tiny 24 px image is sent to visitors (a few colour blocks, no detail). Needs the nPG option \"lock image for protected albums\" to be on."
+msgstr "Alba s heslem místo obyčejného zámku ukážou rozmazanou verzi titulní fotografie se zámkem. Návštěvníkovi se pošle jen drobný obrázek o šířce 24 px (pár barevných ploch, žádný detail). Vyžaduje zapnutou volbu nPG „zámek u chráněných alb“."
+
+msgid "Blur strength"
+msgstr "Síla rozmazání"
+
+msgid "Light blur (a hint of the image)"
+msgstr "Slabé rozmazání (náznak obrázku)"
+
+msgid "Medium blur"
+msgstr "Střední rozmazání"
+
+msgid "Strong blur (colours only)"
+msgstr "Silné rozmazání (jen barvy)"
+
+msgid "The lighter the blur, the more of the cover photo can be recognised. Keep it strong for private client albums."
+msgstr "Čím slabší rozmazání, tím víc je z titulní fotografie poznat. U soukromých klientských alb nechte silné."
+
+msgid "Albums on the home page"
+msgstr "Alba na úvodní stránce"
+
+msgid "Up to 4 album folders separated by commas. Empty = the first albums of the gallery."
+msgstr "Až 4 složky alb oddělené čárkou. Prázdné = první alba galerie."
+
+msgid "\"About me\" page"
+msgstr "Stránka „O mně“"
+
+msgid "Titlelink of a Zenpage page (the address of the page without the domain), shown as the \"About me\" block on the home page. Empty = no block."
+msgstr "Titlelink stránky Zenpage (adresa stránky bez domény), zobrazí se jako blok „O mně“ na úvodní stránce. Prázdné = bez bloku."
+
+msgid "References category"
+msgstr "Kategorie referencí"
+
+msgid "Titlelink of the news category with references. One article = one reference: the title is the name(s), the first image is the small image, the text is the quote. Empty = no references."
+msgstr "Titlelink kategorie novinek s referencemi. Jeden článek = jedna reference: nadpis jsou jména, první obrázek je malá fotografie, text je citát. Prázdné = bez referencí."
+
+msgid "References on the home page"
+msgstr "Reference na úvodní stránce"
+
+msgid "Show a strip with the latest four references on the home page."
+msgstr "Zobrazit na úvodní stránce pás se čtyřmi nejnovějšími referencemi."
+
+msgid "Numbers of images, albums, pages and news and a cloud of the most used tags at the bottom of the home page (cached for 6 hours)."
+msgstr "Počty fotografií, alb, stránek a novinek a oblak nejpoužívanějších štítků dole na úvodní stránce (ukládá se na 6 hodin)."
+
+msgid "Login page: welcome text"
+msgstr "Přihlášení: uvítací text"
+
+msgid "Empty = \"Enter the password you received from the photographer.\""
+msgstr "Prázdné = „Zadejte heslo, které jste dostali od fotografa.“"
+
+msgid "Login page: help link text"
+msgstr "Přihlášení: text odkazu na pomoc"
+
+msgid "Empty = \"No access? Write to me\"."
+msgstr "Prázdné = „Nemáte přístup? Napište mi“."
+
+msgid "Login page: help link address"
+msgstr "Přihlášení: adresa odkazu na pomoc"
+
+msgid "Empty = the contact page (when the contact form is enabled)."
+msgstr "Prázdné = stránka Kontakt (je-li povolen kontaktní formulář)."
+
+msgid "Album password page: ask for a user name"
+msgstr "Stránka s heslem k albu: ptát se na uživatelské jméno"
+
+msgid "Off = password only (clients get just a password). On = user name and password. The login window opened from the menu always asks for both."
+msgstr "Vypnuto = jen heslo (klienti dostanou pouze heslo). Zapnuto = uživatelské jméno a heslo. Přihlašovací okno otevřené z menu se vždy ptá na obojí."
+
+msgid "Show the shooting data on the image page. The metadata to show is chosen in Options > Image > Metadata."
+msgstr "Zobrazit údaje o snímku na stránce fotografie. Které metadata se zobrazí, se vybírá v Nastavení > Obrázek > Metadata."
+
+msgid "Show a map on album pages and on the image page when the images have GPS coordinates (needs the openStreetMap plugin)."
+msgstr "Zobrazit mapu na stránkách alb a na stránce fotografie, mají-li fotografie GPS souřadnice (vyžaduje plugin openStreetMap)."
+
+msgid "Image map page"
+msgstr "Stránka s mapou fotografií"
+
+msgid "Enable the \"Image map\" page (/page/photomap) with all images that have GPS coordinates, plus its menu link. Safe for very large galleries: only the visible part of the map is loaded and nearby images are grouped on the server."
+msgstr "Povolit stránku „Mapa fotografií“ (/page/photomap) se všemi fotografiemi s GPS souřadnicemi a odkaz v menu. Bezpečné i pro velmi velké galerie: načítá se jen viditelná část mapy a blízké fotografie se seskupují na serveru."
+
+msgid "Filter chips in albums"
+msgstr "Filtrační štítky v albech"
+
+msgid "Chips with the tags of the images on the page that filter the album without reloading. Uses one extra database query per image; disable it for albums with very many images per page."
+msgstr "Štítky podle tagů fotografií na stránce, které filtrují album bez načítání stránky. Používá jeden dotaz do databáze navíc na každou fotografii; u alb s velmi mnoha fotografiemi na stránce vypněte."
+
+msgid "Show similar images (shared tags, otherwise the same album) below the image."
+msgstr "Zobrazit pod fotografií podobné fotografie (společné tagy, jinak stejné album)."
+
+msgid "Use the \"menu_manager\" menu named \"atelier\" instead of the standard menu."
+msgstr "Použít menu „atelier“ z pluginu menu_manager místo standardního menu."
+
+msgid "Show GPS and description statistics in the footer (a few database counts on every page; disable on very large galleries)."
+msgstr "Zobrazit v patičce statistiky GPS a popisků (několik databázových počtů na každé stránce; u velmi velkých galerií vypněte)."
+
+msgid "The colour is readable on light and dark backgrounds."
+msgstr "Barva je čitelná na světlém i tmavém pozadí."
+
+msgid "The colour is too light or too dark for small text. Used instead:"
+msgstr "Barva je pro malý text příliš světlá nebo tmavá. Použije se místo ní:"
+
+#: themes/atelier/print_login.php
+msgid "Open page"
+msgstr "Otevřít stránku"
+
+#: themes/atelier/print_login.php
+msgid "Protected page"
+msgstr "Chráněná stránka"
 
