@@ -1095,7 +1095,7 @@ function printCategoryCheckboxListEntry($cat, $articleid, $option, $class = '') 
 	$catname = $cat->getTitle();
 	$catlink = $cat->getTitlelink();
 	if ($cat->getPassword()) {
-		$protected = '<img src="' . WEBPATH . '/' . CORE_FOLDER . '/images/lock_icon.png" />';
+		$protected = '<img src="' . WEBPATH . '/' . CORE_FOLDER . '/images/lock_icon.png" alt="" />';
 	} else {
 		$protected = '';
 	}
