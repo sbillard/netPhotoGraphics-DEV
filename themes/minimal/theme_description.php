@@ -6,4 +6,5 @@ $theme_description['author'] = 'gjr';
 $theme_description['version'] = '1.4.4.3b';
 $theme_description['date'] = '2013-09-04';
 $theme_description['desc'] = 'A netPhotoGraphics/ZenPage minimalistic theme.';
+$theme_description['deprecated'] = gettext('Minimal will be removed from a future release.');
 ?>
