@@ -370,7 +370,6 @@ function printAdminHeader($tab, $subtab = NULL) {
 					$user = $_current_admin_obj->getUser();
 					printf($msg, '<a href = "' . getAdminLink('admin-tabs/users.php') . '?user=' . $user . '&page=admin&tab=users" title = "' . gettext('go to user profile') . '">' . $user . '</a>', $last);
 					?>
-					</a>
 					<?php
 					if ($_current_admin_obj->logout_link) {
 						$link = getAdminLink('admin.php') . '?logout=1';
