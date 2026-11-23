@@ -1803,8 +1803,6 @@ function printAdminHeader($tab, $subtab = NULL) {
 				case 'private':
 					$order = '`private` DESC, `name` COLLATE ' . UTF8MB4_AS_DISPLAY_COLLATION;
 					$field = ['private' => true, 'tag' => false];
-
-					$order = '`id`';
 					break;
 				default:
 					$order = '`name` COLLATE ' . UTF8MB4_AS_DISPLAY_COLLATION;
