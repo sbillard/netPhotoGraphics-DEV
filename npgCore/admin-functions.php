@@ -370,6 +370,7 @@ function printAdminHeader($tab, $subtab = NULL) {
 					$user = $_current_admin_obj->getUser();
 					printf($msg, '<a href = "' . getAdminLink('admin-tabs/users.php') . '?user=' . $user . '&page=admin&tab=users" title = "' . gettext('go to user profile') . '">' . $user . '</a>', $last);
 					?>
+					</a>
 					<?php
 					if ($_current_admin_obj->logout_link) {
 						$link = getAdminLink('admin.php') . '?logout=1';
@@ -1789,18 +1790,25 @@ function printAdminHeader($tab, $subtab = NULL) {
 			switch ($tagsort) {
 				case 'language':
 					$order = '`language` DESC,`name` COLLATE ' . UTF8MB4_AS_DISPLAY_COLLATION;
+					$field = ['language' => 'true'];
 					break;
 				case 'recent':
 					$order = '`id` DESC';
+					$field = null;
 					break;
 				case 'mostused':
 					$order = '`count` DESC';
+					$field = null;
 					break;
 				case 'private':
 					$order = '`private` DESC, `name` COLLATE ' . UTF8MB4_AS_DISPLAY_COLLATION;
+					$field = ['private' => true, 'tag' => false];
+
+					$order = '`id`';
 					break;
 				default:
 					$order = '`name` COLLATE ' . UTF8MB4_AS_DISPLAY_COLLATION;
+					$field = ['tag' => false];
 					break;
 			}
 			$masters = $translations = $_admin_ordered_taglist = $languages = array();
@@ -1837,7 +1845,11 @@ function printAdminHeader($tab, $subtab = NULL) {
 					}
 				}
 			}
+			if ($field) {
+				$_admin_ordered_taglist = sortMultiArray($_admin_ordered_taglist, $field);
+			}
 		}
+
 		return $_admin_ordered_taglist;
 	}
 
