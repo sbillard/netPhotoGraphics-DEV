@@ -11,6 +11,7 @@
 setupLog(gettext('Set default options'), true);
 
 require_once(CORE_SERVERPATH . 'admin-globals.php');
+
 if (CURL_ENABLED) {
 	require (CORE_SERVERPATH . 'lib-CURL.php');
 }
@@ -449,11 +450,7 @@ if (SYMLINK && !npgFunctions::hasPrimaryScripts()) {
 			$p = SERVERPATH . '/' . THEMEFOLDER . '/' . $theme;
 			if (is_link($p)) {
 				if (!realpath($p)) { //	theme removed from master install
-					if (is_dir($p)) {
-						rmdir($p);
-					} else {
-						unlink($p);
-					}
+					npgFunctions::rmlink($p);
 				}
 			}
 		}

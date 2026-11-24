@@ -120,16 +120,6 @@ if ($plugin_disable) {
 			return false;
 		}
 
-		static function rmlink($link) {
-			$e = error_reporting(0);
-			chmod($link, 0777);
-			//	some systems treat links to a folder as a file,
-			//	some treat them as directories so we try both
-			$success = unlink($link) || rmdir($link);
-			error_reporting($e);
-			return $success;
-		}
-
 	}
 
 }

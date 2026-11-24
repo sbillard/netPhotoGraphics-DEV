@@ -88,7 +88,7 @@ if (isset($_GET['purge'])) {
 		if (file_exists($folder . USER_PLUGIN_FOLDER)) {
 			if (is_link($folder . USER_PLUGIN_FOLDER)) {
 				//	it is a symlink from older version of clone
-				$succeed = npgClone::rmlink($folder . USER_PLUGIN_FOLDER);
+				$succeed = npgFunctions::rmlink($folder . USER_PLUGIN_FOLDER);
 			} else {
 				//	discard plugins that no longer exist
 				$pluginFiles = safe_glob($folder . USER_PLUGIN_FOLDER . '/*.php');
@@ -133,7 +133,7 @@ if (isset($_GET['purge'])) {
 				case 'dir':
 					if ($exists) {
 						if ($link) {
-							$success = npgClone::rmlink($folder . $target);
+							$success = npgFunctions::rmlink($folder . $target);
 						} else {
 							$success = npgFunctions::removeDir($folder . $target);
 						}
@@ -183,7 +183,7 @@ if (isset($_GET['purge'])) {
 						$e = error_reporting(0);
 						chmod($folder . $target, 0777);
 						error_reporting($e);
-						if (!npgClone::rmlink($folder . $target)) {
+						if (!npgFunctions::rmlink($folder . $target)) {
 							if ($link) {
 								$msg[] = sprintf(gettext('The existing symlink <code>%s</code> could not be removed.'), $target8) . "<br />\n";
 							} else {
@@ -222,7 +222,7 @@ if (isset($_GET['purge'])) {
 				case 'copy':
 					if ($exists) {
 						if ($link) {
-							$success = npgClone::rmlink($folder . $target);
+							$success = npgFunctions::rmlink($folder . $target);
 						} else {
 							if (is_dir($folder . $target)) {
 								$success = npgFunctions::removeDir($folder . $target);
@@ -243,7 +243,7 @@ if (isset($_GET['purge'])) {
 					break;
 
 				case 'discard':
-					if (npgClone::rmlink($folder . $target)) {
+					if (npgFunctions::rmlink($folder . $target)) {
 						$msg[] = sprintf(gettext('Obsolete symlink <code>%s</code> discarded.'), $target8) . "<br />\n";
 					} else {
 						$msg[] = sprintf(gettext('Obsolete symlink <code>%s</code> could not be removed.'), $target8) . "<br />\n";
