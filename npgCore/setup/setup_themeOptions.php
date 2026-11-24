@@ -37,7 +37,7 @@ if ($icon == 2) {
 	$name = '<s>' . $theme . '</s>';
 	if ($_gallery->getCurrentTheme() == $theme) {
 		require_once(PLUGIN_SERVERPATH . 'deprecated-functions.php');
-		deprecated_functions::deprecationMessage(sprintf(gettext('The current theme (%1$s) is deprecated.'), $theme));
+		deprecated_functions::deprecationMessage(sprintf(gettext('The sctive theme, %1$s, is deprecated.'), $theme));
 	}
 } else {
 	$name = $theme;
@@ -45,9 +45,6 @@ if ($icon == 2) {
 $__script = 'Theme:' . $theme;
 
 setupLog(sprintf(gettext('Theme:%s setup started'), $name), $fullLog);
-
-require_once(PLUGIN_SERVERPATH . 'deprecated-functions.php');
-deprecated_functions::deprecationMessage(sprintf(gettext('The active theme (%1$s) is deprecated.'), $theme));
 
 $requirePath = getPlugin('themeoptions.php', $theme);
 if (!empty($requirePath)) {
