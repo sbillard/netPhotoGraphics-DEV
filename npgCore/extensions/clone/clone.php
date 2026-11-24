@@ -33,7 +33,7 @@ if (isset($_GET['purge'])) {
 		$succeed = true;
 		$targets = array('docs' => 'dir', CORE_FOLDER => 'dir');
 
-		//	handle the user plugin folder
+//	handle the user plugin folder
 		$pluginFiles = safe_glob(SERVERPATH . '/' . USER_PLUGIN_FOLDER . '/*', GLOB_ONLYDIR);
 		foreach ($pluginFiles as $file) {
 			if (!(file_exists($file . '.php') || is_link($file . '.php'))) {
@@ -87,10 +87,10 @@ if (isset($_GET['purge'])) {
 
 		if (file_exists($folder . USER_PLUGIN_FOLDER)) {
 			if (is_link($folder . USER_PLUGIN_FOLDER)) {
-				//	it is a symlink from older version of clone
-				$succeed = npgFunctions::rmlink($folder . USER_PLUGIN_FOLDER);
+//	it is a symlink from older version of clone
+				$succeed = rmlink($folder . USER_PLUGIN_FOLDER);
 			} else {
-				//	discard plugins that no longer exist
+//	discard plugins that no longer exist
 				$pluginFiles = safe_glob($folder . USER_PLUGIN_FOLDER . '/*.php');
 				foreach ($pluginFiles as $file) {
 					$pluginDir = USER_PLUGIN_FOLDER . '/' . stripSuffix(basename($file));
@@ -105,7 +105,7 @@ if (isset($_GET['purge'])) {
 		}
 
 		if (file_exists($folder . THEMEFOLDER)) {
-			//	discard themes that no longer exist
+//	discard themes that no longer exist
 			$themeFiles = safe_glob($folder . THEMEFOLDER . '/*', GLOB_ONLYDIR);
 			foreach ($themeFiles as $file) {
 				$themeDir = THEMEFOLDER . '/' . basename($file);
@@ -133,7 +133,7 @@ if (isset($_GET['purge'])) {
 				case 'dir':
 					if ($exists) {
 						if ($link) {
-							$success = npgFunctions::rmlink($folder . $target);
+							$success = rmlink($folder . $target);
 						} else {
 							$success = npgFunctions::removeDir($folder . $target);
 						}
@@ -183,7 +183,7 @@ if (isset($_GET['purge'])) {
 						$e = error_reporting(0);
 						chmod($folder . $target, 0777);
 						error_reporting($e);
-						if (!npgFunctions::rmlink($folder . $target)) {
+						if (!rmlink($folder . $target)) {
 							if ($link) {
 								$msg[] = sprintf(gettext('The existing symlink <code>%s</code> could not be removed.'), $target8) . "<br />\n";
 							} else {
@@ -222,7 +222,7 @@ if (isset($_GET['purge'])) {
 				case 'copy':
 					if ($exists) {
 						if ($link) {
-							$success = npgFunctions::rmlink($folder . $target);
+							$success = rmlink($folder . $target);
 						} else {
 							if (is_dir($folder . $target)) {
 								$success = npgFunctions::removeDir($folder . $target);
@@ -243,7 +243,7 @@ if (isset($_GET['purge'])) {
 					break;
 
 				case 'discard':
-					if (npgFunctions::rmlink($folder . $target)) {
+					if (rmlink($folder . $target)) {
 						$msg[] = sprintf(gettext('Obsolete symlink <code>%s</code> discarded.'), $target8) . "<br />\n";
 					} else {
 						$msg[] = sprintf(gettext('Obsolete symlink <code>%s</code> could not be removed.'), $target8) . "<br />\n";
@@ -265,7 +265,7 @@ if (isset($_GET['purge'])) {
 			} else {
 				query('UPDATE ' . prefix('plugin_storage') . 'SET `data`=' . db_quote(trim($newinstall, '/')) . ' WHERE `id`=' . $rslt['id']);
 			}
-			// admin synchronization
+// admin synchronization
 			$clone_data = array(
 					'link' => $newinstall,
 					'UTF8_image_URI' => UTF8_IMAGE_URI,
@@ -280,7 +280,7 @@ if (isset($_GET['purge'])) {
 			$adminTableDB = db_list_fields('administrators');
 			$adminTable = array();
 			foreach ($adminTableDB as $key => $datum) {
-				// remove don't care fields
+// remove don't care fields
 				unset($datum['Key']);
 				unset($datum['Extra']);
 				unset($datum['Privileges']);
@@ -290,7 +290,7 @@ if (isset($_GET['purge'])) {
 			$clone_data['admin'] = serialize($_current_admin_obj);
 			file_put_contents($folder . '/clone_data', serialize($clone_data));
 
-			//	leave as direct link incase the admin mod_rewrite mechanism is not yet setup
+//	leave as direct link incase the admin mod_rewrite mechanism is not yet setup
 			$msg[] = get_npgButton('button', gettext('setup the new install'), array('buttonClick' => 'window.open(\'' . $newinstall . CORE_FOLDER . '/setup/index.php?autorun\');')) . '<br clear="all">';
 		} else {
 			$reinstall = '<p>' . sprintf(gettext('Before running setup for <code>%1$s</code> please reinstall the following setup files from the %2$s to this installation:'), $newinstall, NETPHOTOGRAPHICS_VERSION) .

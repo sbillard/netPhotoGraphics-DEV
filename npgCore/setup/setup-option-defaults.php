@@ -450,7 +450,7 @@ if (SYMLINK && !npgFunctions::hasPrimaryScripts()) {
 			$p = SERVERPATH . '/' . THEMEFOLDER . '/' . $theme;
 			if (is_link($p)) {
 				if (!realpath($p)) { //	theme removed from master install
-					npgFunctions::rmlink($p);
+					rmlink($p);
 				}
 			}
 		}

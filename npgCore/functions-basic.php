@@ -545,6 +545,16 @@ function mkdir_recursive($pathname, $mode) {
 	return is_dir($pathname) || mkdir($pathname, $mode);
 }
 
+function rmlink($link) {
+	$e = error_reporting(0);
+	chmod($link, 0777);
+	//	some systems treat links to a folder as a file,
+	//	some treat them as directories so we try both
+	$success = unlink($link) || rmdir($link);
+	error_reporting($e);
+	return $success;
+}
+
 function array_map_recursive(callable $func, array $array) {
 	return filter_var($array, \FILTER_CALLBACK, ['options' => $func]);
 }
