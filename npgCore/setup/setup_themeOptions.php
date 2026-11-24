@@ -37,7 +37,7 @@ if ($icon == 2) {
 	$name = '<s>' . $theme . '</s>';
 	if ($_gallery->getCurrentTheme() == $theme) {
 		require_once(PLUGIN_SERVERPATH . 'deprecated-functions.php');
-		deprecated_functions::deprecationMessage(sprintf(gettext('The sctive theme, %1$s, is deprecated.'), $theme));
+		deprecated_functions::deprecationMessage(sprintf(gettext('The <code>Current Theme</code> %1$s is deprecated.'), $theme));
 	}
 } else {
 	$name = $theme;
