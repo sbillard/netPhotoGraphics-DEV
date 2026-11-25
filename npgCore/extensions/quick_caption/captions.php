@@ -23,7 +23,8 @@ $locale = getOption('locale');
 
 function qcap_missing($col, $loc) {
 	if (!getOption('multi_lingual') || !$loc) {
-		return "($col IS NULL OR TRIM($col) = '' OR ($col LIKE 'a:%{%' AND $col LIKE '%\"\";}'))";
+		// serialized with no non-empty text (a text that only ENDS with a quote mark must not count as empty)
+		return "($col IS NULL OR TRIM($col) = '' OR ($col LIKE 'a:%{%' AND $col NOT REGEXP '\"[A-Za-z_@]+\";s:[1-9][0-9]*:\"'))";
 	}
 	$key = db_quote('%s:5:"' . $loc . '";s:%');
 	$empty = db_quote('%s:5:"' . $loc . '";s:0:"";%');
