@@ -4535,14 +4535,10 @@ function getCodeblock($number = 1, $object = NULL) {
 			$object = $_current_image;
 		}
 		if (in_context(ZENPAGE_PAGE)) {
-			if ($_CMS_current_page->checkAccess()) {
-				$object = $_CMS_current_page;
-			}
+			$object = $_CMS_current_page;
 		}
 		if (in_context(ZENPAGE_NEWS_ARTICLE)) {
-			if ($_CMS_current_article->checkAccess()) {
-				$object = $_CMS_current_article;
-			}
+			$object = $_CMS_current_article;
 		}
 	}
 	if (!is_object($object)) {
